@@ -2,6 +2,11 @@
 /**
  * Definition Grid — intro testuale + griglia 2x2 con titolo/descrizione.
  * Usata nella sezione "Che cos'è il [servizio]?" delle pagine servizio.
+ *
+ * Può opzionalmente mostrare un video verticale (formato 9:16) accanto al
+ * contenuto: se la prop `video` è presente, il layout diventa a 2 colonne
+ * su schermi lg+ (contenuto a sinistra, video a destra). Su mobile il
+ * video appare SOPRA le card.
  */
 
 interface DefinitionItem {
@@ -9,28 +14,95 @@ interface DefinitionItem {
   description: string;
 }
 
+interface VideoProps {
+  mp4: string;           // percorso del file .mp4 (fallback principale)
+  webm?: string;         // percorso del file .webm (formato preferito dal browser se supportato)
+  poster?: string;       // immagine di anteprima mostrata prima del play
+  title?: string;        // titolo accessibile del video (usato come aria-label)
+}
+
 interface Props {
   introText: string;
   items: DefinitionItem[];
+  video?: VideoProps;
 }
 
-const { introText, items } = Astro.props;
+const { introText, items, video } = Astro.props;
 ---
 
-<div class="max-w-narrow">
-  <p class="text-lg text-pb-text-secondary leading-relaxed mb-8">
-    {introText}
-  </p>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-    {items.map((item) => (
-      <div
-        class="p-card-pad border border-pb-border-default rounded-md
-               transition-all duration-base ease-default
-               hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
-      >
-        <h3 class="font-display text-display-sm text-pb-text-primary mb-2">{item.title}</h3>
-        <p class="text-sm text-pb-text-tertiary leading-normal">{item.description}</p>
+{video ? (
+  <!-- Layout con video: 2 colonne su lg+, stack su mobile -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+    {/* Colonna video — su mobile appare per prima (order-1), su lg va a destra (order-2) */}
+    <div class="order-1 lg:order-2 lg:col-span-5">
+      <div class="relative overflow-hidden rounded-md border border-pb-border-default bg-black aspect-[9/16] lg:sticky lg:top-28">
+        <video
+          class="absolute inset-0 w-full h-full object-cover"
+          controls
+          playsinline
+          preload="none"
+          poster={video.poster}
+          aria-label={video.title}
+        >
+          {/*
+            preload="none"  → il browser NON scarica il video al caricamento pagina;
+                              parte solo quando l'utente preme play. Risparmia banda.
+            controls        → mostra i controlli nativi (play, volume, fullscreen).
+            playsinline     → su iOS il video parte inline e non in fullscreen automatico.
+            poster          → immagine di anteprima mostrata finché il video non parte.
+            aria-label      → etichetta accessibile per screen reader.
+          */}
+          {video.webm && (
+            /* Primo source: webm — più leggero, preferito se supportato dal browser */
+            <source src={video.webm} type="video/webm" />
+          )}
+          {/* Secondo source: mp4 — fallback universale (supportato ovunque) */}
+          <source src={video.mp4} type="video/mp4" />
+          {/* Testo di fallback per browser che non supportano il tag <video> */}
+          <p class="p-4 text-sm text-pb-text-tertiary">
+            Il tuo browser non supporta il tag video.
+            <a href={video.mp4} class="underline text-brand">Scarica il video</a>.
+          </p>
+        </video>
       </div>
-    ))}
+    </div>
+
+    {/* Colonna contenuto — intro + griglia 2x2 */}
+    <div class="order-2 lg:order-1 lg:col-span-7">
+      <p class="text-lg text-pb-text-secondary leading-relaxed mb-8">
+        {introText}
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        {items.map((item) => (
+          <div
+            class="p-card-pad border border-pb-border-default rounded-md
+                   transition-all duration-base ease-default
+                   hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
+          >
+            <h3 class="font-display text-display-sm text-pb-text-primary mb-2">{item.title}</h3>
+            <p class="text-sm text-pb-text-tertiary leading-normal">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
-</div>
+) : (
+  <!-- Layout senza video: comportamento originale, contenuto incolonnato a sinistra -->
+  <div class="max-w-narrow">
+    <p class="text-lg text-pb-text-secondary leading-relaxed mb-8">
+      {introText}
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      {items.map((item) => (
+        <div
+          class="p-card-pad border border-pb-border-default rounded-md
+                 transition-all duration-base ease-default
+                 hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
+        >
+          <h3 class="font-display text-display-sm text-pb-text-primary mb-2">{item.title}</h3>
+          <p class="text-sm text-pb-text-tertiary leading-normal">{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+)}

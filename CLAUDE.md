@@ -87,6 +87,103 @@ pugilistica/
 - **Single source of truth**: dati condivisi (sede, orari, nav) vivono **solo** in `src/data/shared.ts` — non ridichiarare inline nelle pagine
 - **Classi custom**: le classi `pb-*` (container, section, btn, topline, ecc.) sono definite in `src/styles/global.css` — usale al posto di ripetere catene lunghe di utility Tailwind
 
+## Gestione video (sezione "Che cos'è il [corso]?")
+
+Ogni pagina corso (pugilato, hyrox, pb-hiit, ecc.) può mostrare un video verticale
+accanto al `DefinitionGrid`. Il componente supporta una prop `video` opzionale: se
+presente, il layout diventa 2 colonne su `lg+` (contenuto a sinistra, video a destra)
+e su mobile il video appare sopra le card. Se la prop manca, il componente si comporta
+come prima (una sola colonna).
+
+### Formato video richiesto
+
+- **Orientamento**: verticale 9:16 (es. 720×1280). Il box ha `aspect-[9/16]` fisso;
+  video orizzontali risulterebbero deformati o con bande nere.
+- **Durata**: breve (15–30 s tipicamente, il contenuto è un "teaser" del corso).
+- **Audio**: opzionale. Se il video è muto, nel comando di conversione webm
+  sostituisci `-c:a libopus -b:a 96k` con `-an` (stessa cosa per il pass 1).
+
+### Naming e posizione dei file
+
+Tutti i file video vivono in `public/videos/`. Convenzione di naming:
+
+```
+public/videos/
+├── corso-<nomecorso>-pugilistica-brianza-barlassina.mp4   ← sorgente originale
+├── corso-<nomecorso>-pugilistica-brianza-barlassina.webm  ← generato via ffmpeg
+└── corso-<nomecorso>-pugilistica-brianza-barlassina.jpg   ← poster generato via ffmpeg
+```
+
+Esempio per Hyrox: `corso-hyrox-pugilistica-brianza-barlassina.mp4`.
+
+### Come aggiungere un nuovo video a una pagina corso
+
+1. Metti il file `.mp4` sorgente in `public/videos/` rispettando la convenzione di naming.
+2. Genera `.webm` e poster `.jpg` con i due comandi ffmpeg qui sotto.
+3. Nella pagina `.astro` del corso, passa la prop `video` al componente `DefinitionGrid`:
+
+   ```astro
+   <DefinitionGrid
+     introText="..."
+     items={definitionItems}
+     video={{
+       mp4: "/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.mp4",
+       webm: "/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.webm",
+       poster: "/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.jpg",
+       title: "Allenamento di <descrizione> alla Pugilistica Brianza di Barlassina",
+     }}
+   />
+   ```
+
+4. Lancia `npm run build` per verificare che compili senza errori.
+
+### Comandi ffmpeg
+
+ffmpeg è installato via `winget install Gyan.FFmpeg` (v8.1). Il PATH di sistema è aggiornato: in nuove sessioni di terminale il comando `ffmpeg` è disponibile direttamente. Se una sessione bash già aperta non lo trova, chiudila e riaprila, oppure usa il percorso assoluto:
+`/c/Users/filip/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffmpeg.exe`.
+
+**1) Estrarre il poster (frame al secondo 2):**
+
+```bash
+ffmpeg -y -ss 00:00:02 -i public/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.mp4 \
+  -frames:v 1 -update 1 -q:v 2 \
+  public/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.jpg
+```
+
+- `-ss 00:00:02` → seek al secondo 2 (cambia se quel frame non è rappresentativo).
+- `-frames:v 1 -update 1` → salva un singolo frame (ffmpeg 8+ richiede `-update 1`).
+- `-q:v 2` → qualità JPEG alta (scala 2–31, più basso = migliore).
+
+**2) Convertire mp4 → webm (VP9 CRF 33, 2-pass + Opus 96k):**
+
+Il 2-pass dà un file più piccolo a parità di qualità. Due comandi in sequenza:
+
+```bash
+ffmpeg -y -i public/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.mp4 \
+  -c:v libvpx-vp9 -b:v 0 -crf 33 -pass 1 -an -f null /dev/null && \
+ffmpeg -y -i public/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.mp4 \
+  -c:v libvpx-vp9 -b:v 0 -crf 33 -pass 2 -c:a libopus -b:a 96k \
+  public/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.webm
+```
+
+- `libvpx-vp9` + `-crf 33` + `-b:v 0` → VP9 in modalità qualità costante (sweet
+  spot per il web; più basso il CRF, migliore la qualità ma file più grande).
+- `libopus -b:a 96k` → audio Opus 96 kbps. Se il video è muto, sostituisci con `-an`.
+- Il pass 1 scrive un file di log `ffmpeg2pass-0.log` nella directory corrente:
+  **eliminalo dopo il pass 2** (`rm ffmpeg2pass-0.log`) per non sporcare il repo.
+- Se lanci il comando da `cmd.exe` invece che da bash, sostituisci `/dev/null` con `NUL`.
+
+### Attributi del tag `<video>` (già gestiti dal componente)
+
+Il componente `DefinitionGrid` genera il tag con questi attributi, già commentati
+nel sorgente — non serve rifarlo manualmente:
+
+- `preload="none"` → nessun download automatico, parte solo al play (risparmio banda).
+- `controls` + `playsinline` → controlli nativi, play inline su iOS.
+- `poster` → immagine di anteprima.
+- Due `<source>` in ordine: prima `.webm` (se passato), poi `.mp4` come fallback universale.
+- Testo di fallback con link di download dentro `<video>` per browser antichi.
+
 ## Comandi
 
 - `npm run dev` — avvia in locale su http://localhost:4321 (o prima porta libera successiva se 4321 è occupata)
@@ -122,6 +219,15 @@ Ultimo aggiornamento: 2026-04-14
 - `npm install` completato
 - Build di produzione verificata: 0 errori, 0 warning, 9 pagine generate in `dist/`
 - Repo Git inizializzato, primo commit, branch rinominato in `main`, push su https://github.com/filippoucchino/pugilistica
+- Video verticale aggiunto alla pagina `/pugilato/` nella sezione "Che cos'è il Pugilato?":
+  `DefinitionGrid.astro` esteso con prop `video` opzionale (layout 2 colonne su lg+, stack con video sopra su mobile);
+  asset in `public/videos/` (mp4 sorgente + webm VP9 CRF 33 + poster jpg estratto al secondo 2);
+  `ffmpeg` installato via `winget install Gyan.FFmpeg` v8.1
+- Video verticale aggiunto alla pagina `/hyrox/` nella sezione "Che cos'è Hyrox?":
+  asset in `public/videos/` (mp4 + webm VP9 CRF 33 + poster jpg estratto a 00:01:08)
+- Video verticale aggiunto alla pagina `/pb-hiit/` nella sezione "Che cos'è PB Hiit?":
+  asset in `public/videos/` (mp4 + webm VP9 CRF 33 + poster jpg estratto al secondo 2);
+  tutte e tre le pagine corso (pugilato, hyrox, pb-hiit) ora hanno il loro video verticale
 
 ### In corso
 - Nessuna attività in corso
