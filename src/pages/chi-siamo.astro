@@ -2,17 +2,98 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import SectionHeading from "../components/SectionHeading.astro";
-import CoachBlock from "../components/CoachBlock.astro";
+import TeamMemberCard from "../components/TeamMemberCard.astro";
 import TargetCard from "../components/TargetCard.astro";
 import Gallery from "../components/Gallery.astro";
 import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { localDetails, zones, siteInfo } from "@/data/shared";
+
+// Foto team: importate come ES module così Astro le ottimizza in build
+// (genera WebP, dimensioni esplicite, hashing del nome file per caching).
+import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
+import brunoPhoto from "../assets/images/bio/bruno-elli.jpg";
+import riccardoPhoto from "../assets/images/bio/riccardo-sparano.jpg";
+import vittorioPhoto from "../assets/images/bio/vittorio-uboldi.jpg";
+
+const teamMembers = [
+  {
+    name: "Stefano Rizzo",
+    role: "Fondatore e Head Coach",
+    bio: "Stefano Rizzo, milanese classe 1984, è il fondatore di Pugilistica Brianza e la guida tecnica di ogni corso. Il suo percorso sportivo attraversa nuoto, ginnastica artistica e l'hockey su ghiaccio, dove viene convocato nelle nazionali giovanili Under 17 e Under 21, prima di approdare al pugilato con circa 40 incontri da dilettante. Oggi allena, organizza eventi e segue ogni atleta: dal principiante a chi si prepara a salire sul ring.",
+    credentials: [
+      "Maestro di pugilato di 2° livello FPI",
+      "Tecnico di 1° livello FIPE – Federazione Italiana Pesistica",
+      "Coach certificato Hyrox – Accademia 365",
+      "Consigliere Comitato Regionale Lombardo FPI (rappresentante atleti, quadriennio olimpico)",
+      "Atleta attivo: Hyrox, corsa 10 km e mezza maratona",
+    ],
+    photo: stefanoPhoto,
+    photoAlt:
+      "Stefano Rizzo, fondatore e head coach di Pugilistica Brianza a Barlassina",
+  },
+  {
+    name: "Bruno Elli",
+    role: "Presidente",
+    bio: "Bruno Elli è co-fondatore e presidente di Pugilistica Brianza. Ex nuotatore agonista, scopre la boxe a 21 anni e la porta avanti fino a disputare 22 incontri da dilettante. La stessa passione che lo ha avvicinato al ring lo ha spinto a costruire, insieme ai soci, una palestra vera in Brianza.",
+    credentials: [
+      "Co-fondatore di Pugilistica Brianza",
+      "22 match da pugile dilettante",
+      "Presidente ASD Pugilistica Brianza dal 2025",
+    ],
+    photo: brunoPhoto,
+    photoAlt: "Bruno Elli, presidente e co-fondatore di Pugilistica Brianza",
+  },
+  {
+    name: "Riccardo Sparano",
+    role: "Vicepresidente",
+    bio: "Riccardo Sparano, di Seregno, è co-fondatore e vicepresidente di Pugilistica Brianza. Dopo anni passati a cercare il suo sport, tra calcio, nuoto e basket, ha trovato nella boxe e nel gruppo che ha dato vita alla palestra il posto in cui sentirsi davvero a casa. Oggi contribuisce a costruire ogni giorno la realtà dell'associazione.",
+    credentials: [
+      "Co-fondatore di Pugilistica Brianza",
+      "Vicepresidente ASD Pugilistica Brianza",
+    ],
+    photo: riccardoPhoto,
+    photoAlt:
+      "Riccardo Sparano, vicepresidente e co-fondatore di Pugilistica Brianza",
+  },
+  {
+    name: "Vittorio Uboldi",
+    role: "Cutman e Presentatore",
+    bio: "Vittorio Uboldi porta nella Pugilistica Brianza un profilo unico: laureato in Ingegneria Meccanica al Politecnico di Milano e docente, è anche cantante, autore, speaker radiofonico e attore di prosa e musical. Sul ring è cutman e presentatore di eventi sportivi, dove è noto con il nome di Vick \"The Judgment Day\".",
+    credentials: [
+      "Laurea in Ingegneria Meccanica – Politecnico di Milano",
+      "Cutman e presentatore di eventi sportivi (alias: Vick \"The Judgment Day\")",
+      "Speaker radiofonico e voice over",
+      "Insegnante di canto e chitarra; attore di prosa e musical",
+    ],
+    photo: vittorioPhoto,
+    photoAlt:
+      "Vittorio Uboldi, cutman e presentatore di Pugilistica Brianza",
+  },
+];
+
+// JSON-LD: un grafo di 4 Person legati all'organizzazione, per aiutare i motori
+// di ricerca a capire chi gestisce la palestra (SEO tecnica / entità).
+const teamSchema = {
+  "@context": "https://schema.org",
+  "@graph": teamMembers.map((m) => ({
+    "@type": "Person",
+    name: m.name,
+    jobTitle: m.role,
+    description: m.bio,
+    worksFor: {
+      "@type": "SportsActivityLocation",
+      name: siteInfo.name,
+      url: siteInfo.url,
+    },
+  })),
+};
 ---
 
 <BaseLayout
   title="Chi Siamo — ASD Pugilistica Brianza | Barlassina"
-  description="Scopri la storia, i valori e il coach di Pugilistica Brianza, palestra di pugilato a Barlassina dal 2018. Affiliati FPI e FIPE."
+  description="Scopri la storia, i valori e il team di Pugilistica Brianza, palestra di pugilato a Barlassina dal 2018. Affiliati FPI e FIPE."
+  schema={teamSchema}
 >
   <!-- HERO -->
   <Hero
@@ -81,18 +162,27 @@ import { localDetails, zones, siteInfo } from "@/data/shared";
     </div>
   </section>
 
-  <!-- COACH -->
+  <!-- TEAM -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Il Coach">
+      <SectionHeading
+        topline="Il team"
+        description="Quattro persone, una visione: costruire una palestra di pugilato vera in Brianza. Ecco chi guida Pugilistica Brianza."
+      >
         Chi guida la <span class="text-brand">palestra</span>
       </SectionHeading>
-      <CoachBlock
-        name="Stefano Rizzo"
-        role="Fondatore e Head Coach"
-        bio="Ex pugile con un percorso reale nel pugilato competitivo, oggi allena con la stessa intensità con cui ha combattuto. Non è un istruttore generico: è un coach che ha fatto il ring, conosce la fatica e sa cosa serve per crescere."
-        tags={["Ex pugile agonista", "Certificato FIPE", "Light-boxe", "Boxe dilettantistica", "Fondatore dal 2018"]}
-      />
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        {teamMembers.map((m) => (
+          <TeamMemberCard
+            name={m.name}
+            role={m.role}
+            bio={m.bio}
+            credentials={[...m.credentials]}
+            photo={m.photo}
+            photoAlt={m.photoAlt}
+          />
+        ))}
+      </div>
     </div>
   </section>
 
