@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ContactCard from "../components/ContactCard.astro";
+import LocalSection from "../components/LocalSection.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { localDetails, zones, siteInfo, hours } from "@/data/shared";
+---
+
+<BaseLayout
+  title="Contatti — Pugilistica Brianza | Barlassina (MB)"
+  description="Contatta Pugilistica Brianza a Barlassina: indirizzo, telefono, email, orari e mappa. Via Giovanni Segantini 29, facilmente raggiungibile da tutta la Brianza."
+>
+  <!-- HERO -->
+  <Hero
+    topline="Dove trovarci"
+    subtitle="Via Giovanni Segantini 29, Barlassina (MB). Palestra di pugilato nel cuore della Brianza, facile da raggiungere da Seveso, Lissone, Seregno, Desio e Muggiò. Parcheggio disponibile, spogliatoi e docce."
+  >
+    Contatti — Pugilistica <span class="text-brand">Brianza</span> a Barlassina
+  </Hero>
+
+  <!-- CONTATTI PRINCIPALI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Contatti diretti"
+        description="Il modo più rapido per iniziare è chiamarci o passare direttamente. Rispondiamo dal lunedì al sabato."
+      >
+        Chiamaci, scrivici <span class="text-brand">o vieni</span> in palestra
+      </SectionHeading>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <ContactCard
+          icon='<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>'
+          label="Telefono"
+          value={siteInfo.phone}
+          href="tel:+39XXXXXXXXXX"
+          subtitle="Chiamaci per informazioni o per prenotare la tua prova gratuita. Rispondiamo dal lunedì al sabato."
+        />
+        <ContactCard
+          icon='<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="none"/>'
+          label="Indirizzo"
+          value={siteInfo.address}
+          subtitle={`${siteInfo.cap} ${siteInfo.city} (${siteInfo.province}) — Brianza. Parcheggio gratuito disponibile nelle immediate vicinanze.`}
+        />
+        <ContactCard
+          icon='<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>'
+          label="Email"
+          value={siteInfo.email}
+          href={`mailto:${siteInfo.email}`}
+          subtitle="Scrivici per domande sui corsi, sugli orari o per richieste particolari. Rispondiamo entro 24 ore."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- MAPPA + INFO -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Dove siamo"
+        description="Siamo in Via Giovanni Segantini 29, Barlassina — una zona residenziale comoda da raggiungere sia in auto che con i mezzi."
+      >
+        Raggiungi la <span class="text-brand">palestra</span> a Barlassina
+      </SectionHeading>
+      <LocalSection
+        address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
+        addressLabel={siteInfo.name}
+        zones={zones}
+        details={localDetails}
+      />
+    </div>
+  </section>
+
+  <!-- ORARI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Orari"
+        description="La palestra è aperta dal lunedì al sabato. I corsi si svolgono in orari serali durante la settimana e al mattino il sabato."
+      >
+        Orari di <span class="text-brand">apertura</span>
+      </SectionHeading>
+      <div class="max-w-[560px]">
+        <div class="flex flex-col">
+          {hours.map((h) => (
+            <div class:list={[
+              "flex justify-between py-3 border-b border-pb-border-default",
+              "closed" in h && h.closed ? "text-pb-text-muted" : "",
+            ]}>
+              <span class="text-base font-medium text-pb-text-secondary">{h.day}</span>
+              <span class:list={["text-base", "closed" in h && h.closed ? "text-pb-text-muted" : "text-pb-text-primary font-semibold"]}>
+                {h.time}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-5 text-sm text-pb-text-muted leading-normal">
+          Gli orari possono variare durante i periodi festivi. Per conferme, chiamaci direttamente o scrivici.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINALE -->
+  <div class="pb-section--alt">
+    <CtaBlock
+      description="La prima lezione è gratuita e senza impegno. Chiamaci, scrivici o passa direttamente in palestra."
+      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+      ctaSecondary={{ label: "Chiamaci", href: "tel:+39XXXXXXXXXX" }}
+    >
+      Vieni a <span class="text-brand">trovarci</span>
+    </CtaBlock>
+  </div>
+</BaseLayout>

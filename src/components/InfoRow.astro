@@ -1,0 +1,29 @@
+---
+/**
+ * InfoRow — riga con icona + testo (strong + body).
+ * Usata nella sezione "Orari, prova e iscrizione" delle pagine servizio.
+ */
+
+interface Props {
+  icon: string;
+  /** Supporta HTML, usa <strong> per il titolo inline */
+  text: string;
+}
+
+const { icon, text } = Astro.props;
+---
+
+<div class="flex items-start gap-4 py-4 border-b border-pb-border-default last:border-b-0">
+  <div
+    class="w-10 h-10 border border-pb-border-accent rounded-md
+           flex items-center justify-center flex-shrink-0 mt-0.5"
+  >
+    <svg
+      class="w-5 h-5 stroke-brand fill-none"
+      style="stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+      viewBox="0 0 24 24"
+      set:html={icon}
+    />
+  </div>
+  <p class="text-base text-pb-text-secondary leading-normal [&>strong]:text-pb-text-primary [&>strong]:font-semibold [&>strong]:block [&>strong]:mb-1" set:html={text} />
+</div>

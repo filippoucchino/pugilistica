@@ -1,0 +1,35 @@
+---
+/**
+ * Contact Card — icona + label + valore + sottotesto.
+ * Usata nella pagina Contatti.
+ */
+
+interface Props {
+  icon: string;
+  label: string;
+  value: string;
+  /** Se presente, il value diventa un link */
+  href?: string;
+  subtitle?: string;
+}
+
+const { icon, label, value, href, subtitle } = Astro.props;
+---
+
+<div class="p-card-pad-lg border border-pb-border-default rounded-md flex flex-col gap-4">
+  <div class="w-11 h-11 border border-pb-border-accent rounded-md flex items-center justify-center">
+    <svg
+      class="w-5 h-5 stroke-brand fill-none"
+      style="stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+      viewBox="0 0 24 24"
+      set:html={icon}
+    />
+  </div>
+  <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-muted">{label}</div>
+  {href ? (
+    <a href={href} class="text-lg font-semibold text-pb-text-primary no-underline hover:text-brand transition-colors">{value}</a>
+  ) : (
+    <div class="text-lg font-semibold text-pb-text-primary">{value}</div>
+  )}
+  {subtitle && <p class="text-sm text-pb-text-tertiary leading-normal">{subtitle}</p>}
+</div>

@@ -1,0 +1,68 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Aggiunge Schema.org JSON-LD alla pagina */
+  schema?: Record<string, unknown>;
+}
+
+const { title, description, schema } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL.href} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:locale" content="it_IT" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {schema && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(schema)}
+      />
+    )}
+  </head>
+  <body>
+    <Header />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <!-- Scroll reveal -->
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

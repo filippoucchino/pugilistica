@@ -1,0 +1,86 @@
+---
+/**
+ * Local Section — info sede + mappa Google.
+ * Posizionata prima della CTA finale su tutte le pagine.
+ */
+
+interface Detail {
+  icon: string;  // SVG inner HTML
+  text: string;
+}
+
+interface Props {
+  address: string;
+  addressLabel?: string;
+  zones?: string[];
+  details?: Detail[];
+  /** URL di embed Google Maps */
+  mapEmbedUrl?: string;
+}
+
+const {
+  address,
+  addressLabel = "Sede",
+  zones = [],
+  details = [],
+  mapEmbedUrl,
+} = Astro.props;
+---
+
+<div class="grid grid-cols-local gap-12 items-start max-md:grid-cols-1">
+  <!-- Info -->
+  <div class="flex flex-col gap-5">
+    <div class="text-base text-pb-text-secondary leading-relaxed">
+      <strong class="text-pb-text-primary font-semibold block mb-1">{addressLabel}</strong>
+      <span set:html={address} />
+    </div>
+
+    {zones.length > 0 && (
+      <div class="flex gap-2 flex-wrap">
+        {zones.map((zone) => (
+          <span
+            class="py-[5px] px-3.5 border border-pb-border-default rounded-full
+                   text-xs text-pb-text-muted font-medium"
+          >
+            {zone}
+          </span>
+        ))}
+      </div>
+    )}
+
+    {details.length > 0 && (
+      <div class="flex flex-col gap-3">
+        {details.map((detail) => (
+          <div class="flex items-center gap-2.5 text-sm text-pb-text-tertiary">
+            <svg
+              class="w-4 h-4 stroke-brand fill-none flex-shrink-0"
+              style="stroke-width: 1.5;"
+              viewBox="0 0 24 24"
+              set:html={detail.icon}
+            />
+            {detail.text}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <!-- Map -->
+  {mapEmbedUrl ? (
+    <iframe
+      src={mapEmbedUrl}
+      class="w-full aspect-[16/10] rounded-lg border border-pb-border-default"
+      loading="lazy"
+      allowfullscreen
+      title="Mappa Google — Pugilistica Brianza"
+    />
+  ) : (
+    <div
+      class="w-full aspect-[16/10] bg-neutral-800 rounded-lg flex items-center
+             justify-center text-sm text-pb-text-faint tracking-wide
+             border border-pb-border-default"
+    >
+      MAPPA GOOGLE
+    </div>
+  )}
+</div>

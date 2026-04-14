@@ -1,0 +1,120 @@
+---
+/**
+ * FAQ Accordion — lista di domande/risposte con toggle + – / ×.
+ * Genera anche Schema.org FAQPage se `withSchema` è true.
+ */
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: FaqItem[];
+  /** Indice dell'item aperto di default (opzionale) */
+  defaultOpen?: number;
+  /** Se true, genera lo structured data FAQPage */
+  withSchema?: boolean;
+}
+
+const { items, defaultOpen, withSchema = false } = Astro.props;
+
+// Schema.org FAQPage
+const faqSchema = withSchema
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: items.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    }
+  : null;
+---
+
+<div class="flex flex-col max-w-narrow" data-faq-accordion>
+  {items.map((item, i) => (
+    <div
+      class:list={[
+        "border-b border-pb-border-default",
+        { "is-open": defaultOpen === i },
+      ]}
+      data-faq-item
+    >
+      <button
+        class="w-full bg-transparent border-none py-5 flex items-center
+               justify-between gap-4 cursor-pointer text-left group"
+        data-faq-trigger
+        aria-expanded={defaultOpen === i ? "true" : "false"}
+      >
+        <span
+          class="font-body text-base font-semibold text-pb-text-secondary
+                 leading-snug transition-colors duration-base ease-default
+                 group-hover:text-pb-text-primary"
+        >
+          {item.question}
+        </span>
+
+        <div
+          class="w-7 h-7 border border-pb-border-default rounded-sm
+                 flex items-center justify-center flex-shrink-0
+                 transition-all duration-base ease-default
+                 [.is-open_&]:border-pb-border-accent"
+          data-faq-icon
+        >
+          <svg
+            class="w-3.5 h-3.5 stroke-pb-text-muted fill-none transition-transform
+                   duration-base ease-default [.is-open_&]:stroke-brand [.is-open_&]:rotate-45"
+            style="stroke-width: 1.5;"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </div>
+      </button>
+
+      <div
+        class="overflow-hidden transition-all duration-slow ease-default
+               max-h-0 [.is-open_&]:max-h-[300px]"
+        data-faq-answer
+      >
+        <div class="pb-5 text-sm text-pb-text-tertiary leading-relaxed max-w-[600px]">
+          {item.answer}
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+{faqSchema && (
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+)}
+
+<script>
+  document.querySelectorAll("[data-faq-accordion]").forEach((accordion) => {
+    accordion.querySelectorAll("[data-faq-trigger]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const item = trigger.closest("[data-faq-item]") as HTMLElement;
+        if (!item) return;
+
+        const isOpen = item.classList.contains("is-open");
+
+        // Chiudi tutti gli altri (opzionale: rimuovi per multi-open)
+        accordion.querySelectorAll("[data-faq-item]").forEach((other) => {
+          other.classList.remove("is-open");
+          other.querySelector("[data-faq-trigger]")?.setAttribute("aria-expanded", "false");
+        });
+
+        // Toggle corrente
+        if (!isOpen) {
+          item.classList.add("is-open");
+          trigger.setAttribute("aria-expanded", "true");
+        }
+      });
+    });
+  });
+</script>

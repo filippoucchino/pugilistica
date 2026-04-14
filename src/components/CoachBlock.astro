@@ -1,0 +1,58 @@
+---
+/**
+ * Coach Block — card con foto, nome, ruolo, bio e tag.
+ */
+
+interface Props {
+  name: string;
+  role: string;
+  bio: string;
+  tags: string[];
+  /** Path all'immagine, oppure placeholder */
+  photoSrc?: string;
+  photoAlt?: string;
+}
+
+const { name, role, bio, tags, photoSrc, photoAlt = "" } = Astro.props;
+---
+
+<div
+  class="grid grid-cols-coach gap-10 items-center p-card-pad-lg
+         bg-surface-card border border-pb-border-default rounded-md
+         max-md:grid-cols-1"
+>
+  <!-- Photo -->
+  {photoSrc ? (
+    <img
+      src={photoSrc}
+      alt={photoAlt}
+      class="w-[200px] h-[240px] object-cover rounded-md max-md:w-full max-md:h-[200px]"
+      loading="lazy"
+    />
+  ) : (
+    <div
+      class="w-[200px] h-[240px] bg-neutral-800 rounded-md flex items-center
+             justify-center font-display text-[28px] text-pb-text-faint
+             max-md:w-full max-md:h-[200px]"
+    >
+      FOTO
+    </div>
+  )}
+
+  <!-- Info -->
+  <div>
+    <h3 class="font-display text-display-sm text-pb-text-primary mb-1">{name}</h3>
+    <p class="text-sm text-brand font-semibold tracking-wide mb-4">{role}</p>
+    <p class="text-base text-pb-text-tertiary leading-normal mb-5">{bio}</p>
+    <div class="flex gap-2 flex-wrap">
+      {tags.map((tag) => (
+        <span
+          class="py-[5px] px-3 border border-pb-border-default rounded-full
+                 text-xxs font-semibold text-pb-text-muted tracking-wide"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+---
+/**
+ * Lesson Step — step numerato con counter CSS.
+ * Raggruppa più step in un wrapper con classe CSS counter-reset.
+ */
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<div
+  class="grid grid-cols-step gap-6 py-7 border-b border-pb-border-default
+         last:border-b-0"
+  style="counter-increment: step;"
+>
+  <!-- Number -->
+  <div
+    class="w-12 h-12 border border-pb-border-accent flex items-center
+           justify-center font-display text-[22px] text-brand
+           before:content-[counter(step)]"
+  >
+  </div>
+
+  <!-- Content -->
+  <div>
+    <h3 class="font-display text-display-sm text-pb-text-primary mb-1.5">{title}</h3>
+    <p class="text-sm text-pb-text-tertiary leading-normal">{description}</p>
+  </div>
+</div>

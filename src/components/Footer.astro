@@ -1,0 +1,86 @@
+---
+/**
+ * Footer — 4 colonne: brand, percorsi, info, contatti + bottom bar con social.
+ */
+import { siteInfo, courseLinks, infoLinks } from "@/data/shared";
+---
+
+<footer class="bg-neutral-950 border-t border-pb-border-subtle pt-16 px-8 pb-8">
+  <div class="max-w-container mx-auto">
+    <!-- Grid -->
+    <div class="grid grid-cols-footer gap-12 mb-12 max-md:grid-cols-footer-md max-md:gap-8 max-sm:grid-cols-1">
+      <!-- Brand -->
+      <div>
+        <div class="font-display text-[28px] text-pb-text-primary mb-3">
+          Pugilistica <span class="text-brand">Brianza</span>
+        </div>
+        <p class="text-sm text-pb-text-muted leading-normal max-w-[280px]">
+          ASD di pugilato a {siteInfo.city}. Ambiente familiare, coach qualificati, prova gratuita.
+        </p>
+      </div>
+
+      <!-- Percorsi -->
+      <div>
+        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-4">
+          Percorsi
+        </div>
+        {courseLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block text-sm text-pb-text-tertiary py-[5px] no-underline transition-colors duration-base hover:text-pb-text-primary"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- Info -->
+      <div>
+        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-4">
+          Info
+        </div>
+        {infoLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block text-sm text-pb-text-tertiary py-[5px] no-underline transition-colors duration-base hover:text-pb-text-primary"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- Contatti -->
+      <div>
+        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-4">
+          Contatti
+        </div>
+        <span class="block text-sm text-pb-text-tertiary py-[5px]">{siteInfo.address}</span>
+        <span class="block text-sm text-pb-text-tertiary py-[5px]">{siteInfo.city} ({siteInfo.province})</span>
+        <span class="block text-sm text-pb-text-tertiary py-[5px]">Lun – Sab</span>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="border-t border-pb-border-default pt-6 flex justify-between items-center max-md:flex-col max-md:gap-4 max-md:text-center">
+      <span class="text-xs text-pb-text-faint">&copy; 2025 {siteInfo.name}. Tutti i diritti riservati.</span>
+      <div class="flex gap-4">
+        <a
+          href={siteInfo.social.facebook}
+          class="w-8 h-8 border border-pb-border-default rounded-md flex items-center justify-center
+                 transition-all duration-base ease-default hover:border-brand hover:bg-[rgba(196,30,30,0.1)]"
+          aria-label="Facebook"
+        >
+          <svg class="w-3.5 h-3.5 fill-pb-text-muted" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a
+          href={siteInfo.social.instagram}
+          class="w-8 h-8 border border-pb-border-default rounded-md flex items-center justify-center
+                 transition-all duration-base ease-default hover:border-brand hover:bg-[rgba(196,30,30,0.1)]"
+          aria-label="Instagram"
+        >
+          <svg class="w-3.5 h-3.5 fill-pb-text-muted" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

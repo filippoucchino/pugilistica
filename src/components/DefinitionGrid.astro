@@ -1,0 +1,36 @@
+---
+/**
+ * Definition Grid — intro testuale + griglia 2x2 con titolo/descrizione.
+ * Usata nella sezione "Che cos'è il [servizio]?" delle pagine servizio.
+ */
+
+interface DefinitionItem {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  introText: string;
+  items: DefinitionItem[];
+}
+
+const { introText, items } = Astro.props;
+---
+
+<div class="max-w-narrow">
+  <p class="text-lg text-pb-text-secondary leading-relaxed mb-8">
+    {introText}
+  </p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    {items.map((item) => (
+      <div
+        class="p-card-pad border border-pb-border-default rounded-md
+               transition-all duration-base ease-default
+               hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
+      >
+        <h3 class="font-display text-display-sm text-pb-text-primary mb-2">{item.title}</h3>
+        <p class="text-sm text-pb-text-tertiary leading-normal">{item.description}</p>
+      </div>
+    ))}
+  </div>
+</div>

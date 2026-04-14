@@ -1,0 +1,210 @@
+/* ============================================================
+   PUGILISTICA BRIANZA — GLOBAL STYLES
+   Questo file contiene:
+   - Font imports
+   - Tailwind directives
+   - Base reset extras
+   - Utility classes custom non coperte da Tailwind
+   ============================================================ */
+
+/* --- Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+
+/* --- Tailwind layers --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body text-base text-pb-text-secondary bg-surface-body leading-normal;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-pb-text-primary leading-tight tracking-tight;
+  }
+
+  a {
+    @apply text-brand no-underline transition-colors duration-base ease-default;
+  }
+
+  a:hover {
+    @apply text-brand-light;
+  }
+
+  img {
+    @apply max-w-full block;
+  }
+
+  ::selection {
+    background: rgba(196, 30, 30, 0.3);
+    @apply text-pb-text-primary;
+  }
+}
+
+/* ============================================================
+   COMPONENTS LAYER — classi riutilizzabili
+   ============================================================ */
+@layer components {
+  /* Container standard */
+  .pb-container {
+    @apply mx-auto w-full px-10 max-w-container;
+  }
+
+  @media (max-width: 768px) {
+    .pb-container {
+      @apply px-5;
+    }
+  }
+
+  .pb-container--narrow {
+    @apply max-w-narrow;
+  }
+
+  .pb-container--wide {
+    @apply max-w-wide;
+  }
+
+  /* Section padding */
+  .pb-section {
+    @apply py-section-y;
+  }
+
+  .pb-section--lg {
+    @apply py-section-y-lg;
+  }
+
+  .pb-section--alt {
+    @apply bg-surface;
+  }
+
+  /* Topline / Label */
+  .pb-topline {
+    @apply inline-flex items-center gap-3 mb-5;
+  }
+
+  .pb-topline__bar {
+    @apply w-10 h-0.5 bg-brand;
+  }
+
+  .pb-topline__text {
+    @apply font-body text-xs font-semibold tracking-widest uppercase text-pb-text-muted;
+  }
+
+  /* Section Heading */
+  .pb-section-heading {
+    @apply mb-12;
+  }
+
+  .pb-section-heading h2 {
+    @apply text-display-md mb-4;
+  }
+
+  .pb-section-heading p {
+    @apply text-lg text-pb-text-tertiary max-w-[560px] leading-normal;
+  }
+
+  /* CTA Buttons */
+  .pb-btn-primary {
+    @apply inline-block py-4 px-9 bg-brand text-white font-body text-[15px]
+           font-bold tracking-wider uppercase border-none cursor-pointer
+           transition-all duration-base ease-default no-underline;
+  }
+
+  .pb-btn-primary:hover {
+    @apply bg-brand-dark text-white -translate-y-0.5;
+  }
+
+  .pb-btn-secondary {
+    @apply inline-block py-4 px-9 bg-transparent text-pb-text-secondary font-body
+           text-[15px] font-semibold tracking-wider uppercase
+           border border-pb-border-medium cursor-pointer
+           transition-all duration-base ease-default no-underline;
+  }
+
+  .pb-btn-secondary:hover {
+    @apply border-pb-border-strong text-pb-text-primary;
+  }
+
+  .pb-btn-text {
+    @apply inline-flex items-center gap-2 py-2 bg-transparent text-brand
+           font-body text-sm font-semibold tracking-wide border-none
+           cursor-pointer transition-colors duration-base ease-default no-underline;
+  }
+
+  .pb-btn-text:hover {
+    @apply text-brand-light;
+  }
+
+  .pb-btn-text svg {
+    @apply w-4 h-4 fill-current transition-transform duration-base ease-default;
+  }
+
+  .pb-btn-text:hover svg {
+    @apply translate-x-0.5;
+  }
+
+  /* Divider gradient (usato in hero, CTA block) */
+  .pb-divider {
+    @apply absolute bottom-0 left-0 right-0 h-px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(196, 30, 30, 0.3),
+      transparent
+    );
+  }
+
+  /* Hero glow */
+  .pb-hero-glow {
+    @apply absolute pointer-events-none;
+    top: -20%;
+    right: -10%;
+    width: 70%;
+    height: 140%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(196, 30, 30, 0.08) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Hero watermark */
+  .pb-hero-watermark {
+    @apply absolute pointer-events-none select-none font-display leading-none;
+    bottom: -8%;
+    right: -3%;
+    font-size: clamp(200px, 28vw, 400px);
+    color: rgba(255, 255, 255, 0.02);
+  }
+}
+
+/* ============================================================
+   UTILITIES LAYER
+   ============================================================ */
+@layer utilities {
+  .text-accent {
+    @apply text-brand;
+  }
+
+  /* Fade-up animation (scroll reveal) */
+  .fade-up {
+    @apply opacity-0 translate-y-[30px] transition-all duration-[700ms] ease-default;
+  }
+
+  .fade-up.visible {
+    @apply opacity-100 translate-y-0;
+  }
+}

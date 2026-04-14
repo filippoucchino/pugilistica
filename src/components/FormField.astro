@@ -1,0 +1,69 @@
+---
+/**
+ * Form Field — input / textarea / select con label.
+ */
+
+interface Props {
+  label: string;
+  name: string;
+  type?: "text" | "email" | "tel" | "textarea" | "select";
+  placeholder?: string;
+  required?: boolean;
+  options?: { value: string; label: string }[];
+  rows?: number;
+}
+
+const {
+  label,
+  name,
+  type = "text",
+  placeholder = "",
+  required = false,
+  options = [],
+  rows = 5,
+} = Astro.props;
+
+const inputClasses = `w-full py-3 px-4 bg-surface-input border border-pb-border-default
+  rounded-sm font-body text-base text-pb-text-primary transition-all duration-base
+  ease-default outline-none placeholder:text-pb-text-muted
+  focus:bg-surface-input-focus focus:border-brand focus:shadow-input-focus`;
+---
+
+<div class="flex flex-col gap-1.5">
+  <label for={name} class="text-xs font-semibold text-pb-text-tertiary tracking-wide">
+    {label}
+    {required && <span class="text-brand">*</span>}
+  </label>
+
+  {type === "textarea" ? (
+    <textarea
+      id={name}
+      name={name}
+      placeholder={placeholder}
+      required={required}
+      rows={rows}
+      class:list={[inputClasses, "resize-y min-h-[120px]"]}
+    />
+  ) : type === "select" ? (
+    <select
+      id={name}
+      name={name}
+      required={required}
+      class={inputClasses}
+    >
+      {placeholder && <option value="">{placeholder}</option>}
+      {options.map((opt) => (
+        <option value={opt.value}>{opt.label}</option>
+      ))}
+    </select>
+  ) : (
+    <input
+      id={name}
+      name={name}
+      type={type}
+      placeholder={placeholder}
+      required={required}
+      class={inputClasses}
+    />
+  )}
+</div>

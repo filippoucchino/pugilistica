@@ -1,0 +1,266 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import DefinitionGrid from "../components/DefinitionGrid.astro";
+import TargetCard from "../components/TargetCard.astro";
+import BenefitItem from "../components/BenefitItem.astro";
+import LessonStep from "../components/LessonStep.astro";
+import WhyUsCard from "../components/WhyUsCard.astro";
+import InfoRow from "../components/InfoRow.astro";
+import PricingCard from "../components/PricingCard.astro";
+import Gallery from "../components/Gallery.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import LocalSection from "../components/LocalSection.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { trustItems, localDetails, zones, siteInfo } from "@/data/shared";
+
+/* — Dati pagina — */
+
+const definitionItems = [
+  { title: "Tecnica e coordinazione", description: "Impari i fondamentali della boxe — guardia, colpi, spostamenti, difese — con progressioni chiare e graduali." },
+  { title: "Preparazione atletica", description: "Ogni lezione include lavoro su resistenza, velocità e forza esplosiva, elementi centrali del pugilato." },
+  { title: "Disciplina e mentalità", description: "La boxe sviluppa concentrazione, gestione dello stress e fiducia in sé, dentro e fuori dalla palestra." },
+  { title: "Allenamento completo", description: "Cardio, tono muscolare, agilità e coordinazione in un unico percorso, con il supporto di un coach ex agonista." },
+];
+
+const targets = [
+  { icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>', title: "Principianti", description: "Non hai mai fatto boxe? La maggior parte dei nostri iscritti è partita da zero. Il coach ti guida passo dopo passo." },
+  { icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>', title: "Donne", description: "Corso misto e inclusivo. Alleniamo donne di ogni età in un ambiente rispettoso, motivante e sicuro." },
+  { icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>', title: "Ragazzi 12+", description: "L'età minima è 12 anni. L'allenamento è adattato per garantire sicurezza e crescita graduale." },
+  { icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>', title: "Amatori", description: "Vuoi allenarti con costanza, migliorare la tecnica e stare in forma? Il percorso amatoriale è fatto per te." },
+  { icon: '<path d="M6 9l6 6 6-6"/><path d="M6 4h12M6 20h12"/>', title: "Agonisti", description: "Affiliati FPI, gareggiamo nella light-boxe e boxe dilettantistica. Costruiamo percorsi agonistici su misura." },
+];
+
+const benefits = [
+  "<strong>Migliora</strong> resistenza cardiovascolare e condizione fisica generale",
+  "<strong>Sviluppa</strong> forza esplosiva, velocità e coordinazione motoria",
+  "<strong>Aumenta</strong> concentrazione, disciplina e gestione dello stress",
+  "<strong>Aiuta</strong> dimagrimento, tono muscolare e benessere complessivo",
+  "<strong>Costruisce</strong> fiducia in sé, costanza e mentalità forte",
+  "<strong>Rafforza</strong> agilità, riflessi e consapevolezza del corpo",
+];
+
+const steps = [
+  { title: "Riscaldamento", description: "Attivazione generale con corda, mobilità articolare e lavoro cardiovascolare leggero. Prepara il corpo all'intensità della lezione." },
+  { title: "Tecnica e fondamentali", description: "Guardia, spostamenti, combinazioni di colpi, schivate e parate. Per i principianti si lavora sui fondamentali; per gli avanzati su combinazioni e strategie." },
+  { title: "Lavoro al sacco e a coppie", description: "Applicazione della tecnica su sacchi, colpitori e guanti. Lavoro a coppie per sviluppare timing, distanza e reattività." },
+  { title: "Preparazione atletica", description: "Circuiti di forza, velocità e resistenza specifici per il pugilato. Esercizi mirati per migliorare la performance e la tenuta fisica." },
+  { title: "Defaticamento e chiusura", description: "Stretching, respirazione e ritorno alla calma. Il coach dà feedback individuali sulla lezione e sugli aspetti su cui lavorare." },
+];
+
+const whyUs = [
+  { icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>', title: "Coach ex agonista", description: "Stefano Rizzo ha un passato da pugile vero e certificazione FIPE. Non insegna teoria: insegna esperienza." },
+  { icon: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/>', title: "Ambiente familiare", description: "Un posto dove ti senti a casa, ma lavori duro. L'ambiente è accogliente, inclusivo e allo stesso tempo competitivo." },
+  { icon: '<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>', title: "Affiliazioni FPI e FIPE", description: "Siamo un'ASD riconosciuta, affiliata alla Federazione Pugilistica Italiana e alla Federazione Italiana Pesistica." },
+  { icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>', title: "Attivi dal 2018", description: "Non siamo appena aperti: siamo una realtà consolidata, con anni di esperienza sul campo e una comunità di iscritti che cresce." },
+  { icon: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>', title: "Palestra attrezzata", description: "Ring, sacchi, area functional, spogliatoi con docce e parcheggio. Tutto quello che serve per allenarti sul serio." },
+  { icon: '<path d="M5 3l14 9-14 9V3z"/>', title: "Prova gratuita", description: "Non chiediamo impegno: vieni, prova una lezione e decidi con calma. Nessun vincolo." },
+];
+
+const infoRows = [
+  { icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>', text: "<strong>Quando si svolge</strong>Il corso di pugilato si tiene dal lunedì al sabato. Gli orari dettagliati saranno inseriti a breve." },
+  { icon: '<path d="M5 3l14 9-14 9V3z"/>', text: "<strong>Prova gratuita</strong>La prima lezione è gratuita e senza impegno. Vieni, allenati e decidi con calma." },
+  { icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>', text: "<strong>Come iscriversi</strong>Contatto diretto: chiamaci, scrivici o passa in palestra. L'iscrizione è semplice e veloce." },
+  { icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>', text: "<strong>Cosa portare</strong>Abbigliamento sportivo, scarpe da ginnastica. Guantoni e fasce disponibili in palestra per la prova." },
+];
+
+const faqItems = [
+  { question: "Posso iniziare il corso di pugilato anche se sono principiante?", answer: "Assolutamente sì. La maggior parte dei nostri iscritti ha iniziato da zero. Il corso è strutturato per accogliere tutti i livelli, dai principianti assoluti a chi ha già esperienza. Il coach adatta gli esercizi in base al livello di ciascuno." },
+  { question: "Il corso di pugilato è adatto anche alle donne?", answer: "Sì, il corso è misto e pensato per essere inclusivo. Alleniamo donne di ogni età e livello, in un ambiente rispettoso e motivante. La boxe è uno degli allenamenti più completi anche per obiettivi di fitness e benessere." },
+  { question: "Da che età si può iniziare a fare pugilato?", answer: "L'età minima per partecipare ai nostri corsi è 12 anni. L'allenamento è adattato all'età e al livello del ragazzo, con attenzione alla sicurezza e alla crescita graduale." },
+  { question: "Fate anche pugilato agonistico?", answer: "Sì, siamo affiliati alla Federazione Pugilistica Italiana (FPI) e gareggiamo nella light-boxe e nella boxe dilettantistica. Se vuoi crescere in ambito agonistico, possiamo costruire un percorso su misura per te." },
+  { question: "Posso prenotare una prova gratuita di pugilato?", answer: "Certo. La prova gratuita è senza impegno: vieni, allenati con noi e decidi con calma. Puoi prenotarla chiamandoci o passando direttamente in palestra a Barlassina." },
+  { question: "Cosa devo portare alla prima lezione di pugilato?", answer: "Per la prima lezione bastano abbigliamento sportivo comodo e scarpe da ginnastica. Guantoni e fasce possono essere forniti dalla palestra per la prova. Abbiamo spogliatoi e docce a disposizione." },
+  { question: "Quante volte a settimana è consigliato allenarsi?", answer: "Per risultati costanti consigliamo 2-3 allenamenti a settimana. Il coach ti aiuterà a trovare la frequenza giusta in base ai tuoi obiettivi e alla tua disponibilità." },
+];
+---
+
+<BaseLayout
+  title="Corso di Pugilato a Barlassina | Pugilistica Brianza"
+  description="Scopri il corso di pugilato a Barlassina: per chi è adatto, come si svolge, benefici, prova gratuita e contatti di Pugilistica Brianza."
+>
+  <!-- 1. HERO -->
+  <Hero
+    topline="Corso di pugilato — Pugilistica Brianza"
+    subtitle="Allenati con un percorso adatto a ogni livello, dai principianti agli agonisti, in una palestra con ambiente familiare, coach qualificati e prova gratuita."
+    watermark="BOX"
+    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+  >
+    Corso di <span class="text-brand">Pugilato</span><br />a Barlassina in Brianza
+  </Hero>
+
+  <!-- TRUST BAR -->
+  <div class="bg-surface border-b border-pb-border-default">
+    <div class="pb-container">
+      <TrustBar items={trustItems} />
+    </div>
+  </div>
+
+  <!-- 2. CHE COS'È IL PUGILATO -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Il corso">
+        Che cos'è il <span class="text-brand">Pugilato?</span>
+      </SectionHeading>
+      <DefinitionGrid
+        introText="Il pugilato è uno sport di combattimento che allena corpo e mente attraverso tecnica, coordinazione e preparazione atletica. A Pugilistica Brianza lo insegniamo in modo strutturato, adatto a ogni livello: da chi vuole scoprirlo per la prima volta a chi punta al ring."
+        items={definitionItems}
+      />
+    </div>
+  </section>
+
+  <!-- 3. PER CHI È ADATTO -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Per chi"
+        description="Il corso è pensato per accogliere profili diversi, con un approccio che si adatta al livello e all'obiettivo di ciascuno."
+      >
+        Per chi è adatto il corso di <span class="text-brand">Pugilato?</span>
+      </SectionHeading>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {targets.map((t) => (
+          <TargetCard icon={t.icon} title={t.title} description={t.description} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. BENEFICI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Benefici"
+        description="Il pugilato è uno degli allenamenti più completi. Ecco cosa sviluppi con la pratica costante."
+      >
+        I benefici del <span class="text-brand">Pugilato</span>
+      </SectionHeading>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {benefits.map((b) => <BenefitItem text={b} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. COME SI SVOLGE UNA LEZIONE -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="La lezione"
+        description="Ogni lezione dura circa 60–90 minuti ed è strutturata in fasi progressive, adattate al livello del gruppo."
+      >
+        Come si svolge una lezione di <span class="text-brand">Pugilato?</span>
+      </SectionHeading>
+      <div class="flex flex-col" style="counter-reset: step;">
+        {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA INTERMEDIA -->
+  <div class="pb-section--alt">
+    <CtaBlock
+      description="La prova è gratuita e senza impegno. Vieni a Barlassina, allenati con noi e decidi con calma."
+      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+      ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    >
+      Vuoi provare una <span class="text-brand">lezione?</span>
+    </CtaBlock>
+  </div>
+
+  <!-- 6. PERCHÉ SCEGLIERE NOI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Perché noi"
+        description="Pugilistica Brianza non è una palestra generica. È un'ASD nata per il pugilato, con un'identità chiara e un approccio diretto."
+      >
+        Perché allenarti <span class="text-brand">con noi</span>
+      </SectionHeading>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {whyUs.map((w) => (
+          <WhyUsCard icon={w.icon} title={w.title} description={w.description} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. ORARI, PROVA E ISCRIZIONE -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Info pratiche">
+        Orari, prova e <span class="text-brand">iscrizione</span>
+      </SectionHeading>
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 items-start">
+        <div>
+          {infoRows.map((r) => <InfoRow icon={r.icon} text={r.text} />)}
+        </div>
+        <PricingCard
+          title="Abbonamento mensile"
+          price="€50"
+          note="Prezzo indicativo — contattaci per conferma"
+          features={[
+            "Accesso a tutte le lezioni di pugilato",
+            "Uso di ring, sacchi e attrezzatura",
+            "Spogliatoi, docce e parcheggio inclusi",
+            "Coach dedicato in ogni lezione",
+            "Prima lezione gratuita",
+          ]}
+          ctaLabel="Prenota la prova gratuita"
+          ctaHref="/prova-gratuita/"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. GALLERY -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Gallery">
+        Guarda <span class="text-brand">l'allenamento</span>
+      </SectionHeading>
+      <Gallery />
+    </div>
+  </section>
+
+  <!-- 9. FAQ -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="FAQ">
+        Domande frequenti sul <span class="text-brand">Pugilato</span>
+      </SectionHeading>
+      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+    </div>
+  </section>
+
+  <!-- 10. LOCAL -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Dove siamo">
+        Allenati a <span class="text-brand">Barlassina,</span> in Brianza
+      </SectionHeading>
+      <LocalSection
+        address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
+        addressLabel={siteInfo.name}
+        zones={zones}
+        details={localDetails}
+      />
+      <div class="mt-8">
+        <a href="/contatti/" class="pb-btn-text">Vai alla pagina Contatti →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. CTA FINALE -->
+  <div class="pb-section--alt">
+    <CtaBlock
+      description="Vieni a Barlassina e prova il corso di pugilato senza impegno. Coach qualificati, ambiente familiare e accesso semplice."
+      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+      ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    >
+      Prenota la tua <span class="text-brand">prova gratuita</span>
+    </CtaBlock>
+  </div>
+</BaseLayout>

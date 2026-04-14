@@ -1,0 +1,26 @@
+---
+interface Props {
+  topline?: string;
+  /** Usa Fragment per iniettare HTML (es. <span class="text-brand">accento</span>) */
+  description?: string;
+}
+
+const { topline, description } = Astro.props;
+---
+
+<div class="pb-section-heading">
+  {topline && (
+    <div class="pb-topline">
+      <span class="pb-topline__bar"></span>
+      <span class="pb-topline__text">{topline}</span>
+    </div>
+  )}
+  <h2 class="text-display-md mb-4">
+    <slot />
+  </h2>
+  {description && (
+    <p class="text-lg text-pb-text-tertiary max-w-[560px] leading-normal">
+      {description}
+    </p>
+  )}
+</div>

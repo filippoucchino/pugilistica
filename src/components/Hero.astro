@@ -1,0 +1,54 @@
+---
+interface Props {
+  topline?: string;
+  subtitle?: string;
+  /** Testo del watermark di sfondo (es. "PB") */
+  watermark?: string;
+  ctaPrimary?: { label: string; href: string };
+  ctaSecondary?: { label: string; href: string };
+}
+
+const { topline, subtitle, watermark = "PB", ctaPrimary, ctaSecondary } = Astro.props;
+---
+
+<section class="relative py-[140px_80px] overflow-hidden min-h-[90vh] flex items-center max-lg:pt-[100px] max-lg:min-h-auto max-md:pt-[100px] max-md:pb-12">
+  <!-- Glow -->
+  <div class="pb-hero-glow"></div>
+
+  <!-- Watermark -->
+  {watermark && <div class="pb-hero-watermark">{watermark}</div>}
+
+  <!-- Content -->
+  <div class="pb-container relative z-[2]">
+    {topline && (
+      <div class="pb-topline">
+        <span class="pb-topline__bar"></span>
+        <span class="pb-topline__text">{topline}</span>
+      </div>
+    )}
+
+    <h1 class="text-display-hero max-w-[800px] mb-7 max-md:text-[clamp(40px,10vw,60px)]">
+      <slot />
+    </h1>
+
+    {subtitle && (
+      <p class="text-[clamp(16px,2vw,19px)] leading-normal text-pb-text-tertiary max-w-hero-subtitle mb-10">
+        {subtitle}
+      </p>
+    )}
+
+    {(ctaPrimary || ctaSecondary) && (
+      <div class="flex gap-4 flex-wrap max-md:justify-start">
+        {ctaPrimary && (
+          <a href={ctaPrimary.href} class="pb-btn-primary">{ctaPrimary.label}</a>
+        )}
+        {ctaSecondary && (
+          <a href={ctaSecondary.href} class="pb-btn-secondary">{ctaSecondary.label}</a>
+        )}
+      </div>
+    )}
+  </div>
+
+  <!-- Bottom divider -->
+  <div class="pb-divider"></div>
+</section>

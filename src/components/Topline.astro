@@ -1,0 +1,12 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<div class="pb-topline">
+  <span class="pb-topline__bar"></span>
+  <span class="pb-topline__text">{text}</span>
+</div>

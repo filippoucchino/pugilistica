@@ -1,0 +1,122 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import DefinitionGrid from "../components/DefinitionGrid.astro";
+import BenefitItem from "../components/BenefitItem.astro";
+import CoachBlock from "../components/CoachBlock.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import LocalSection from "../components/LocalSection.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { trustItems, localDetails, zones, siteInfo } from "@/data/shared";
+
+const faqItems = [
+  { question: "Come funzionano le lezioni private di pugilato?", answer: "Le lezioni private sono sessioni individuali 1:1 con il coach. Lavori su tecnica, preparazione atletica o obiettivi specifici con un programma costruito su misura per te." },
+  { question: "Qual è la durata di una lezione privata?", answer: "Ogni sessione dura circa 60 minuti, interamente dedicati a te." },
+  { question: "Posso scegliere gli orari?", answer: "Sì, gli orari delle lezioni private sono flessibili e concordati direttamente con il coach." },
+  { question: "Le lezioni private sono adatte ai principianti?", answer: "Assolutamente. Sono ideali per chi vuole iniziare con un percorso individuale e imparare i fondamentali con calma." },
+  { question: "Quanto costano le lezioni private?", answer: "Il costo varia in base alla frequenza. Contattaci per un preventivo personalizzato." },
+];
+---
+
+<BaseLayout
+  title="Lezioni Private di Pugilato a Barlassina | Pugilistica Brianza"
+  description="Lezioni private di pugilato 1:1 a Barlassina con coach ex agonista. Percorso personalizzato, orari flessibili."
+>
+  <Hero
+    topline="Lezioni private — Pugilistica Brianza"
+    subtitle="Percorso personalizzato 1:1 con il coach. Tecnica, preparazione e obiettivi specifici, con orari flessibili e programma costruito su misura."
+    watermark="1:1"
+    ctaPrimary={{ label: "Richiedi informazioni", href: "/contatti/" }}
+    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+  >
+    Lezioni <span class="text-brand">private</span><br />di pugilato
+  </Hero>
+
+  <div class="bg-surface border-b border-pb-border-default">
+    <div class="pb-container"><TrustBar items={trustItems} /></div>
+  </div>
+
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Il percorso">
+        Cosa sono le lezioni <span class="text-brand">private?</span>
+      </SectionHeading>
+      <DefinitionGrid
+        introText="Le lezioni private di pugilato sono sessioni individuali 1:1 con il coach. Un percorso su misura per chi vuole lavorare su aspetti specifici della tecnica, della preparazione atletica o della crescita agonistica, con la massima attenzione e flessibilità."
+        items={[
+          { title: "Allenamento 1:1", description: "Tutta l'attenzione del coach è dedicata a te. Ogni sessione è costruita sui tuoi punti di forza e sulle aree da migliorare." },
+          { title: "Percorso personalizzato", description: "Obiettivi chiari, progressione misurabile. Il programma si adatta ai tuoi tempi e al tuo livello." },
+          { title: "Orari flessibili", description: "Gli orari vengono concordati direttamente con il coach, in base alla tua disponibilità." },
+          { title: "Preparazione mirata", description: "Tecnica avanzata, preparazione a gare, miglioramento specifico: lavoriamo su quello che serve davvero." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Benefici">
+        I vantaggi di un percorso <span class="text-brand">individuale</span>
+      </SectionHeading>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          "<strong>Attenzione totale:</strong> il coach si dedica esclusivamente a te per tutta la sessione",
+          "<strong>Progressione accelerata:</strong> impari più velocemente con feedback continuo",
+          "<strong>Flessibilità:</strong> orari e frequenza su misura, concordati con il coach",
+          "<strong>Obiettivi specifici:</strong> tecnica, preparazione agonistica o fitness puro",
+          "<strong>Adatto a tutti:</strong> principianti, avanzati, donne, ragazzi e agonisti",
+          "<strong>Privacy e comfort:</strong> ti alleni senza la pressione del gruppo, al tuo ritmo",
+        ].map((b) => <BenefitItem text={b} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Il coach">
+        Chi ti segue nel percorso <span class="text-brand">privato</span>
+      </SectionHeading>
+      <CoachBlock
+        name="Stefano Rizzo"
+        role="Fondatore e Head Coach"
+        bio="Ex pugile agonista con certificazione FIPE. Nelle lezioni private Stefano applica la sua esperienza diretta per costruire un percorso tecnico e atletico cucito sui tuoi obiettivi."
+        tags={["Ex pugile agonista", "Certificato FIPE", "Light-boxe", "Boxe dilettantistica"]}
+      />
+    </div>
+  </section>
+
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="FAQ">
+        Domande sulle lezioni <span class="text-brand">private</span>
+      </SectionHeading>
+      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+    </div>
+  </section>
+
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Dove siamo">
+        Allenati a <span class="text-brand">Barlassina</span>
+      </SectionHeading>
+      <LocalSection
+        address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
+        addressLabel={siteInfo.name}
+        zones={zones}
+        details={localDetails}
+      />
+    </div>
+  </section>
+
+  <div class="pb-section--alt">
+    <CtaBlock
+      description="Contattaci per concordare orari, frequenza e costi delle lezioni private."
+      ctaPrimary={{ label: "Richiedi informazioni", href: "/contatti/" }}
+      ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    >
+      Prenota una lezione <span class="text-brand">privata</span>
+    </CtaBlock>
+  </div>
+</BaseLayout>

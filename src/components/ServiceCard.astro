@@ -1,0 +1,50 @@
+---
+/**
+ * Card servizio — usata per i corsi nella home e come card generica.
+ */
+
+interface Props {
+  icon: string;     // SVG inner HTML
+  title: string;
+  description: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const { icon, title, description, ctaLabel = "Scopri il corso", ctaHref = "#" } = Astro.props;
+---
+
+<div
+  class="group bg-surface-card border border-pb-border-default rounded-md
+         p-card-pad-lg transition-all duration-base ease-default
+         flex flex-col gap-4 hover:bg-surface-card-hover hover:border-pb-border-medium"
+>
+  <!-- Icon -->
+  <div
+    class="w-11 h-11 border border-pb-border-accent rounded-md
+           flex items-center justify-center"
+  >
+    <svg
+      class="w-5 h-5 stroke-brand fill-none"
+      style="stroke-width: 1.5;"
+      viewBox="0 0 24 24"
+      set:html={icon}
+    />
+  </div>
+
+  <!-- Title -->
+  <h3 class="font-display text-display-sm text-pb-text-primary">{title}</h3>
+
+  <!-- Description -->
+  <p class="text-sm text-pb-text-tertiary leading-normal flex-grow">{description}</p>
+
+  <!-- CTA -->
+  <a
+    href={ctaHref}
+    class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand
+           tracking-wide no-underline transition-colors duration-base hover:text-brand-light"
+  >
+    {ctaLabel}
+    <span class="transition-transform duration-fast ease-default group-hover:translate-x-1">→</span>
+  </a>
+</div>

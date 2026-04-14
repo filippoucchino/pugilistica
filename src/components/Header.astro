@@ -1,0 +1,132 @@
+---
+/**
+ * Header / Navbar — fixed, glass-morph, con menu mobile hamburger.
+ * Usa le stesse classi del prototipo HTML mappate su Tailwind.
+ */
+import { navLinks } from "@/data/shared";
+
+const currentPath = Astro.url.pathname;
+---
+
+<!-- Desktop header -->
+<header
+  class="fixed top-0 left-0 right-0 z-header h-header-h bg-[rgba(10,10,10,0.85)]
+         backdrop-blur-header border-b border-pb-border-subtle
+         flex items-center px-8 transition-all duration-base ease-default
+         max-md:h-header-h-mobile max-md:px-5"
+>
+  <div class="max-w-container mx-auto w-full flex items-center justify-between">
+    <!-- Brand -->
+    <a
+      href="/"
+      class="font-display text-[26px] text-pb-text-primary tracking-tight whitespace-nowrap no-underline"
+    >
+      Pugilistica <span class="text-brand">Brianza</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-7">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            "font-body text-sm font-medium tracking-wide no-underline transition-colors duration-base ease-default",
+            currentPath === link.href
+              ? "text-pb-text-primary"
+              : "text-pb-text-tertiary hover:text-pb-text-primary",
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/prova-gratuita/"
+        class="py-2.5 px-[22px] bg-brand text-white font-body text-xs font-bold
+               tracking-wider uppercase no-underline transition-all duration-base
+               ease-default hover:bg-brand-dark"
+      >
+        Prova gratuita
+      </a>
+    </nav>
+
+    <!-- Mobile burger -->
+    <button
+      id="burger"
+      class="md:hidden flex flex-col gap-[5px] bg-transparent border-none cursor-pointer p-2"
+      aria-label="Apri menu"
+      aria-expanded="false"
+    >
+      <i class="block w-[22px] h-0.5 bg-pb-text-secondary transition-all duration-base ease-default"></i>
+      <i class="block w-[22px] h-0.5 bg-pb-text-secondary transition-all duration-base ease-default"></i>
+      <i class="block w-[22px] h-0.5 bg-pb-text-secondary transition-all duration-base ease-default"></i>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile nav overlay -->
+<nav
+  id="mobile-nav"
+  class="hidden fixed top-header-h-mobile left-0 right-0 bottom-0
+         bg-[rgba(10,10,10,0.97)] backdrop-blur-header z-overlay
+         flex-col px-5 py-8 overflow-y-auto"
+>
+  {navLinks.map((link) => (
+    <a
+      href={link.href}
+      class="font-body text-lg font-medium text-pb-text-tertiary no-underline
+             py-4 border-b border-pb-border-default transition-colors
+             duration-base ease-default hover:text-pb-text-primary"
+    >
+      {link.label}
+    </a>
+  ))}
+  <a
+    href="/prova-gratuita/"
+    class="mt-6 block text-center py-4 bg-brand text-white font-bold
+           tracking-wider uppercase text-sm no-underline"
+  >
+    Prova gratuita
+  </a>
+</nav>
+
+<script>
+  const burger = document.getElementById("burger");
+  const mobileNav = document.getElementById("mobile-nav");
+
+  burger?.addEventListener("click", () => {
+    const isOpen = mobileNav?.classList.contains("flex");
+
+    if (isOpen) {
+      mobileNav?.classList.remove("flex");
+      mobileNav?.classList.add("hidden");
+      burger.setAttribute("aria-expanded", "false");
+      // Reset burger lines
+      burger.querySelectorAll("i").forEach((line) => {
+        (line as HTMLElement).style.transform = "";
+        (line as HTMLElement).style.opacity = "";
+      });
+    } else {
+      mobileNav?.classList.remove("hidden");
+      mobileNav?.classList.add("flex");
+      burger.setAttribute("aria-expanded", "true");
+      // Animate burger to X
+      const lines = burger.querySelectorAll("i");
+      (lines[0] as HTMLElement).style.transform = "rotate(45deg) translate(5px, 5px)";
+      (lines[1] as HTMLElement).style.opacity = "0";
+      (lines[2] as HTMLElement).style.transform = "rotate(-45deg) translate(5px, -5px)";
+    }
+  });
+
+  // Chiudi menu mobile su click link
+  mobileNav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileNav.classList.remove("flex");
+      mobileNav.classList.add("hidden");
+      burger?.setAttribute("aria-expanded", "false");
+      burger?.querySelectorAll("i").forEach((line) => {
+        (line as HTMLElement).style.transform = "";
+        (line as HTMLElement).style.opacity = "";
+      });
+    });
+  });
+</script>

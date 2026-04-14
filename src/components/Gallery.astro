@@ -1,0 +1,48 @@
+---
+/**
+ * Gallery — griglia 3 colonne, prima immagine span 2 righe.
+ * Accetta immagini o mostra placeholder.
+ */
+
+interface GalleryImage {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  images?: GalleryImage[];
+  /** Numero di placeholder da mostrare se nessuna immagine */
+  placeholderCount?: number;
+}
+
+const { images, placeholderCount = 5 } = Astro.props;
+const items = images ?? Array.from({ length: placeholderCount }, () => null);
+---
+
+<div
+  class="grid grid-cols-3 grid-rows-[repeat(2,200px)] gap-3
+         max-md:grid-cols-2 max-md:grid-rows-[200px_160px_160px]
+         max-sm:grid-cols-1 max-sm:grid-rows-[repeat(5,160px)]
+         [&>*:first-child]:row-span-2
+         max-md:[&>*:first-child]:col-span-2 max-md:[&>*:first-child]:row-span-1
+         max-sm:[&>*:first-child]:col-span-1"
+>
+  {items.map((item, i) =>
+    item ? (
+      <img
+        src={item.src}
+        alt={item.alt}
+        class="w-full h-full object-cover rounded-md transition-all duration-base ease-default hover:brightness-110"
+        loading="lazy"
+      />
+    ) : (
+      <div
+        class="bg-neutral-800 rounded-md flex items-center justify-center
+               text-xs text-pb-text-faint tracking-wide uppercase font-semibold
+               transition-all duration-base ease-default hover:bg-neutral-700"
+      >
+        Foto {i + 1}
+      </div>
+    )
+  )}
+</div>

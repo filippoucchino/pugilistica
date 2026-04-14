@@ -1,0 +1,40 @@
+---
+/**
+ * Trust Bar — barra di credibilità con icone + label.
+ * Usata sotto l'hero della home e nelle pagine servizio.
+ */
+
+interface TrustItem {
+  icon: string; // SVG path(s) come stringa HTML
+  title: string;
+  subtitle: string;
+}
+
+interface Props {
+  items: TrustItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="flex gap-8 flex-wrap py-7 max-md:gap-5">
+  {items.map((item) => (
+    <div class="flex items-center gap-2.5">
+      <div
+        class="w-9 h-9 border border-pb-border-default rounded-md
+               flex items-center justify-center"
+      >
+        <svg
+          class="w-4 h-4 fill-none stroke-pb-text-muted"
+          style="stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+          viewBox="0 0 24 24"
+          set:html={item.icon}
+        />
+      </div>
+      <div class="text-xs text-pb-text-muted leading-snug">
+        <strong class="block text-pb-text-secondary font-semibold">{item.title}</strong>
+        {item.subtitle}
+      </div>
+    </div>
+  ))}
+</div>

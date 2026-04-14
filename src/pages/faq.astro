@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+
+const faqGeneral = [
+  { question: "Posso iniziare anche se sono principiante?", answer: "Assolutamente sì. La maggior parte dei nostri iscritti ha iniziato da zero. Il corso è strutturato per accogliere tutti i livelli, dai principianti assoluti a chi ha già esperienza." },
+  { question: "Il corso è adatto anche alle donne?", answer: "Sì, il corso è misto e pensato per essere inclusivo. Alleniamo donne di ogni età e livello, in un ambiente rispettoso e motivante." },
+  { question: "Accettate ragazzi dai 12 anni?", answer: "Sì, l'età minima per partecipare ai nostri corsi è 12 anni. L'allenamento è adattato all'età e al livello del ragazzo." },
+  { question: "Posso prenotare una prova gratuita?", answer: "Certo. La prova gratuita è senza impegno: vieni, allenati con noi e decidi con calma. Puoi prenotarla chiamandoci o passando direttamente in palestra." },
+  { question: "Fate anche pugilato agonistico?", answer: "Sì, siamo affiliati FPI e gareggiamo nella light-boxe e nella boxe dilettantistica. Se vuoi crescere in ambito agonistico, possiamo costruire un percorso su misura." },
+  { question: "Avete lezioni private?", answer: "Sì, offriamo lezioni private di pugilato 1:1 con il coach. Puoi lavorare su tecnica, preparazione atletica o obiettivi specifici con orari flessibili." },
+];
+
+const faqPractical = [
+  { question: "Cosa devo portare alla prima lezione?", answer: "Abbigliamento sportivo comodo e scarpe da ginnastica. Per la prova, guantoni e fasce vengono forniti dalla palestra." },
+  { question: "Quante volte a settimana è consigliato allenarsi?", answer: "Per risultati costanti consigliamo 2-3 allenamenti a settimana. Il coach ti aiuterà a trovare la frequenza giusta in base ai tuoi obiettivi." },
+  { question: "Quanto costa l'iscrizione?", answer: "L'abbonamento mensile è indicativamente di €50/mese. Contattaci per conferma e per conoscere le opzioni disponibili." },
+  { question: "Avete parcheggio?", answer: "Sì, parcheggio gratuito disponibile nelle immediate vicinanze della palestra, in Via Giovanni Segantini 29 a Barlassina." },
+  { question: "Ci sono spogliatoi e docce?", answer: "Sì, la palestra è dotata di spogliatoi e docce a disposizione di tutti gli iscritti." },
+  { question: "Quali sono gli orari di apertura?", answer: "La palestra è aperta dal lunedì al sabato, dalle 09:00 alle 22:00 (sabato fino alle 18:00). Domenica chiuso." },
+];
+
+const faqCourses = [
+  { question: "Qual è la differenza tra Pugilato, Hyrox e PB Hiit?", answer: "Il pugilato è un percorso tecnico completo. Hyrox è un allenamento ibrido per resistenza e forza. PB Hiit sono circuiti a intervalli per fitness e tono. Puoi provare tutti gratuitamente." },
+  { question: "Posso frequentare più corsi?", answer: "Sì, l'abbonamento ti dà accesso ai corsi disponibili. Puoi combinare pugilato con Hyrox o PB Hiit in base ai tuoi obiettivi." },
+  { question: "Come funzionano le lezioni private?", answer: "Le lezioni private sono sessioni 1:1 con il coach, con orari flessibili e programma personalizzato. Contattaci per disponibilità e costi." },
+];
+---
+
+<BaseLayout
+  title="FAQ — Domande Frequenti | Pugilistica Brianza"
+  description="Risposte alle domande più frequenti su Pugilistica Brianza: corsi, prova gratuita, orari, costi e tutto quello che serve per iniziare."
+>
+  <!-- HERO -->
+  <Hero
+    topline="FAQ — Pugilistica Brianza"
+    subtitle="Tutto quello che serve sapere prima di venire in palestra. Se non trovi la risposta che cerchi, chiamaci o scrivici."
+  >
+    Domande <span class="text-brand">frequenti</span>
+  </Hero>
+
+  <!-- FAQ GENERALI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Domande generali">
+        Sulla <span class="text-brand">palestra</span> e i corsi
+      </SectionHeading>
+      <FaqAccordion items={faqGeneral} defaultOpen={0} withSchema />
+    </div>
+  </section>
+
+  <!-- FAQ PRATICHE -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Info pratiche">
+        Orari, costi e <span class="text-brand">logistica</span>
+      </SectionHeading>
+      <FaqAccordion items={faqPractical} />
+    </div>
+  </section>
+
+  <!-- FAQ CORSI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="I corsi">
+        Pugilato, Hyrox e <span class="text-brand">PB Hiit</span>
+      </SectionHeading>
+      <FaqAccordion items={faqCourses} />
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="pb-section--alt">
+    <CtaBlock
+      description="Non hai trovato la risposta che cercavi? Chiamaci, scrivici o vieni direttamente in palestra."
+      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+      ctaSecondary={{ label: "Contattaci", href: "/contatti/" }}
+    >
+      Hai altre <span class="text-brand">domande?</span>
+    </CtaBlock>
+  </div>
+</BaseLayout>

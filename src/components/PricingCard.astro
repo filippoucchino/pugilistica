@@ -1,0 +1,49 @@
+---
+/**
+ * Pricing Card — box abbonamento con prezzo, lista inclusi e CTA.
+ */
+
+interface Props {
+  title: string;
+  price: string;
+  period?: string;
+  note?: string;
+  features: string[];
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+const { title, price, period = "/mese", note, features, ctaLabel, ctaHref } = Astro.props;
+---
+
+<div class="p-card-pad-lg bg-surface-card border border-pb-border-default rounded-md">
+  <h3 class="font-display text-display-sm text-pb-text-primary mb-4">{title}</h3>
+
+  <div class="mb-1">
+    <span class="font-display text-[clamp(40px,5vw,56px)] text-pb-text-primary leading-none">
+      {price}
+    </span>
+    <span class="text-lg text-pb-text-muted">{period}</span>
+  </div>
+
+  {note && (
+    <p class="text-xs text-pb-text-muted mb-6">{note}</p>
+  )}
+
+  <ul class="flex flex-col gap-3 mb-8">
+    {features.map((f) => (
+      <li class="flex items-start gap-2.5 text-sm text-pb-text-tertiary leading-snug">
+        <svg
+          class="w-4 h-4 stroke-brand fill-none flex-shrink-0 mt-0.5"
+          style="stroke-width: 2;"
+          viewBox="0 0 24 24"
+        >
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+        {f}
+      </li>
+    ))}
+  </ul>
+
+  <a href={ctaHref} class="pb-btn-primary w-full text-center block">{ctaLabel}</a>
+</div>

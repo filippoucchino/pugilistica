@@ -1,0 +1,29 @@
+---
+/**
+ * Benefit item — riga con check icon + testo.
+ * Usato in lista benefici/vantaggi.
+ */
+
+interface Props {
+  /** Supporta HTML: usa <strong> per evidenziare parte del testo */
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<div class="flex items-start gap-3.5 py-4">
+  <div
+    class="w-7 h-7 border border-pb-border-accent rounded-sm
+           flex items-center justify-center flex-shrink-0 mt-0.5"
+  >
+    <svg
+      class="w-3.5 h-3.5 stroke-brand fill-none"
+      style="stroke-width: 2;"
+      viewBox="0 0 24 24"
+    >
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+  </div>
+  <p class="text-base text-pb-text-secondary leading-snug [&>strong]:text-pb-text-primary [&>strong]:font-semibold" set:html={text} />
+</div>

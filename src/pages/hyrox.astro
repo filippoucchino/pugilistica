@@ -1,0 +1,104 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import DefinitionGrid from "../components/DefinitionGrid.astro";
+import BenefitItem from "../components/BenefitItem.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import LocalSection from "../components/LocalSection.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { trustItems, localDetails, zones, siteInfo } from "@/data/shared";
+
+const faqItems = [
+  { question: "Cos'è Hyrox?", answer: "Hyrox è una competizione fitness internazionale che combina corsa con esercizi funzionali. Il nostro corso ti prepara con allenamenti specifici per resistenza, forza e capacità ibrida." },
+  { question: "Serve esperienza per iniziare Hyrox?", answer: "No, il corso è aperto a tutti i livelli. Lavoriamo su progressioni che ti portano gradualmente a gestire l'intensità e la complessità degli esercizi." },
+  { question: "Posso provare Hyrox gratuitamente?", answer: "Sì, la prima lezione è sempre gratuita e senza impegno. Vieni e prova con noi." },
+  { question: "Quante volte a settimana dovrei allenarmi?", answer: "Per risultati costanti, consigliamo 2-3 sessioni a settimana. Il coach ti aiuterà a costruire il piano giusto." },
+];
+---
+
+<BaseLayout
+  title="Corso Hyrox a Barlassina | Pugilistica Brianza"
+  description="Allenamento Hyrox a Barlassina in Brianza. Preparazione per resistenza, forza e performance ibrida. Prova gratuita, coach qualificati."
+>
+  <Hero
+    topline="Hyrox — Pugilistica Brianza"
+    subtitle="Allenamento performance-oriented per resistenza, forza e preparazione ibrida. Per chi cerca una sfida strutturata e vuole superare i propri limiti."
+    watermark="HRX"
+    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+  >
+    Corso <span class="text-brand">Hyrox</span><br />a Barlassina in Brianza
+  </Hero>
+
+  <div class="bg-surface border-b border-pb-border-default">
+    <div class="pb-container"><TrustBar items={trustItems} /></div>
+  </div>
+
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Il corso">
+        Che cos'è <span class="text-brand">Hyrox?</span>
+      </SectionHeading>
+      <DefinitionGrid
+        introText="Hyrox è una competizione fitness che combina running con functional training. A Pugilistica Brianza ti alleniamo con un programma specifico: corsa, sled push/pull, farmers carry, burpees, rowing e molto altro, in un percorso strutturato per costruire resistenza e forza."
+        items={[
+          { title: "Resistenza", description: "Allenamenti che combinano corsa e stazioni di lavoro per costruire una base aerobica e anaerobica solida." },
+          { title: "Forza funzionale", description: "Esercizi con sled, kettlebell, sandbag e bilanciere per sviluppare forza applicabile e trasferibile." },
+          { title: "Capacità ibrida", description: "La chiave di Hyrox: saper gestire fatica, transizioni e intensità senza crollare." },
+          { title: "Mentalità", description: "Ogni allenamento è progettato per spingerti oltre la comfort zone, con progressione e supporto." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Benefici">
+        I benefici dell'allenamento <span class="text-brand">Hyrox</span>
+      </SectionHeading>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          "<strong>Resistenza cardiovascolare</strong> e capacità aerobica di alto livello",
+          "<strong>Forza funzionale</strong> applicabile nella vita quotidiana e nello sport",
+          "<strong>Composizione corporea</strong> migliorata: più muscolo, meno grasso",
+          "<strong>Resilienza mentale:</strong> impari a gestire fatica e pressione",
+          "<strong>Community:</strong> ti alleni con un gruppo motivato e competitivo",
+          "<strong>Preparazione</strong> specifica per gare Hyrox o altri eventi fitness",
+        ].map((b) => <BenefitItem text={b} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="FAQ">
+        Domande frequenti su <span class="text-brand">Hyrox</span>
+      </SectionHeading>
+      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+    </div>
+  </section>
+
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Dove siamo">
+        Allenati a <span class="text-brand">Barlassina</span>
+      </SectionHeading>
+      <LocalSection
+        address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
+        addressLabel={siteInfo.name}
+        zones={zones}
+        details={localDetails}
+      />
+    </div>
+  </section>
+
+  <CtaBlock
+    description="Vieni a Barlassina e prova Hyrox senza impegno."
+    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+  >
+    Prenota la tua <span class="text-brand">prova gratuita</span>
+  </CtaBlock>
+</BaseLayout>

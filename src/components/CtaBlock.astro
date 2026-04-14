@@ -1,0 +1,52 @@
+---
+/**
+ * CTA Block — sezione centrata con titolo, descrizione e bottoni.
+ * Usata a fine pagina per spingere la conversione.
+ */
+
+interface Props {
+  description?: string;
+  /** Testo aggiuntivo sotto la desc (più piccolo, muted) */
+  subdesc?: string;
+  ctaPrimary?: { label: string; href: string };
+  ctaSecondary?: { label: string; href: string };
+}
+
+const { description, subdesc, ctaPrimary, ctaSecondary } = Astro.props;
+---
+
+<section class="text-center py-section-y-lg relative">
+  <!-- Top divider -->
+  <div class="pb-divider !top-0 !bottom-auto"></div>
+
+  <div class="pb-container">
+    <h2 class="text-display-lg mb-4">
+      <slot />
+    </h2>
+
+    {description && (
+      <p class="text-lg text-pb-text-tertiary max-w-[480px] mx-auto mb-4 leading-normal">
+        {description}
+      </p>
+    )}
+
+    {subdesc && (
+      <p class="text-sm text-pb-text-muted max-w-[480px] mx-auto mb-9 leading-relaxed">
+        {subdesc}
+      </p>
+    )}
+
+    {!subdesc && !description && <div class="mb-9"></div>}
+
+    {(ctaPrimary || ctaSecondary) && (
+      <div class="flex gap-4 justify-center flex-wrap max-md:flex-col max-md:items-center">
+        {ctaPrimary && (
+          <a href={ctaPrimary.href} class="pb-btn-primary">{ctaPrimary.label}</a>
+        )}
+        {ctaSecondary && (
+          <a href={ctaSecondary.href} class="pb-btn-secondary">{ctaSecondary.label}</a>
+        )}
+      </div>
+    )}
+  </div>
+</section>

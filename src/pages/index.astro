@@ -1,0 +1,366 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import SegmentCard from "../components/SegmentCard.astro";
+import BenefitItem from "../components/BenefitItem.astro";
+import CoachBlock from "../components/CoachBlock.astro";
+import Gallery from "../components/Gallery.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import LocalSection from "../components/LocalSection.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { trustItems, localDetails, zones, siteInfo } from "@/data/shared";
+
+const services = [
+  {
+    icon: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
+    title: "Pugilato",
+    description:
+      "Per chi vuole imparare tecnica, mettersi in forma o crescere anche in ottica agonistica. Dai principianti ai dilettanti, passando per donne e ragazzi dai 12 anni.",
+    ctaLabel: "Scopri il corso",
+    ctaHref: "/pugilato/",
+  },
+  {
+    icon: '<path d="M18 20V10M12 20V4M6 20v-6"/>',
+    title: "Hyrox",
+    description:
+      "Allenamento performance-oriented per resistenza, forza e preparazione ibrida. Per chi cerca una sfida strutturata e vuole superare i propri limiti.",
+    ctaLabel: "Scopri Hyrox",
+    ctaHref: "/hyrox/",
+  },
+  {
+    icon: '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
+    title: "PB Hiit",
+    description:
+      "Allenamento intenso e dinamico per fitness, tono e condizione. Circuiti a intervalli pensati per chi vuole risultati visibili in poco tempo.",
+    ctaLabel: "Scopri PB Hiit",
+    ctaHref: "/pb-hiit/",
+  },
+  {
+    icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>',
+    title: "Lezioni private",
+    description:
+      "Percorso personalizzato 1:1 per tecnica, preparazione e obiettivi specifici. Orari flessibili e programma costruito su misura.",
+    ctaLabel: "Richiedi informazioni",
+    ctaHref: "/lezioni-private-pugilato/",
+  },
+];
+
+const segments = [
+  {
+    title: "Principianti",
+    description:
+      "Parti da zero con un percorso guidato, in un ambiente accogliente e senza pressione. La maggior parte dei nostri iscritti ha iniziato qui.",
+    linkLabel: "Scopri il corso →",
+    linkHref: "/pugilato/",
+  },
+  {
+    title: "Donne",
+    description:
+      "Corso misto in un contesto inclusivo, tecnico e motivante. Il pugilato allena corpo e mente senza distinzioni.",
+    linkLabel: "Scopri il corso →",
+    linkHref: "/pugilato/",
+  },
+  {
+    title: "Ragazzi dai 12 anni",
+    description:
+      "Disciplina, coordinazione e fiducia in un ambiente sano e formativo. L'allenamento è adattato all'età e al livello.",
+    linkLabel: "Scopri il corso →",
+    linkHref: "/pugilato/",
+  },
+  {
+    title: "Amatori e agonisti",
+    description:
+      "Preparazione tecnica e atletica per light-boxe e boxe dilettantistica. Percorsi strutturati per chi vuole competere.",
+    linkLabel: "Scopri il corso →",
+    linkHref: "/pugilato/",
+  },
+];
+
+const benefits = [
+  "<strong>Ambiente familiare e divertente,</strong> ma competitivo allo stesso tempo",
+  "<strong>Coach con esperienza agonistica reale</strong> e certificazione FIPE",
+  "<strong>Attenzione sia a chi inizia</strong> sia a chi vuole crescere in ottica dilettantistica",
+  "<strong>Struttura attrezzata</strong> con ring, sacchi e area functional training",
+  "<strong>Affiliazioni FPI e FIPE,</strong> garanzia di serietà e standard tecnici",
+  "<strong>Posizione comoda</strong> per Barlassina, Seveso, Lissone, Seregno e tutta la Brianza",
+];
+
+const reviews = [
+  {
+    text: "Palestra seria ma con un clima fantastico. Stefano è un grande professionista e ti segue passo dopo passo, qualunque sia il tuo livello.",
+    author: "Marco R.",
+    source: "Google Reviews",
+  },
+  {
+    text: "Ho iniziato senza sapere nulla e ora mi alleno 3 volte a settimana. L'ambiente è inclusivo e il pugilato è diventato la mia valvola di sfogo migliore.",
+    author: "Giulia P.",
+    source: "Google Reviews",
+  },
+  {
+    text: "La migliore palestra di pugilato in Brianza. Serio ma divertente, competente ma accogliente. Consigliatissima.",
+    author: "Laura T.",
+    source: "Google Reviews",
+  },
+  {
+    text: "Mio figlio di 14 anni adora venire qui. Stefano è bravissimo con i ragazzi, e l'ambiente è sicuro e stimolante.",
+    author: "Alessia M.",
+    source: "Google Reviews",
+  },
+];
+
+const faqItems = [
+  {
+    question: "Posso iniziare anche se sono principiante?",
+    answer:
+      "Assolutamente sì. La maggior parte dei nostri iscritti ha iniziato da zero. Il corso è strutturato per accogliere tutti i livelli, dai principianti assoluti a chi ha già esperienza.",
+  },
+  {
+    question: "Il corso è adatto anche alle donne?",
+    answer:
+      "Sì, il corso è misto e pensato per essere inclusivo. Alleniamo donne di ogni età e livello, in un ambiente rispettoso e motivante.",
+  },
+  {
+    question: "Accettate ragazzi dai 12 anni?",
+    answer:
+      "Sì, l'età minima per partecipare ai nostri corsi è 12 anni. L'allenamento è adattato all'età e al livello del ragazzo.",
+  },
+  {
+    question: "Fate anche pugilato agonistico?",
+    answer:
+      "Sì, siamo affiliati FPI e gareggiamo nella light-boxe e nella boxe dilettantistica. Se vuoi crescere in ambito agonistico, possiamo costruire un percorso su misura.",
+  },
+  {
+    question: "Posso prenotare una prova gratuita?",
+    answer:
+      "Certo. La prova gratuita è senza impegno: vieni, allenati con noi e decidi con calma. Puoi prenotarla chiamandoci o passando direttamente in palestra.",
+  },
+  {
+    question: "Avete lezioni private?",
+    answer:
+      "Sì, offriamo lezioni private di pugilato 1:1 con il coach. Puoi lavorare su tecnica, preparazione atletica o obiettivi specifici con orari flessibili.",
+  },
+];
+
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  name: siteInfo.name,
+  description:
+    "Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato, Hyrox e PB Hiit per principianti, amatori e agonisti.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: siteInfo.address,
+    addressLocality: siteInfo.city,
+    postalCode: siteInfo.cap,
+    addressRegion: siteInfo.province,
+    addressCountry: "IT",
+  },
+  url: siteInfo.url,
+};
+---
+
+<BaseLayout
+  title="Palestra di Pugilato a Barlassina | Pugilistica Brianza"
+  description="Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato, Hyrox e PB Hiit per principianti, amatori e agonisti. Prova gratuita, ambiente familiare e coach qualificati."
+  schema={pageSchema}
+>
+  <!-- 1. HERO -->
+  <Hero
+    topline="ASD Pugilistica Brianza — Barlassina"
+    subtitle="Corsi di pugilato, Hyrox e PB Hiit per principianti, amatori e agonisti. Prova gratuita, ambiente familiare e coach qualificati."
+    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+  >
+    Palestra di <span class="text-brand">pugilato</span><br />a Barlassina in Brianza
+  </Hero>
+
+  <!-- 2. TRUST BAR -->
+  <div class="bg-surface border-b border-pb-border-default">
+    <div class="pb-container">
+      <TrustBar items={trustItems} />
+    </div>
+  </div>
+
+  <!-- 3. SERVIZI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="I nostri percorsi"
+        description="Quattro percorsi per obiettivi diversi, con lo stesso approccio: tecnica, ambiente e risultati concreti."
+      >
+        Corsi di pugilato, <span class="text-brand">Hyrox</span> e PB Hiit
+      </SectionHeading>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {services.map((s) => (
+          <ServiceCard
+            icon={s.icon}
+            title={s.title}
+            description={s.description}
+            ctaLabel={s.ctaLabel}
+            ctaHref={s.ctaHref}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PER CHI È -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Per chi è"
+        description="Non importa da dove parti. Importa dove vuoi arrivare."
+      >
+        Un percorso adatto a <span class="text-brand">ogni livello</span>
+      </SectionHeading>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {segments.map((s) => (
+          <SegmentCard
+            title={s.title}
+            description={s.description}
+            linkLabel={s.linkLabel}
+            linkHref={s.linkHref}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. PERCHÉ SCEGLIERCI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Perché noi"
+        description="Tecnica, ambiente e mentalità. Non una palestra qualunque, ma una realtà di pugilato con credibilità sportiva e accessibilità locale."
+      >
+        Perché scegliere <span class="text-brand">Pugilistica Brianza</span>
+      </SectionHeading>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {benefits.map((b) => (
+          <BenefitItem text={b} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. COACH -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Il coach">
+        Una guida tecnica con <span class="text-brand">esperienza reale</span>
+      </SectionHeading>
+
+      <CoachBlock
+        name="Stefano Rizzo"
+        role="Fondatore e coach principale"
+        bio="Ex pugile agonista, oggi proprietario della palestra e guida tecnica di tutti i percorsi. Certificato FIPE, con esperienza nella light-boxe e nella boxe dilettantistica. Segue personalmente ogni iscritto, dai principianti a chi prepara le gare."
+        tags={[
+          "Ex pugile agonista",
+          "Certificato FIPE",
+          "Light-boxe",
+          "Boxe dilettantistica",
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- 7. GALLERY -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="La palestra">
+        Dove ti <span class="text-brand">alleni</span>
+      </SectionHeading>
+
+      <Gallery />
+    </div>
+  </section>
+
+  <!-- 8. PROVA GRATUITA CTA -->
+  <div class="pb-section--alt">
+    <CtaBlock
+      description="Allenati a Barlassina in una palestra di pugilato vera, con percorsi chiari e ambiente accogliente."
+      subdesc="Nessun impegno. Vieni, prova e decidi."
+      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+      ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    >
+      Prova <span class="text-brand">gratuita</span>
+    </CtaBlock>
+  </div>
+
+  <!-- 9. RECENSIONI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Recensioni"
+        description="Chi ci sceglie, resta."
+      >
+        Cosa dicono di <span class="text-brand">noi</span>
+      </SectionHeading>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {reviews.map((r) => (
+          <ReviewCard
+            text={r.text}
+            author={r.author}
+            source={r.source}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. LOCAL -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Dove siamo">
+        Ci trovi a <span class="text-brand">Barlassina</span>
+      </SectionHeading>
+
+      <LocalSection
+        address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
+        addressLabel={siteInfo.name}
+        zones={zones}
+        details={localDetails}
+      />
+
+      <div class="mt-8">
+        <a href="/contatti/" class="pb-btn-text">
+          Vai alla pagina Contatti →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. FAQ -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="FAQ">
+        Domande <span class="text-brand">frequenti</span>
+      </SectionHeading>
+
+      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+
+      <div class="mt-8">
+        <a href="/faq/" class="pb-btn-text">Tutte le domande frequenti →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. CTA FINALE -->
+  <div class="pb-section--alt">
+    <CtaBlock
+      description="Allenati a Barlassina in una palestra di pugilato vera, con percorsi chiari, ambiente accogliente e accesso semplice tramite prova gratuita."
+      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+      ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    >
+      Inizia ad allenarti<br />con <span class="text-brand">noi</span>
+    </CtaBlock>
+  </div>
+</BaseLayout>

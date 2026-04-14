@@ -1,0 +1,104 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import DefinitionGrid from "../components/DefinitionGrid.astro";
+import BenefitItem from "../components/BenefitItem.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import LocalSection from "../components/LocalSection.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { trustItems, localDetails, zones, siteInfo } from "@/data/shared";
+
+const faqItems = [
+  { question: "Cos'è PB Hiit?", answer: "PB Hiit è il nostro programma di allenamento a circuiti ad alta intensità: intervalli di lavoro e recupero, esercizi dinamici e variati. Pensato per chi vuole migliorare tono, resistenza e condizione fisica in modo rapido e strutturato." },
+  { question: "Serve esperienza per PB Hiit?", answer: "No, il corso è adatto a tutti. Gli esercizi vengono adattati dal coach in base al livello di ciascun partecipante." },
+  { question: "Posso provare PB Hiit gratuitamente?", answer: "Sì, la prima lezione è gratuita e senza impegno." },
+  { question: "Quanto dura una lezione di PB Hiit?", answer: "Circa 45-60 minuti: riscaldamento, circuiti a intervalli e defaticamento finale." },
+];
+---
+
+<BaseLayout
+  title="PB Hiit a Barlassina | Pugilistica Brianza"
+  description="Allenamento PB Hiit a Barlassina in Brianza. Circuiti ad alta intensità per fitness, tono e condizione. Prova gratuita."
+>
+  <Hero
+    topline="PB Hiit — Pugilistica Brianza"
+    subtitle="Allenamento intenso e dinamico per fitness, tono e condizione. Circuiti a intervalli pensati per chi vuole risultati visibili in poco tempo."
+    watermark="HIIT"
+    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+  >
+    Corso <span class="text-brand">PB Hiit</span><br />a Barlassina in Brianza
+  </Hero>
+
+  <div class="bg-surface border-b border-pb-border-default">
+    <div class="pb-container"><TrustBar items={trustItems} /></div>
+  </div>
+
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Il corso">
+        Che cos'è <span class="text-brand">PB Hiit?</span>
+      </SectionHeading>
+      <DefinitionGrid
+        introText="PB Hiit è il nostro format proprietario di allenamento ad alta intensità a intervalli. Circuiti veloci, esercizi dinamici e varietà: ogni sessione è diversa dalla precedente, progettata per spingerti al massimo in poco tempo."
+        items={[
+          { title: "Alta intensità", description: "Intervalli di lavoro e recupero calibrati per massimizzare la performance e il consumo calorico." },
+          { title: "Varietà", description: "Ogni lezione è diversa: bodyweight, kettlebell, corda, box jump, battle rope e molto altro." },
+          { title: "Tono e condizione", description: "Migliori la composizione corporea, la resistenza e il tono muscolare in modo efficiente." },
+          { title: "Per tutti", description: "Il coach adatta intensità e carico al tuo livello. Principianti e avanzati si allenano insieme." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Benefici">
+        I benefici di <span class="text-brand">PB Hiit</span>
+      </SectionHeading>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          "<strong>Brucia calorie</strong> in modo efficiente anche dopo l'allenamento (effetto EPOC)",
+          "<strong>Migliora il tono</strong> muscolare senza sessioni infinite in palestra",
+          "<strong>Aumenta la resistenza</strong> cardiovascolare e la capacità di recupero",
+          "<strong>Varietà continua:</strong> nessuna sessione è uguale alla precedente",
+          "<strong>Adatto a tutti:</strong> il coach adatta gli esercizi al tuo livello",
+          "<strong>Efficienza:</strong> risultati concreti in 45-60 minuti di allenamento",
+        ].map((b) => <BenefitItem text={b} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="FAQ">
+        Domande frequenti su <span class="text-brand">PB Hiit</span>
+      </SectionHeading>
+      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+    </div>
+  </section>
+
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Dove siamo">
+        Allenati a <span class="text-brand">Barlassina</span>
+      </SectionHeading>
+      <LocalSection
+        address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
+        addressLabel={siteInfo.name}
+        zones={zones}
+        details={localDetails}
+      />
+    </div>
+  </section>
+
+  <CtaBlock
+    description="Vieni a Barlassina e prova PB Hiit senza impegno."
+    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+  >
+    Prenota la tua <span class="text-brand">prova gratuita</span>
+  </CtaBlock>
+</BaseLayout>

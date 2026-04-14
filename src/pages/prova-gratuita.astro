@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import BenefitItem from "../components/BenefitItem.astro";
+import LessonStep from "../components/LessonStep.astro";
+import FormField from "../components/FormField.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import LocalSection from "../components/LocalSection.astro";
+import { localDetails, zones, siteInfo } from "@/data/shared";
+
+const steps = [
+  { title: "Scegli il corso", description: "Pugilato, Hyrox, PB Hiit o lezione privata. Se non sai quale scegliere, ti aiutiamo noi." },
+  { title: "Contattaci", description: "Chiamaci, scrivici o compila il modulo qui sotto. Ti confermiamo giorno e orario della prova." },
+  { title: "Vieni in palestra", description: "Porta solo abbigliamento sportivo e scarpe da ginnastica. Guantoni e fasce li forniamo noi per la prova." },
+  { title: "Allenati con noi", description: "Partecipi a una lezione vera, con il gruppo e con il coach. Nessun obbligo, nessuna pressione." },
+  { title: "Decidi con calma", description: "Dopo la prova scegli tu se iscriverti. Zero vincoli, zero impegni anticipati." },
+];
+
+const faqItems = [
+  { question: "La prova gratuita è davvero senza impegno?", answer: "Sì, completamente. Non chiediamo pagamenti, dati della carta o impegni di alcun tipo. Vieni, prova e decidi con calma." },
+  { question: "Cosa devo portare alla prova gratuita?", answer: "Abbigliamento sportivo e scarpe da ginnastica. Guantoni e fasce vengono forniti dalla palestra per la prova." },
+  { question: "Posso provare più di un corso?", answer: "Sì, puoi provare gratuitamente i diversi corsi (pugilato, Hyrox, PB Hiit) per scegliere quello più adatto a te." },
+  { question: "La prova gratuita è adatta ai principianti?", answer: "Assolutamente. La maggior parte di chi prova non ha mai fatto pugilato. Il coach adatta l'allenamento al tuo livello." },
+];
+---
+
+<BaseLayout
+  title="Prova Gratuita — Pugilistica Brianza | Barlassina"
+  description="Prenota la tua prova gratuita a Pugilistica Brianza, palestra di pugilato a Barlassina. Senza impegno, vieni e allenati con noi."
+>
+  <!-- HERO -->
+  <Hero
+    topline="Prova gratuita — Pugilistica Brianza"
+    subtitle="Vieni a Barlassina, allenati con noi e decidi con calma. Nessun impegno, nessun vincolo. La prima lezione è sempre gratuita."
+    ctaPrimary={{ label: "Vai al modulo", href: "#prenota" }}
+    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+  >
+    Prova <span class="text-brand">gratuita</span><br />senza impegno
+  </Hero>
+
+  <!-- COME FUNZIONA -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Come funziona"
+        description="Dalla prenotazione all'allenamento in 5 passi semplici."
+      >
+        Come <span class="text-brand">prenotare</span> la prova
+      </SectionHeading>
+      <div class="max-w-narrow flex flex-col" style="counter-reset: step;">
+        {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- COSA INCLUDE -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Cosa include">
+        La prova gratuita <span class="text-brand">include</span>
+      </SectionHeading>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-narrow">
+        {[
+          "<strong>Lezione completa</strong> con il gruppo e il coach, non una versione ridotta",
+          "<strong>Guantoni e fasce</strong> forniti dalla palestra per la prova",
+          "<strong>Spogliatoi e docce</strong> a disposizione",
+          "<strong>Zero vincoli:</strong> nessun pagamento, nessun obbligo di iscrizione",
+        ].map((b) => <BenefitItem text={b} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM PRENOTAZIONE -->
+  <section class="pb-section fade-up" id="prenota">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Prenota"
+        description="Compila il modulo e ti confermiamo giorno e orario. Oppure chiamaci direttamente."
+      >
+        Prenota la tua <span class="text-brand">prova gratuita</span>
+      </SectionHeading>
+      <div class="max-w-narrow">
+        <div class="p-card-pad-lg border border-pb-border-default rounded-md bg-surface-card">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <FormField label="Nome" name="nome" placeholder="Il tuo nome" required />
+            <FormField label="Cognome" name="cognome" placeholder="Il tuo cognome" required />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <FormField label="Telefono" name="telefono" type="tel" placeholder="+39 ..." required />
+            <FormField label="Email" name="email" type="email" placeholder="la-tua@email.it" />
+          </div>
+          <div class="mb-5">
+            <FormField
+              label="Corso di interesse"
+              name="corso"
+              type="select"
+              placeholder="Seleziona un corso"
+              options={[
+                { value: "pugilato", label: "Pugilato" },
+                { value: "hyrox", label: "Hyrox" },
+                { value: "pb-hiit", label: "PB Hiit" },
+                { value: "lezione-privata", label: "Lezione privata" },
+                { value: "non-so", label: "Non so ancora" },
+              ]}
+            />
+          </div>
+          <div class="mb-6">
+            <FormField
+              label="Note (opzionale)"
+              name="note"
+              type="textarea"
+              placeholder="Vuoi dirci qualcosa? Livello di esperienza, disponibilità, domande..."
+              rows={4}
+            />
+          </div>
+          <button type="button" class="pb-btn-primary w-full text-center">
+            Prenota la prova gratuita
+          </button>
+          <p class="text-xs text-pb-text-muted mt-4 text-center">
+            Nessun impegno. Ti ricontattiamo per confermare giorno e orario.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="FAQ">
+        Domande sulla <span class="text-brand">prova gratuita</span>
+      </SectionHeading>
+      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+    </div>
+  </section>
+
+  <!-- LOCAL -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading topline="Dove siamo">
+        Ci trovi a <span class="text-brand">Barlassina</span>
+      </SectionHeading>
+      <LocalSection
+        address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
+        addressLabel={siteInfo.name}
+        zones={zones}
+        details={localDetails}
+      />
+    </div>
+  </section>
+</BaseLayout>
