@@ -14,12 +14,15 @@ import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { trustItems, localDetails, zones, siteInfo } from "@/data/shared";
 
+// Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
+import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
+
 const services = [
   {
     icon: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
     title: "Pugilato",
     description:
-      "Per chi vuole imparare tecnica, mettersi in forma o crescere anche in ottica agonistica. Dai principianti ai dilettanti, passando per donne e ragazzi dai 12 anni.",
+      "Per chi vuole imparare tecnica, mettersi in forma o crescere anche in ottica agonistica. Dai principianti ai dilettanti, passando per donne e ragazzi dagli 8 anni.",
     ctaLabel: "Scopri il corso",
     ctaHref: "/pugilato/",
   },
@@ -65,7 +68,7 @@ const segments = [
     linkHref: "/pugilato/",
   },
   {
-    title: "Ragazzi dai 12 anni",
+    title: "Ragazzi dagli 8 anni",
     description:
       "Disciplina, coordinazione e fiducia in un ambiente sano e formativo. L'allenamento è adattato all'età e al livello.",
     linkLabel: "Scopri il corso →",
@@ -85,7 +88,7 @@ const benefits = [
   "<strong>Coach con esperienza agonistica reale</strong> e certificazione FIPE",
   "<strong>Attenzione sia a chi inizia</strong> sia a chi vuole crescere in ottica dilettantistica",
   "<strong>Struttura attrezzata</strong> con ring, sacchi e area functional training",
-  "<strong>Affiliazioni FPI e FIPE,</strong> garanzia di serietà e standard tecnici",
+  "<strong>Affiliazioni FPI, FIPE e Hyrox,</strong> garanzia di serietà e standard tecnici",
   "<strong>Posizione comoda</strong> per Barlassina, Seveso, Lissone, Seregno e tutta la Brianza",
 ];
 
@@ -124,9 +127,9 @@ const faqItems = [
       "Sì, il corso è misto e pensato per essere inclusivo. Alleniamo donne di ogni età e livello, in un ambiente rispettoso e motivante.",
   },
   {
-    question: "Accettate ragazzi dai 12 anni?",
+    question: "Da che età si può fare pugilato?",
     answer:
-      "Sì, l'età minima per partecipare ai nostri corsi è 12 anni. L'allenamento è adattato all'età e al livello del ragazzo.",
+      "Il corso di pugilato è aperto dagli 8 anni in su. L'allenamento è adattato all'età e al livello del ragazzo, con attenzione alla sicurezza e alla crescita graduale.",
   },
   {
     question: "Fate anche pugilato agonistico?",
@@ -136,7 +139,7 @@ const faqItems = [
   {
     question: "Posso prenotare una prova gratuita?",
     answer:
-      "Certo. La prova gratuita è senza impegno: vieni, allenati con noi e decidi con calma. Puoi prenotarla chiamandoci o passando direttamente in palestra.",
+      "Certo. La prova gratuita è senza impegno: vieni, allenati con noi e decidi con calma. Puoi prenotarla scrivendoci su WhatsApp o passando direttamente in palestra.",
   },
   {
     question: "Avete lezioni private?",
@@ -259,14 +262,16 @@ const pageSchema = {
 
       <CoachBlock
         name="Stefano Rizzo"
-        role="Fondatore e coach principale"
-        bio="Ex pugile agonista, oggi proprietario della palestra e guida tecnica di tutti i percorsi. Certificato FIPE, con esperienza nella light-boxe e nella boxe dilettantistica. Segue personalmente ogni iscritto, dai principianti a chi prepara le gare."
+        role="Co-fondatore e Head Coach"
+        bio="Ex pugile agonista, oggi co-fondatore della palestra e guida tecnica di tutti i percorsi. Certificato FIPE, con esperienza nella light-boxe e nella boxe dilettantistica. Segue personalmente ogni iscritto, dai principianti a chi prepara le gare."
         tags={[
           "Ex pugile agonista",
           "Certificato FIPE",
           "Light-boxe",
           "Boxe dilettantistica",
         ]}
+        photo={stefanoPhoto}
+        photoAlt="Stefano Rizzo, co-fondatore e head coach di Pugilistica Brianza"
       />
     </div>
   </section>

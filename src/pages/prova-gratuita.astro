@@ -4,20 +4,25 @@ import Hero from "../components/Hero.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import BenefitItem from "../components/BenefitItem.astro";
 import LessonStep from "../components/LessonStep.astro";
-import FormField from "../components/FormField.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import LocalSection from "../components/LocalSection.astro";
-import { localDetails, zones, siteInfo } from "@/data/shared";
+import { localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+
+// Unica CTA della pagina: contatto diretto via WhatsApp al numero del coach.
+const whatsappHref = buildWhatsappHref(
+  "Ciao, vorrei prenotare una prova gratuita a Pugilistica Brianza."
+);
 
 const steps = [
   { title: "Scegli il corso", description: "Pugilato, Hyrox, PB Hiit o lezione privata. Se non sai quale scegliere, ti aiutiamo noi." },
-  { title: "Contattaci", description: "Chiamaci, scrivici o compila il modulo qui sotto. Ti confermiamo giorno e orario della prova." },
+  { title: "Scrivici su WhatsApp", description: `Mandaci un messaggio al ${siteInfo.whatsappDisplay}. Le prove gratuite si tengono il lunedì, mercoledì e venerdì: ti confermiamo in chat giorno e orario.` },
   { title: "Vieni in palestra", description: "Porta solo abbigliamento sportivo e scarpe da ginnastica. Guantoni e fasce li forniamo noi per la prova." },
   { title: "Allenati con noi", description: "Partecipi a una lezione vera, con il gruppo e con il coach. Nessun obbligo, nessuna pressione." },
   { title: "Decidi con calma", description: "Dopo la prova scegli tu se iscriverti. Zero vincoli, zero impegni anticipati." },
 ];
 
 const faqItems = [
+  { question: "Quando posso fare la prova gratuita?", answer: `Le prove gratuite si tengono il lunedì, mercoledì e venerdì. Scrivici su WhatsApp al ${siteInfo.whatsappDisplay} indicando il giorno che preferisci: ti confermiamo in chat l'orario esatto della lezione.` },
   { question: "La prova gratuita è davvero senza impegno?", answer: "Sì, completamente. Non chiediamo pagamenti, dati della carta o impegni di alcun tipo. Vieni, prova e decidi con calma." },
   { question: "Cosa devo portare alla prova gratuita?", answer: "Abbigliamento sportivo e scarpe da ginnastica. Guantoni e fasce vengono forniti dalla palestra per la prova." },
   { question: "Posso provare più di un corso?", answer: "Sì, puoi provare gratuitamente i diversi corsi (pugilato, Hyrox, PB Hiit) per scegliere quello più adatto a te." },
@@ -33,8 +38,7 @@ const faqItems = [
   <Hero
     topline="Prova gratuita — Pugilistica Brianza"
     subtitle="Vieni a Barlassina, allenati con noi e decidi con calma. Nessun impegno, nessun vincolo. La prima lezione è sempre gratuita."
-    ctaPrimary={{ label: "Vai al modulo", href: "#prenota" }}
-    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    ctaPrimary={{ label: "Scrivimi su WhatsApp", href: whatsappHref }}
   >
     Prova <span class="text-brand">gratuita</span><br />senza impegno
   </Hero>
@@ -71,54 +75,39 @@ const faqItems = [
     </div>
   </section>
 
-  <!-- FORM PRENOTAZIONE -->
+  <!-- CTA WHATSAPP -->
   <section class="pb-section fade-up" id="prenota">
     <div class="pb-container">
       <SectionHeading
         topline="Prenota"
-        description="Compila il modulo e ti confermiamo giorno e orario. Oppure chiamaci direttamente."
+        description="Scrivici su WhatsApp: è il modo più veloce per fissare la tua prova. Ti rispondiamo in giornata con giorno e orario confermati."
       >
         Prenota la tua <span class="text-brand">prova gratuita</span>
       </SectionHeading>
       <div class="max-w-narrow">
-        <div class="p-card-pad-lg border border-pb-border-default rounded-md bg-surface-card">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-            <FormField label="Nome" name="nome" placeholder="Il tuo nome" required />
-            <FormField label="Cognome" name="cognome" placeholder="Il tuo cognome" required />
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
-            <FormField label="Telefono" name="telefono" type="tel" placeholder="+39 ..." required />
-            <FormField label="Email" name="email" type="email" placeholder="la-tua@email.it" />
-          </div>
-          <div class="mb-5">
-            <FormField
-              label="Corso di interesse"
-              name="corso"
-              type="select"
-              placeholder="Seleziona un corso"
-              options={[
-                { value: "pugilato", label: "Pugilato" },
-                { value: "hyrox", label: "Hyrox" },
-                { value: "pb-hiit", label: "PB Hiit" },
-                { value: "lezione-privata", label: "Lezione privata" },
-                { value: "non-so", label: "Non so ancora" },
-              ]}
-            />
-          </div>
-          <div class="mb-6">
-            <FormField
-              label="Note (opzionale)"
-              name="note"
-              type="textarea"
-              placeholder="Vuoi dirci qualcosa? Livello di esperienza, disponibilità, domande..."
-              rows={4}
-            />
-          </div>
-          <button type="button" class="pb-btn-primary w-full text-center">
-            Prenota la prova gratuita
-          </button>
-          <p class="text-xs text-pb-text-muted mt-4 text-center">
-            Nessun impegno. Ti ricontattiamo per confermare giorno e orario.
+        <div class="p-card-pad-lg border border-pb-border-default rounded-md bg-surface-card text-center">
+          <p class="text-pb-text-secondary mb-2">
+            Mandaci un messaggio su WhatsApp al
+          </p>
+          <p class="text-display-md font-display text-white mb-6">
+            {siteInfo.whatsappDisplay}
+          </p>
+          <p class="text-pb-text-tertiary mb-6 max-w-prose mx-auto">
+            Dicci quale corso ti interessa — pugilato, Hyrox, PB Hiit o lezione privata — e quando vorresti venire. Ti rispondiamo personalmente per confermare data e orario della prova.
+          </p>
+          <p class="inline-block border border-brand/40 bg-brand/10 text-white text-sm px-4 py-2 rounded-md mb-8">
+            <strong class="text-brand">Quando:</strong> le prove gratuite si tengono il <strong>lunedì, mercoledì e venerdì</strong>.
+          </p>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener"
+            class="pb-btn-primary inline-block"
+          >
+            Scrivimi su WhatsApp
+          </a>
+          <p class="text-xs text-pb-text-muted mt-4">
+            Nessun impegno, nessun modulo da compilare. Rispondiamo direttamente in chat.
           </p>
         </div>
       </div>

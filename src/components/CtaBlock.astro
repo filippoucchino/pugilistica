@@ -13,6 +13,9 @@ interface Props {
 }
 
 const { description, subdesc, ctaPrimary, ctaSecondary } = Astro.props;
+
+// Link esterni (http/https) devono aprirsi in nuova scheda per non perdere la pagina.
+const isExternal = (href: string) => /^https?:\/\//.test(href);
 ---
 
 <section class="text-center py-section-y-lg relative">
@@ -41,10 +44,20 @@ const { description, subdesc, ctaPrimary, ctaSecondary } = Astro.props;
     {(ctaPrimary || ctaSecondary) && (
       <div class="flex gap-4 justify-center flex-wrap max-md:flex-col max-md:items-center">
         {ctaPrimary && (
-          <a href={ctaPrimary.href} class="pb-btn-primary">{ctaPrimary.label}</a>
+          <a
+            href={ctaPrimary.href}
+            class="pb-btn-primary"
+            target={isExternal(ctaPrimary.href) ? "_blank" : undefined}
+            rel={isExternal(ctaPrimary.href) ? "noopener" : undefined}
+          >{ctaPrimary.label}</a>
         )}
         {ctaSecondary && (
-          <a href={ctaSecondary.href} class="pb-btn-secondary">{ctaSecondary.label}</a>
+          <a
+            href={ctaSecondary.href}
+            class="pb-btn-secondary"
+            target={isExternal(ctaSecondary.href) ? "_blank" : undefined}
+            rel={isExternal(ctaSecondary.href) ? "noopener" : undefined}
+          >{ctaSecondary.label}</a>
         )}
       </div>
     )}

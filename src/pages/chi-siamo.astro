@@ -7,7 +7,12 @@ import TargetCard from "../components/TargetCard.astro";
 import Gallery from "../components/Gallery.astro";
 import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
-import { localDetails, zones, siteInfo } from "@/data/shared";
+import { localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+
+// Unica CTA della pagina: WhatsApp con messaggio generico (chi-siamo non è legata a un corso specifico).
+const whatsappHref = buildWhatsappHref(
+  "Ciao, vorrei prenotare una prova gratuita a Pugilistica Brianza."
+);
 
 // Foto team: importate come ES module così Astro le ottimizza in build
 // (genera WebP, dimensioni esplicite, hashing del nome file per caching).
@@ -19,8 +24,8 @@ import vittorioPhoto from "../assets/images/bio/vittorio-uboldi.jpg";
 const teamMembers = [
   {
     name: "Stefano Rizzo",
-    role: "Fondatore e Head Coach",
-    bio: "Stefano Rizzo, milanese classe 1984, è il fondatore di Pugilistica Brianza e la guida tecnica di ogni corso. Il suo percorso sportivo attraversa nuoto, ginnastica artistica e l'hockey su ghiaccio, dove viene convocato nelle nazionali giovanili Under 17 e Under 21, prima di approdare al pugilato con circa 40 incontri da dilettante. Oggi allena, organizza eventi e segue ogni atleta: dal principiante a chi si prepara a salire sul ring.",
+    role: "Co-Fondatore e Head Coach",
+    bio: "Stefano Rizzo, milanese classe 1984, è co-fondatore di Pugilistica Brianza e la guida tecnica di ogni corso. Il suo percorso sportivo attraversa nuoto, ginnastica artistica e l'hockey su ghiaccio, dove viene convocato nelle nazionali giovanili Under 17 e Under 21, prima di approdare al pugilato con circa 40 incontri da dilettante. Oggi allena, organizza eventi e segue ogni atleta: dal principiante a chi si prepara a salire sul ring.",
     credentials: [
       "Maestro di pugilato di 2° livello FPI",
       "Tecnico di 1° livello FIPE – Federazione Italiana Pesistica",
@@ -30,11 +35,11 @@ const teamMembers = [
     ],
     photo: stefanoPhoto,
     photoAlt:
-      "Stefano Rizzo, fondatore e head coach di Pugilistica Brianza a Barlassina",
+      "Stefano Rizzo, co-fondatore e head coach di Pugilistica Brianza a Barlassina",
   },
   {
     name: "Bruno Elli",
-    role: "Presidente",
+    role: "Co-Fondatore e Presidente",
     bio: "Bruno Elli è co-fondatore e presidente di Pugilistica Brianza. Ex nuotatore agonista, scopre la boxe a 21 anni e la porta avanti fino a disputare 22 incontri da dilettante. La stessa passione che lo ha avvicinato al ring lo ha spinto a costruire, insieme ai soci, una palestra vera in Brianza.",
     credentials: [
       "Co-fondatore di Pugilistica Brianza",
@@ -46,7 +51,7 @@ const teamMembers = [
   },
   {
     name: "Riccardo Sparano",
-    role: "Vicepresidente",
+    role: "Co-Fondatore e Vicepresidente",
     bio: "Riccardo Sparano, di Seregno, è co-fondatore e vicepresidente di Pugilistica Brianza. Dopo anni passati a cercare il suo sport, tra calcio, nuoto e basket, ha trovato nella boxe e nel gruppo che ha dato vita alla palestra il posto in cui sentirsi davvero a casa. Oggi contribuisce a costruire ogni giorno la realtà dell'associazione.",
     credentials: [
       "Co-fondatore di Pugilistica Brianza",
@@ -58,8 +63,8 @@ const teamMembers = [
   },
   {
     name: "Vittorio Uboldi",
-    role: "Cutman e Presentatore",
-    bio: "Vittorio Uboldi porta nella Pugilistica Brianza un profilo unico: laureato in Ingegneria Meccanica al Politecnico di Milano e docente, è anche cantante, autore, speaker radiofonico e attore di prosa e musical. Sul ring è cutman e presentatore di eventi sportivi, dove è noto con il nome di Vick \"The Judgment Day\".",
+    role: "Co-Fondatore, Cutman e Presentatore",
+    bio: "Vittorio Uboldi, co-fondatore di Pugilistica Brianza, porta nella palestra un profilo unico: laureato in Ingegneria Meccanica al Politecnico di Milano e docente, è anche cantante, autore, speaker radiofonico e attore di prosa e musical. Sul ring è cutman e presentatore di eventi sportivi, dove è noto con il nome di Vick \"The Judgment Day\".",
     credentials: [
       "Laurea in Ingegneria Meccanica – Politecnico di Milano",
       "Cutman e presentatore di eventi sportivi (alias: Vick \"The Judgment Day\")",
@@ -92,16 +97,15 @@ const teamSchema = {
 
 <BaseLayout
   title="Chi Siamo — ASD Pugilistica Brianza | Barlassina"
-  description="Scopri la storia, i valori e il team di Pugilistica Brianza, palestra di pugilato a Barlassina dal 2018. Affiliati FPI e FIPE."
+  description="Scopri la storia, i valori e il team di Pugilistica Brianza, palestra di pugilato a Barlassina dal 9 gennaio 2016. Affiliati FPI, FIPE e Hyrox."
   schema={teamSchema}
 >
   <!-- HERO -->
   <Hero
     topline="Chi siamo — Pugilistica Brianza"
-    subtitle="Dal 2018 a Barlassina, una palestra di pugilato fondata su tecnica, ambiente e rispetto. Affiliata FPI e FIPE, guidata da un coach ex agonista."
+    subtitle="Dal 9 gennaio 2016 a Barlassina, una palestra di pugilato fondata su tecnica, ambiente e rispetto. Affiliata FPI, FIPE e Hyrox, guidata da un coach ex agonista."
     watermark="PB"
-    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
-    ctaSecondary={{ label: "Vieni a trovarci", href: "/contatti/" }}
+    ctaPrimary={{ label: "Prenota su WhatsApp", href: whatsappHref }}
   >
     Pugilistica <span class="text-brand">Brianza</span>
   </Hero>
@@ -112,11 +116,11 @@ const teamSchema = {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
         <div>
           <div class="font-display text-display-lg text-pb-text-primary mb-2">ASD</div>
-          <p class="text-sm text-pb-text-tertiary">Associazione Sportiva Dilettantistica<br>affiliata FPI e FIPE</p>
+          <p class="text-sm text-pb-text-tertiary">Associazione Sportiva Dilettantistica<br>affiliata FPI, FIPE e Hyrox</p>
         </div>
         <div>
-          <div class="font-display text-display-lg text-pb-text-primary mb-2">20<span class="text-brand">18</span></div>
-          <p class="text-sm text-pb-text-tertiary">Anno di fondazione<br>della palestra</p>
+          <div class="font-display text-display-lg text-pb-text-primary mb-2">20<span class="text-brand">16</span></div>
+          <p class="text-sm text-pb-text-tertiary">Fondata il 9 gennaio<br>a Barlassina</p>
         </div>
         <div>
           <div class="font-display text-display-lg text-pb-text-primary mb-2">Barlassina</div>
@@ -199,7 +203,7 @@ const teamSchema = {
         {[
           { icon: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>', title: "Principianti", description: "La maggior parte dei nostri iscritti ha iniziato da zero." },
           { icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>', title: "Donne", description: "Corso misto e inclusivo, in un ambiente rispettoso e motivante." },
-          { icon: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>', title: "Ragazzi 12+", description: "Allenamento adattato all'età e al livello, approccio educativo." },
+          { icon: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>', title: "Ragazzi 8+", description: "Corso di pugilato dagli 8 anni in su. Allenamento adattato all'età e al livello, approccio educativo." },
           { icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>', title: "Amatori e agonisti", description: "Percorsi su misura per fitness o competizione in light-boxe e boxe dilettantistica." },
         ].map((t) => (
           <TargetCard icon={t.icon} title={t.title} description={t.description} />
@@ -239,8 +243,7 @@ const teamSchema = {
   <!-- CTA FINALE -->
   <CtaBlock
     description="Vieni a conoscerci. La prima lezione è gratuita e senza impegno."
-    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
-    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    ctaPrimary={{ label: "Prenota su WhatsApp", href: whatsappHref }}
   >
     Inizia ad allenarti<br />con <span class="text-brand">noi</span>
   </CtaBlock>

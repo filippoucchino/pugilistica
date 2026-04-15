@@ -14,6 +14,9 @@ interface Props {
 }
 
 const { title, price, period = "/mese", note, features, ctaLabel, ctaHref } = Astro.props;
+
+// Link esterni (http/https) devono aprirsi in nuova scheda per non perdere la pagina.
+const isExternal = /^https?:\/\//.test(ctaHref);
 ---
 
 <div class="p-card-pad-lg bg-surface-card border border-pb-border-default rounded-md">
@@ -45,5 +48,10 @@ const { title, price, period = "/mese", note, features, ctaLabel, ctaHref } = As
     ))}
   </ul>
 
-  <a href={ctaHref} class="pb-btn-primary w-full text-center block">{ctaLabel}</a>
+  <a
+    href={ctaHref}
+    class="pb-btn-primary w-full text-center block"
+    target={isExternal ? "_blank" : undefined}
+    rel={isExternal ? "noopener" : undefined}
+  >{ctaLabel}</a>
 </div>

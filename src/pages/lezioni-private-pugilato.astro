@@ -9,7 +9,15 @@ import CoachBlock from "../components/CoachBlock.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
-import { trustItems, localDetails, zones, siteInfo } from "@/data/shared";
+import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+
+// Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
+import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
+
+// Unica CTA della pagina: WhatsApp al coach, con messaggio orientato alla richiesta di info (non prenotazione diretta).
+const whatsappHref = buildWhatsappHref(
+  "Ciao, vorrei informazioni sulle lezioni private di pugilato."
+);
 
 const faqItems = [
   { question: "Come funzionano le lezioni private di pugilato?", answer: "Le lezioni private sono sessioni individuali 1:1 con il coach. Lavori su tecnica, preparazione atletica o obiettivi specifici con un programma costruito su misura per te." },
@@ -28,8 +36,7 @@ const faqItems = [
     topline="Lezioni private — Pugilistica Brianza"
     subtitle="Percorso personalizzato 1:1 con il coach. Tecnica, preparazione e obiettivi specifici, con orari flessibili e programma costruito su misura."
     watermark="1:1"
-    ctaPrimary={{ label: "Richiedi informazioni", href: "/contatti/" }}
-    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    ctaPrimary={{ label: "Scrivici su WhatsApp", href: whatsappHref }}
   >
     Lezioni <span class="text-brand">private</span><br />di pugilato
   </Hero>
@@ -80,9 +87,11 @@ const faqItems = [
       </SectionHeading>
       <CoachBlock
         name="Stefano Rizzo"
-        role="Fondatore e Head Coach"
+        role="Co-fondatore e Head Coach"
         bio="Ex pugile agonista con certificazione FIPE. Nelle lezioni private Stefano applica la sua esperienza diretta per costruire un percorso tecnico e atletico cucito sui tuoi obiettivi."
         tags={["Ex pugile agonista", "Certificato FIPE", "Light-boxe", "Boxe dilettantistica"]}
+        photo={stefanoPhoto}
+        photoAlt="Stefano Rizzo, co-fondatore e head coach di Pugilistica Brianza"
       />
     </div>
   </section>
@@ -112,9 +121,8 @@ const faqItems = [
 
   <div class="pb-section--alt">
     <CtaBlock
-      description="Contattaci per concordare orari, frequenza e costi delle lezioni private."
-      ctaPrimary={{ label: "Richiedi informazioni", href: "/contatti/" }}
-      ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+      description="Scrivici su WhatsApp per concordare orari, frequenza e costi delle lezioni private."
+      ctaPrimary={{ label: "Scrivici su WhatsApp", href: whatsappHref }}
     >
       Prenota una lezione <span class="text-brand">privata</span>
     </CtaBlock>

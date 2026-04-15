@@ -13,8 +13,13 @@ export const siteInfo = {
   province: "MB",
   cap: "20825",
   phone: "+39 XXX XXX XXXX",
+  // Numero WhatsApp del coach — formato wa.me (solo cifre, con prefisso internazionale).
+  whatsapp: "393397540061",
+  // Versione leggibile dello stesso numero, da usare nei testi visibili all'utente.
+  whatsappDisplay: "+39 339 754 0061",
   email: "info@pugilisticabrianza.it",
-  founded: 2018,
+  founded: 2016,
+  foundingDate: "9 gennaio 2016",
   url: "https://pugilisticabrianza.it",
   social: {
     facebook: "#",
@@ -22,11 +27,20 @@ export const siteInfo = {
   },
 } as const;
 
+/**
+ * Costruisce l'URL wa.me con messaggio precompilato.
+ * Usa sempre questo helper invece di hardcodare il numero: se cambia,
+ * si aggiorna solo `siteInfo.whatsapp` e tutti i link si allineano.
+ */
+export function buildWhatsappHref(message: string): string {
+  return `https://wa.me/${siteInfo.whatsapp}?text=${encodeURIComponent(message)}`;
+}
+
 /* — Trust Bar items — */
 export const trustItems = [
   {
     icon: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
-    title: "Dal 2018",
+    title: "Dal 2016",
     subtitle: "ASD attiva",
   },
   {
@@ -36,7 +50,7 @@ export const trustItems = [
   },
   {
     icon: '<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>',
-    title: "FPI e FIPE",
+    title: "FPI, FIPE e Hyrox",
     subtitle: "Affiliazioni ufficiali",
   },
   {

@@ -1,19 +1,23 @@
 ---
 /**
  * Coach Block — card con foto, nome, ruolo, bio e tag.
+ * La foto è opzionale: se presente, va passata come asset importato
+ * (ES module) così Astro la ottimizza automaticamente (WebP, srcset).
  */
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 interface Props {
   name: string;
   role: string;
   bio: string;
   tags: string[];
-  /** Path all'immagine, oppure placeholder */
-  photoSrc?: string;
+  /** Foto opzionale, importata come asset ES module (ottimizzata da Astro) */
+  photo?: ImageMetadata;
   photoAlt?: string;
 }
 
-const { name, role, bio, tags, photoSrc, photoAlt = "" } = Astro.props;
+const { name, role, bio, tags, photo, photoAlt = "" } = Astro.props;
 ---
 
 <div
@@ -22,12 +26,15 @@ const { name, role, bio, tags, photoSrc, photoAlt = "" } = Astro.props;
          max-md:grid-cols-1"
 >
   <!-- Photo -->
-  {photoSrc ? (
-    <img
-      src={photoSrc}
+  {photo ? (
+    <Image
+      src={photo}
       alt={photoAlt}
-      class="w-[200px] h-[240px] object-cover rounded-md max-md:w-full max-md:h-[200px]"
+      width={400}
+      height={480}
       loading="lazy"
+      decoding="async"
+      class="w-[200px] h-[240px] object-cover rounded-md max-md:w-full max-md:h-[200px]"
     />
   ) : (
     <div
