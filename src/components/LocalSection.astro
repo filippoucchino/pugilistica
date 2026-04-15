@@ -2,7 +2,10 @@
 /**
  * Local Section — info sede + mappa Google.
  * Posizionata prima della CTA finale su tutte le pagine.
+ * La mappa è gestita da MapFacade (pattern "facade" per evitare il caricamento
+ * dell'iframe di Google al primo load).
  */
+import MapFacade from "./MapFacade.astro";
 
 interface Detail {
   icon: string;  // SVG inner HTML
@@ -14,8 +17,14 @@ interface Props {
   addressLabel?: string;
   zones?: string[];
   details?: Detail[];
-  /** URL di embed Google Maps */
+  /** URL di embed Google Maps (src dell'iframe). */
   mapEmbedUrl?: string;
+  /** Link "apri in Google Maps" per il fallback testuale sotto la mappa. */
+  mapExternalUrl?: string;
+  /** Immagine statica di preview usata dal facade. */
+  mapPreviewSrc?: string;
+  /** Etichetta usata negli aria-label/alt della mappa. */
+  mapLabel?: string;
 }
 
 const {
@@ -24,7 +33,12 @@ const {
   zones = [],
   details = [],
   mapEmbedUrl,
+  mapExternalUrl,
+  mapPreviewSrc,
+  mapLabel = "Pugilistica Brianza",
 } = Astro.props;
+
+const hasMap = Boolean(mapEmbedUrl && mapExternalUrl && mapPreviewSrc);
 ---
 
 <div class="grid grid-cols-local gap-12 items-start max-md:grid-cols-1">
@@ -65,14 +79,13 @@ const {
     )}
   </div>
 
-  <!-- Map -->
-  {mapEmbedUrl ? (
-    <iframe
-      src={mapEmbedUrl}
-      class="w-full aspect-[16/10] rounded-lg border border-pb-border-default"
-      loading="lazy"
-      allowfullscreen
-      title="Mappa Google — Pugilistica Brianza"
+  <!-- Map (facade pattern: iframe caricato solo al click) -->
+  {hasMap ? (
+    <MapFacade
+      embedUrl={mapEmbedUrl!}
+      externalUrl={mapExternalUrl!}
+      previewSrc={mapPreviewSrc!}
+      label={mapLabel}
     />
   ) : (
     <div

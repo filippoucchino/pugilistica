@@ -1,0 +1,151 @@
+---
+/**
+ * MapFacade — pattern "facade" per Google Maps.
+ *
+ * Al primo caricamento NON viene scaricato l'iframe di Google (che pesa ~500 KB
+ * e imposta cookie di tracking): mostriamo invece un'immagine statica leggera
+ * della mappa + un bottone. L'iframe vero viene caricato solo quando l'utente
+ * clicca, così risparmiamo banda e miglioriamo LCP/CLS.
+ *
+ * Fallback <noscript> con iframe reale per chi ha JavaScript disabilitato.
+ */
+
+interface Props {
+  /** URL di embed Google Maps (quello dell'iframe). */
+  embedUrl: string;
+  /** URL "apri in Google Maps" per il link testuale sotto la mappa. */
+  externalUrl: string;
+  /** Indirizzo leggibile da mostrare sul facade. */
+  label: string;
+  /** Immagine statica di preview (PNG/JPG già in /public). */
+  previewSrc: string;
+}
+
+const { embedUrl, externalUrl, label, previewSrc } = Astro.props;
+---
+
+<div class="map-facade-wrapper flex flex-col gap-3">
+  <div
+    class="map-facade relative w-full aspect-[16/10] rounded-lg overflow-hidden
+           border border-pb-border-default bg-neutral-800"
+    data-embed={embedUrl}
+  >
+    <!-- Immagine statica: leggera, cached, senza cookie. -->
+    <img
+      src={previewSrc}
+      alt={`Mappa della zona di ${label}`}
+      loading="lazy"
+      decoding="async"
+      width="1200"
+      height="750"
+      class="map-facade__img w-full h-full object-cover"
+    />
+
+    <!-- Overlay scuro per leggibilità -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/60 pointer-events-none"></div>
+
+    <!-- Pin centrale -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <svg
+        class="w-12 h-12 drop-shadow-lg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#ff3d3d"
+        style="stroke-width: 2;"
+        aria-hidden="true"
+      >
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#ff3d3d"/>
+        <circle cx="12" cy="9" r="2.5" fill="#fff" stroke="#fff"/>
+      </svg>
+    </div>
+
+    <!-- Bottone "Apri mappa": al click carichiamo l'iframe vero. -->
+    <button
+      type="button"
+      class="map-facade__btn absolute inset-0 w-full h-full flex items-end justify-center pb-5
+             text-white cursor-pointer focus-visible:outline focus-visible:outline-2
+             focus-visible:outline-offset-[-4px] focus-visible:outline-brand"
+      aria-label={`Apri mappa interattiva — ${label}`}
+    >
+      <span
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full
+               bg-white/95 text-neutral-900 text-sm font-semibold
+               shadow-lg transition-transform hover:scale-[1.03]"
+      >
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          style="stroke-width: 2;"
+          aria-hidden="true"
+        >
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+          <line x1="8" y1="2" x2="8" y2="18"/>
+          <line x1="16" y1="6" x2="16" y2="22"/>
+        </svg>
+        Apri mappa
+      </span>
+    </button>
+
+    <!-- Fallback senza JS: l'iframe viene mostrato direttamente. -->
+    <noscript>
+      <iframe
+        src={embedUrl}
+        class="absolute inset-0 w-full h-full border-0"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        title={`Mappa Google — ${label}`}
+      ></iframe>
+    </noscript>
+  </div>
+
+  <!-- Link testuale permanente: funziona sempre, anche senza click sul facade. -->
+  <a
+    href={externalUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-1.5 text-sm text-pb-text-tertiary
+           hover:text-brand transition-colors self-start"
+  >
+    Apri in Google Maps
+    <svg
+      class="w-3.5 h-3.5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      style="stroke-width: 2;"
+      aria-hidden="true"
+    >
+      <path d="M7 17L17 7M7 7h10v10"/>
+    </svg>
+  </a>
+</div>
+
+<script>
+  // Al click, sostituiamo il bottone+immagine con l'iframe vero di Google Maps.
+  // Delegazione: un solo listener per tutti i facade sulla pagina.
+  document.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest(".map-facade__btn");
+    if (!btn) return;
+    const wrapper = btn.closest(".map-facade") as HTMLElement | null;
+    if (!wrapper) return;
+    const embed = wrapper.dataset.embed;
+    if (!embed) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.src = embed;
+    iframe.className = "absolute inset-0 w-full h-full border-0";
+    iframe.loading = "eager";
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = "no-referrer-when-downgrade";
+    iframe.title = "Mappa Google — Pugilistica Brianza";
+
+    // Svuotiamo il wrapper (immagine, overlay, pin, bottone, noscript) e
+    // inseriamo l'iframe reale. Il focus va all'iframe per accessibilità.
+    wrapper.innerHTML = "";
+    wrapper.appendChild(iframe);
+    iframe.focus();
+  });
+</script>
