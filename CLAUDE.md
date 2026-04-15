@@ -173,6 +173,76 @@ ffmpeg -y -i public/videos/corso-<nomecorso>-pugilistica-brianza-barlassina.mp4 
   **eliminalo dopo il pass 2** (`rm ffmpeg2pass-0.log`) per non sporcare il repo.
 - Se lanci il comando da `cmd.exe` invece che da bash, sostituisci `/dev/null` con `NUL`.
 
+## Brand assets (logo + favicon)
+
+I file sorgente del logo e della favicon vivono in `public/brand/source/`
+(versione "originale", non toccata). Da lì vengono generate tutte le varianti
+servite al browser. Convenzione: **mai** linkare i file in `source/` dal sito —
+sono solo materiale di partenza.
+
+### Sorgenti
+- `public/brand/source/PB_logo.png` — logo badge orizzontale (500×318, PNG con alpha)
+- `public/brand/source/favicon.png` — pugile tricolore quadrato (500×500, PNG con alpha)
+
+### Varianti generate
+
+**Dal logo (`PB_logo.png`):**
+- `public/brand/logo.png` — copia di lavoro usata in Header e Footer
+- `public/brand/og-image.jpg` — 1200×630 per anteprime social (logo centrato su sfondo `#0a0a0a`)
+
+**Dalla favicon (`favicon.png`):**
+- `public/favicon-16.png` (16×16) e `public/favicon-32.png` (32×32) — favicon scheda browser
+- `public/apple-touch-icon.png` (180×180) — home screen iOS
+- `public/icon-192.png` (192×192) e `public/icon-512.png` (512×512) — PWA / Android
+- `public/site.webmanifest` — manifest PWA (theme `#c41e1e`, background `#0a0a0a`)
+
+Tutti i link sono già configurati in `src/layouts/BaseLayout.astro` (favicon set
+completo, `apple-touch-icon`, `manifest`, `theme-color`, `og:image`, Twitter Card).
+
+### Come rigenerare le varianti dopo aver cambiato un sorgente
+
+Sostituisci il file in `public/brand/source/` mantenendo lo stesso nome, poi
+lancia i comandi ffmpeg qui sotto.
+
+**Favicon (tutte le dimensioni):**
+
+```bash
+ffmpeg -y -i public/brand/source/favicon.png -vf "scale=16:16:flags=lanczos" -frames:v 1 -update 1 public/favicon-16.png
+ffmpeg -y -i public/brand/source/favicon.png -vf "scale=32:32:flags=lanczos" -frames:v 1 -update 1 public/favicon-32.png
+ffmpeg -y -i public/brand/source/favicon.png -vf "scale=180:180:flags=lanczos" -frames:v 1 -update 1 public/apple-touch-icon.png
+ffmpeg -y -i public/brand/source/favicon.png -vf "scale=192:192:flags=lanczos" -frames:v 1 -update 1 public/icon-192.png
+ffmpeg -y -i public/brand/source/favicon.png -vf "scale=512:512:flags=lanczos" -frames:v 1 -update 1 public/icon-512.png
+```
+
+**Logo + OG image:**
+
+```bash
+ffmpeg -y -i public/brand/source/PB_logo.png -vf "scale=500:-1" -frames:v 1 -update 1 public/brand/logo.png
+ffmpeg -y -f lavfi -i "color=c=0x0a0a0a:s=1200x630:d=1" -i public/brand/source/PB_logo.png \
+  -filter_complex "[1]scale=800:-1[lg];[0][lg]overlay=(W-w)/2:(H-h)/2" \
+  -frames:v 1 -update 1 -q:v 3 public/brand/og-image.jpg
+```
+
+Note pratiche:
+- Se cambi il colore di sfondo dell'OG image, modifica `c=0x0a0a0a` (esadecimale senza `#`).
+- I tag `<img>` in `Header.astro` e `Footer.astro` hanno `width="500" height="318"` espliciti per evitare layout shift: se cambi le proporzioni del logo sorgente, aggiorna anche questi due attributi.
+- **`favicon.ico` non viene generato**: ffmpeg non lo supporta nativamente e i browser moderni accettano i PNG. Se in futuro serve supporto IE/legacy, va aggiunto con ImageMagick.
+
+## Form di contatto (Web3Forms)
+
+Il form su `/contatti/` è gestito via [Web3Forms](https://web3forms.com): POST a
+`api.web3forms.com/submit`, Web3Forms inoltra l'email al destinatario configurato
+sul loro account. Niente backend, sito resta statico.
+
+- L'`access_key` è hard-coded nel sorgente di `src/pages/contatti.astro` ed è
+  **pubblica per design** (identifica l'account, non è una password). Se inizia
+  ad arrivare spam, si ruota dalla dashboard Web3Forms.
+- **Honeypot**: campo `botcheck` nascosto — se un bot lo compila, Web3Forms scarta.
+- L'invio è gestito da uno `<script is:inline>` in fondo alla pagina che intercetta
+  il submit, manda via `fetch` e mostra successo/errore **inline** (niente redirect,
+  niente `alert`). Selettori: `#contact-form`, `#contact-submit`, `#contact-success`, `#contact-error`.
+- Piano free Web3Forms: 250 invii/mese.
+
 ### Attributi del tag `<video>` (già gestiti dal componente)
 
 Il componente `DefinitionGrid` genera il tag con questi attributi, già commentati
@@ -204,7 +274,7 @@ nel sorgente — non serve rifarlo manualmente:
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-04-14
+Ultimo aggiornamento: 2026-04-15
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -228,14 +298,25 @@ Ultimo aggiornamento: 2026-04-14
 - Video verticale aggiunto alla pagina `/pb-hiit/` nella sezione "Che cos'è PB Hiit?":
   asset in `public/videos/` (mp4 + webm VP9 CRF 33 + poster jpg estratto al secondo 2);
   tutte e tre le pagine corso (pugilato, hyrox, pb-hiit) ora hanno il loro video verticale
+- Pagina `/contatti/` rivista: rimossa l'email a vista, aggiunto form di contatto via
+  Web3Forms (con honeypot, gestione successo/errore inline) e nuova sezione dedicata
+  "Seguici sui social" sotto la mappa con due card grandi cliccabili
+- Numero di telefono reale impostato in `src/data/shared.ts` (`siteInfo.phone` + nuovo
+  `siteInfo.phoneHref`), coincide con il WhatsApp del coach
+- URL social reali (Facebook + Instagram) salvati in `siteInfo.social`; nuovo componente
+  `SocialLinks.astro` come unico posto dove vivono gli SVG di IG/FB (prop `size`/`label`/`align`)
+- Footer ridisegnato: logo grande, icone social sotto il brand, bottom bar con solo copyright
+- Brand assets integrati: logo badge nell'Header e Footer (sostituisce il testo), favicon
+  pugile tricolore, set completo (16/32/180/192/512), `site.webmanifest`, `og-image.jpg`
+  1200×630 per anteprime social, `theme-color` e Twitter Card in `BaseLayout`
+- JSON-LD `SportsActivityLocation` della home arricchito con `logo`, `image`, `telephone`, `sameAs`
 
 ### In corso
 - Nessuna attività in corso
 
 ### Prossimo step
-- Sostituire i placeholder con asset reali: foto coach, gallery palestra, mappa Google embed, favicon definitiva
-- Aggiornare i dati segnaposto in `src/data/shared.ts`: numero di telefono (`+39 XXX XXX XXXX`), link social Facebook/Instagram
-- Collegare il form di `/prova-gratuita/` a un backend o servizio (Formspree, Netlify Forms, Web3Forms, ecc.)
-- Aggiungere immagini Open Graph (`og:image`) per ogni pagina
+- Sostituire i placeholder con asset reali: foto coach, gallery palestra, mappa Google embed
 - Scegliere hosting e configurare il deploy automatico da GitHub (Vercel, Netlify o GitHub Pages + Action)
 - Valutare blocco indicizzazione (`robots.txt` + meta `noindex` in `BaseLayout`) finché il sito non è pronto per il pubblico
+- Verificare la leggibilità del favicon a 16×16 (il pugile ha molti dettagli): se non si distingue,
+  valutare una versione semplificata o un monogramma "PB" per le dimensioni piccole

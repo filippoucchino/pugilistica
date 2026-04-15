@@ -12,11 +12,14 @@ export const siteInfo = {
   city: "Barlassina",
   province: "MB",
   cap: "20825",
-  phone: "+39 XXX XXX XXXX",
+  // Numero di telefono visibile — coincide con il WhatsApp del coach.
+  phone: "+39 339 754 0061",
   // Numero WhatsApp del coach — formato wa.me (solo cifre, con prefisso internazionale).
   whatsapp: "393397540061",
   // Versione leggibile dello stesso numero, da usare nei testi visibili all'utente.
   whatsappDisplay: "+39 339 754 0061",
+  // Formato tel: (solo cifre con + iniziale) per attributi href.
+  phoneHref: "tel:+393397540061",
   email: "info@pugilisticabrianza.it",
   founded: 2016,
   foundingDate: "9 gennaio 2016",
@@ -30,8 +33,8 @@ export const siteInfo = {
   // Immagine statica usata come facade (generata dai tile OSM per evitare il caricamento iniziale dell'iframe).
   mapPreviewSrc: "/images/map-pugilistica-brianza.png",
   social: {
-    facebook: "#",
-    instagram: "#",
+    facebook: "https://www.facebook.com/pugilistica",
+    instagram: "https://www.instagram.com/pugilisticabrianza",
   },
 } as const;
 

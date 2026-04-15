@@ -17,11 +17,16 @@ const currentPath = Astro.url.pathname;
 >
   <div class="max-w-container mx-auto w-full flex items-center justify-between">
     <!-- Brand -->
-    <a
-      href="/"
-      class="font-display text-[26px] text-pb-text-primary tracking-tight whitespace-nowrap no-underline"
-    >
-      Pugilistica <span class="text-brand">Brianza</span>
+    <a href="/" class="flex items-center no-underline" aria-label="Pugilistica Brianza — Home">
+      <img
+        src="/brand/logo.png"
+        alt="Pugilistica Brianza"
+        width="500"
+        height="318"
+        class="h-12 w-auto max-md:h-10"
+        decoding="async"
+        fetchpriority="high"
+      />
     </a>
 
     <!-- Desktop nav -->

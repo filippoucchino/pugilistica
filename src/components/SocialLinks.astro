@@ -1,0 +1,78 @@
+---
+/**
+ * SocialLinks — icone Facebook + Instagram che linkano ai profili della palestra.
+ * Unico posto dove vivono gli SVG: se in futuro aggiungiamo TikTok/YouTube,
+ * il componente si estende qui e si propaga ovunque sia usato.
+ *
+ * Prop `size`:
+ *   - sm → 32x32px (usato nella bottom bar del footer, se servisse di nuovo)
+ *   - md → 40x40px (default, usato nel footer sotto il brand)
+ *   - lg → 48x48px (usato nella pagina contatti, più prominente)
+ *
+ * Prop `label` opzionale: se passata, mostra un'etichetta sopra le icone.
+ */
+import { siteInfo } from "@/data/shared";
+
+interface Props {
+  size?: "sm" | "md" | "lg";
+  label?: string;
+  align?: "start" | "center";
+  class?: string;
+}
+
+const { size = "md", label, align = "start", class: extraClass = "" } = Astro.props;
+
+// Mappa dimensioni box + icona per ogni variante.
+const sizeMap = {
+  sm: { box: "w-8 h-8", icon: "w-3.5 h-3.5" },
+  md: { box: "w-10 h-10", icon: "w-[18px] h-[18px]" },
+  lg: { box: "w-12 h-12", icon: "w-5 h-5" },
+};
+const { box, icon } = sizeMap[size];
+
+const alignClass = align === "center" ? "items-center text-center" : "items-start";
+---
+
+<div class:list={["flex flex-col gap-3", alignClass, extraClass]}>
+  {label && (
+    <span class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint">
+      {label}
+    </span>
+  )}
+  <div class="flex gap-3">
+    <a
+      href={siteInfo.social.facebook}
+      target="_blank"
+      rel="noopener"
+      aria-label="Facebook Pugilistica Brianza"
+      class:list={[
+        box,
+        "border border-pb-border-default rounded-md flex items-center justify-center",
+        "transition-all duration-base ease-default",
+        "hover:border-brand hover:bg-[rgba(196,30,30,0.1)]",
+      ]}
+    >
+      <svg class:list={[icon, "fill-pb-text-muted"]} viewBox="0 0 24 24">
+        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+      </svg>
+    </a>
+    <a
+      href={siteInfo.social.instagram}
+      target="_blank"
+      rel="noopener"
+      aria-label="Instagram Pugilistica Brianza"
+      class:list={[
+        box,
+        "border border-pb-border-default rounded-md flex items-center justify-center",
+        "transition-all duration-base ease-default",
+        "hover:border-brand hover:bg-[rgba(196,30,30,0.1)]",
+      ]}
+    >
+      <svg class:list={[icon, "fill-none stroke-pb-text-muted"]} viewBox="0 0 24 24" stroke-width="2">
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+        <circle cx="17.5" cy="6.5" r=".5" fill="currentColor" />
+      </svg>
+    </a>
+  </div>
+</div>
