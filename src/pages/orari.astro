@@ -1,0 +1,534 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ScheduleTable from "../components/ScheduleTable.astro";
+import PricingCard from "../components/PricingCard.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { siteInfo } from "@/data/shared";
+import {
+  schedule,
+  pricingPlans,
+  scheduleNotes,
+  activityLabels,
+  buildEvents,
+  type ActivityTag,
+} from "@/data/scheduleData";
+
+/* — JSON-LD —
+ * Un unico @graph che contiene:
+ *  1. Un nodo SportsActivityLocation (#gym) con indirizzo, telefono e
+ *     openingHoursSpecification (derivato dagli orari reali del poster).
+ *  2. Un array di Event ricorrenti (uno per tipo di attività) con eventSchedule
+ *     byDay + startTime/endTime, collegati alla location via @id.
+ *
+ * L'helper buildEvents aggrega tutte le righe dello schedule (feriale + sabato)
+ * per ActivityTag così non emettiamo un Event per ogni riga.
+ */
+
+const gymId = `${siteInfo.url}/#gym`;
+
+const mergedEvents = buildEvents();
+
+// Schema.org Event per ogni attività consolidata.
+// startDate/endDate sono l'arco di validità dell'orario: volutamente generoso
+// (tutto l'anno solare). repeatFrequency P1W = ricorrenza settimanale.
+const currentYear = new Date().getFullYear();
+const scheduleStartDate = `${currentYear}-01-01`;
+const scheduleEndDate = `${currentYear}-12-31`;
+
+const eventNodes = mergedEvents.map((evt) => ({
+  "@type": "Event",
+  name: `${evt.name} — Pugilistica Brianza`,
+  description: evt.description,
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  eventStatus: "https://schema.org/EventScheduled",
+  location: { "@id": gymId },
+  organizer: {
+    "@type": "SportsOrganization",
+    name: siteInfo.name,
+    url: siteInfo.url,
+  },
+  // Usiamo il primo slot come orario di riferimento; byDay copre tutti i giorni
+  // in cui l'attività è programmata. Se in futuro servissero più finestre orarie
+  // distinte per la stessa attività, si può estendere mappando slots → array di Schedule.
+  eventSchedule: {
+    "@type": "Schedule",
+    repeatFrequency: "P1W",
+    byDay: evt.byDay.map((d) => `https://schema.org/${d}`),
+    startTime: evt.slots[0]?.start,
+    endTime: evt.slots[0]?.end,
+    startDate: scheduleStartDate,
+    endDate: scheduleEndDate,
+    scheduleTimezone: "Europe/Rome",
+  },
+}));
+
+// SportsActivityLocation con orari di apertura reali della palestra.
+// Lun–Ven 08:00–21:00, Sab 10:00–12:00, Domenica chiusa.
+const locationNode = {
+  "@type": "SportsActivityLocation",
+  "@id": gymId,
+  name: siteInfo.name,
+  url: siteInfo.url,
+  telephone: siteInfo.phone,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: siteInfo.address,
+    addressLocality: siteInfo.city,
+    addressRegion: siteInfo.province,
+    postalCode: siteInfo.cap,
+    addressCountry: "IT",
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "21:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "Saturday",
+      opens: "10:00",
+      closes: "12:00",
+    },
+  ],
+};
+
+const scheduleSchema = {
+  "@context": "https://schema.org",
+  "@graph": [locationNode, ...eventNodes],
+};
+
+// Lista ordinata di ActivityTag per costruire la legenda-filtro sopra la tabella.
+// 6 voci: le combo "BOXE + HYROX" e "BOXE + PB HIIT" non hanno una voce propria —
+// rispondono a "Boxe"+"Hyrox" o "Boxe"+"PB Hiit" perché le loro celle hanno
+// entrambi i tag in data-tags.
+const legendTags: ActivityTag[] = [
+  "boxe",
+  "boxe-agonisti",
+  "kids-boxe",
+  "hyrox",
+  "pb-hiit",
+  "open-gym",
+];
+---
+
+<BaseLayout
+  title="Orari Corsi — Pugilistica Brianza | Boxe, Hyrox, PB Hiit a Barlassina"
+  description="Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB). Lezioni dal lunedì al sabato, prezzi e abbonamenti chiari."
+  schema={scheduleSchema}
+>
+  {/* HERO */}
+  <Hero
+    topline="Orari e prezzi"
+    subtitle="Tutti gli orari dei corsi dal lunedì al sabato: pugilato, Hyrox, PB Hiit, Kids Boxe, Boxe Agonisti e Open Gym. Scegli la fascia che ti viene comoda e vieni a fare una prova."
+    watermark="ORARI"
+    ctaPrimary={{ label: "Prenota una prova gratuita", href: "/prova-gratuita/" }}
+    ctaSecondary={{ label: "Chiamaci", href: siteInfo.phoneHref }}
+  >
+    Orari <span class="text-brand">corsi</span> — Pugilistica Brianza
+  </Hero>
+
+  {/* TABELLA ORARI */}
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Settimana tipo"
+        description="La palestra è aperta dal lunedì al sabato. I corsi seguono fasce orarie fisse: scegli l'orario che preferisci e non serve prenotare, basta presentarsi 5 minuti prima."
+      >
+        Orari settimanali <span class="text-brand">dei corsi</span>
+      </SectionHeading>
+
+      {/* Legenda / filtri — clicca un pulsante per evidenziare le celle di quel
+          tipo di corso. Di default nessun filtro è attivo e tutte le celle sono
+          visibili al 100%. Cliccando uno o più pulsanti, solo le celle che
+          corrispondono restano piene; le altre si attenuano. Senza JavaScript i
+          pulsanti sono statici e la tabella mostra comunque tutto. */}
+      <div
+        id="schedule-filters"
+        class="mb-10 p-card-pad border border-pb-border-default rounded-md bg-surface-card"
+      >
+        <div class="flex items-center justify-between gap-4 mb-4 flex-wrap">
+          <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint">
+            Evidenzia un corso
+          </div>
+          <button
+            type="button"
+            id="schedule-filter-reset"
+            class="pb-btn-text text-xxs tracking-widest uppercase hidden"
+            aria-label="Azzera la selezione dei filtri"
+          >
+            Azzera selezione
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-2.5" role="group" aria-label="Filtri tipo di corso">
+          {legendTags.map((tag) => (
+            <button
+              type="button"
+              class={`pb-filter-pill pb-filter-pill--${tag}`}
+              data-filter-tag={tag}
+              aria-pressed="false"
+            >
+              <span class={`pb-legend-dot pb-legend-dot--${tag}`} aria-hidden="true"></span>
+              {activityLabels[tag]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <ScheduleTable rows={schedule} />
+
+      {/* Nota domenica chiusa */}
+      <p class="mt-8 text-sm text-pb-text-muted leading-normal text-center">
+        {scheduleNotes.closedDay}. Gli orari possono variare durante i periodi festivi —
+        per conferme, chiamaci direttamente.
+      </p>
+    </div>
+  </section>
+
+  {/* PREZZI */}
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Prezzi e abbonamenti"
+        description="Tariffe chiare, senza sorprese. Puoi iniziare con una lezione singola oppure scegliere l'abbonamento mensile del corso che preferisci. Nessun vincolo di durata."
+      >
+        Quanto <span class="text-brand">costa</span>
+      </SectionHeading>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {pricingPlans.map((plan) => (
+          <PricingCard
+            title={plan.title}
+            price={plan.price}
+            period={plan.period}
+            note={plan.note}
+            features={plan.features}
+            ctaLabel={plan.ctaLabel}
+            ctaHref={plan.ctaHref}
+          />
+        ))}
+      </div>
+
+      <p class="mt-8 text-sm text-pb-text-muted leading-normal text-center">
+        {scheduleNotes.annualFee} — una tantum all'inizio della stagione, copre
+        l'assicurazione e il tesseramento FPI.
+      </p>
+    </div>
+  </section>
+
+  {/* INFO PRATICHE */}
+  <section class="pb-section pb-section--alt fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="Prima di iniziare"
+        description="Due cose pratiche da sapere prima di mettere piede in palestra per la prima volta."
+      >
+        Info <span class="text-brand">pratiche</span>
+      </SectionHeading>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-narrow">
+        <div class="p-card-pad-lg border border-pb-border-default rounded-md bg-surface-card">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="shrink-0 w-11 h-11 rounded-md border border-pb-border-default flex items-center justify-center bg-surface-base">
+              <svg
+                class="w-5 h-5 fill-none stroke-brand"
+                style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+            </span>
+            <h3 class="font-display text-display-sm text-pb-text-primary">
+              Certificato medico
+            </h3>
+          </div>
+          <p class="text-base text-pb-text-tertiary leading-normal">
+            {scheduleNotes.medical} Per la prima lezione di prova basta presentarsi:
+            il certificato serve dalla seconda lezione in poi.
+          </p>
+        </div>
+
+        <div class="p-card-pad-lg border border-pb-border-default rounded-md bg-surface-card">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="shrink-0 w-11 h-11 rounded-md border border-pb-border-default flex items-center justify-center bg-surface-base">
+              <svg
+                class="w-5 h-5 fill-none stroke-brand"
+                style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7l3-7z" />
+              </svg>
+            </span>
+            <h3 class="font-display text-display-sm text-pb-text-primary">
+              Convenzione Fisio Medical
+            </h3>
+          </div>
+          <p class="text-base text-pb-text-tertiary leading-normal">
+            {scheduleNotes.fisioMedical}
+          </p>
+          <a
+            href="https://www.fisio-medical.net/"
+            target="_blank"
+            rel="noopener"
+            class="pb-btn-text mt-4 inline-flex items-center gap-1"
+          >
+            Visita fisio-medical.net
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CTA FINALE */}
+  <div>
+    <CtaBlock
+      description="La prima lezione è gratuita e senza impegno. Scegli un orario che ti viene comodo e vieni a provare."
+      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
+      ctaSecondary={{ label: "Chiamaci", href: siteInfo.phoneHref }}
+    >
+      Pronto a <span class="text-brand">iniziare?</span>
+    </CtaBlock>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Filtri sticky su mobile: mentre l'utente scorre l'elenco degli orari,
+   * la barra dei filtri resta ancorata sotto l'header così può cambiare
+   * corso evidenziato senza tornare in cima. Su desktop resta statica. */
+  @media (max-width: 767px) {
+    #schedule-filters {
+      position: sticky;
+      /* Altezza dell'header mobile (60px, vedi tailwind.config.ts). */
+      top: 60px;
+      z-index: 20;
+      /* Rafforza l'opacità del background: la card di default è quasi opaca
+       * ma sotto scorre altro contenuto e non vogliamo trasparenze. */
+      background: #111111;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    /* Compatta il blocco filtri su mobile per ridurne l'altezza quando sticky:
+     * l'etichetta "Evidenzia un corso" scompare visivamente (resta per screen
+     * reader) e i pulsanti hanno gap più stretto. */
+    #schedule-filters > div:first-child {
+      margin-bottom: 10px;
+    }
+    #schedule-filters .text-xxs.uppercase.tracking-widest {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+  }
+
+  /* Pulsanti filtro: cliccabili, toggle di "evidenziazione".
+   * Stato di default = aria-pressed="false" (neutro, cliccabile, non evidenziato).
+   * Stato attivo = aria-pressed="true" (evidenziato, colore acceso).
+   * Quando nessun pulsante è attivo la tabella mostra tutto al 100%;
+   * quando almeno uno lo è, le celle non corrispondenti si attenuano. */
+  .pb-filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+      color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .pb-filter-pill:hover {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .pb-filter-pill:focus-visible {
+    outline: 2px solid #c41e1e;
+    outline-offset: 2px;
+  }
+
+  /* Stato attivo: pulsante selezionato, colore brand acceso */
+  .pb-filter-pill[aria-pressed="true"] {
+    border-color: rgba(196, 30, 30, 0.6);
+    background: rgba(196, 30, 30, 0.12);
+    color: #ffffff;
+  }
+
+  .pb-filter-pill[aria-pressed="true"]:hover {
+    border-color: rgba(196, 30, 30, 0.85);
+    background: rgba(196, 30, 30, 0.18);
+  }
+
+  /* Pallini colorati dentro ai pulsanti — replicano la palette di ScheduleTable
+   * così chi guarda il filtro riconosce subito il codice colore delle celle. */
+  .pb-legend-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    flex-shrink: 0;
+  }
+  .pb-legend-dot--boxe {
+    background: rgba(196, 30, 30, 0.15);
+    border-color: rgba(196, 30, 30, 0.6);
+  }
+  .pb-legend-dot--boxe-agonisti {
+    background: rgba(196, 30, 30, 0.25);
+    border-color: rgba(196, 30, 30, 0.8);
+  }
+  .pb-legend-dot--kids-boxe {
+    background: rgba(234, 179, 8, 0.15);
+    border-color: rgba(234, 179, 8, 0.6);
+  }
+  .pb-legend-dot--hyrox {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.6);
+  }
+  .pb-legend-dot--pb-hiit {
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.6);
+  }
+  .pb-legend-dot--open-gym {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+</style>
+
+{/* Script filtro legenda — progressive enhancement.
+ * Stato iniziale: nessun pulsante selezionato, tutte le celle piene (100%).
+ * Click su un pulsante → lo attiva (aria-pressed="true") e attenua tutte
+ * le celle che non hanno almeno uno dei tag attivi.
+ * Quando il set di attivi torna vuoto → tabella di nuovo tutta visibile.
+ * L'SEO non è impattata: tutto l'HTML della tabella è sempre nel DOM. */}
+<script is:inline>
+  (function () {
+    const filtersContainer = document.getElementById("schedule-filters");
+    if (!filtersContainer) return;
+
+    const pills = Array.from(
+      filtersContainer.querySelectorAll("[data-filter-tag]"),
+    );
+    const resetBtn = document.getElementById("schedule-filter-reset");
+    // Il filtro ora opera sugli SLOT (ciascuno è un singolo corso), non più
+    // sulle celle. Una cella con Boxe+Hyrox ha due slot indipendenti: chi
+    // filtra "Boxe" vede solo la chip Boxe accendersi, quella Hyrox si
+    // attenua/scompare.
+    const slots = Array.from(document.querySelectorAll(".pb-schedule__slot[data-tags]"));
+    const cells = Array.from(document.querySelectorAll(".pb-schedule__cell"));
+    const rows = Array.from(document.querySelectorAll(".pb-schedule__table tbody tr"));
+    const wrappers = Array.from(document.querySelectorAll(".pb-schedule"));
+
+    function getActiveTags() {
+      return new Set(
+        pills
+          .filter((p) => p.getAttribute("aria-pressed") === "true")
+          .map((p) => p.getAttribute("data-filter-tag")),
+      );
+    }
+
+    function applyFilter() {
+      const active = getActiveTags();
+      const noneSelected = active.size === 0;
+
+      // 1) Accendi/attenua/nascondi i singoli slot in base al filtro
+      slots.forEach((slot) => {
+        const tagsAttr = slot.getAttribute("data-tags") || "";
+        // Gli slot "empty" (placeholder "/") restano visibili su desktop;
+        // su mobile vengono nascosti via CSS quando .filter-active è attivo.
+        if (tagsAttr === "empty" || tagsAttr === "") {
+          slot.classList.remove("is-filtered-out");
+          slot.removeAttribute("aria-hidden");
+          return;
+        }
+        const slotTags = tagsAttr.split(" ").filter(Boolean);
+        const highlighted =
+          noneSelected || slotTags.some((t) => active.has(t));
+        slot.classList.toggle("is-filtered-out", !highlighted);
+        // aria-hidden utile soprattutto su mobile (slot display:none) ma
+        // innocuo su desktop (slot al 15% di opacità, comunque poco leggibile).
+        if (!highlighted) {
+          slot.setAttribute("aria-hidden", "true");
+        } else {
+          slot.removeAttribute("aria-hidden");
+        }
+      });
+
+      // 2) Nasconde la cella quando nessuno dei suoi slot "reali" è visibile.
+      // Così su mobile evitiamo di mostrare un <td> con la sola etichetta
+      // del giorno e niente contenuto. Su desktop la classe c'è ma non ha
+      // effetto (il CSS la applica solo sotto 768px).
+      cells.forEach((cell) => {
+        if (noneSelected) {
+          cell.classList.remove("is-cell-hidden");
+          return;
+        }
+        const cellSlots = Array.from(
+          cell.querySelectorAll(".pb-schedule__slot[data-tags]"),
+        );
+        const anyVisible = cellSlots.some((s) => {
+          const t = s.getAttribute("data-tags") || "";
+          if (!t || t === "empty") return false;
+          return !s.classList.contains("is-filtered-out");
+        });
+        cell.classList.toggle("is-cell-hidden", !anyVisible);
+      });
+
+      // 3) Nasconde la riga (fascia oraria) se tutte le sue celle sono
+      // hidden. Anche qui, su desktop la classe è inerte.
+      rows.forEach((row) => {
+        if (noneSelected) {
+          row.classList.remove("is-row-hidden");
+          return;
+        }
+        const rowCells = Array.from(row.querySelectorAll(".pb-schedule__cell"));
+        const anyVisible = rowCells.some(
+          (c) => !c.classList.contains("is-cell-hidden"),
+        );
+        row.classList.toggle("is-row-hidden", !anyVisible);
+      });
+
+      // Flag sul wrapper .pb-schedule: attiva il CSS mobile che nasconde gli
+      // slot "empty" ("/") quando almeno un filtro è selezionato.
+      wrappers.forEach((w) => {
+        w.classList.toggle("filter-active", !noneSelected);
+      });
+
+      // Il bottone "Azzera selezione" appare solo quando almeno un filtro è attivo.
+      if (resetBtn) {
+        resetBtn.classList.toggle("hidden", noneSelected);
+      }
+    }
+
+    pills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        const pressed = pill.getAttribute("aria-pressed") === "true";
+        pill.setAttribute("aria-pressed", pressed ? "false" : "true");
+        applyFilter();
+      });
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        pills.forEach((p) => p.setAttribute("aria-pressed", "false"));
+        applyFilter();
+      });
+    }
+  })();
+</script>

@@ -116,6 +116,7 @@ export const navLinks = [
   { label: "Chi siamo", href: "/chi-siamo/" },
   { label: "FAQ", href: "/faq/" },
   { label: "Contatti", href: "/contatti/" },
+  { label: "Orari", href: "/orari/" },
 ];
 
 /* — Percorsi (subset di navLinks usato nel Footer) — */
@@ -128,6 +129,7 @@ export const courseLinks = [
 
 /* — Info links (subset usato nel Footer) — */
 export const infoLinks = [
+  { label: "Orari", href: "/orari/" },
   { label: "Chi siamo", href: "/chi-siamo/" },
   { label: "FAQ", href: "/faq/" },
   { label: "Contatti", href: "/contatti/" },
@@ -135,12 +137,15 @@ export const infoLinks = [
 ];
 
 /* — Orari — */
+// Orari reali di apertura della palestra (allineati al poster corsi).
+// Lun–Ven aperti dalle 08:00 (Open Gym) alle 21:00, sabato finestra ridotta
+// (10:00–12:00, solo 2 corsi), domenica chiusa.
 export const hours = [
-  { day: "Lunedì", time: "09:00 – 22:00" },
-  { day: "Martedì", time: "09:00 – 22:00" },
-  { day: "Mercoledì", time: "09:00 – 22:00" },
-  { day: "Giovedì", time: "09:00 – 22:00" },
-  { day: "Venerdì", time: "09:00 – 22:00" },
-  { day: "Sabato", time: "09:00 – 18:00" },
+  { day: "Lunedì", time: "08:00 – 21:00" },
+  { day: "Martedì", time: "08:00 – 21:00" },
+  { day: "Mercoledì", time: "08:00 – 21:00" },
+  { day: "Giovedì", time: "08:00 – 21:00" },
+  { day: "Venerdì", time: "08:00 – 21:00" },
+  { day: "Sabato", time: "10:00 – 12:00" },
   { day: "Domenica", time: "Chiuso", closed: true },
 ] as const;

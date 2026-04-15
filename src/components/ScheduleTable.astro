@@ -1,0 +1,417 @@
+---
+/**
+ * Schedule Table — tabella unica degli orari settimanali (Lun–Sab).
+ *
+ * A11y: <th> con `scope` corretto, ogni <td> ha `data-day` per la vista mobile
+ * stacked (l'etichetta del giorno è iniettata via CSS ::before).
+ *
+ * Responsive: sotto i 768px la tabella collassa in una lista verticale grazie a
+ * regole CSS scoped (niente JavaScript, niente scroll orizzontale).
+ */
+
+import type { ScheduleRow } from "@/data/scheduleData";
+import { WEEKDAYS_FULL, WEEKDAYS_SHORT } from "@/data/scheduleData";
+
+interface Props {
+  rows: ScheduleRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<div class="pb-schedule">
+  <table
+    class="pb-schedule__table"
+    aria-label="Orari dei corsi da lunedì a sabato"
+  >
+    <caption class="sr-only">
+      Orari settimanali dei corsi di Pugilistica Brianza
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col" class="pb-schedule__time-head">Orario</th>
+        {WEEKDAYS_FULL.map((day, i) => (
+          <th scope="col" abbr={WEEKDAYS_SHORT[i]}>
+            <span class="hidden md:inline">{day}</span>
+            <span class="md:hidden">{WEEKDAYS_SHORT[i]}</span>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => {
+        // Ricostruisce l'indice del giorno mentre si itera, per assegnare
+        // correttamente data-day (serve alla vista mobile stacked).
+        let dayIndex = 0;
+        return (
+          <tr>
+            <th scope="row" class="pb-schedule__time">{row.time}</th>
+            {row.cells.map((cell) => {
+              const span = cell.colspan ?? 1;
+              // Etichetta giorno per la vista mobile:
+              // - colspan 1 → nome del giorno (es. "Lunedì")
+              // - colspan > 1 → "Lun – Ven" / "Lun – Sab" calcolato dinamicamente
+              //   sulla base dell'indice corrente e dello span della cella.
+              const dayLabel =
+                span > 1
+                  ? `${WEEKDAYS_SHORT[dayIndex]} – ${WEEKDAYS_SHORT[dayIndex + span - 1]}`
+                  : WEEKDAYS_FULL[dayIndex];
+              dayIndex += span;
+
+              // Nel nuovo modello ogni cella ospita un array di attività:
+              // ciascuna diventa uno "slot" indipendente (con colore e target
+              // di filtro propri) affiancato agli altri dentro la stessa cella.
+              // Se `activities` è null o vuoto, la cella è vuota ("/").
+              const activities = cell.activities ?? [];
+              const isEmpty = activities.length === 0;
+              return (
+                <td
+                  colspan={span === 1 ? undefined : span}
+                  data-day={dayLabel}
+                  data-span={span}
+                  class="pb-schedule__cell"
+                >
+                  <div class="pb-schedule__cell-inner">
+                    {isEmpty ? (
+                      <div
+                        class="pb-schedule__slot pb-schedule__slot--empty"
+                        data-tags="empty"
+                        data-primary-tag="empty"
+                      >
+                        <span class="pb-schedule__empty" aria-label="Nessuna lezione">/</span>
+                      </div>
+                    ) : (
+                      activities.map((activity) => (
+                        <div
+                          class="pb-schedule__slot"
+                          data-tags={activity.tags.join(" ")}
+                          data-primary-tag={activity.tags[0]}
+                        >
+                          <span class="pb-schedule__label">{activity.label}</span>
+                          {activity.note && (
+                            <small class="pb-schedule__note">{activity.note}</small>
+                          )}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </td>
+              );
+            })}
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+
+</div>
+
+<style>
+  /* Wrapper e layout base */
+  .pb-schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .pb-schedule__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 6px;
+    table-layout: fixed;
+  }
+
+  /* Header (giorni) */
+  .pb-schedule__table thead th {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.85);
+    text-transform: uppercase;
+    padding: 14px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+    text-align: center;
+    font-weight: 400;
+  }
+
+  /* Cella orario (colonna sinistra) */
+  .pb-schedule__time-head {
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif !important;
+    font-size: 13px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.15em !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+    background: transparent !important;
+    border: none !important;
+    font-weight: 600 !important;
+  }
+
+  .pb-schedule__time {
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #c41e1e;
+    text-align: right;
+    padding: 12px 16px 12px 0;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    width: 130px;
+  }
+
+  /* Celle dati — SOLO contenitore strutturale.
+   * Tutto lo styling visivo (bg, border, pillola) è sulle .pb-schedule__slot:
+   * una cella può ospitare 1 o più slot affiancati (es. Boxe + Hyrox in
+   * parallelo nello stesso orario). */
+  .pb-schedule__cell {
+    padding: 0;
+    background: transparent;
+    border: none;
+    vertical-align: middle;
+  }
+
+  /* Inner wrapper: flex row che affianca gli slot dentro la cella.
+   * Con un solo slot la cella sembra identica al vecchio layout a pillola;
+   * con 2+ slot, le pillole si distribuiscono equamente in larghezza. */
+  .pb-schedule__cell-inner {
+    display: flex;
+    align-items: stretch;
+    gap: 4px;
+    width: 100%;
+  }
+
+  /* Slot: la pillola visiva — prima viveva sulla cella, ora sta qui così
+   * ogni corso ha la sua identità grafica e riceve il filtro in modo
+   * indipendente dagli altri nello stesso orario. */
+  .pb-schedule__slot {
+    flex: 1 1 0;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* Radius contenuto: le slot possono diventare strette con 6 colonne, un
+     * 9999px le farebbe sembrare cerchi deformati. 10px dà l'effetto "card"
+     * con angoli addolciti. */
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition:
+      border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .pb-schedule__slot:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .pb-schedule__label {
+    display: block;
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+
+  .pb-schedule__note {
+    display: block;
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+  }
+
+  .pb-schedule__empty {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 18px;
+  }
+
+  /* Colorazione per tag (bordo colorato sullo slot).
+   * Ogni slot ha un solo tag, quindi il "primary tag" coincide con l'unico
+   * tag della sua attività. */
+  .pb-schedule__slot[data-primary-tag="open-gym"] {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .pb-schedule__slot[data-primary-tag="boxe"] {
+    border-color: rgba(196, 30, 30, 0.35);
+  }
+  .pb-schedule__slot[data-primary-tag="boxe-agonisti"] {
+    border-color: rgba(196, 30, 30, 0.5);
+    background: rgba(196, 30, 30, 0.05);
+  }
+  .pb-schedule__slot[data-primary-tag="kids-boxe"] {
+    border-color: rgba(234, 179, 8, 0.4);
+  }
+  .pb-schedule__slot[data-primary-tag="hyrox"] {
+    border-color: rgba(59, 130, 246, 0.4);
+  }
+  .pb-schedule__slot[data-primary-tag="pb-hiit"] {
+    border-color: rgba(168, 85, 247, 0.4);
+  }
+  .pb-schedule__slot[data-primary-tag="empty"] {
+    background: transparent;
+    border-style: dashed;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Stato "filtrato fuori": slot attenuato ma ancora al suo posto.
+   * Applicato via JavaScript in orari.astro quando nessuno dei tag dello
+   * slot corrisponde ai filtri attivi nella legenda. Su mobile il comportamento
+   * cambia in display:none (vedi @media sotto) per evitare liste sbiadite. */
+  .pb-schedule__slot.is-filtered-out {
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  /* Caption nascosta visivamente ma presente per screen reader */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ========================================
+     MOBILE STACKED VIEW (< 768px)
+     La tabella collassa in una lista verticale: ogni fascia oraria
+     diventa un blocco con le celle impilate. L'etichetta del giorno
+     è iniettata via data-day per mantenere il contesto.
+     ======================================== */
+  @media (max-width: 767px) {
+    .pb-schedule__table {
+      border-spacing: 0;
+      display: block;
+    }
+
+    .pb-schedule__table thead {
+      /* Nasconde l'header tabellare: la tabella non è più una griglia */
+      display: none;
+    }
+
+    .pb-schedule__table tbody {
+      display: block;
+    }
+
+    .pb-schedule__table tbody tr {
+      display: block;
+      margin-bottom: 24px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .pb-schedule__time {
+      display: block;
+      text-align: left;
+      padding: 0 0 12px 0;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      width: auto;
+      font-size: 14px;
+    }
+
+    /* Su mobile la cella torna ad avere styling proprio: diventa una riga
+     * con etichetta giorno a sinistra e, a destra, gli slot affiancati. */
+    .pb-schedule__cell {
+      display: flex;
+      align-items: center;
+      text-align: left;
+      border-radius: 4px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .pb-schedule__cell:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Etichetta giorno iniettata via CSS — tutti i dati per lo screen reader
+     * sono già presenti nell'attributo data-day sui <td>. */
+    .pb-schedule__cell::before {
+      content: attr(data-day);
+      font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-right: 10px;
+      flex-shrink: 0;
+      min-width: 70px;
+    }
+
+    /* Inner wrapper: riempie lo spazio a destra del data-day con gli slot
+     * affiancati orizzontalmente. Con 2 slot si divide in due chip strette. */
+    .pb-schedule__cell-inner {
+      flex: 1;
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+      align-items: stretch;
+    }
+
+    /* Slot su mobile: chip compatte, padding ridotto. Mantengono bordo
+     * colorato per rendere immediato il tipo di corso anche senza filtro. */
+    .pb-schedule__slot {
+      padding: 6px 12px;
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+
+    .pb-schedule__label {
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .pb-schedule__note {
+      text-align: center;
+    }
+
+    /* Celle colspan=5 (OPEN GYM attraverso tutta la settimana) */
+    .pb-schedule__cell[data-span="5"] {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Tabella sabato: stesso layout stacked */
+    .pb-schedule__table--saturday {
+      max-width: none;
+    }
+
+    /* Filtro aggressivo in mobile.
+     * Su desktop gli slot non corrispondenti al filtro si attenuano al 15%
+     * (vedi regola .is-filtered-out sopra); su mobile la vista è verticale
+     * e scorrere una lista sbiadita è faticoso. Qui invece: lo slot filtrato
+     * scompare, la cella senza slot visibili scompare a sua volta, e così
+     * la riga-fascia oraria se nessuna cella le resta. Le celle "/" (empty)
+     * si nascondono quando almeno un filtro è attivo.
+     * display:none è interpretato da Google come contenuto condizionale
+     * (non cloaking): l'HTML completo è sempre presente al page load. */
+    .pb-schedule__slot.is-filtered-out {
+      display: none;
+    }
+    .pb-schedule__cell.is-cell-hidden {
+      display: none;
+    }
+    .pb-schedule__table tbody tr.is-row-hidden {
+      display: none;
+    }
+    .pb-schedule.filter-active .pb-schedule__slot[data-tags="empty"] {
+      display: none;
+    }
+  }
+</style>
