@@ -302,12 +302,13 @@ La pagina mostra orari dei corsi, prezzi e info pratiche. Tre file chiave:
 
 - **`src/data/scheduleData.ts`** — single source of truth per orari, attività, prezzi, note.
   Esporta `schedule` (array di `ScheduleRow`, 9 righe × 6 colonne Lun–Sab), `pricingPlans`,
-  `scheduleNotes`, `activityLabels`, `buildEvents()` (genera nodi JSON-LD).
+  `scheduleNotes`, `activityLabels`, `buildEvents()` (genera `RecurringEvent[]` con mappatura
+  precisa slot→giorni, es. Boxe 09:00-10:00 → Lun/Mer/Ven).
   Un'assertion a build-time verifica che `sum(colspan) === 6` per ogni riga.
 - **`src/components/ScheduleTable.astro`** — renderizza una tabella HTML semantica unica
   (`<table>` con `<th scope>`, `<caption>`, `aria-label`).
 - **`src/pages/orari.astro`** — compone la pagina, include filtri e JSON-LD
-  (`@graph` con `SportsActivityLocation` + un `Event` per ogni tipo di attività).
+  (usa `buildScheduleEvents()` da `schema.ts` per generare Event con orari precisi).
 
 ### Modello dati: slot paralleli
 
@@ -388,9 +389,9 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 
 - **File centrale**: `src/data/schema.ts` — esporta builder (`buildGym`, `buildCourse`,
   `buildBreadcrumb`, `buildFaqPage`, `buildVideo`, `buildPerson`, `buildService`,
-  `buildWebSite`, `buildWebPage`, `buildFreeTrialOffer`, `buildPageSchema`, `buildGymRef`)
-  e interfacce TypeScript (`FaqItem`, `BreadcrumbItem`, `CoachRef`, `CourseSchemaOpts`,
-  `VideoSchemaOpts`, `PersonSchemaOpts`, `ServiceSchemaOpts`).
+  `buildWebSite`, `buildWebPage`, `buildFreeTrialOffer`, `buildScheduleEvents`,
+  `buildPageSchema`, `buildGymRef`) e interfacce TypeScript (`FaqItem`, `BreadcrumbItem`,
+  `CoachRef`, `CourseSchemaOpts`, `VideoSchemaOpts`, `PersonSchemaOpts`, `ServiceSchemaOpts`).
 - **Pattern @graph**: ogni pagina usa `buildPageSchema(...nodi)` che wrappa i nodi in
   `{ "@context": "https://schema.org", "@graph": [...] }`.
 - **Collegamento via @id**: le entità si referenziano con `@id` stabili:
@@ -408,9 +409,9 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 | Pagina | Tipi principali |
 |--------|----------------|
 | `/` | WebSite, SportsActivityLocation (full), WebPage, FAQPage, Offer |
-| `/pugilato/` | Course, VideoObject, FAQPage, BreadcrumbList |
-| `/hyrox/` | Course, VideoObject, FAQPage, BreadcrumbList |
-| `/pb-hiit/` | Course, VideoObject, FAQPage, BreadcrumbList |
+| `/pugilato/` | Course, VideoObject, FAQPage, Event ×3 (Boxe/Kids/Agonisti), BreadcrumbList |
+| `/hyrox/` | Course, VideoObject, FAQPage, Event ×1, BreadcrumbList |
+| `/pb-hiit/` | Course, VideoObject, FAQPage, Event ×1, BreadcrumbList |
 | `/lezioni-private-pugilato/` | Service, FAQPage, BreadcrumbList |
 | `/chi-siamo/` | AboutPage, Person ×5, BreadcrumbList |
 | `/faq/` | FAQPage (15 items), BreadcrumbList |
@@ -427,6 +428,8 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 4. Includi sempre `buildBreadcrumb([...])` (tranne homepage).
 5. Se la pagina ha FAQ, includi `buildFaqPage(items, slug)` — **non** usare
    `withSchema` su `FaqAccordion` (la prop non esiste più).
+6. Se la pagina è un corso con orari, includi `...buildScheduleEvents(["tag"])` per
+   aggiungere Event con mappatura precisa slot→giorni (letti da `scheduleData.ts`).
 
 ## Comandi
 
@@ -538,10 +541,12 @@ Ultimo aggiornamento: 2026-04-16
 - Hosting configurato su Vercel (deploy automatico da GitHub, dominio `pugilistica.vercel.app`)
 
 - Dati strutturati Schema.org completi su tutte le 11 pagine (copertura 100%):
-  `src/data/schema.ts` con 12 builder TypeScript centralizzati, pattern @graph con @id
+  `src/data/schema.ts` con 13 builder TypeScript centralizzati, pattern @graph con @id
   coerenti tra le pagine. Tipi: WebSite, SportsActivityLocation, WebPage, Course,
   VideoObject, FAQPage, Service, Offer, Person, BreadcrumbList, Event, AboutPage,
   ContactPage. Tutto nel `<head>` via BaseLayout (rimosso JSON-LD dal body di FaqAccordion).
+  Event con mappatura precisa slot→giorni (es. Boxe 09:00-10:00 Lun/Mer/Ven, non
+  "Lun-Sab 09:00"). Pagine corso includono Event filtrati per i propri tag.
   Eleggibili per Rich Results: Local Business, FAQ, Course, Video, Breadcrumb, Review.
 
 ### In corso
