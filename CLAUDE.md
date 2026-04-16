@@ -16,7 +16,8 @@ ai potenziali iscritti di prenotare una prova gratuita.
 - **Font**: Bebas Neue (display) + Barlow (body) — caricati da Google Fonts via `<link>` in `BaseLayout.astro` (con preconnect)
 - **Dati**: `src/data/shared.ts` (info sede, orari, nav links, zone servite, trust items) + `src/data/schema.ts` (builder JSON-LD Schema.org)
 - **CMS**: nessuno (contenuti statici nelle pagine e in `shared.ts`)
-- **Hosting**: non ancora configurato
+- **Hosting**: Vercel (deploy automatico da GitHub)
+- **Sitemap**: generata automaticamente da `@astrojs/sitemap` a build-time
 - **Package manager**: npm
 
 ## Struttura cartelle
@@ -24,6 +25,7 @@ ai potenziali iscritti di prenotare una prova gratuita.
 ```
 pugilistica/
 ├── public/
+│   ├── robots.txt                     ← regole crawler + puntamento sitemap
 │   └── favicon.svg                    ← asset statici serviti direttamente
 ├── src/
 │   ├── components/                    ← 23 componenti .astro riutilizzabili
@@ -549,10 +551,14 @@ Ultimo aggiornamento: 2026-04-16
   "Lun-Sab 09:00"). Pagine corso includono Event filtrati per i propri tag.
   Eleggibili per Rich Results: Local Business, FAQ, Course, Video, Breadcrumb, Review.
 
+- SEO: `robots.txt` + sitemap XML per indicizzazione motori di ricerca.
+  `public/robots.txt` consente tutti i crawler (`Allow: /`) e punta alla sitemap.
+  `@astrojs/sitemap` genera `sitemap-index.xml` + `sitemap-0.xml` a build-time con
+  tutte le 11 pagine (inclusa privacy-policy). URL base da `site` in `astro.config.mjs`.
+
 ### In corso
 - Nessuna attività in corso
 
 ### Prossimo step
-- Valutare blocco indicizzazione (`robots.txt` + meta `noindex` in `BaseLayout`) finché il sito non è pronto per il pubblico
 - Verificare la leggibilità del favicon a 16×16 (il pugile ha molti dettagli): se non si distingue,
   valutare una versione semplificata o un monogramma "PB" per le dimensioni piccole
