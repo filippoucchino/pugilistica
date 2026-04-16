@@ -9,6 +9,11 @@
 
 RewriteEngine On
 
+# --- Redirect www → non-www (dominio canonico: pugilisticabrianza.it) ---
+# Chi arriva su www.pugilisticabrianza.it viene rediretto 301 alla versione senza www
+RewriteCond %{HTTP_HOST} ^www\.pugilisticabrianza\.it [NC]
+RewriteRule ^(.*)$ https://pugilisticabrianza.it/$1 [R=301,L]
+
 # Se il file richiesto esiste già, servilo direttamente
 RewriteCond %{REQUEST_FILENAME} !-f
 

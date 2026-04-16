@@ -18,6 +18,9 @@ ai potenziali iscritti di prenotare una prova gratuita.
 - **CMS**: nessuno (contenuti statici nelle pagine e in `shared.ts`)
 - **Hosting produzione**: Aruba (sito statico su Apache, upload manuale di `dist/`)
 - **Hosting demo**: Vercel (deploy automatico da GitHub, `pugilistica.vercel.app`)
+- **Dominio canonico**: `pugilisticabrianza.it` (senza `www.`). Il `.htaccess` redirige 301
+  `www.pugilisticabrianza.it` → `pugilisticabrianza.it`. Il campo `site` in `astro.config.mjs`
+  usa lo stesso dominio senza www, così canonical, sitemap e JSON-LD sono coerenti.
 - **Sitemap**: generata automaticamente da `@astrojs/sitemap` a build-time
 - **Package manager**: npm
 
@@ -587,6 +590,11 @@ Ultimo aggiornamento: 2026-07-14
 
 - Pagina prova-gratuita: aggiunto spazio (div wrapper con `mb-8`) tra il box
   "Quando: le prove gratuite..." e il bottone "Scrivimi su WhatsApp"
+
+- Dominio canonico senza www: aggiunta regola RewriteRule nel `.htaccess` che redirige
+  301 da `www.pugilisticabrianza.it` a `pugilisticabrianza.it`. La config Astro (`site`
+  in `astro.config.mjs`) era già impostata senza www, quindi canonical, sitemap e JSON-LD
+  sono coerenti. Risolve i 301 non-www→www trovati in Screaming Frog.
 
 ### In corso
 - Nessuna attività in corso
