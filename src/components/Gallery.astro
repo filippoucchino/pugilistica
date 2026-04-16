@@ -9,12 +9,19 @@
  * Griglia responsive: 3 colonne desktop, 2 tablet, 1 mobile.
  * Se nessuna immagine è passata, mostra placeholder.
  *
+ * src accetta sia stringhe URL (es. "/images/foto.jpg") sia ImageMetadata
+ * (import da src/assets/). Con ImageMetadata Astro ottimizza automaticamente
+ * l'immagine: conversione WebP, width/height espliciti, compressione.
+ *
  * A11y: <button> per i thumb (focus + Invio), dialog modale con focus trap,
  * aria-label sui controlli, aria-live sul contatore, tastiera (← →, Esc).
  */
 
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
 interface GalleryImage {
-  src: string;
+  src: ImageMetadata | string;
   alt: string;
 }
 
@@ -43,12 +50,22 @@ const items: (GalleryImage | null)[] = hasImages
           data-index={i}
           aria-label={`Ingrandisci: ${item.alt}`}
         >
-          <img
-            src={item.src}
-            alt={item.alt}
-            class="pb-gallery__thumb-img"
-            loading="lazy"
-          />
+          {typeof item.src === "string" ? (
+            <img
+              src={item.src}
+              alt={item.alt}
+              class="pb-gallery__thumb-img"
+              loading="lazy"
+            />
+          ) : (
+            <Image
+              src={item.src}
+              alt={item.alt}
+              class="pb-gallery__thumb-img"
+              loading="lazy"
+              quality={80}
+            />
+          )}
         </button>
       ) : (
         <div class="pb-gallery__placeholder">
@@ -106,7 +123,7 @@ const items: (GalleryImage | null)[] = hasImages
   /* ===== GRIGLIA ===== */
   .pb-gallery__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
 

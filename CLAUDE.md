@@ -26,7 +26,7 @@ pugilistica/
 ├── public/
 │   └── favicon.svg                    ← asset statici serviti direttamente
 ├── src/
-│   ├── components/                    ← 22 componenti .astro riutilizzabili
+│   ├── components/                    ← 23 componenti .astro riutilizzabili
 │   │   ├── Header.astro               ← navbar fixed + menu mobile
 │   │   ├── Footer.astro               ← footer 4 colonne
 │   │   ├── Hero.astro                 ← hero sezione con topline + watermark
@@ -35,16 +35,19 @@ pugilistica/
 │   │   ├── CoachBlock.astro           ← card coach
 │   │   ├── FaqAccordion.astro         ← accordion FAQ con JSON-LD
 │   │   ├── TrustBar.astro             ← barra affidabilità sotto hero
-│   │   ├── LocalSection.astro         ← info sede + mappa
+│   │   ├── LocalSection.astro         ← info sede + mappa (delega a MapFacade)
+│   │   ├── MapFacade.astro            ← facade pattern per Google Maps
 │   │   ├── PricingCard.astro          ← box abbonamento
 │   │   ├── ReviewCard.astro           ← recensione Google
 │   │   ├── FormField.astro            ← input / select / textarea
+│   │   ├── ScheduleTable.astro         ← tabella orari Lun–Sab con slot paralleli
 │   │   └── ...                        ← e altri componenti di supporto
 │   ├── data/
-│   │   └── shared.ts                  ← dati condivisi (siteInfo, trustItems, zones, hours, navLinks, ecc.)
+│   │   ├── shared.ts                  ← dati condivisi (siteInfo, trustItems, zones, hours, navLinks, ecc.)
+│   │   └── scheduleData.ts            ← orari, attività, prezzi, builder JSON-LD per /orari/
 │   ├── layouts/
 │   │   └── BaseLayout.astro           ← layout unico: head, SEO, Header, slot, Footer, scroll reveal
-│   ├── pages/                         ← 9 pagine, una per URL
+│   ├── pages/                         ← 10 pagine, una per URL
 │   │   ├── index.astro
 │   │   ├── pugilato.astro
 │   │   ├── hyrox.astro
@@ -53,6 +56,7 @@ pugilistica/
 │   │   ├── chi-siamo.astro
 │   │   ├── faq.astro
 │   │   ├── contatti.astro
+│   │   ├── orari.astro
 │   │   └── prova-gratuita.astro
 │   └── styles/
 │       └── global.css                 ← Tailwind directives + classi custom pb-*
@@ -73,6 +77,7 @@ pugilistica/
 - `/chi-siamo/` — Storia, filosofia, coach
 - `/faq/` — Domande frequenti (3 gruppi: generali, pratiche, corsi)
 - `/contatti/` — Contatti, mappa, orari
+- `/orari/` — Orari corsi (tabella Lun–Sab con filtri), prezzi, info pratiche
 - `/prova-gratuita/` — Landing con form di prenotazione
 
 ## Convenzioni
@@ -86,6 +91,62 @@ pugilistica/
 - **Path alias**: usa `@/data/shared` invece di path relativi lunghi (alias `@/*` → `src/*` già configurato in `tsconfig.json`)
 - **Single source of truth**: dati condivisi (sede, orari, nav) vivono **solo** in `src/data/shared.ts` — non ridichiarare inline nelle pagine
 - **Classi custom**: le classi `pb-*` (container, section, btn, topline, ecc.) sono definite in `src/styles/global.css` — usale al posto di ripetere catene lunghe di utility Tailwind
+
+## Gestione immagini (Gallery)
+
+Il componente `Gallery.astro` mostra thumbnail quadrate con lightbox nativo (`<dialog>`).
+
+- **Formato**: le foto possono avere qualsiasi aspect ratio (16:9, 9:16, ecc.). La griglia le
+  mostra come quadrati (`aspect-ratio: 1/1`, `object-fit: cover`). Al click il lightbox mostra
+  l'immagine intera (`object-fit: contain`).
+- **Griglia responsive**: 4 colonne desktop, 2 tablet, 1 mobile.
+- **Numero flessibile**: il componente accetta un array di lunghezza arbitraria. Se nessuna
+  immagine è passata, mostra placeholder.
+- **`src` accetta `ImageMetadata | string`**: le immagini in `src/assets/` vanno importate
+  come ES module e passate direttamente. Con `ImageMetadata` il componente usa `<Image>`
+  di Astro per ottimizzazione automatica (WebP, `width`/`height`, `quality={80}`).
+  Per URL statiche da `public/` si può ancora passare una stringa.
+- **Come passare le immagini** dalla pagina (metodo preferito, con ottimizzazione Astro):
+  ```astro
+  import foto from "../assets/images/pugilato/nome-file.jpg";
+  // ...
+  <Gallery images={[
+    { src: foto, alt: "Descrizione per SEO" },
+  ]} />
+  ```
+- **SEO immagini**: `alt` descrittivo obbligatorio, `loading="lazy"` automatico, nomi file
+  parlanti (es. `allenamento-boxe-pugilistica-brianza.jpg`).
+
+### Dove vivono le foto
+
+Le foto della gallery vivono in `src/assets/images/` organizzate per corso:
+
+```
+src/assets/images/
+├── bio/             ← foto coach (stefano-rizzo.jpg, moreno-bragato.jpg, ecc.)
+├── pugilato/        ← 8 foto gallery pagina pugilato + riusate nella home
+├── hyrox/           ← 8 foto gallery pagina hyrox
+└── pb-hiit/         ← 5 foto gallery pagina pb-hiit
+```
+
+La home page riusa un mix di 8 foto dalle tre cartelle (non ha una cartella dedicata).
+
+### Convenzione nomi file immagini
+
+`<soggetto>-<contesto>-<corso>-pugilistica-brianza.jpg`
+
+Esempi: `circuito-gruppo-pb-hiit-pugilistica-brianza.jpg`,
+`ring-boxe-pugilistica-brianza-barlassina.jpg`,
+`sled-push-allenamento-hyrox-pugilistica-brianza.jpg`.
+
+### Come aggiungere nuove foto a una gallery
+
+1. Metti il `.jpg` nella cartella corretta dentro `src/assets/images/<corso>/`.
+2. Rinomina con la convenzione sopra. Ridimensiona a ~1600px di lato lungo se l'originale
+   è più grande (usa ffmpeg: `-vf "scale=1600:-1:flags=lanczos" -q:v 4`).
+3. Nella pagina `.astro`, importa con `import nome from "../assets/images/<corso>/file.jpg";`
+4. Aggiungi `{ src: nome, alt: "Descrizione" }` all'array `images` della `<Gallery>`.
+5. `npm run build` per verificare (Astro converte in WebP e aggiunge width/height).
 
 ## Gestione video (sezione "Che cos'è il [corso]?")
 
@@ -228,6 +289,46 @@ Note pratiche:
 - I tag `<img>` in `Header.astro` e `Footer.astro` hanno `width="500" height="318"` espliciti per evitare layout shift: se cambi le proporzioni del logo sorgente, aggiorna anche questi due attributi.
 - **`favicon.ico` non viene generato**: ffmpeg non lo supporta nativamente e i browser moderni accettano i PNG. Se in futuro serve supporto IE/legacy, va aggiunto con ImageMagick.
 
+## Pagina Orari (`/orari/`)
+
+La pagina mostra orari dei corsi, prezzi e info pratiche. Tre file chiave:
+
+- **`src/data/scheduleData.ts`** — single source of truth per orari, attività, prezzi, note.
+  Esporta `schedule` (array di `ScheduleRow`, 9 righe × 6 colonne Lun–Sab), `pricingPlans`,
+  `scheduleNotes`, `activityLabels`, `buildEvents()` (genera nodi JSON-LD).
+  Un'assertion a build-time verifica che `sum(colspan) === 6` per ogni riga.
+- **`src/components/ScheduleTable.astro`** — renderizza una tabella HTML semantica unica
+  (`<table>` con `<th scope>`, `<caption>`, `aria-label`).
+- **`src/pages/orari.astro`** — compone la pagina, include filtri e JSON-LD
+  (`@graph` con `SportsActivityLocation` + un `Event` per ogni tipo di attività).
+
+### Modello dati: slot paralleli
+
+Una cella (`ScheduleCell`) contiene `activities: Activity[] | null`. Quando due corsi
+avvengono nella stessa fascia/giorno (es. Boxe e Hyrox alle 09:00 di lunedì), la cella
+ha due attività nell'array. Ciascuna viene renderizzata come un `<div class="pb-schedule__slot">`
+indipendente, **affiancato orizzontalmente** all'altro dentro la stessa `<td>`.
+Ogni slot ha il suo `data-tags` e `data-primary-tag` per colore e filtro.
+
+### Filtro per corso
+
+Pulsanti pill sopra la tabella (`pb-filter-pill`), uno per `ActivityTag` (6 tipi).
+Script `<script is:inline>` in `orari.astro` — progressive enhancement, senza JS la
+tabella mostra tutto.
+
+| Viewport | Comportamento filtro |
+|----------|---------------------|
+| Desktop (≥768px) | Slot non corrispondenti → `opacity: 0.15` (attenuazione) |
+| Mobile (<768px) | Slot → `display: none`; celle senza slot → `display: none`; righe senza celle → `display: none`. Barra filtri `position: sticky` sotto l'header (top 60px) |
+
+### Come aggiungere/modificare un orario
+
+1. Modifica solo `src/data/scheduleData.ts` (array `schedule`).
+2. La somma dei colspan per riga deve restare 6 — altrimenti il build fallisce.
+3. Per aggiungere un nuovo tipo di corso: aggiungi un `ActivityTag`, una voce in `ACTIVITIES`,
+   una in `activityLabels`, una in `activityDescriptions`, e un `legendTag` in `orari.astro`.
+4. `npm run build` per verificare.
+
 ## Form di contatto (Web3Forms)
 
 Il form su `/contatti/` è gestito via [Web3Forms](https://web3forms.com): POST a
@@ -242,6 +343,22 @@ sul loro account. Niente backend, sito resta statico.
   il submit, manda via `fetch` e mostra successo/errore **inline** (niente redirect,
   niente `alert`). Selettori: `#contact-form`, `#contact-submit`, `#contact-success`, `#contact-error`.
 - Piano free Web3Forms: 250 invii/mese.
+
+## Mappa Google (facade pattern)
+
+La mappa di Google Maps è implementata con il **facade pattern**: al primo
+caricamento la pagina mostra un'immagine statica leggera (PNG da tile OSM,
+`public/images/map-pugilistica-brianza.png`, 1200×750 px) con un bottone "Apri
+mappa". L'iframe pesante di Google (~500 KB di JS + cookie) viene caricato
+**solo al click** dell'utente.
+
+- **Componente**: `src/components/MapFacade.astro` — usato da `LocalSection.astro`.
+- **Single source of truth**: URL embed, URL esterno e path immagine vivono in
+  `siteInfo.mapEmbedUrl`, `siteInfo.mapExternalUrl`, `siteInfo.mapPreviewSrc`
+  dentro `src/data/shared.ts`.
+- **Fallback**: `<noscript>` con iframe reale + link testuale "Apri in Google Maps" sempre visibile.
+- **Se cambia la sede**: aggiorna i 3 campi in `shared.ts` e rigenera l'immagine
+  statica (script Node one-off con `sharp` + tile OSM, vedi commit `fd7d8bd`).
 
 ### Attributi del tag `<video>` (già gestiti dal componente)
 
@@ -274,20 +391,21 @@ nel sorgente — non serve rifarlo manualmente:
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-04-15
+Ultimo aggiornamento: 2026-04-16
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
 - Design system completo in `tailwind.config.ts` (colori brand/surface/pb, tipografia Bebas Neue/Barlow, spacing semantici, grid templates custom)
 - `src/styles/global.css` con classi riutilizzabili `pb-*` (container, section, btn, topline, divider, hero-glow, hero-watermark, fade-up)
-- 22 componenti riutilizzabili in `src/components/`
+- 23 componenti riutilizzabili in `src/components/`
 - Layout unico `BaseLayout.astro` con SEO meta, Open Graph, canonical, slot per JSON-LD, IntersectionObserver per scroll reveal
-- 9 pagine create e funzionanti, con JSON-LD `FAQPage` sui FAQ e `SportsActivityLocation` sulla home
-- `src/data/shared.ts` come single source of truth (siteInfo, trustItems, localDetails, zones, navLinks, courseLinks, infoLinks, hours)
+- 10 pagine create e funzionanti, con JSON-LD `FAQPage` sui FAQ e `SportsActivityLocation` sulla home
+- `src/data/shared.ts` come single source of truth (siteInfo, trustItems, localDetails, zones, navLinks, courseLinks, infoLinks, hours, reviews, reviewAggregation)
+- `src/data/scheduleData.ts` come single source of truth per orari corsi, attività, prezzi della pagina `/orari/`
 - Header e Footer collegati a `shared.ts`, tutte le pagine deduplicate per dati comuni
 - Encoding UTF-8 corretto in tutti i file (à, è, ì, ò, ù, é, €, —, →)
 - `npm install` completato
-- Build di produzione verificata: 0 errori, 0 warning, 9 pagine generate in `dist/`
+- Build di produzione verificata: 0 errori, 0 warning, 10 pagine generate in `dist/`
 - Repo Git inizializzato, primo commit, branch rinominato in `main`, push su https://github.com/filippoucchino/pugilistica
 - Video verticale aggiunto alla pagina `/pugilato/` nella sezione "Che cos'è il Pugilato?":
   `DefinitionGrid.astro` esteso con prop `video` opzionale (layout 2 colonne su lg+, stack con video sopra su mobile);
@@ -310,12 +428,33 @@ Ultimo aggiornamento: 2026-04-15
   pugile tricolore, set completo (16/32/180/192/512), `site.webmanifest`, `og-image.jpg`
   1200×630 per anteprime social, `theme-color` e Twitter Card in `BaseLayout`
 - JSON-LD `SportsActivityLocation` della home arricchito con `logo`, `image`, `telephone`, `sameAs`
+- Recensioni home: 10 recensioni reali dal GBP in slider CSS scroll-snap orizzontale
+  (frecce prev/next, swipe nativo su mobile, scrollbar nascosta); `ReviewCard` usa
+  HTML semantico (`<figure>`, `<blockquote>`, `<cite>`, `aria-label` sulle stelle);
+  JSON-LD arricchito con `aggregateRating` (5.0 su 74 recensioni) e array `review`
+- Mappa Google Maps integrata su tutte e 8 le pagine con `LocalSection` tramite
+  facade pattern (`MapFacade.astro`): immagine statica OSM al primo load, iframe
+  Google solo al click. URL mappa centralizzati in `siteInfo` (`shared.ts`)
+- Pagina `/orari/` con tabella unica Lun–Sab, filtri per corso, prezzi e info pratiche.
+  Tabella: `ScheduleTable.astro` renderizza 6 colonne; celle con corsi paralleli (es. Boxe + Hyrox)
+  mostrano slot affiancati orizzontalmente, ognuno con tag e colore propri.
+  Filtri: pill toggle per `ActivityTag`, su desktop attenuano (opacity 15%), su mobile nascondono
+  (display:none a 3 livelli: slot → cella → riga) + barra filtri sticky sotto header.
+  Dati in `scheduleData.ts`, assertion build-time su colspan, JSON-LD Event + SportsActivityLocation
+
+- Gallery con foto reali su 4 pagine (home, pugilato, hyrox, pb-hiit):
+  componente `Gallery.astro` aggiornato per supportare `ImageMetadata` di Astro (import ES
+  module → `<Image>` con conversione WebP automatica, width/height, quality 80);
+  griglia portata a 4 colonne desktop, 2 tablet, 1 mobile.
+  Foto organizzate in `src/assets/images/{pugilato,hyrox,pb-hiit}/` con nomi SEO-friendly.
+  Originali ridimensionati a ~1600px max, ritagliati/compressi dove necessario via ffmpeg.
+  Home riusa un mix di 8 foto dalle tre cartelle.
+  Totale: 21 foto in gallery (8 home, 8 pugilato, 8 hyrox, 5 pb-hiit — alcune condivise)
 
 ### In corso
 - Nessuna attività in corso
 
 ### Prossimo step
-- Sostituire i placeholder con asset reali: foto coach, gallery palestra, mappa Google embed
 - Scegliere hosting e configurare il deploy automatico da GitHub (Vercel, Netlify o GitHub Pages + Action)
 - Valutare blocco indicizzazione (`robots.txt` + meta `noindex` in `BaseLayout`) finché il sito non è pronto per il pubblico
 - Verificare la leggibilità del favicon a 16×16 (il pugile ha molti dettagli): se non si distingue,

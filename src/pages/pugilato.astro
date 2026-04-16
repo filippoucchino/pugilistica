@@ -22,6 +22,16 @@ import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 import morenoPhoto from "../assets/images/bio/moreno-bragato.jpg";
 
+// Foto gallery: importate come ES module per ottimizzazione automatica (WebP, width/height, compressione).
+import galPanoramica from "../assets/images/pugilato/palestra-panoramica-ring-pugilistica-brianza.jpg";
+import galRing from "../assets/images/pugilato/ring-boxe-pugilistica-brianza-barlassina.jpg";
+import galAllenamento from "../assets/images/pugilato/allenamento-sacchi-pugili-pugilistica-brianza.jpg";
+import galSacchi from "../assets/images/pugilato/sacchi-pesanti-boxe-pugilistica-brianza.jpg";
+import galSalaSacchi from "../assets/images/pugilato/sala-sacchi-panoramica-pugilistica-brianza.jpg";
+import galRingSacco from "../assets/images/pugilato/ring-sacco-rosso-pugilistica-brianza.jpg";
+import galAngolo from "../assets/images/pugilato/angolo-ring-corde-pugilistica-brianza.jpg";
+import galIngresso from "../assets/images/pugilato/ingresso-reception-pugilistica-brianza.jpg";
+
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
   "Ciao, vorrei prenotare una prova gratuita per il corso di pugilato."
@@ -266,7 +276,16 @@ const faqItems = [
       <SectionHeading topline="Gallery">
         Guarda <span class="text-brand">l'allenamento</span>
       </SectionHeading>
-      <Gallery />
+      <Gallery images={[
+        { src: galPanoramica, alt: "Vista panoramica della palestra Pugilistica Brianza: sala sacchi e ring da boxe con bandiere internazionali" },
+        { src: galRing, alt: "Ring da boxe della Pugilistica Brianza di Barlassina con bandiera laterale e bandiere internazionali" },
+        { src: galAllenamento, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione alla Pugilistica Brianza" },
+        { src: galSacchi, alt: "Sacchi pesanti Leone e Combat Sports in fila nella sala boxe della Pugilistica Brianza" },
+        { src: galSalaSacchi, alt: "Sala sacchi della Pugilistica Brianza: fila di sacchi pesanti appesi con pavimento rosso" },
+        { src: galRingSacco, alt: "Ring da boxe e sacco rosso Leone alla Pugilistica Brianza con logo sul bordo ring" },
+        { src: galAngolo, alt: "Dettaglio angolo del ring con corde rosse Pugilistica Brianza e bandiere internazionali" },
+        { src: galIngresso, alt: "Ingresso e reception della Pugilistica Brianza: bancone con logo, locandine eventi e scaffali attrezzatura" },
+      ]} />
     </div>
   </section>
 

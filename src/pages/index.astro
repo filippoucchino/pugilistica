@@ -17,6 +17,16 @@ import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref, reviews, 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 
+// Foto gallery home: mix da tutte le aree della palestra per dare una panoramica completa.
+import galPanoramica from "../assets/images/pugilato/palestra-panoramica-ring-pugilistica-brianza.jpg";
+import galCircuito from "../assets/images/pb-hiit/circuito-gruppo-pb-hiit-pugilistica-brianza.jpg";
+import galRing from "../assets/images/pugilato/ring-boxe-pugilistica-brianza-barlassina.jpg";
+import galHyrox from "../assets/images/hyrox/area-functional-panoramica-hyrox-pugilistica-brianza.jpg";
+import galSacchi from "../assets/images/pugilato/allenamento-sacchi-pugili-pugilistica-brianza.jpg";
+import galColpitori from "../assets/images/pb-hiit/lavoro-colpitori-boxe-pb-hiit-pugilistica-brianza.jpg";
+import galSimulazione from "../assets/images/hyrox/simulazione-gara-hyrox-pugilistica-brianza.jpg";
+import galIngresso from "../assets/images/pugilato/ingresso-reception-pugilistica-brianza.jpg";
+
 const services = [
   {
     icon: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
@@ -285,7 +295,16 @@ const pageSchema = {
         Dove ti <span class="text-brand">alleni</span>
       </SectionHeading>
 
-      <Gallery />
+      <Gallery images={[
+        { src: galPanoramica, alt: "Vista panoramica della Pugilistica Brianza: sala sacchi pesanti e ring da boxe con bandiere internazionali" },
+        { src: galCircuito, alt: "Circuito di gruppo PB Hiit alla Pugilistica Brianza: allieve su stazioni diverse con bilancieri e corpo libero" },
+        { src: galRing, alt: "Ring da boxe della Pugilistica Brianza di Barlassina con bandiera laterale e bandiere internazionali" },
+        { src: galHyrox, alt: "Area Hyrox e functional training della Pugilistica Brianza: rower, sled, bilancieri e attrezzatura completa" },
+        { src: galSacchi, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione di boxe alla Pugilistica Brianza" },
+        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione di allenamento alla Pugilistica Brianza" },
+        { src: galSimulazione, alt: "Simulazione gara Hyrox alla Pugilistica Brianza: sled push e rope pull con il gruppo che osserva" },
+        { src: galIngresso, alt: "Ingresso e reception della Pugilistica Brianza: bancone con logo, locandine eventi e scaffali attrezzatura" },
+      ]} />
     </div>
   </section>
 

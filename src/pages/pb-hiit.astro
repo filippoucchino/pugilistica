@@ -21,6 +21,13 @@ import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 
+// Foto gallery: importate come ES module per ottimizzazione automatica (WebP, width/height, compressione).
+import galCircuito from "../assets/images/pb-hiit/circuito-gruppo-pb-hiit-pugilistica-brianza.jpg";
+import galColpitori from "../assets/images/pb-hiit/lavoro-colpitori-boxe-pb-hiit-pugilistica-brianza.jpg";
+import galSwing from "../assets/images/pb-hiit/kettlebell-swing-circuito-pb-hiit-pugilistica-brianza.jpg";
+import galSacco from "../assets/images/pb-hiit/sacco-pesante-boxe-pb-hiit-pugilistica-brianza.jpg";
+import galKettlebell from "../assets/images/pb-hiit/esercizio-kettlebell-pb-hiit-pugilistica-brianza.jpg";
+
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
   "Ciao, vorrei prenotare una prova gratuita per il corso PB Hiit."
@@ -254,7 +261,13 @@ const faqItems = [
       <SectionHeading topline="Gallery">
         Guarda <span class="text-brand">l'allenamento</span>
       </SectionHeading>
-      <Gallery />
+      <Gallery images={[
+        { src: galCircuito, alt: "Circuito di gruppo PB Hiit alla Pugilistica Brianza: allieve su stazioni diverse con bilancieri e corpo libero" },
+        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione PB Hiit alla Pugilistica Brianza" },
+        { src: galSwing, alt: "Kettlebell swing e stacco con bilanciere nel circuito PB Hiit della Pugilistica Brianza" },
+        { src: galSacco, alt: "Allenamento al sacco pesante durante il corso PB Hiit alla Pugilistica Brianza di Barlassina" },
+        { src: galKettlebell, alt: "Esercizio con kettlebell davanti allo specchio durante il PB Hiit alla Pugilistica Brianza" },
+      ]} />
     </div>
   </section>
 
