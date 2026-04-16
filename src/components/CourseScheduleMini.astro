@@ -1,0 +1,327 @@
+---
+/**
+ * Mini tabella orari filtrata per corso.
+ *
+ * Legge da `scheduleData.ts` (single source of truth) e mostra solo le
+ * fasce orarie che contengono attività corrispondenti ai tag passati.
+ * Usata nelle pagine corso (/pugilato/, /hyrox/, /pb-hiit/) dentro la
+ * sezione "Orari, prova e iscrizione".
+ *
+ * Responsive: su mobile (<768px) la tabella collassa in card verticali,
+ * nascondendo le celle vuote per ridurre il rumore visivo.
+ *
+ * SEO: <table> semantica con <caption>, <th scope>, aria-label.
+ */
+
+import type { ActivityTag } from "@/data/scheduleData";
+import { schedule, WEEKDAYS_SHORT, WEEKDAYS_FULL } from "@/data/scheduleData";
+
+interface Props {
+  /** Tag delle attività da visualizzare nella tabella */
+  tags: ActivityTag[];
+  /** Caption accessibile (screen reader + SEO) */
+  caption: string;
+}
+
+const { tags, caption } = Astro.props;
+
+/* — Struttura dati per la mini tabella —
+ * Per ogni riga dello schedule completo, espandiamo le celle con colspan
+ * in 6 celle singole (Lun–Sab) e filtriamo solo le attività con tag
+ * corrispondenti. Scartiamo le righe senza match. */
+
+interface MiniActivity {
+  label: string;
+  tag: ActivityTag;
+  note?: string;
+}
+
+interface MiniRow {
+  time: string;
+  /** 6 celle (una per giorno Lun–Sab), ciascuna con 0+ attività */
+  cells: MiniActivity[][];
+}
+
+const rows: MiniRow[] = [];
+
+for (const row of schedule) {
+  let dayIdx = 0;
+  const cells: MiniActivity[][] = [[], [], [], [], [], []];
+  let hasMatch = false;
+
+  for (const cell of row.cells) {
+    const span = cell.colspan ?? 1;
+    if (cell.activities) {
+      const matched: MiniActivity[] = cell.activities
+        .filter((a) => a.tags.some((t) => tags.includes(t)))
+        .map((a) => ({ label: a.label, tag: a.tags[0], note: a.note }));
+      if (matched.length > 0) {
+        hasMatch = true;
+        for (let i = 0; i < span; i++) {
+          cells[dayIdx + i] = matched;
+        }
+      }
+    }
+    dayIdx += span;
+  }
+
+  if (hasMatch) {
+    rows.push({ time: row.time, cells });
+  }
+}
+---
+
+<div class="mini-sched">
+  <table class="mini-sched__table" aria-label={caption}>
+    <caption class="sr-only">{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="mini-sched__th-time">Orario</th>
+        {WEEKDAYS_FULL.map((day, i) => (
+          <th scope="col" class="mini-sched__th-day">
+            <span class="mini-sched__day-full">{day}</span>
+            <span class="mini-sched__day-short">{WEEKDAYS_SHORT[i]}</span>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          <th scope="row" class="mini-sched__time">{row.time}</th>
+          {row.cells.map((acts, i) => (
+            <td
+              data-day={WEEKDAYS_FULL[i]}
+              class:list={[
+                "mini-sched__cell",
+                acts.length === 0 && "mini-sched__cell--empty",
+              ]}
+              data-tag={acts.length > 0 ? acts[0].tag : "empty"}
+            >
+              {acts.length === 0 ? (
+                <span class="mini-sched__dash" aria-label="Nessuna lezione">&mdash;</span>
+              ) : (
+                acts.map((a) => (
+                  <span class="mini-sched__activity" data-tag={a.tag}>
+                    {a.label}
+                    {a.note && <small class="mini-sched__note">{a.note}</small>}
+                  </span>
+                ))
+              )}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mini-sched__footer">
+    <a href="/orari/" class="pb-btn-text">Vedi tutti gli orari e i corsi &rarr;</a>
+  </p>
+</div>
+
+<style>
+  /* ===== CONTAINER ===== */
+  .mini-sched {
+    margin-top: 2.5rem;
+  }
+
+  /* ===== TABLE BASE ===== */
+  .mini-sched__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 4px;
+    table-layout: fixed;
+  }
+
+  /* ===== HEADER (giorni) ===== */
+  .mini-sched__th-day {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    padding: 10px 4px;
+    text-align: center;
+    font-weight: 400;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+  }
+
+  .mini-sched__day-short {
+    display: none;
+  }
+
+  .mini-sched__th-time {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: right;
+    padding: 10px 10px 10px 0;
+  }
+
+  /* ===== COLONNA ORARIO ===== */
+  .mini-sched__time {
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #c41e1e;
+    text-align: right;
+    padding: 10px 10px 10px 0;
+    white-space: nowrap;
+    width: 100px;
+  }
+
+  /* ===== CELLE ===== */
+  .mini-sched__cell {
+    text-align: center;
+    padding: 10px 4px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    vertical-align: middle;
+  }
+
+  .mini-sched__cell--empty {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  /* ===== COLORI BORDO PER TAG ===== */
+  .mini-sched__cell[data-tag="boxe"]          { border-color: rgba(196, 30, 30, 0.35); }
+  .mini-sched__cell[data-tag="boxe-agonisti"] { border-color: rgba(196, 30, 30, 0.5); background: rgba(196, 30, 30, 0.04); }
+  .mini-sched__cell[data-tag="kids-boxe"]     { border-color: rgba(234, 179, 8, 0.35); }
+  .mini-sched__cell[data-tag="hyrox"]         { border-color: rgba(59, 130, 246, 0.35); }
+  .mini-sched__cell[data-tag="pb-hiit"]       { border-color: rgba(168, 85, 247, 0.35); }
+
+  /* ===== TESTO ATTIVITÀ ===== */
+  .mini-sched__activity {
+    display: block;
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+
+  .mini-sched__note {
+    display: block;
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    margin-top: 1px;
+  }
+
+  .mini-sched__dash {
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 14px;
+  }
+
+  /* ===== FOOTER (link) ===== */
+  .mini-sched__footer {
+    text-align: center;
+    margin-top: 1.25rem;
+  }
+
+  /* ===== SR-ONLY ===== */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ===== TABLET: abbrevia i nomi dei giorni ===== */
+  @media (max-width: 1023px) {
+    .mini-sched__day-full {
+      display: none;
+    }
+    .mini-sched__day-short {
+      display: inline;
+    }
+  }
+
+  /* ===== MOBILE STACKED (<768px) =====
+   * La tabella collassa in card verticali: ogni fascia oraria diventa un
+   * blocco con le celle impilate. Celle vuote nascoste per pulizia. */
+  @media (max-width: 767px) {
+    .mini-sched__table {
+      border-spacing: 0;
+      display: block;
+    }
+
+    .mini-sched__table thead {
+      display: none;
+    }
+
+    .mini-sched__table tbody {
+      display: block;
+    }
+
+    .mini-sched__table tbody tr {
+      display: block;
+      margin-bottom: 16px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .mini-sched__time {
+      display: block;
+      text-align: left;
+      padding: 0 0 10px 0;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      width: auto;
+      font-size: 13px;
+    }
+
+    .mini-sched__cell {
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      margin-bottom: 4px;
+      text-align: left;
+      border-radius: 6px;
+    }
+
+    .mini-sched__cell:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Nasconde celle vuote su mobile */
+    .mini-sched__cell--empty {
+      display: none;
+    }
+
+    /* Etichetta giorno iniettata via CSS */
+    .mini-sched__cell::before {
+      content: attr(data-day);
+      font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-right: 10px;
+      flex-shrink: 0;
+      min-width: 65px;
+    }
+
+    .mini-sched__activity {
+      font-size: 12px;
+    }
+  }
+</style>

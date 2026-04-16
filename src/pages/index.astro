@@ -12,7 +12,7 @@ import ReviewCard from "../components/ReviewCard.astro";
 import LocalSection from "../components/LocalSection.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
-import { trustItems, localDetails, zones, siteInfo } from "@/data/shared";
+import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
@@ -148,6 +148,10 @@ const faqItems = [
   },
 ];
 
+const whatsappHref = buildWhatsappHref(
+  "Ciao, vorrei prenotare una prova gratuita."
+);
+
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "SportsActivityLocation",
@@ -179,8 +183,7 @@ const pageSchema = {
   <Hero
     topline="ASD Pugilistica Brianza — Barlassina"
     subtitle="Corsi di pugilato, Hyrox e PB Hiit per principianti, amatori e agonisti. Prova gratuita, ambiente familiare e coach qualificati."
-    ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
-    ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+    ctaPrimary={{ label: "Prenota una prova gratuita", href: whatsappHref }}
   >
     Palestra di <span class="text-brand">pugilato</span><br />a Barlassina in Brianza
   </Hero>
@@ -296,8 +299,7 @@ const pageSchema = {
     <CtaBlock
       description="Allenati a Barlassina in una palestra di pugilato vera, con percorsi chiari e ambiente accogliente."
       subdesc="Nessun impegno. Vieni, prova e decidi."
-      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
-      ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+      ctaPrimary={{ label: "Scrivici su WhatsApp", href: whatsappHref }}
     >
       Prova <span class="text-brand">gratuita</span>
     </CtaBlock>
@@ -370,8 +372,7 @@ const pageSchema = {
   <div class="pb-section--alt">
     <CtaBlock
       description="Allenati a Barlassina in una palestra di pugilato vera, con percorsi chiari, ambiente accogliente e accesso semplice tramite prova gratuita."
-      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
-      ctaSecondary={{ label: "Chiamaci", href: "/contatti/" }}
+      ctaPrimary={{ label: "Prenota su WhatsApp", href: whatsappHref }}
     >
       Inizia ad allenarti<br />con <span class="text-brand">noi</span>
     </CtaBlock>
