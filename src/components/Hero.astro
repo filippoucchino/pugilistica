@@ -8,7 +8,7 @@ interface Props {
   ctaSecondary?: { label: string; href: string };
 }
 
-const { topline, subtitle, watermark = "PB", ctaPrimary, ctaSecondary } = Astro.props;
+const { topline, subtitle, watermark = "PUGILISTICA", ctaPrimary, ctaSecondary } = Astro.props;
 
 // Link esterni (http/https) devono aprirsi in nuova scheda per non perdere la pagina.
 const isExternal = (href: string) => /^https?:\/\//.test(href);

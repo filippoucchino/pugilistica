@@ -4,7 +4,12 @@ import Hero from "../components/Hero.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
+import { buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage } from "@/data/schema";
+
+const whatsappHref = buildWhatsappHref(
+  "Ciao, ho una domanda sulle attività di Pugilistica Brianza."
+);
 
 const faqGeneral = [
   { question: "Posso iniziare anche se sono principiante?", answer: "Assolutamente sì. La maggior parte dei nostri iscritti ha iniziato da zero. Il corso è strutturato per accogliere tutti i livelli, dai principianti assoluti a chi ha già esperienza." },
@@ -51,6 +56,7 @@ const pageSchema = buildPageSchema(
   <Hero
     topline="FAQ — Pugilistica Brianza"
     subtitle="Tutto quello che serve sapere prima di venire in palestra. Se non trovi la risposta che cerchi, scrivici su WhatsApp."
+    watermark="FAQ"
   >
     Domande <span class="text-brand">frequenti</span>
   </Hero>
@@ -88,9 +94,8 @@ const pageSchema = buildPageSchema(
   <!-- CTA -->
   <div class="pb-section--alt">
     <CtaBlock
-      description="Non hai trovato la risposta che cercavi? Chiamaci, scrivici o vieni direttamente in palestra."
-      ctaPrimary={{ label: "Prenota la prova gratuita", href: "/prova-gratuita/" }}
-      ctaSecondary={{ label: "Contattaci", href: "/contatti/" }}
+      description="Non hai trovato la risposta che cercavi? Scrivici su WhatsApp e ti rispondiamo subito."
+      ctaPrimary={{ label: "Scrivici su WhatsApp", href: whatsappHref }}
     >
       Hai altre <span class="text-brand">domande?</span>
     </CtaBlock>

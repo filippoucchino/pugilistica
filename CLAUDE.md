@@ -458,7 +458,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-04-27
+Ultimo aggiornamento: 2026-07-14
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -509,14 +509,14 @@ Ultimo aggiornamento: 2026-04-27
   (display:none a 3 livelli: slot → cella → riga) + barra filtri sticky sotto header.
   Dati in `scheduleData.ts`, assertion build-time su colspan, JSON-LD Event + SportsActivityLocation
 
-- Gallery con foto reali su 4 pagine (home, pugilato, hyrox, pb-hiit):
+- Gallery con foto reali su 5 pagine (home, pugilato, hyrox, pb-hiit, chi-siamo):
   componente `Gallery.astro` aggiornato per supportare `ImageMetadata` di Astro (import ES
   module → `<Image>` con conversione WebP automatica, width/height, quality 80);
   griglia portata a 4 colonne desktop, 2 tablet, 1 mobile.
   Foto organizzate in `src/assets/images/{pugilato,hyrox,pb-hiit}/` con nomi SEO-friendly.
   Originali ridimensionati a ~1600px max, ritagliati/compressi dove necessario via ffmpeg.
-  Home riusa un mix di 8 foto dalle tre cartelle.
-  Totale: 21 foto in gallery (8 home, 8 pugilato, 8 hyrox, 5 pb-hiit — alcune condivise)
+  Home e chi-siamo riusano un mix di 8 foto dalle tre cartelle.
+  Totale: 21 foto in gallery (8 home, 8 pugilato, 8 hyrox, 5 pb-hiit, 8 chi-siamo — alcune condivise)
 
 - Privacy Policy (`/privacy-policy/`): pagina completa in italiano con 11 sezioni GDPR
   (titolare, dati raccolti, finalità, base giuridica, servizi terze parti, cookie,
@@ -574,6 +574,19 @@ Ultimo aggiornamento: 2026-04-27
   `Content-Security-Policy` (allowlist: Google Fonts, Web3Forms, Google Maps, script inline).
   `.htaccess` include anche le regole di rewrite per il routing Astro su Apache e la
   direttiva `ErrorDocument 404` per la pagina 404 personalizzata.
+
+- Hero watermark: testo di default cambiato da "PB" a "PUGILISTICA" nel componente
+  `Hero.astro`. Posizionamento corretto (`bottom: 0; right: 0`) per evitare tagli,
+  font-size ridotto a `clamp(80px, 12vw, 200px)` per adattarsi alla parola più lunga.
+  Watermark specifici per pagina: BOXE (pugilato), HYROX (hyrox), HIIT (pb-hiit),
+  1:1 (lezioni-private), ORARI (orari), CONTATTI (contatti), FAQ (faq),
+  PUGILISTICA (home, chi-siamo, prova-gratuita, privacy-policy)
+
+- Pagina FAQ: CTA cambiata da doppio pulsante (prova gratuita + contatti) a singolo
+  pulsante WhatsApp con messaggio precompilato
+
+- Pagina prova-gratuita: aggiunto spazio (div wrapper con `mb-8`) tra il box
+  "Quando: le prove gratuite..." e il bottone "Scrivimi su WhatsApp"
 
 ### In corso
 - Nessuna attività in corso

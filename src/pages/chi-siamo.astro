@@ -23,6 +23,16 @@ import riccardoPhoto from "../assets/images/bio/riccardo-sparano.jpg";
 import vittorioPhoto from "../assets/images/bio/vittorio-uboldi.jpg";
 import morenoPhoto from "../assets/images/bio/moreno-bragato.jpg";
 
+// Foto gallery: stesso mix della home per mostrare gli spazi della palestra.
+import galPanoramica from "../assets/images/pugilato/palestra-panoramica-ring-pugilistica-brianza.jpg";
+import galCircuito from "../assets/images/pb-hiit/circuito-gruppo-pb-hiit-pugilistica-brianza.jpg";
+import galRing from "../assets/images/pugilato/ring-boxe-pugilistica-brianza-barlassina.jpg";
+import galHyrox from "../assets/images/hyrox/area-functional-panoramica-hyrox-pugilistica-brianza.jpg";
+import galSacchi from "../assets/images/pugilato/allenamento-sacchi-pugili-pugilistica-brianza.jpg";
+import galColpitori from "../assets/images/pb-hiit/lavoro-colpitori-boxe-pb-hiit-pugilistica-brianza.jpg";
+import galSimulazione from "../assets/images/hyrox/simulazione-gara-hyrox-pugilistica-brianza.jpg";
+import galIngresso from "../assets/images/pugilato/ingresso-reception-pugilistica-brianza.jpg";
+
 const teamMembers = [
   {
     name: "Stefano Rizzo",
@@ -131,7 +141,7 @@ const pageSchema = buildPageSchema(
   <Hero
     topline="Chi siamo — Pugilistica Brianza"
     subtitle="Dal 9 gennaio 2016 a Barlassina, una palestra di pugilato fondata su tecnica, ambiente e rispetto. Affiliata FPI, FIPE e Hyrox, guidata da un coach ex agonista."
-    watermark="PB"
+    watermark="PUGILISTICA"
     ctaPrimary={{ label: "Prenota su WhatsApp", href: whatsappHref }}
   >
     Pugilistica <span class="text-brand">Brianza</span>
@@ -248,7 +258,16 @@ const pageSchema = buildPageSchema(
       >
         La <span class="text-brand">palestra</span>
       </SectionHeading>
-      <Gallery />
+      <Gallery images={[
+        { src: galPanoramica, alt: "Vista panoramica della Pugilistica Brianza: sala sacchi pesanti e ring da boxe con bandiere internazionali" },
+        { src: galCircuito, alt: "Circuito di gruppo PB Hiit alla Pugilistica Brianza: allieve su stazioni diverse con bilancieri e corpo libero" },
+        { src: galRing, alt: "Ring da boxe della Pugilistica Brianza di Barlassina con bandiera laterale e bandiere internazionali" },
+        { src: galHyrox, alt: "Area Hyrox e functional training della Pugilistica Brianza: rower, sled, bilancieri e attrezzatura completa" },
+        { src: galSacchi, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione di boxe alla Pugilistica Brianza" },
+        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione di allenamento alla Pugilistica Brianza" },
+        { src: galSimulazione, alt: "Simulazione gara Hyrox alla Pugilistica Brianza: sled push e rope pull con il gruppo che osserva" },
+        { src: galIngresso, alt: "Ingresso e reception della Pugilistica Brianza: bancone con logo, locandine eventi e scaffali attrezzatura" },
+      ]} />
     </div>
   </section>
 

@@ -197,9 +197,9 @@
   /* Hero watermark */
   .pb-hero-watermark {
     @apply absolute pointer-events-none select-none font-display leading-none;
-    bottom: -8%;
-    right: -3%;
-    font-size: clamp(200px, 28vw, 400px);
+    bottom: 0;
+    right: 0;
+    font-size: clamp(80px, 12vw, 200px);
     color: rgba(255, 255, 255, 0.02);
   }
 }
