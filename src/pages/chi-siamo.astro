@@ -20,6 +20,7 @@ import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 import brunoPhoto from "../assets/images/bio/bruno-elli.jpg";
 import riccardoPhoto from "../assets/images/bio/riccardo-sparano.jpg";
 import vittorioPhoto from "../assets/images/bio/vittorio-uboldi.jpg";
+import morenoPhoto from "../assets/images/bio/moreno-bragato.jpg";
 
 const teamMembers = [
   {
@@ -75,9 +76,21 @@ const teamMembers = [
     photoAlt:
       "Vittorio Uboldi, cutman e presentatore di Pugilistica Brianza",
   },
+  {
+    name: "Moreno Bragato",
+    role: "Tecnico di Pugilato",
+    bio: "Moreno Bragato, classe 1956, è un ex pugile che ha portato la sua esperienza sul ring in palestra. In Pugilistica Brianza affianca Stefano Rizzo nella preparazione tecnica del corso di pugilato, con un approccio attento alla didattica e alla crescita di ogni atleta.",
+    credentials: [
+      "Ex pugile",
+      "Tecnico di 1° livello FPI – Federazione Pugilistica Italiana",
+    ],
+    photo: morenoPhoto,
+    photoAlt:
+      "Moreno Bragato, tecnico di pugilato di Pugilistica Brianza",
+  },
 ];
 
-// JSON-LD: un grafo di 4 Person legati all'organizzazione, per aiutare i motori
+// JSON-LD: un grafo di 5 Person legati all'organizzazione, per aiutare i motori
 // di ricerca a capire chi gestisce la palestra (SEO tecnica / entità).
 const teamSchema = {
   "@context": "https://schema.org",
@@ -171,7 +184,7 @@ const teamSchema = {
     <div class="pb-container">
       <SectionHeading
         topline="Il team"
-        description="Quattro persone, una visione: costruire una palestra di pugilato vera in Brianza. Ecco chi guida Pugilistica Brianza."
+        description="Il team che guida Pugilistica Brianza: dai fondatori ai tecnici, ecco chi lavora ogni giorno per costruire una palestra di pugilato vera in Brianza."
       >
         Chi guida la <span class="text-brand">palestra</span>
       </SectionHeading>

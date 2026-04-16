@@ -18,8 +18,9 @@ import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
 import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
 
-// Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
+// Foto coach: importate come ES module così Astro le ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
+import morenoPhoto from "../assets/images/bio/moreno-bragato.jpg";
 
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
@@ -177,17 +178,27 @@ const faqItems = [
   <!-- IL COACH -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Il coach">
+      <SectionHeading topline="I coach">
         Chi ti guida sul <span class="text-brand">ring</span>
       </SectionHeading>
-      <CoachBlock
-        name="Stefano Rizzo"
-        role="Co-fondatore e Head Coach"
-        bio="Ex pugile agonista e Maestro di 2° livello FPI. Nel corso di pugilato Stefano trasferisce la sua esperienza diretta sul ring: tecnica, preparazione e mentalità costruite in anni di boxe agonistica, applicate in ogni lezione ai principianti come ai più avanzati."
-        tags={["Ex pugile agonista", "Maestro 2° livello FPI", "Light-boxe", "Boxe dilettantistica"]}
-        photo={stefanoPhoto}
-        photoAlt="Stefano Rizzo, co-fondatore e head coach di Pugilistica Brianza"
-      />
+      <div class="space-y-6">
+        <CoachBlock
+          name="Stefano Rizzo"
+          role="Co-fondatore e Head Coach"
+          bio="Ex pugile agonista e Maestro di 2° livello FPI. Nel corso di pugilato Stefano trasferisce la sua esperienza diretta sul ring: tecnica, preparazione e mentalità costruite in anni di boxe agonistica, applicate in ogni lezione ai principianti come ai più avanzati."
+          tags={["Ex pugile agonista", "Maestro 2° livello FPI", "Light-boxe", "Boxe dilettantistica"]}
+          photo={stefanoPhoto}
+          photoAlt="Stefano Rizzo, co-fondatore e head coach di Pugilistica Brianza"
+        />
+        <CoachBlock
+          name="Moreno Bragato"
+          role="Tecnico di Pugilato"
+          bio="Ex pugile, classe 1956, Moreno affianca Stefano nella preparazione tecnica del corso di pugilato. Porta in palestra decenni di esperienza nel ring, con un approccio attento alla didattica e alla crescita individuale di ogni atleta."
+          tags={["Ex pugile", "Tecnico 1° livello FPI"]}
+          photo={morenoPhoto}
+          photoAlt="Moreno Bragato, tecnico di pugilato di Pugilistica Brianza"
+        />
+      </div>
     </div>
   </section>
 
