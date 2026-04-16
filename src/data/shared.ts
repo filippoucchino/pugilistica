@@ -20,7 +20,7 @@ export const siteInfo = {
   whatsappDisplay: "+39 339 754 0061",
   // Formato tel: (solo cifre con + iniziale) per attributi href.
   phoneHref: "tel:+393397540061",
-  email: "info@pugilisticabrianza.it",
+  email: "pugilisticabrianza@gmail.com",
   founded: 2016,
   foundingDate: "9 gennaio 2016",
   url: "https://pugilisticabrianza.it",
