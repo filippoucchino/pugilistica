@@ -199,6 +199,15 @@
     @apply text-brand;
   }
 
+  /* Nasconde la scrollbar mantenendo lo scroll (slider recensioni, ecc.) */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Fade-up animation (scroll reveal) */
   .fade-up {
     @apply opacity-0 translate-y-[30px] transition-all duration-[700ms] ease-default;

@@ -12,7 +12,7 @@ import ReviewCard from "../components/ReviewCard.astro";
 import LocalSection from "../components/LocalSection.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
-import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref, reviews, reviewAggregation } from "@/data/shared";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
@@ -92,29 +92,6 @@ const benefits = [
   "<strong>Posizione comoda</strong> per Barlassina, Seveso, Lissone, Seregno e tutta la Brianza",
 ];
 
-const reviews = [
-  {
-    text: "Palestra seria ma con un clima fantastico. Stefano è un grande professionista e ti segue passo dopo passo, qualunque sia il tuo livello.",
-    author: "Marco R.",
-    source: "Google Reviews",
-  },
-  {
-    text: "Ho iniziato senza sapere nulla e ora mi alleno 3 volte a settimana. L'ambiente è inclusivo e il pugilato è diventato la mia valvola di sfogo migliore.",
-    author: "Giulia P.",
-    source: "Google Reviews",
-  },
-  {
-    text: "La migliore palestra di pugilato in Brianza. Serio ma divertente, competente ma accogliente. Consigliatissima.",
-    author: "Laura T.",
-    source: "Google Reviews",
-  },
-  {
-    text: "Mio figlio di 14 anni adora venire qui. Stefano è bravissimo con i ragazzi, e l'ambiente è sicuro e stimolante.",
-    author: "Alessia M.",
-    source: "Google Reviews",
-  },
-];
-
 const faqItems = [
   {
     question: "Posso iniziare anche se sono principiante?",
@@ -171,6 +148,24 @@ const pageSchema = {
   image: `${siteInfo.url}/brand/og-image.jpg`,
   telephone: siteInfo.phone,
   sameAs: [siteInfo.social.facebook, siteInfo.social.instagram],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: reviewAggregation.ratingValue,
+    bestRating: 5,
+    worstRating: 1,
+    reviewCount: reviewAggregation.reviewCount,
+  },
+  review: reviews.map((r) => ({
+    "@type": "Review",
+    author: { "@type": "Person", name: r.author },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: 5,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    reviewBody: r.text,
+  })),
 };
 ---
 
@@ -305,27 +300,99 @@ const pageSchema = {
     </CtaBlock>
   </div>
 
-  <!-- 9. RECENSIONI -->
+  <!-- 9. RECENSIONI (slider orizzontale CSS scroll-snap) -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading
-        topline="Recensioni"
-        description="Chi ci sceglie, resta."
-      >
-        Cosa dicono di <span class="text-brand">noi</span>
-      </SectionHeading>
+      <div class="flex items-end justify-between mb-12 gap-6 [&>.pb-section-heading]:mb-0">
+        <SectionHeading
+          topline="Recensioni"
+          description="Chi ci sceglie, resta."
+        >
+          Cosa dicono di <span class="text-brand">noi</span>
+        </SectionHeading>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Frecce di navigazione (visibili solo da sm in su) -->
+        <div class="hidden sm:flex gap-2 shrink-0 mb-1">
+          <button
+            type="button"
+            id="reviews-prev"
+            aria-label="Recensioni precedenti"
+            class="w-10 h-10 rounded-full border border-pb-border-medium
+                   flex items-center justify-center text-pb-text-muted
+                   hover:border-brand hover:text-brand transition-colors duration-200
+                   disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            id="reviews-next"
+            aria-label="Recensioni successive"
+            class="w-10 h-10 rounded-full border border-pb-border-medium
+                   flex items-center justify-center text-pb-text-muted
+                   hover:border-brand hover:text-brand transition-colors duration-200
+                   disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slider container -->
+      <div
+        id="reviews-slider"
+        class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide"
+      >
         {reviews.map((r) => (
-          <ReviewCard
-            text={r.text}
-            author={r.author}
-            source={r.source}
-          />
+          <div class="w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none snap-start">
+            <ReviewCard
+              text={r.text}
+              author={r.author}
+              source={r.source}
+            />
+          </div>
         ))}
       </div>
     </div>
   </section>
+
+  <!-- Script navigazione slider recensioni -->
+  <script is:inline>
+  (function () {
+    const slider = document.getElementById("reviews-slider");
+    const prev = document.getElementById("reviews-prev");
+    const next = document.getElementById("reviews-next");
+    if (!slider || !prev || !next) return;
+
+    /** Larghezza di una card + gap per calcolare lo scroll */
+    function getScrollStep() {
+      const card = slider.querySelector(":scope > div");
+      if (!card) return 300;
+      const style = getComputedStyle(slider);
+      const gap = parseFloat(style.gap) || 24;
+      return card.offsetWidth + gap;
+    }
+
+    function updateButtons() {
+      prev.disabled = slider.scrollLeft <= 1;
+      next.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 1;
+    }
+
+    prev.addEventListener("click", function () {
+      slider.scrollBy({ left: -getScrollStep(), behavior: "smooth" });
+    });
+    next.addEventListener("click", function () {
+      slider.scrollBy({ left: getScrollStep(), behavior: "smooth" });
+    });
+
+    slider.addEventListener("scroll", updateButtons, { passive: true });
+    updateButtons();
+  })();
+  </script>
 
   <!-- 10. LOCAL -->
   <section class="pb-section pb-section--alt fade-up">

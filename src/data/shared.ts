@@ -136,6 +136,72 @@ export const infoLinks = [
   { label: "Prova gratuita", href: "/prova-gratuita/" },
 ];
 
+/* — Recensioni Google (reali, dal Google Business Profile) — */
+export interface Review {
+  text: string;
+  author: string;
+  source: string;
+}
+
+export const reviews: Review[] = [
+  {
+    text: "Più di una palestra! Un ambiente che tra passione e fatica crea atleti e dilettanti che si mantengono in forma divertendosi in un gruppo unico.",
+    author: "Pino Piran",
+    source: "Google",
+  },
+  {
+    text: "La serietà e la preparazione dei coach fanno la differenza! Si crea una bella atmosfera di gruppo dove ci si allena anche divertendosi.",
+    author: "Laura Costa",
+    source: "Google",
+  },
+  {
+    text: "Palestra perfetta. Attrezzatura ottima, ampio spazio di allenamento, personale e coach superqualificati.",
+    author: "Rossana Panucci",
+    source: "Google",
+  },
+  {
+    text: "Dopo anni passati in diverse palestre finalmente scopro la Pugilistica Brianza, dove le persone fanno la differenza.",
+    author: "Roberto Brambilla",
+    source: "Google",
+  },
+  {
+    text: "Ottima palestra di pugilato, coach qualificati e professionali. Prezzi contenuti, orario libero.",
+    author: "Umberto Ferrante",
+    source: "Google",
+  },
+  {
+    text: "Ambiente sano e allenatori preparati. Un ottimo posto per imparare l'arte del pugilato.",
+    author: "Marta R",
+    source: "Google",
+  },
+  {
+    text: "La palestra ideale, sia per chi vuole fare agonismo, sia per chi vuole imparare una nuova disciplina.",
+    author: "Stefano Casati",
+    source: "Google",
+  },
+  {
+    text: "Si allena mio figlio Federico da circa un anno, si trova benissimo sia con i compagni che con gli allenatori.",
+    author: "Bruno Crea",
+    source: "Google",
+  },
+  {
+    text: "Allenatori preparati, ottimo ambiente, giovanile. Super consigliata!",
+    author: "Flavio Brigato",
+    source: "Google",
+  },
+  {
+    text: "Palestra bellissima, istruttori molto bravi e gentilissimi.",
+    author: "Cristian Marchetti",
+    source: "Google",
+  },
+];
+
+/** Dati aggregati recensioni Google (per JSON-LD) */
+export const reviewAggregation = {
+  ratingValue: 5,
+  reviewCount: 74,
+} as const;
+
 /* — Orari — */
 // Orari reali di apertura della palestra (allineati al poster corsi).
 // Lun–Ven aperti dalle 08:00 (Open Gym) alle 21:00, sabato finestra ridotta
