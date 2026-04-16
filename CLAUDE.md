@@ -41,13 +41,14 @@ pugilistica/
 │   │   ├── ReviewCard.astro           ← recensione Google
 │   │   ├── FormField.astro            ← input / select / textarea
 │   │   ├── ScheduleTable.astro         ← tabella orari Lun–Sab con slot paralleli
+│   │   ├── CookieBanner.astro         ← banner consenso cookie (localStorage, incluso in BaseLayout)
 │   │   └── ...                        ← e altri componenti di supporto
 │   ├── data/
 │   │   ├── shared.ts                  ← dati condivisi (siteInfo, trustItems, zones, hours, navLinks, ecc.)
 │   │   └── scheduleData.ts            ← orari, attività, prezzi, builder JSON-LD per /orari/
 │   ├── layouts/
 │   │   └── BaseLayout.astro           ← layout unico: head, SEO, Header, slot, Footer, scroll reveal
-│   ├── pages/                         ← 10 pagine, una per URL
+│   ├── pages/                         ← 11 pagine, una per URL
 │   │   ├── index.astro
 │   │   ├── pugilato.astro
 │   │   ├── hyrox.astro
@@ -57,7 +58,8 @@ pugilistica/
 │   │   ├── faq.astro
 │   │   ├── contatti.astro
 │   │   ├── orari.astro
-│   │   └── prova-gratuita.astro
+│   │   ├── prova-gratuita.astro
+│   │   └── privacy-policy.astro
 │   └── styles/
 │       └── global.css                 ← Tailwind directives + classi custom pb-*
 ├── astro.config.mjs
@@ -79,6 +81,7 @@ pugilistica/
 - `/contatti/` — Contatti, mappa, orari
 - `/orari/` — Orari corsi (tabella Lun–Sab con filtri), prezzi, info pratiche
 - `/prova-gratuita/` — Landing con form di prenotazione
+- `/privacy-policy/` — Informativa privacy GDPR (11 sezioni, link nel footer)
 
 ## Convenzioni
 
@@ -397,15 +400,15 @@ Ultimo aggiornamento: 2026-04-16
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
 - Design system completo in `tailwind.config.ts` (colori brand/surface/pb, tipografia Bebas Neue/Barlow, spacing semantici, grid templates custom)
 - `src/styles/global.css` con classi riutilizzabili `pb-*` (container, section, btn, topline, divider, hero-glow, hero-watermark, fade-up)
-- 23 componenti riutilizzabili in `src/components/`
+- 24 componenti riutilizzabili in `src/components/`
 - Layout unico `BaseLayout.astro` con SEO meta, Open Graph, canonical, slot per JSON-LD, IntersectionObserver per scroll reveal
-- 10 pagine create e funzionanti, con JSON-LD `FAQPage` sui FAQ e `SportsActivityLocation` sulla home
+- 11 pagine create e funzionanti, con JSON-LD `FAQPage` sui FAQ e `SportsActivityLocation` sulla home
 - `src/data/shared.ts` come single source of truth (siteInfo, trustItems, localDetails, zones, navLinks, courseLinks, infoLinks, hours, reviews, reviewAggregation)
 - `src/data/scheduleData.ts` come single source of truth per orari corsi, attività, prezzi della pagina `/orari/`
 - Header e Footer collegati a `shared.ts`, tutte le pagine deduplicate per dati comuni
 - Encoding UTF-8 corretto in tutti i file (à, è, ì, ò, ù, é, €, —, →)
 - `npm install` completato
-- Build di produzione verificata: 0 errori, 0 warning, 10 pagine generate in `dist/`
+- Build di produzione verificata: 0 errori, 0 warning, 11 pagine generate in `dist/`
 - Repo Git inizializzato, primo commit, branch rinominato in `main`, push su https://github.com/filippoucchino/pugilistica
 - Video verticale aggiunto alla pagina `/pugilato/` nella sezione "Che cos'è il Pugilato?":
   `DefinitionGrid.astro` esteso con prop `video` opzionale (layout 2 colonne su lg+, stack con video sopra su mobile);
@@ -450,6 +453,17 @@ Ultimo aggiornamento: 2026-04-16
   Originali ridimensionati a ~1600px max, ritagliati/compressi dove necessario via ffmpeg.
   Home riusa un mix di 8 foto dalle tre cartelle.
   Totale: 21 foto in gallery (8 home, 8 pugilato, 8 hyrox, 5 pb-hiit — alcune condivise)
+
+- Privacy Policy (`/privacy-policy/`): pagina completa in italiano con 11 sezioni GDPR
+  (titolare, dati raccolti, finalità, base giuridica, servizi terze parti, cookie,
+  trasferimenti extra-UE, conservazione, diritti, minori, modifiche).
+  Titolare: Bruno Elli. Copre Web3Forms, Google Fonts/Maps, WhatsApp, Meta.
+  Sezione dedicata ai minori (under 14 → consenso genitoriale).
+  Link nel footer (bottom bar) accanto al copyright.
+- Cookie consent banner (`CookieBanner.astro`): banner fisso in fondo a ogni pagina,
+  incluso in `BaseLayout.astro`. Pulsanti Accetta/Rifiuta, scelta salvata in
+  localStorage (`cookie_consent`). Predisposto per integrazione futura GA4
+  (commento-guida nel codice). Script `is:inline` per evitare flash del banner.
 
 ### In corso
 - Nessuna attività in corso

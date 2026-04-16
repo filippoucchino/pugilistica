@@ -71,8 +71,14 @@ import SocialLinks from "./SocialLinks.astro";
     </div>
 
     <!-- Bottom -->
-    <div class="border-t border-pb-border-default pt-6 text-center">
+    <div class="border-t border-pb-border-default pt-6 flex items-center justify-between max-sm:flex-col max-sm:gap-2">
       <span class="text-xs text-pb-text-faint">&copy; 2025 {siteInfo.name}. Tutti i diritti riservati.</span>
+      <a
+        href="/privacy-policy/"
+        class="text-xs text-pb-text-faint no-underline transition-colors duration-base hover:text-pb-text-tertiary"
+      >
+        Privacy Policy
+      </a>
     </div>
   </div>
 </footer>

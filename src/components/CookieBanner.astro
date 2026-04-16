@@ -1,0 +1,74 @@
+---
+/**
+ * CookieBanner — banner di consenso cookie, mostrato in fondo a ogni pagina.
+ * Usa localStorage per ricordare la scelta dell'utente.
+ * Incluso in BaseLayout.astro.
+ */
+---
+
+<div
+  id="cookie-banner"
+  class="fixed bottom-0 left-0 right-0 z-toast border-t border-pb-border-default bg-surface-raised px-8 py-5 max-md:px-5"
+  role="region"
+  aria-label="Consenso cookie"
+>
+  <div class="mx-auto flex max-w-container items-center justify-between gap-6 max-md:flex-col max-md:items-start max-md:gap-4">
+    <p class="max-w-[640px] text-sm leading-normal text-pb-text-secondary">
+      Questo sito utilizza cookie tecnici necessari al funzionamento.
+      Potremmo utilizzare cookie di analisi per migliorare la tua esperienza, previo tuo consenso.
+      <a
+        href="/privacy-policy/"
+        class="text-brand underline transition-colors duration-base hover:text-brand-light"
+      >
+        Leggi l'informativa completa
+      </a>
+    </p>
+    <div class="flex shrink-0 gap-3">
+      <button
+        id="cookie-reject"
+        class="cursor-pointer border border-pb-border-medium bg-transparent px-5 py-2.5 font-body text-xs font-semibold uppercase tracking-wider text-pb-text-secondary transition-all duration-base ease-default hover:border-pb-border-strong hover:text-pb-text-primary"
+        type="button"
+      >
+        Rifiuta
+      </button>
+      <button
+        id="cookie-accept"
+        class="cursor-pointer border-none bg-brand px-5 py-2.5 font-body text-xs font-bold uppercase tracking-wider text-white transition-all duration-base ease-default hover:bg-brand-dark"
+        type="button"
+      >
+        Accetta
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // Nasconde il banner se l'utente ha già espresso una preferenza
+  (function () {
+    var consent = localStorage.getItem("cookie_consent");
+    if (consent) {
+      var banner = document.getElementById("cookie-banner");
+      if (banner) banner.remove();
+    }
+  })();
+
+  document.getElementById("cookie-accept")?.addEventListener("click", function () {
+    localStorage.setItem("cookie_consent", "accepted");
+    var banner = document.getElementById("cookie-banner");
+    if (banner) banner.remove();
+    // Per aggiungere Google Analytics (GA4) in futuro:
+    // 1. Controllare: localStorage.getItem("cookie_consent") === "accepted"
+    // 2. Solo se accettato, iniettare lo script gtag.js qui.
+    // Esempio:
+    //   var s = document.createElement("script");
+    //   s.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX";
+    //   s.async = true;
+    //   document.head.appendChild(s);
+  });
+
+  document.getElementById("cookie-reject")?.addEventListener("click", function () {
+    localStorage.setItem("cookie_consent", "rejected");
+    var banner = document.getElementById("cookie-banner");
+    if (banner) banner.remove();
+  });
+</script>

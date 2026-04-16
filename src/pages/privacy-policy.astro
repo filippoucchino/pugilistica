@@ -1,0 +1,327 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import { siteInfo } from "@/data/shared";
+---
+
+<BaseLayout
+  title="Privacy Policy — Pugilistica Brianza"
+  description="Informativa sulla privacy di ASD Pugilistica Brianza ai sensi del Regolamento UE 2016/679 (GDPR). Come trattiamo i tuoi dati personali."
+>
+  <!-- HERO -->
+  <Hero
+    topline="Privacy Policy"
+    subtitle="Informativa sul trattamento dei dati personali ai sensi del Regolamento UE 2016/679 (GDPR)."
+  >
+    Informativa sulla <span class="text-brand">privacy</span>
+  </Hero>
+
+  <!-- 1. TITOLARE DEL TRATTAMENTO -->
+  <section class="pb-section">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">1. Titolare del trattamento</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <p>
+          Il titolare del trattamento dei dati personali è:
+        </p>
+        <ul class="list-none space-y-1 pl-0">
+          <li><strong class="text-pb-text-primary">ASD Pugilistica Brianza</strong></li>
+          <li>Legale rappresentante: Bruno Elli</li>
+          <li>Sede: {siteInfo.address}, {siteInfo.cap} {siteInfo.city} ({siteInfo.province})</li>
+          <li>Email: <a href="mailto:pugilisticabrianza@gmail.com">pugilisticabrianza@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. TIPI DI DATI RACCOLTI -->
+  <section class="pb-section pb-section--alt">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">2. Tipi di dati raccolti</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <h3 class="text-lg font-semibold text-pb-text-primary">Dati forniti volontariamente</h3>
+        <p>
+          Quando compili il modulo di contatto nella pagina
+          <a href="/contatti/">Contatti</a>, raccogliamo:
+        </p>
+        <ul class="list-disc space-y-2 pl-5">
+          <li>Nome</li>
+          <li>Indirizzo email</li>
+          <li>Messaggio</li>
+        </ul>
+
+        <h3 class="text-lg font-semibold text-pb-text-primary mt-8">Dati raccolti automaticamente</h3>
+        <p>
+          Il sito non raccoglie direttamente dati di navigazione. Tuttavia, alcuni servizi
+          di terze parti integrati nel sito (descritti alla sezione 5) possono raccogliere
+          automaticamente dati tecnici come indirizzo IP e user-agent del browser.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FINALITÀ DEL TRATTAMENTO -->
+  <section class="pb-section">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">3. Finalità del trattamento</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <p>I dati personali sono trattati per le seguenti finalità:</p>
+        <ul class="list-disc space-y-2 pl-5">
+          <li>
+            <strong class="text-pb-text-primary">Rispondere alle richieste di contatto</strong> —
+            i dati inseriti nel modulo vengono utilizzati esclusivamente per rispondere
+            alla tua richiesta.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Funzionamento tecnico del sito</strong> —
+            il caricamento dei font dal servizio Google Fonts è necessario per la corretta
+            visualizzazione del sito.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Visualizzazione della mappa</strong> —
+            Google Maps viene caricato solo quando decidi di cliccare su "Apri mappa",
+            per mostrarti la posizione della palestra.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. BASE GIURIDICA -->
+  <section class="pb-section pb-section--alt">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">4. Base giuridica del trattamento</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <p>Il trattamento dei dati si fonda sulle seguenti basi giuridiche (art. 6 GDPR):</p>
+        <ul class="list-disc space-y-2 pl-5">
+          <li>
+            <strong class="text-pb-text-primary">Consenso</strong> (art. 6.1.a) —
+            per l'eventuale utilizzo di cookie non essenziali e futuri strumenti di analisi.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Esecuzione di misure precontrattuali</strong> (art. 6.1.b) —
+            per rispondere alle richieste inviate tramite il modulo di contatto.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Legittimo interesse</strong> (art. 6.1.f) —
+            per il funzionamento tecnico del sito, incluso il caricamento dei font.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SERVIZI DI TERZE PARTI -->
+  <section class="pb-section">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">5. Servizi di terze parti</h2>
+      <div class="space-y-6 text-pb-text-secondary leading-relaxed">
+        <p>Il sito utilizza i seguenti servizi esterni:</p>
+
+        <div>
+          <h3 class="text-lg font-semibold text-pb-text-primary">Web3Forms</h3>
+          <p class="mt-2">
+            Il modulo di contatto invia i dati a
+            <a href="https://web3forms.com" target="_blank" rel="noopener">Web3Forms</a>,
+            che li inoltra al nostro indirizzo email. Web3Forms non utilizza i dati per
+            finalità proprie.
+            <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Privacy Policy di Web3Forms</a>.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-pb-text-primary">Google Fonts</h3>
+          <p class="mt-2">
+            Per la visualizzazione dei font, il sito si collega ai server di Google.
+            Durante il caricamento, Google riceve il tuo indirizzo IP e informazioni
+            sul browser (user-agent).
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy di Google</a>.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-pb-text-primary">Google Maps</h3>
+          <p class="mt-2">
+            La mappa interattiva viene caricata <strong class="text-pb-text-primary">solo quando clicchi
+            su "Apri mappa"</strong>. Fino a quel momento, viene mostrata un'immagine
+            statica che non trasmette dati a Google. Quando la mappa viene caricata,
+            Google può raccogliere dati di navigazione e impostare cookie.
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy di Google</a>.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-pb-text-primary">WhatsApp (Meta)</h3>
+          <p class="mt-2">
+            Alcuni pulsanti del sito aprono una conversazione WhatsApp.
+            Cliccando, vieni reindirizzato a WhatsApp e il trattamento dei dati
+            avviene sotto la
+            <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener">Privacy Policy di WhatsApp/Meta</a>.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-pb-text-primary">Facebook e Instagram (Meta)</h3>
+          <p class="mt-2">
+            Il sito contiene link ai nostri profili social. Cliccando, vieni
+            reindirizzato alle rispettive piattaforme, il cui trattamento dati è
+            disciplinato dalla
+            <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Privacy Policy di Meta</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. COOKIE -->
+  <section class="pb-section pb-section--alt">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">6. Cookie e tecnologie di tracciamento</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <p>
+          Il sito <strong class="text-pb-text-primary">non imposta cookie propri di profilazione</strong>.
+        </p>
+        <p>Ecco cosa utilizziamo:</p>
+        <ul class="list-disc space-y-2 pl-5">
+          <li>
+            <strong class="text-pb-text-primary">Preferenza cookie</strong> —
+            memorizziamo la tua scelta sul consenso ai cookie tramite localStorage
+            del browser (chiave <code class="text-xs text-pb-text-tertiary">cookie_consent</code>).
+            Non è un cookie e non viene trasmesso a nessun server.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Google Fonts</strong> —
+            il servizio potrebbe impostare cookie tecnici di Google.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Google Maps</strong> —
+            quando carichi la mappa interattiva, Google può impostare cookie
+            sul dominio google.com.
+          </li>
+        </ul>
+        <p>
+          In futuro potranno essere utilizzati cookie di analisi (es. Google Analytics)
+          per comprendere come viene utilizzato il sito. Questi cookie verranno attivati
+          <strong class="text-pb-text-primary">solo previo tuo consenso</strong> tramite
+          il banner mostrato alla prima visita.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. TRASFERIMENTO DATI EXTRA-UE -->
+  <section class="pb-section">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">7. Trasferimento dati extra-UE</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <p>
+          Alcuni dei servizi di terze parti indicati alla sezione 5 hanno sede
+          negli Stati Uniti. I trasferimenti di dati avvengono sulla base di:
+        </p>
+        <ul class="list-disc space-y-2 pl-5">
+          <li>
+            <strong class="text-pb-text-primary">Google</strong> (Fonts, Maps) — aderisce al
+            EU-U.S. Data Privacy Framework.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Web3Forms</strong> — i dati possono essere
+            trasferiti fuori dall'UE sulla base di clausole contrattuali standard
+            approvate dalla Commissione Europea.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. CONSERVAZIONE DEI DATI -->
+  <section class="pb-section pb-section--alt">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">8. Conservazione dei dati</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <ul class="list-disc space-y-2 pl-5">
+          <li>
+            <strong class="text-pb-text-primary">Dati del modulo di contatto</strong> —
+            conservati da Web3Forms per il tempo necessario all'inoltro. L'email
+            risultante viene conservata da noi per il tempo strettamente necessario
+            a rispondere alla richiesta.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Dati di navigazione</strong> —
+            non vengono conservati dal sito. La conservazione da parte di Google
+            (Fonts, Maps) segue la loro rispettiva policy sulla privacy.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. DIRITTI DELL'INTERESSATO -->
+  <section class="pb-section">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">9. I tuoi diritti</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <p>
+          Ai sensi degli articoli 15-22 del GDPR, hai diritto di:
+        </p>
+        <ul class="list-disc space-y-2 pl-5">
+          <li><strong class="text-pb-text-primary">Accesso</strong> — ottenere conferma dell'esistenza dei tuoi dati e riceverne copia.</li>
+          <li><strong class="text-pb-text-primary">Rettifica</strong> — correggere dati inesatti o incompleti.</li>
+          <li><strong class="text-pb-text-primary">Cancellazione</strong> — richiedere la cancellazione dei tuoi dati.</li>
+          <li><strong class="text-pb-text-primary">Limitazione</strong> — limitare il trattamento in determinati casi.</li>
+          <li><strong class="text-pb-text-primary">Portabilità</strong> — ricevere i tuoi dati in formato strutturato.</li>
+          <li><strong class="text-pb-text-primary">Opposizione</strong> — opporti al trattamento dei tuoi dati.</li>
+          <li><strong class="text-pb-text-primary">Revoca del consenso</strong> — revocare in qualsiasi momento il consenso prestato, senza pregiudicare la liceità del trattamento basato sul consenso dato prima della revoca.</li>
+        </ul>
+        <p>
+          Per esercitare i tuoi diritti, scrivi a
+          <a href="mailto:pugilisticabrianza@gmail.com">pugilisticabrianza@gmail.com</a>.
+        </p>
+        <p>
+          Hai inoltre il diritto di proporre reclamo al
+          <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">Garante per la Protezione dei Dati Personali</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. MINORI -->
+  <section class="pb-section pb-section--alt">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">10. Minori</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <p>
+          La palestra accoglie atleti minorenni, con il consenso del genitore
+          o del tutore legale per l'iscrizione ai corsi.
+        </p>
+        <p>
+          Per quanto riguarda il trattamento dei dati personali online,
+          per gli utenti di età inferiore a 14 anni il consenso deve essere
+          fornito o autorizzato dal genitore o dal tutore legale
+          (art. 8 GDPR e art. 2-quinquies del D.Lgs. 196/2003).
+        </p>
+        <p>
+          In caso di raccolta involontaria di dati di minori senza il necessario
+          consenso genitoriale, provvederemo alla loro cancellazione tempestiva
+          non appena ne verremo a conoscenza.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. MODIFICHE -->
+  <section class="pb-section">
+    <div class="pb-container pb-container--narrow">
+      <h2 class="text-display-sm mb-6">11. Modifiche all'informativa</h2>
+      <div class="space-y-4 text-pb-text-secondary leading-relaxed">
+        <p>
+          La presente informativa potrebbe essere aggiornata per riflettere
+          modifiche normative o cambiamenti nei servizi offerti. Eventuali
+          aggiornamenti verranno pubblicati su questa pagina.
+        </p>
+        <p class="text-pb-text-tertiary text-sm">
+          Ultimo aggiornamento: 16 aprile 2026
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
