@@ -275,11 +275,16 @@ export function buildCourse(opts: CourseSchemaOpts): Record<string, unknown> {
   };
 
   if (opts.coaches.length > 0) {
-    node.instructor = opts.coaches.map((c) => ({
-      "@type": "Person",
-      "@id": `${SITE_URL}/#person-${c.slug}`,
-      name: c.name,
-    }));
+    // instructor è proprietà di CourseInstance, non di Course
+    node.hasCourseInstance = {
+      "@type": "CourseInstance",
+      courseMode: "https://schema.org/OnSite",
+      instructor: opts.coaches.map((c) => ({
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person-${c.slug}`,
+        name: c.name,
+      })),
+    };
   }
 
   return node;
