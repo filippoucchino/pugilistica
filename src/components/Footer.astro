@@ -2,8 +2,12 @@
 /**
  * Footer — 4 colonne: brand, percorsi, info, contatti + bottom bar con social.
  */
+import { Image } from "astro:assets";
+import logoSrc from "@/assets/brand/logo.png";
 import { siteInfo, courseLinks, infoLinks } from "@/data/shared";
 import SocialLinks from "./SocialLinks.astro";
+
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="bg-neutral-950 border-t border-pb-border-subtle pt-16 px-8 pb-8">
@@ -13,11 +17,11 @@ import SocialLinks from "./SocialLinks.astro";
       <!-- Brand -->
       <div>
         <a href="/" class="inline-block mb-4 no-underline" aria-label="Pugilistica Brianza — Home">
-          <img
-            src="/brand/logo.png"
+          <Image
+            src={logoSrc}
             alt="Pugilistica Brianza"
-            width="500"
-            height="318"
+            width={126}
+            height={80}
             class="h-20 w-auto"
             loading="lazy"
             decoding="async"
@@ -31,7 +35,7 @@ import SocialLinks from "./SocialLinks.astro";
 
       <!-- Percorsi -->
       <div>
-        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-4">
+        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-muted mb-4">
           Percorsi
         </div>
         {courseLinks.map((link) => (
@@ -46,7 +50,7 @@ import SocialLinks from "./SocialLinks.astro";
 
       <!-- Info -->
       <div>
-        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-4">
+        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-muted mb-4">
           Info
         </div>
         {infoLinks.map((link) => (
@@ -61,7 +65,7 @@ import SocialLinks from "./SocialLinks.astro";
 
       <!-- Contatti -->
       <div>
-        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-4">
+        <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-muted mb-4">
           Contatti
         </div>
         <span class="block text-sm text-pb-text-tertiary py-[5px]">{siteInfo.address}</span>
@@ -72,10 +76,10 @@ import SocialLinks from "./SocialLinks.astro";
 
     <!-- Bottom -->
     <div class="border-t border-pb-border-default pt-6 flex items-center justify-between max-sm:flex-col max-sm:gap-2">
-      <span class="text-xs text-pb-text-faint">&copy; 2025 {siteInfo.name}. Tutti i diritti riservati.</span>
+      <span class="text-xs text-pb-text-muted">&copy; {currentYear} {siteInfo.name}. Tutti i diritti riservati.</span>
       <a
         href="/privacy-policy/"
-        class="text-xs text-pb-text-faint no-underline transition-colors duration-base hover:text-pb-text-tertiary"
+        class="text-xs text-pb-text-muted no-underline transition-colors duration-base hover:text-pb-text-tertiary"
       >
         Privacy Policy
       </a>

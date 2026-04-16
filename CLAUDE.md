@@ -13,7 +13,7 @@ ai potenziali iscritti di prenotare una prova gratuita.
 - **Tailwind config**: `tailwind.config.ts` (TypeScript)
 - **Design tokens**: mappati in `tailwind.config.ts` (colori brand/surface/pb, spacing semantici, tipografia)
 - **CSS globale**: `src/styles/global.css` definisce le classi custom riutilizzabili (`pb-container`, `pb-section`, `pb-btn-primary`, ecc.)
-- **Font**: Bebas Neue (display) + Barlow (body) — caricati da Google Fonts in `global.css`
+- **Font**: Bebas Neue (display) + Barlow (body) — caricati da Google Fonts via `<link>` in `BaseLayout.astro` (con preconnect)
 - **Dati**: `src/data/shared.ts` come single source of truth (info sede, orari, nav links, zone servite, trust items)
 - **CMS**: nessuno (contenuti statici nelle pagine e in `shared.ts`)
 - **Hosting**: non ancora configurato
@@ -251,7 +251,8 @@ sono solo materiale di partenza.
 ### Varianti generate
 
 **Dal logo (`PB_logo.png`):**
-- `public/brand/logo.png` — copia di lavoro usata in Header e Footer
+- `src/assets/brand/logo.png` — usata da Header e Footer tramite `<Image>` di Astro (WebP ottimizzato a build-time)
+- `public/brand/logo.png` — copia statica per il JSON-LD (`logo` in `SportsActivityLocation` della home, serve URL pubblico stabile)
 - `public/brand/og-image.jpg` — 1200×630 per anteprime social (logo centrato su sfondo `#0a0a0a`)
 
 **Dalla favicon (`favicon.png`):**
@@ -289,7 +290,9 @@ ffmpeg -y -f lavfi -i "color=c=0x0a0a0a:s=1200x630:d=1" -i public/brand/source/P
 
 Note pratiche:
 - Se cambi il colore di sfondo dell'OG image, modifica `c=0x0a0a0a` (esadecimale senza `#`).
-- I tag `<img>` in `Header.astro` e `Footer.astro` hanno `width="500" height="318"` espliciti per evitare layout shift: se cambi le proporzioni del logo sorgente, aggiorna anche questi due attributi.
+- Header e Footer usano `<Image>` di Astro con dimensioni di visualizzazione reali
+  (Header: 75×48, Footer: 126×80). Se cambi le proporzioni del logo, aggiorna anche
+  `width`/`height` nei due componenti.
 - **`favicon.ico` non viene generato**: ffmpeg non lo supporta nativamente e i browser moderni accettano i PNG. Se in futuro serve supporto IE/legacy, va aggiunto con ImageMagick.
 
 ## Pagina Orari (`/orari/`)
@@ -465,11 +468,28 @@ Ultimo aggiornamento: 2026-04-16
   localStorage (`cookie_consent`). Predisposto per integrazione futura GA4
   (commento-guida nel codice). Script `is:inline` per evitare flash del banner.
 
+- Ottimizzazioni PageSpeed Insights (performance + accessibilità):
+  - **Font loading**: rimosso `@import` da `global.css`, spostato in `<link>` nel `<head>` di
+    `BaseLayout.astro` con `<link rel="preconnect">` verso `fonts.googleapis.com` e
+    `fonts.gstatic.com`. Elimina la catena critica CSS → Google Fonts → woff2.
+  - **Logo ottimizzato**: logo spostato in `src/assets/brand/logo.png`, Header e Footer
+    usano `<Image>` di Astro (WebP a build-time: header 1 KB, footer 3 KB, da 42 KB PNG).
+    Copia statica mantenuta in `public/brand/logo.png` per il JSON-LD.
+  - **Burger menu refactored**: animazione hamburger → X gestita via classe CSS
+    `.burger-open` + `.burger-line` (definite in `global.css`) invece di manipolazione
+    inline `style.transform`. Elimina il forced reflow segnalato da PageSpeed.
+  - **Contrasto accessibilità WCAG AA**: token `pb-text-muted` alzato da 0.40 a 0.50
+    in `tailwind.config.ts` (contrasto ~5.3:1 su sfondi scuri, passa 4.5:1).
+    Footer: titoli colonne e copyright da `text-pb-text-faint` a `text-pb-text-muted`.
+    TrustBar: icona SVG da `stroke-pb-text-muted` a `stroke-pb-text-tertiary`.
+  - **Copyright dinamico**: anno nel footer generato da `new Date().getFullYear()`
+    nel frontmatter di `Footer.astro` (si aggiorna ad ogni build).
+- Hosting configurato su Vercel (deploy automatico da GitHub, dominio `pugilistica.vercel.app`)
+
 ### In corso
 - Nessuna attività in corso
 
 ### Prossimo step
-- Scegliere hosting e configurare il deploy automatico da GitHub (Vercel, Netlify o GitHub Pages + Action)
 - Valutare blocco indicizzazione (`robots.txt` + meta `noindex` in `BaseLayout`) finché il sito non è pronto per il pubblico
 - Verificare la leggibilità del favicon a 16×16 (il pugile ha molti dettagli): se non si distingue,
   valutare una versione semplificata o un monogramma "PB" per le dimensioni piccole

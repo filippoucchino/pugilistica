@@ -3,6 +3,8 @@
  * Header / Navbar — fixed, glass-morph, con menu mobile hamburger.
  * Usa le stesse classi del prototipo HTML mappate su Tailwind.
  */
+import { Image } from "astro:assets";
+import logoSrc from "@/assets/brand/logo.png";
 import { navLinks } from "@/data/shared";
 
 const currentPath = Astro.url.pathname;
@@ -18,11 +20,11 @@ const currentPath = Astro.url.pathname;
   <div class="max-w-container mx-auto w-full flex items-center justify-between">
     <!-- Brand -->
     <a href="/" class="flex items-center no-underline" aria-label="Pugilistica Brianza — Home">
-      <img
-        src="/brand/logo.png"
+      <Image
+        src={logoSrc}
         alt="Pugilistica Brianza"
-        width="500"
-        height="318"
+        width={75}
+        height={48}
         class="h-12 w-auto max-md:h-10"
         decoding="async"
         fetchpriority="high"
@@ -61,9 +63,9 @@ const currentPath = Astro.url.pathname;
       aria-label="Apri menu"
       aria-expanded="false"
     >
-      <i class="block w-[22px] h-0.5 bg-pb-text-secondary transition-all duration-base ease-default"></i>
-      <i class="block w-[22px] h-0.5 bg-pb-text-secondary transition-all duration-base ease-default"></i>
-      <i class="block w-[22px] h-0.5 bg-pb-text-secondary transition-all duration-base ease-default"></i>
+      <i class="burger-line"></i>
+      <i class="burger-line"></i>
+      <i class="burger-line"></i>
     </button>
   </div>
 </header>
@@ -98,40 +100,28 @@ const currentPath = Astro.url.pathname;
   const burger = document.getElementById("burger");
   const mobileNav = document.getElementById("mobile-nav");
 
+  function closeMobileMenu() {
+    mobileNav?.classList.remove("flex");
+    mobileNav?.classList.add("hidden");
+    burger?.setAttribute("aria-expanded", "false");
+    burger?.classList.remove("burger-open");
+  }
+
   burger?.addEventListener("click", () => {
     const isOpen = mobileNav?.classList.contains("flex");
 
     if (isOpen) {
-      mobileNav?.classList.remove("flex");
-      mobileNav?.classList.add("hidden");
-      burger.setAttribute("aria-expanded", "false");
-      // Reset burger lines
-      burger.querySelectorAll("i").forEach((line) => {
-        (line as HTMLElement).style.transform = "";
-        (line as HTMLElement).style.opacity = "";
-      });
+      closeMobileMenu();
     } else {
       mobileNav?.classList.remove("hidden");
       mobileNav?.classList.add("flex");
       burger.setAttribute("aria-expanded", "true");
-      // Animate burger to X
-      const lines = burger.querySelectorAll("i");
-      (lines[0] as HTMLElement).style.transform = "rotate(45deg) translate(5px, 5px)";
-      (lines[1] as HTMLElement).style.opacity = "0";
-      (lines[2] as HTMLElement).style.transform = "rotate(-45deg) translate(5px, -5px)";
+      burger.classList.add("burger-open");
     }
   });
 
   // Chiudi menu mobile su click link
   mobileNav?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileNav.classList.remove("flex");
-      mobileNav.classList.add("hidden");
-      burger?.setAttribute("aria-expanded", "false");
-      burger?.querySelectorAll("i").forEach((line) => {
-        (line as HTMLElement).style.transform = "";
-        (line as HTMLElement).style.opacity = "";
-      });
-    });
+    link.addEventListener("click", closeMobileMenu);
   });
 </script>

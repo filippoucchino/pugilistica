@@ -47,7 +47,7 @@ export default {
           "text-primary": "#FFFFFF",
           "text-secondary": "rgba(255, 255, 255, 0.75)",
           "text-tertiary": "rgba(255, 255, 255, 0.55)",
-          "text-muted": "rgba(255, 255, 255, 0.40)",
+          "text-muted": "rgba(255, 255, 255, 0.50)",
           "text-faint": "rgba(255, 255, 255, 0.25)",
           "border-default": "rgba(255, 255, 255, 0.08)",
           "border-subtle": "rgba(255, 255, 255, 0.05)",
