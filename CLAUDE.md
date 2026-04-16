@@ -16,7 +16,8 @@ ai potenziali iscritti di prenotare una prova gratuita.
 - **Font**: Bebas Neue (display) + Barlow (body) — caricati da Google Fonts via `<link>` in `BaseLayout.astro` (con preconnect)
 - **Dati**: `src/data/shared.ts` (info sede, orari, nav links, zone servite, trust items) + `src/data/schema.ts` (builder JSON-LD Schema.org)
 - **CMS**: nessuno (contenuti statici nelle pagine e in `shared.ts`)
-- **Hosting**: Vercel (deploy automatico da GitHub)
+- **Hosting produzione**: Aruba (sito statico su Apache, upload manuale di `dist/`)
+- **Hosting demo**: Vercel (deploy automatico da GitHub, `pugilistica.vercel.app`)
 - **Sitemap**: generata automaticamente da `@astrojs/sitemap` a build-time
 - **Package manager**: npm
 
@@ -25,6 +26,7 @@ ai potenziali iscritti di prenotare una prova gratuita.
 ```
 pugilistica/
 ├── public/
+│   ├── .htaccess                      ← config Apache per Aruba (rewrite, 404, security headers)
 │   ├── robots.txt                     ← regole crawler + puntamento sitemap
 │   └── favicon.svg                    ← asset statici serviti direttamente
 ├── src/
@@ -51,7 +53,7 @@ pugilistica/
 │   │   └── schema.ts                  ← builder JSON-LD Schema.org centralizzati per tutte le pagine
 │   ├── layouts/
 │   │   └── BaseLayout.astro           ← layout unico: head, SEO, Header, slot, Footer, scroll reveal
-│   ├── pages/                         ← 11 pagine, una per URL
+│   ├── pages/                         ← 12 pagine, una per URL (+ 404)
 │   │   ├── index.astro
 │   │   ├── pugilato.astro
 │   │   ├── hyrox.astro
@@ -62,9 +64,11 @@ pugilistica/
 │   │   ├── contatti.astro
 │   │   ├── orari.astro
 │   │   ├── prova-gratuita.astro
-│   │   └── privacy-policy.astro
+│   │   ├── privacy-policy.astro
+│   │   └── 404.astro
 │   └── styles/
 │       └── global.css                 ← Tailwind directives + classi custom pb-*
+├── vercel.json                        ← security headers per demo Vercel
 ├── astro.config.mjs
 ├── tailwind.config.ts
 ├── tsconfig.json                      ← path alias @/* → src/*
@@ -85,6 +89,7 @@ pugilistica/
 - `/orari/` — Orari corsi (tabella Lun–Sab con filtri), prezzi, info pratiche
 - `/prova-gratuita/` — Landing con form di prenotazione
 - `/privacy-policy/` — Informativa privacy GDPR (11 sezioni, link nel footer)
+- `/404` — Pagina non trovata (hero + 3 card di navigazione)
 
 ## Convenzioni
 
@@ -453,7 +458,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-04-16
+Ultimo aggiornamento: 2026-04-27
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -461,13 +466,13 @@ Ultimo aggiornamento: 2026-04-16
 - `src/styles/global.css` con classi riutilizzabili `pb-*` (container, section, btn, topline, divider, hero-glow, hero-watermark, fade-up)
 - 24 componenti riutilizzabili in `src/components/`
 - Layout unico `BaseLayout.astro` con SEO meta, Open Graph, canonical, slot per JSON-LD, IntersectionObserver per scroll reveal
-- 11 pagine create e funzionanti, con dati strutturati Schema.org completi su tutte (vedi sezione dedicata)
+- 12 pagine create e funzionanti (11 pagine principali + 404), con dati strutturati Schema.org completi su tutte le 11 principali (vedi sezione dedicata)
 - `src/data/shared.ts` come single source of truth (siteInfo, trustItems, localDetails, zones, navLinks, courseLinks, infoLinks, hours, reviews, reviewAggregation)
 - `src/data/scheduleData.ts` come single source of truth per orari corsi, attività, prezzi della pagina `/orari/`
 - Header e Footer collegati a `shared.ts`, tutte le pagine deduplicate per dati comuni
 - Encoding UTF-8 corretto in tutti i file (à, è, ì, ò, ù, é, €, —, →)
 - `npm install` completato
-- Build di produzione verificata: 0 errori, 0 warning, 11 pagine generate in `dist/`
+- Build di produzione verificata: 0 errori, 0 warning, 12 pagine generate in `dist/`
 - Repo Git inizializzato, primo commit, branch rinominato in `main`, push su https://github.com/filippoucchino/pugilistica
 - Video verticale aggiunto alla pagina `/pugilato/` nella sezione "Che cos'è il Pugilato?":
   `DefinitionGrid.astro` esteso con prop `video` opzionale (layout 2 colonne su lg+, stack con video sopra su mobile);
@@ -540,7 +545,8 @@ Ultimo aggiornamento: 2026-04-16
     TrustBar: icona SVG da `stroke-pb-text-muted` a `stroke-pb-text-tertiary`.
   - **Copyright dinamico**: anno nel footer generato da `new Date().getFullYear()`
     nel frontmatter di `Footer.astro` (si aggiorna ad ogni build).
-- Hosting configurato su Vercel (deploy automatico da GitHub, dominio `pugilistica.vercel.app`)
+- Hosting: produzione su Aruba (sito statico Apache), demo su Vercel (deploy automatico da GitHub,
+  dominio `pugilistica.vercel.app`)
 
 - Dati strutturati Schema.org completi su tutte le 11 pagine (copertura 100%):
   `src/data/schema.ts` con 13 builder TypeScript centralizzati, pattern @graph con @id
@@ -555,6 +561,19 @@ Ultimo aggiornamento: 2026-04-16
   `public/robots.txt` consente tutti i crawler (`Allow: /`) e punta alla sitemap.
   `@astrojs/sitemap` genera `sitemap-index.xml` + `sitemap-0.xml` a build-time con
   tutte le 11 pagine (inclusa privacy-policy). URL base da `site` in `astro.config.mjs`.
+
+- Pagina 404 (`src/pages/404.astro`): pagina personalizzata "non trovata" con Hero,
+  messaggio orientativo e 3 card di navigazione (Orari, Prova gratuita, Contatti).
+  Astro genera `dist/404.html` automaticamente. Su Aruba servita via `ErrorDocument 404`
+  nel `.htaccess`, su Vercel riconosciuta nativamente.
+
+- Security headers HTTP (`public/.htaccess` + `vercel.json`):
+  `.htaccess` per Aruba (Apache) e `vercel.json` per la demo Vercel.
+  Header: `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`,
+  `Permissions-Policy` (camera/mic/geo/payment disabilitati), `Strict-Transport-Security` (HSTS),
+  `Content-Security-Policy` (allowlist: Google Fonts, Web3Forms, Google Maps, script inline).
+  `.htaccess` include anche le regole di rewrite per il routing Astro su Apache e la
+  direttiva `ErrorDocument 404` per la pagina 404 personalizzata.
 
 ### In corso
 - Nessuna attività in corso

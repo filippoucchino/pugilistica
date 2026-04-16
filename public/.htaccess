@@ -1,0 +1,50 @@
+# ============================================================
+# .htaccess — Configurazione Apache per Aruba (sito statico Astro)
+# Astro copia questo file in dist/ al build.
+# ============================================================
+
+# --- Routing pagine statiche Astro ---
+# Astro genera cartelle con index.html (es. /pugilato/ → /pugilato/index.html).
+# Queste regole servono perché Apache non fa questa risoluzione automaticamente.
+
+RewriteEngine On
+
+# Se il file richiesto esiste già, servilo direttamente
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Se la cartella richiesta esiste già, servila direttamente
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Altrimenti cerca index.html dentro la cartella richiesta
+RewriteRule ^(.*)$ /$1/index.html [L]
+
+# --- Pagina di errore 404 personalizzata ---
+ErrorDocument 404 /404.html
+
+# --- Header di sicurezza HTTP ---
+
+# Impedisce al browser di interpretare un file come tipo diverso da quello dichiarato
+Header set X-Content-Type-Options "nosniff"
+
+# Impedisce ad altri siti di incorniciare le nostre pagine in un iframe (anti-clickjacking)
+Header set X-Frame-Options "DENY"
+
+# Limita le informazioni inviate ai siti esterni quando il visitatore clicca un link
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+# Disabilita API del browser non usate (camera, microfono, geolocalizzazione, pagamenti)
+Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+# Forza HTTPS: il browser ricorda di usare sempre HTTPS per 2 anni
+Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+
+# Content Security Policy: definisce esattamente quali risorse il browser puo caricare
+# - script-src: script locali + inline (necessari per Astro is:inline)
+# - style-src: stili locali + inline (Tailwind) + Google Fonts
+# - font-src: font locali + Google Fonts
+# - connect-src: solo Web3Forms (form contatti)
+# - frame-src: solo Google Maps (iframe embed)
+# - media-src: video locali (public/videos/)
+# - object-src none: blocca Flash/Java
+# - frame-ancestors none: rinforzo anti-iframe
+Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.web3forms.com; frame-src https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'none'"

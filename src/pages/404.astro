@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import { siteInfo } from "@/data/shared";
+---
+
+<BaseLayout
+  title="Pagina non trovata — Pugilistica Brianza"
+  description="La pagina che stai cercando non esiste o è stata spostata. Torna alla home di Pugilistica Brianza."
+>
+  <!-- HERO -->
+  <Hero
+    topline="Errore 404"
+    subtitle="La pagina che stai cercando non esiste o è stata spostata. Niente paura: ti rimettiamo in carreggiata."
+    ctaPrimary={{ label: "Torna alla home", href: "/" }}
+    ctaSecondary={{ label: "Contattaci", href: "/contatti/" }}
+  >
+    Pagina non <span class="text-brand">trovata</span>
+  </Hero>
+
+  <!-- SUGGERIMENTI -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <div class="max-w-narrow">
+        <p class="text-lg text-pb-text-secondary leading-relaxed mb-8">
+          Forse hai digitato un indirizzo sbagliato, oppure la pagina è stata rimossa.
+          Ecco qualche link utile per orientarti:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <
+            href="/orari/"
+            class="p-card-pad border border-pb-border-default rounded-md
+                   transition-all duration-base ease-default
+                   hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
+                   no-underline group"
+          >
+            <h2 class="font-display text-display-sm text-pb-text-primary mb-2">Orari e prezzi</h2>
+            <p class="text-sm text-pb-text-tertiary leading-normal">Tabella corsi settimanale, abbonamenti e info pratiche.</p>
+          </a>
+          <a
+            href="/prova-gratuita/"
+            class="p-card-pad border border-pb-border-default rounded-md
+                   transition-all duration-base ease-default
+                   hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
+                   no-underline group"
+          >
+            <h2 class="font-display text-display-sm text-pb-text-primary mb-2">Prova gratuita</h2>
+            <p class="text-sm text-pb-text-tertiary leading-normal">La prima lezione è gratis e senza impegno.</p>
+          </a>
+          <a
+            href="/contatti/"
+            class="p-card-pad border border-pb-border-default rounded-md
+                   transition-all duration-base ease-default
+                   hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
+                   no-underline group"
+          >
+            <h2 class="font-display text-display-sm text-pb-text-primary mb-2">Contatti</h2>
+            <p class="text-sm text-pb-text-tertiary leading-normal">Scrivici o chiamaci al {siteInfo.phone}.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
