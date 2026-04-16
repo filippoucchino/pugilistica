@@ -11,51 +11,13 @@ import {
   pricingPlans,
   scheduleNotes,
   activityLabels,
-  buildEvents,
   type ActivityTag,
 } from "@/data/scheduleData";
-import { buildPageSchema, buildGym, buildWebPage, buildBreadcrumb, GYM_ID } from "@/data/schema";
+import { buildPageSchema, buildGym, buildWebPage, buildBreadcrumb, buildScheduleEvents } from "@/data/schema";
 
-/* — JSON-LD —
- * @graph con:
- *  1. SportsActivityLocation completo (#gym) via buildGym()
- *  2. Event ricorrenti (uno per tipo di attività) con eventSchedule
- *  3. WebPage + BreadcrumbList
- *
- * L'helper buildEvents (da scheduleData.ts) aggrega le righe dello schedule
- * per ActivityTag così non emettiamo un Event per ogni riga.
- */
-
-const mergedEvents = buildEvents();
-
-const currentYear = new Date().getFullYear();
-const scheduleStartDate = `${currentYear}-01-01`;
-const scheduleEndDate = `${currentYear}-12-31`;
-
-const eventNodes = mergedEvents.map((evt) => ({
-  "@type": "Event",
-  name: `${evt.name} — Pugilistica Brianza`,
-  description: evt.description,
-  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  eventStatus: "https://schema.org/EventScheduled",
-  location: { "@id": GYM_ID },
-  organizer: {
-    "@type": "SportsOrganization",
-    name: siteInfo.name,
-    url: siteInfo.url,
-  },
-  eventSchedule: {
-    "@type": "Schedule",
-    repeatFrequency: "P1W",
-    byDay: evt.byDay.map((d) => `https://schema.org/${d}`),
-    startTime: evt.slots[0]?.start,
-    endTime: evt.slots[0]?.end,
-    startDate: scheduleStartDate,
-    endDate: scheduleEndDate,
-    scheduleTimezone: "Europe/Rome",
-  },
-}));
-
+// JSON-LD: buildScheduleEvents() genera un Event per ogni attività con
+// mappatura precisa slot → giorni (es. Boxe 09:00-10:00 Lun/Mer/Ven,
+// 12:30-13:30 Lun-Ven, ecc.). Nessun filtro = tutti i 6 tipi di attività.
 const pageSchema = buildPageSchema(
   buildGym(),
   buildWebPage(
@@ -63,7 +25,7 @@ const pageSchema = buildPageSchema(
     "Orari Corsi — Pugilistica Brianza",
     "Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB).",
   ),
-  ...eventNodes,
+  ...buildScheduleEvents(),
   buildBreadcrumb([{ name: "Orari", href: "/orari/" }]),
 );
 

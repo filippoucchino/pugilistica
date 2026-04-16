@@ -331,14 +331,19 @@ const DAY_OF_WEEK_MAP = [
   "Saturday",
 ] as const;
 
-type RecurringEvent = {
+/** Una fascia oraria con i giorni in cui l'attività è programmata. */
+export type ScheduleEntry = {
+  start: string;
+  end: string;
+  byDay: string[];
+};
+
+export type RecurringEvent = {
   tag: ActivityTag;
   name: string;
   description: string;
-  /** Giorni della settimana in cui l'attività è programmata (schema.org format). */
-  byDay: string[];
-  /** Intervalli orari distinti associati all'attività (HH:MM – HH:MM). */
-  slots: { start: string; end: string }[];
+  /** Fasce orarie con i rispettivi giorni (mappatura precisa slot → giorni). */
+  entries: ScheduleEntry[];
 };
 
 function ensureEvent(
@@ -351,8 +356,7 @@ function ensureEvent(
       tag,
       name: activityLabels[tag],
       description: activityDescriptions[tag],
-      byDay: [],
-      slots: [],
+      entries: [],
     };
     map.set(tag, evt);
   }
@@ -361,8 +365,13 @@ function ensureEvent(
 
 /**
  * Aggrega tutte le righe dello `schedule` per tag di attività e restituisce
- * un array di eventi ricorrenti pronti per essere inseriti nel JSON-LD.
- * Un solo builder perché il sabato vive nella stessa tabella del feriale.
+ * un array di eventi ricorrenti con la mappatura precisa slot → giorni.
+ *
+ * Esempio: Boxe avrà entries come:
+ *   { start: "09:00", end: "10:00", byDay: ["Monday", "Wednesday", "Friday"] }
+ *   { start: "12:30", end: "13:30", byDay: ["Monday", ..., "Friday"] }
+ *   { start: "17:00", end: "18:00", byDay: ["Monday", "Wednesday", "Friday"] }
+ *   ...
  */
 export function buildEvents(): RecurringEvent[] {
   const byTag = new Map<ActivityTag, RecurringEvent>();
@@ -376,20 +385,21 @@ export function buildEvents(): RecurringEvent[] {
           activity.tags.forEach((tag) => {
             const evt = ensureEvent(byTag, tag);
 
-            // Aggiunge i giorni coperti dalla cella
-            for (let i = 0; i < span; i++) {
-              const day = DAY_OF_WEEK_MAP[dayIndex + i];
-              if (day && !evt.byDay.includes(day)) {
-                evt.byDay.push(day);
-              }
+            // Trova o crea l'entry per questa fascia oraria
+            let entry = evt.entries.find(
+              (e) => e.start === row.startIso && e.end === row.endIso,
+            );
+            if (!entry) {
+              entry = { start: row.startIso, end: row.endIso, byDay: [] };
+              evt.entries.push(entry);
             }
 
-            // Aggiunge lo slot orario se non già presente
-            const slotExists = evt.slots.some(
-              (s) => s.start === row.startIso && s.end === row.endIso,
-            );
-            if (!slotExists) {
-              evt.slots.push({ start: row.startIso, end: row.endIso });
+            // Aggiunge i giorni coperti dalla cella a questa specifica fascia
+            for (let i = 0; i < span; i++) {
+              const day = DAY_OF_WEEK_MAP[dayIndex + i];
+              if (day && !entry.byDay.includes(day)) {
+                entry.byDay.push(day);
+              }
             }
           });
         });

@@ -9,6 +9,7 @@
  */
 
 import { siteInfo, reviews, reviewAggregation } from "./shared";
+import { buildEvents, type ActivityTag } from "./scheduleData";
 
 // ─── Costanti @id ──────────────────────────────────────────────────────────────
 
@@ -370,6 +371,50 @@ export function buildFreeTrialOffer(): Record<string, unknown> {
     availability: "https://schema.org/InStock",
     offeredBy: { "@id": GYM_ID },
   };
+}
+
+/**
+ * Genera nodi Event Schema.org con orari precisi (slot → giorni).
+ * Senza filtro restituisce tutti gli eventi (per /orari/).
+ * Con filtro per tag restituisce solo gli eventi rilevanti (per le pagine corso).
+ *
+ * Esempio: buildScheduleEvents(["boxe", "kids-boxe"]) → Event[] per pugilato
+ */
+export function buildScheduleEvents(
+  tags?: ActivityTag[],
+): Record<string, unknown>[] {
+  const allEvents = buildEvents();
+  const filtered = tags
+    ? allEvents.filter((evt) => tags.includes(evt.tag))
+    : allEvents;
+
+  const currentYear = new Date().getFullYear();
+  const startDate = `${currentYear}-01-01`;
+  const endDate = `${currentYear}-12-31`;
+
+  return filtered.map((evt) => ({
+    "@type": "Event",
+    name: `${evt.name} — Pugilistica Brianza`,
+    description: evt.description,
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    location: { "@id": GYM_ID },
+    organizer: {
+      "@type": "SportsOrganization",
+      name: siteInfo.name,
+      url: SITE_URL,
+    },
+    eventSchedule: evt.entries.map((entry) => ({
+      "@type": "Schedule",
+      repeatFrequency: "P1W",
+      byDay: entry.byDay.map((d) => `https://schema.org/${d}`),
+      startTime: entry.start,
+      endTime: entry.end,
+      startDate,
+      endDate,
+      scheduleTimezone: "Europe/Rome",
+    })),
+  }));
 }
 
 /**
