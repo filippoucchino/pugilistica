@@ -14,25 +14,20 @@ import {
   buildEvents,
   type ActivityTag,
 } from "@/data/scheduleData";
+import { buildPageSchema, buildGym, buildWebPage, buildBreadcrumb, GYM_ID } from "@/data/schema";
 
 /* — JSON-LD —
- * Un unico @graph che contiene:
- *  1. Un nodo SportsActivityLocation (#gym) con indirizzo, telefono e
- *     openingHoursSpecification (derivato dagli orari reali del poster).
- *  2. Un array di Event ricorrenti (uno per tipo di attività) con eventSchedule
- *     byDay + startTime/endTime, collegati alla location via @id.
+ * @graph con:
+ *  1. SportsActivityLocation completo (#gym) via buildGym()
+ *  2. Event ricorrenti (uno per tipo di attività) con eventSchedule
+ *  3. WebPage + BreadcrumbList
  *
- * L'helper buildEvents aggrega tutte le righe dello schedule (feriale + sabato)
+ * L'helper buildEvents (da scheduleData.ts) aggrega le righe dello schedule
  * per ActivityTag così non emettiamo un Event per ogni riga.
  */
 
-const gymId = `${siteInfo.url}/#gym`;
-
 const mergedEvents = buildEvents();
 
-// Schema.org Event per ogni attività consolidata.
-// startDate/endDate sono l'arco di validità dell'orario: volutamente generoso
-// (tutto l'anno solare). repeatFrequency P1W = ricorrenza settimanale.
 const currentYear = new Date().getFullYear();
 const scheduleStartDate = `${currentYear}-01-01`;
 const scheduleEndDate = `${currentYear}-12-31`;
@@ -43,15 +38,12 @@ const eventNodes = mergedEvents.map((evt) => ({
   description: evt.description,
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
-  location: { "@id": gymId },
+  location: { "@id": GYM_ID },
   organizer: {
     "@type": "SportsOrganization",
     name: siteInfo.name,
     url: siteInfo.url,
   },
-  // Usiamo il primo slot come orario di riferimento; byDay copre tutti i giorni
-  // in cui l'attività è programmata. Se in futuro servissero più finestre orarie
-  // distinte per la stessa attività, si può estendere mappando slots → array di Schedule.
   eventSchedule: {
     "@type": "Schedule",
     repeatFrequency: "P1W",
@@ -64,42 +56,16 @@ const eventNodes = mergedEvents.map((evt) => ({
   },
 }));
 
-// SportsActivityLocation con orari di apertura reali della palestra.
-// Lun–Ven 08:00–21:00, Sab 10:00–12:00, Domenica chiusa.
-const locationNode = {
-  "@type": "SportsActivityLocation",
-  "@id": gymId,
-  name: siteInfo.name,
-  url: siteInfo.url,
-  telephone: siteInfo.phone,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: siteInfo.address,
-    addressLocality: siteInfo.city,
-    addressRegion: siteInfo.province,
-    postalCode: siteInfo.cap,
-    addressCountry: "IT",
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "08:00",
-      closes: "21:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Saturday",
-      opens: "10:00",
-      closes: "12:00",
-    },
-  ],
-};
-
-const scheduleSchema = {
-  "@context": "https://schema.org",
-  "@graph": [locationNode, ...eventNodes],
-};
+const pageSchema = buildPageSchema(
+  buildGym(),
+  buildWebPage(
+    "/orari/",
+    "Orari Corsi — Pugilistica Brianza",
+    "Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB).",
+  ),
+  ...eventNodes,
+  buildBreadcrumb([{ name: "Orari", href: "/orari/" }]),
+);
 
 // Lista ordinata di ActivityTag per costruire la legenda-filtro sopra la tabella.
 // 6 voci: le combo "BOXE + HYROX" e "BOXE + PB HIIT" non hanno una voce propria —
@@ -118,7 +84,7 @@ const legendTags: ActivityTag[] = [
 <BaseLayout
   title="Orari Corsi — Pugilistica Brianza | Boxe, Hyrox, PB Hiit a Barlassina"
   description="Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB). Lezioni dal lunedì al sabato, prezzi e abbonamenti chiari."
-  schema={scheduleSchema}
+  schema={pageSchema}
 >
   {/* HERO */}
   <Hero

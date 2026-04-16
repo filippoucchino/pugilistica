@@ -12,7 +12,8 @@ import ReviewCard from "../components/ReviewCard.astro";
 import LocalSection from "../components/LocalSection.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
-import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref, reviews, reviewAggregation } from "@/data/shared";
+import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref, reviews } from "@/data/shared";
+import { buildPageSchema, buildGym, buildWebSite, buildWebPage, buildFaqPage, buildFreeTrialOffer } from "@/data/schema";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
@@ -139,44 +140,17 @@ const whatsappHref = buildWhatsappHref(
   "Ciao, vorrei prenotare una prova gratuita."
 );
 
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "SportsActivityLocation",
-  name: siteInfo.name,
-  description:
+const pageSchema = buildPageSchema(
+  buildWebSite(),
+  buildGym(),
+  buildWebPage(
+    "/",
+    "Palestra di Pugilato a Barlassina | Pugilistica Brianza",
     "Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato, Hyrox e PB Hiit per principianti, amatori e agonisti.",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: siteInfo.address,
-    addressLocality: siteInfo.city,
-    postalCode: siteInfo.cap,
-    addressRegion: siteInfo.province,
-    addressCountry: "IT",
-  },
-  url: siteInfo.url,
-  logo: `${siteInfo.url}/brand/logo.png`,
-  image: `${siteInfo.url}/brand/og-image.jpg`,
-  telephone: siteInfo.phone,
-  sameAs: [siteInfo.social.facebook, siteInfo.social.instagram],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: reviewAggregation.ratingValue,
-    bestRating: 5,
-    worstRating: 1,
-    reviewCount: reviewAggregation.reviewCount,
-  },
-  review: reviews.map((r) => ({
-    "@type": "Review",
-    author: { "@type": "Person", name: r.author },
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: 5,
-      bestRating: 5,
-      worstRating: 1,
-    },
-    reviewBody: r.text,
-  })),
-};
+  ),
+  buildFaqPage(faqItems, ""),
+  buildFreeTrialOffer(),
+);
 ---
 
 <BaseLayout
@@ -446,7 +420,7 @@ const pageSchema = {
         Domande <span class="text-brand">frequenti</span>
       </SectionHeading>
 
-      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+      <FaqAccordion items={faqItems} defaultOpen={0} />
 
       <div class="mt-8">
         <a href="/faq/" class="pb-btn-text">Tutte le domande frequenti →</a>

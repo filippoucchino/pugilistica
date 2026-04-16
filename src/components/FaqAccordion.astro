@@ -1,7 +1,8 @@
 ---
 /**
  * FAQ Accordion — lista di domande/risposte con toggle + – / ×.
- * Genera anche Schema.org FAQPage se `withSchema` è true.
+ * Lo Schema.org FAQPage viene generato a livello pagina (nel <head>
+ * via BaseLayout) usando buildFaqPage() da @/data/schema.
  */
 
 interface FaqItem {
@@ -13,27 +14,9 @@ interface Props {
   items: FaqItem[];
   /** Indice dell'item aperto di default (opzionale) */
   defaultOpen?: number;
-  /** Se true, genera lo structured data FAQPage */
-  withSchema?: boolean;
 }
 
-const { items, defaultOpen, withSchema = false } = Astro.props;
-
-// Schema.org FAQPage
-const faqSchema = withSchema
-  ? {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: items.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: item.answer,
-        },
-      })),
-    }
-  : null;
+const { items, defaultOpen } = Astro.props;
 ---
 
 <div class="flex flex-col max-w-narrow" data-faq-accordion>
@@ -89,10 +72,6 @@ const faqSchema = withSchema
     </div>
   ))}
 </div>
-
-{faqSchema && (
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-)}
 
 <script>
   document.querySelectorAll("[data-faq-accordion]").forEach((accordion) => {

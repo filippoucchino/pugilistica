@@ -7,11 +7,24 @@ import FormField from "../components/FormField.astro";
 import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { localDetails, zones, siteInfo, hours } from "@/data/shared";
+import { buildPageSchema, buildGym, buildWebPage, buildBreadcrumb } from "@/data/schema";
+
+const pageSchema = buildPageSchema(
+  buildGym(),
+  buildWebPage(
+    "/contatti/",
+    "Contatti — Pugilistica Brianza",
+    "Contatta Pugilistica Brianza a Barlassina: indirizzo, telefono, email, orari e mappa.",
+    "ContactPage",
+  ),
+  buildBreadcrumb([{ name: "Contatti", href: "/contatti/" }]),
+);
 ---
 
 <BaseLayout
   title="Contatti — Pugilistica Brianza | Barlassina (MB)"
   description="Contatta Pugilistica Brianza a Barlassina: indirizzo, telefono, email, orari e mappa. Via Giovanni Segantini 29, facilmente raggiungibile da tutta la Brianza."
+  schema={pageSchema}
 >
   <!-- HERO -->
   <Hero

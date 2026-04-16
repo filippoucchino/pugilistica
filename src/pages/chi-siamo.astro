@@ -8,6 +8,7 @@ import Gallery from "../components/Gallery.astro";
 import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildPerson } from "@/data/schema";
 
 // Unica CTA della pagina: WhatsApp con messaggio generico (chi-siamo non è legata a un corso specifico).
 const whatsappHref = buildWhatsappHref(
@@ -90,28 +91,41 @@ const teamMembers = [
   },
 ];
 
-// JSON-LD: un grafo di 5 Person legati all'organizzazione, per aiutare i motori
-// di ricerca a capire chi gestisce la palestra (SEO tecnica / entità).
-const teamSchema = {
-  "@context": "https://schema.org",
-  "@graph": teamMembers.map((m) => ({
-    "@type": "Person",
-    name: m.name,
-    jobTitle: m.role,
-    description: m.bio,
-    worksFor: {
-      "@type": "SportsActivityLocation",
-      name: siteInfo.name,
-      url: siteInfo.url,
-    },
-  })),
+// JSON-LD: grafo con Person + AboutPage + BreadcrumbList.
+// Ogni Person ha @id stabile e worksFor → #gym, con certificazioni in hasCredential.
+const personSlugMap: Record<string, string> = {
+  "Stefano Rizzo": "stefano-rizzo",
+  "Bruno Elli": "bruno-elli",
+  "Riccardo Sparano": "riccardo-sparano",
+  "Vittorio Uboldi": "vittorio-uboldi",
+  "Moreno Bragato": "moreno-bragato",
 };
+
+const pageSchema = buildPageSchema(
+  buildGymRef(),
+  buildWebPage(
+    "/chi-siamo/",
+    "Chi Siamo — ASD Pugilistica Brianza",
+    "Scopri la storia, i valori e il team di Pugilistica Brianza, palestra di pugilato a Barlassina dal 9 gennaio 2016.",
+    "AboutPage",
+  ),
+  ...teamMembers.map((m) =>
+    buildPerson({
+      name: m.name,
+      slug: personSlugMap[m.name] ?? m.name.toLowerCase().replace(/\s+/g, "-"),
+      role: m.role,
+      description: m.bio,
+      credentials: m.credentials,
+    }),
+  ),
+  buildBreadcrumb([{ name: "Chi siamo", href: "/chi-siamo/" }]),
+);
 ---
 
 <BaseLayout
   title="Chi Siamo — ASD Pugilistica Brianza | Barlassina"
   description="Scopri la storia, i valori e il team di Pugilistica Brianza, palestra di pugilato a Barlassina dal 9 gennaio 2016. Affiliati FPI, FIPE e Hyrox."
-  schema={teamSchema}
+  schema={pageSchema}
 >
   <!-- HERO -->
   <Hero

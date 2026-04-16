@@ -10,6 +10,7 @@ import FaqAccordion from "../components/FaqAccordion.astro";
 import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildService } from "@/data/schema";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
@@ -26,11 +27,29 @@ const faqItems = [
   { question: "Le lezioni private sono adatte ai principianti?", answer: "Assolutamente. Sono ideali per chi vuole iniziare con un percorso individuale e imparare i fondamentali con calma." },
   { question: "Quanto costano le lezioni private?", answer: "Il costo varia in base alla frequenza. Contattaci per un preventivo personalizzato." },
 ];
+
+const pageSchema = buildPageSchema(
+  buildGymRef(),
+  buildWebPage(
+    "/lezioni-private-pugilato/",
+    "Lezioni Private di Pugilato a Barlassina | Pugilistica Brianza",
+    "Lezioni private di pugilato 1:1 a Barlassina con coach ex agonista. Percorso personalizzato, orari flessibili.",
+  ),
+  buildService({
+    name: "Lezioni Private di Pugilato",
+    slug: "lezioni-private-pugilato",
+    description: "Lezioni private di pugilato 1:1 a Barlassina con coach ex agonista. Percorso personalizzato, orari flessibili.",
+    coaches: [{ name: "Stefano Rizzo", slug: "stefano-rizzo" }],
+  }),
+  buildFaqPage(faqItems, "lezioni-private-pugilato"),
+  buildBreadcrumb([{ name: "Lezioni private", href: "/lezioni-private-pugilato/" }]),
+);
 ---
 
 <BaseLayout
   title="Lezioni Private di Pugilato a Barlassina | Pugilistica Brianza"
   description="Lezioni private di pugilato 1:1 a Barlassina con coach ex agonista. Percorso personalizzato, orari flessibili."
+  schema={pageSchema}
 >
   <Hero
     topline="Lezioni private — Pugilistica Brianza"
@@ -101,7 +120,7 @@ const faqItems = [
       <SectionHeading topline="FAQ">
         Domande sulle lezioni <span class="text-brand">private</span>
       </SectionHeading>
-      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+      <FaqAccordion items={faqItems} defaultOpen={0} />
     </div>
   </section>
 

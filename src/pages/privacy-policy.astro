@@ -2,11 +2,22 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import { siteInfo } from "@/data/shared";
+import { buildPageSchema, buildBreadcrumb, buildWebPage } from "@/data/schema";
+
+const pageSchema = buildPageSchema(
+  buildWebPage(
+    "/privacy-policy/",
+    "Privacy Policy — Pugilistica Brianza",
+    "Informativa sulla privacy di ASD Pugilistica Brianza ai sensi del Regolamento UE 2016/679 (GDPR).",
+  ),
+  buildBreadcrumb([{ name: "Privacy Policy", href: "/privacy-policy/" }]),
+);
 ---
 
 <BaseLayout
   title="Privacy Policy — Pugilistica Brianza"
   description="Informativa sulla privacy di ASD Pugilistica Brianza ai sensi del Regolamento UE 2016/679 (GDPR). Come trattiamo i tuoi dati personali."
+  schema={pageSchema}
 >
   <!-- HERO -->
   <Hero

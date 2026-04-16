@@ -14,7 +14,7 @@ ai potenziali iscritti di prenotare una prova gratuita.
 - **Design tokens**: mappati in `tailwind.config.ts` (colori brand/surface/pb, spacing semantici, tipografia)
 - **CSS globale**: `src/styles/global.css` definisce le classi custom riutilizzabili (`pb-container`, `pb-section`, `pb-btn-primary`, ecc.)
 - **Font**: Bebas Neue (display) + Barlow (body) — caricati da Google Fonts via `<link>` in `BaseLayout.astro` (con preconnect)
-- **Dati**: `src/data/shared.ts` come single source of truth (info sede, orari, nav links, zone servite, trust items)
+- **Dati**: `src/data/shared.ts` (info sede, orari, nav links, zone servite, trust items) + `src/data/schema.ts` (builder JSON-LD Schema.org)
 - **CMS**: nessuno (contenuti statici nelle pagine e in `shared.ts`)
 - **Hosting**: non ancora configurato
 - **Package manager**: npm
@@ -33,7 +33,7 @@ pugilistica/
 │   │   ├── SectionHeading.astro       ← titolo sezione standard
 │   │   ├── ServiceCard.astro          ← card corso (home)
 │   │   ├── CoachBlock.astro           ← card coach
-│   │   ├── FaqAccordion.astro         ← accordion FAQ con JSON-LD
+│   │   ├── FaqAccordion.astro         ← accordion FAQ (solo UI, schema in pagina)
 │   │   ├── TrustBar.astro             ← barra affidabilità sotto hero
 │   │   ├── LocalSection.astro         ← info sede + mappa (delega a MapFacade)
 │   │   ├── MapFacade.astro            ← facade pattern per Google Maps
@@ -45,7 +45,8 @@ pugilistica/
 │   │   └── ...                        ← e altri componenti di supporto
 │   ├── data/
 │   │   ├── shared.ts                  ← dati condivisi (siteInfo, trustItems, zones, hours, navLinks, ecc.)
-│   │   └── scheduleData.ts            ← orari, attività, prezzi, builder JSON-LD per /orari/
+│   │   ├── scheduleData.ts            ← orari, attività, prezzi, builder Event per /orari/
+│   │   └── schema.ts                  ← builder JSON-LD Schema.org centralizzati per tutte le pagine
 │   ├── layouts/
 │   │   └── BaseLayout.astro           ← layout unico: head, SEO, Header, slot, Footer, scroll reveal
 │   ├── pages/                         ← 11 pagine, una per URL
@@ -377,6 +378,56 @@ nel sorgente — non serve rifarlo manualmente:
 - Due `<source>` in ordine: prima `.webm` (se passato), poi `.mp4` come fallback universale.
 - Testo di fallback con link di download dentro `<video>` per browser antichi.
 
+## Dati strutturati Schema.org (JSON-LD)
+
+Tutte le 11 pagine hanno dati strutturati JSON-LD nel `<head>`, generati da
+builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
+`@graph` nel frontmatter e lo passa a `BaseLayout` tramite la prop `schema`.
+
+### Architettura
+
+- **File centrale**: `src/data/schema.ts` — esporta builder (`buildGym`, `buildCourse`,
+  `buildBreadcrumb`, `buildFaqPage`, `buildVideo`, `buildPerson`, `buildService`,
+  `buildWebSite`, `buildWebPage`, `buildFreeTrialOffer`, `buildPageSchema`, `buildGymRef`)
+  e interfacce TypeScript (`FaqItem`, `BreadcrumbItem`, `CoachRef`, `CourseSchemaOpts`,
+  `VideoSchemaOpts`, `PersonSchemaOpts`, `ServiceSchemaOpts`).
+- **Pattern @graph**: ogni pagina usa `buildPageSchema(...nodi)` che wrappa i nodi in
+  `{ "@context": "https://schema.org", "@graph": [...] }`.
+- **Collegamento via @id**: le entità si referenziano con `@id` stabili:
+  - `#gym` — SportsActivityLocation (palestra)
+  - `#website` — WebSite (solo homepage)
+  - `#person-{slug}` — Person (team members)
+  - `/{slug}/#course` — Course (corsi)
+  - `/{slug}/#video` — VideoObject
+  - `/{path}#breadcrumb` — BreadcrumbList
+  - `/{path}#webpage` — WebPage
+  - `#free-trial` — Offer prova gratuita
+
+### Schema per pagina
+
+| Pagina | Tipi principali |
+|--------|----------------|
+| `/` | WebSite, SportsActivityLocation (full), WebPage, FAQPage, Offer |
+| `/pugilato/` | Course, VideoObject, FAQPage, BreadcrumbList |
+| `/hyrox/` | Course, VideoObject, FAQPage, BreadcrumbList |
+| `/pb-hiit/` | Course, VideoObject, FAQPage, BreadcrumbList |
+| `/lezioni-private-pugilato/` | Service, FAQPage, BreadcrumbList |
+| `/chi-siamo/` | AboutPage, Person ×5, BreadcrumbList |
+| `/faq/` | FAQPage (15 items), BreadcrumbList |
+| `/contatti/` | SportsActivityLocation (full), ContactPage, BreadcrumbList |
+| `/orari/` | SportsActivityLocation (full), Event ×6, BreadcrumbList |
+| `/prova-gratuita/` | Offer, FAQPage, BreadcrumbList |
+| `/privacy-policy/` | WebPage, BreadcrumbList |
+
+### Come aggiungere schema a una nuova pagina
+
+1. Importa i builder necessari da `@/data/schema`.
+2. Componi il `pageSchema` nel frontmatter con `buildPageSchema(...)`.
+3. Passa `schema={pageSchema}` a `<BaseLayout>`.
+4. Includi sempre `buildBreadcrumb([...])` (tranne homepage).
+5. Se la pagina ha FAQ, includi `buildFaqPage(items, slug)` — **non** usare
+   `withSchema` su `FaqAccordion` (la prop non esiste più).
+
 ## Comandi
 
 - `npm run dev` — avvia in locale su http://localhost:4321 (o prima porta libera successiva se 4321 è occupata)
@@ -405,7 +456,7 @@ Ultimo aggiornamento: 2026-04-16
 - `src/styles/global.css` con classi riutilizzabili `pb-*` (container, section, btn, topline, divider, hero-glow, hero-watermark, fade-up)
 - 24 componenti riutilizzabili in `src/components/`
 - Layout unico `BaseLayout.astro` con SEO meta, Open Graph, canonical, slot per JSON-LD, IntersectionObserver per scroll reveal
-- 11 pagine create e funzionanti, con JSON-LD `FAQPage` sui FAQ e `SportsActivityLocation` sulla home
+- 11 pagine create e funzionanti, con dati strutturati Schema.org completi su tutte (vedi sezione dedicata)
 - `src/data/shared.ts` come single source of truth (siteInfo, trustItems, localDetails, zones, navLinks, courseLinks, infoLinks, hours, reviews, reviewAggregation)
 - `src/data/scheduleData.ts` come single source of truth per orari corsi, attività, prezzi della pagina `/orari/`
 - Header e Footer collegati a `shared.ts`, tutte le pagine deduplicate per dati comuni
@@ -485,6 +536,13 @@ Ultimo aggiornamento: 2026-04-16
   - **Copyright dinamico**: anno nel footer generato da `new Date().getFullYear()`
     nel frontmatter di `Footer.astro` (si aggiorna ad ogni build).
 - Hosting configurato su Vercel (deploy automatico da GitHub, dominio `pugilistica.vercel.app`)
+
+- Dati strutturati Schema.org completi su tutte le 11 pagine (copertura 100%):
+  `src/data/schema.ts` con 12 builder TypeScript centralizzati, pattern @graph con @id
+  coerenti tra le pagine. Tipi: WebSite, SportsActivityLocation, WebPage, Course,
+  VideoObject, FAQPage, Service, Offer, Person, BreadcrumbList, Event, AboutPage,
+  ContactPage. Tutto nel `<head>` via BaseLayout (rimosso JSON-LD dal body di FaqAccordion).
+  Eleggibili per Rich Results: Local Business, FAQ, Course, Video, Breadcrumb, Review.
 
 ### In corso
 - Nessuna attività in corso

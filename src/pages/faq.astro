@@ -4,6 +4,7 @@ import Hero from "../components/Hero.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
+import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage } from "@/data/schema";
 
 const faqGeneral = [
   { question: "Posso iniziare anche se sono principiante?", answer: "Assolutamente sì. La maggior parte dei nostri iscritti ha iniziato da zero. Il corso è strutturato per accogliere tutti i livelli, dai principianti assoluti a chi ha già esperienza." },
@@ -28,11 +29,23 @@ const faqCourses = [
   { question: "Posso frequentare più corsi?", answer: "Sì, con la formula Open a €90/mese hai accesso illimitato a tutti i corsi (pugilato, Hyrox e PB Hiit). Se invece vuoi seguire un solo corso, l'abbonamento mensile dedicato costa €50 (pugilato o PB Hiit) oppure €65 (Hyrox)." },
   { question: "Come funzionano le lezioni private?", answer: "Le lezioni private sono sessioni 1:1 con il coach, con orari flessibili e programma personalizzato. Contattaci per disponibilità e costi." },
 ];
+
+const pageSchema = buildPageSchema(
+  buildGymRef(),
+  buildWebPage(
+    "/faq/",
+    "FAQ — Domande Frequenti | Pugilistica Brianza",
+    "Risposte alle domande più frequenti su Pugilistica Brianza: corsi, prova gratuita, orari, costi e tutto quello che serve per iniziare.",
+  ),
+  buildFaqPage([...faqGeneral, ...faqPractical, ...faqCourses], "faq"),
+  buildBreadcrumb([{ name: "FAQ", href: "/faq/" }]),
+);
 ---
 
 <BaseLayout
   title="FAQ — Domande Frequenti | Pugilistica Brianza"
   description="Risposte alle domande più frequenti su Pugilistica Brianza: corsi, prova gratuita, orari, costi e tutto quello che serve per iniziare."
+  schema={pageSchema}
 >
   <!-- HERO -->
   <Hero
@@ -48,7 +61,7 @@ const faqCourses = [
       <SectionHeading topline="Domande generali">
         Sulla <span class="text-brand">palestra</span> e i corsi
       </SectionHeading>
-      <FaqAccordion items={faqGeneral} defaultOpen={0} withSchema />
+      <FaqAccordion items={faqGeneral} defaultOpen={0} />
     </div>
   </section>
 

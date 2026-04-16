@@ -7,6 +7,7 @@ import LessonStep from "../components/LessonStep.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import LocalSection from "../components/LocalSection.astro";
 import { localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildFreeTrialOffer } from "@/data/schema";
 
 // Unica CTA della pagina: contatto diretto via WhatsApp al numero del coach.
 const whatsappHref = buildWhatsappHref(
@@ -28,11 +29,24 @@ const faqItems = [
   { question: "Posso provare più di un corso?", answer: "Sì, puoi provare gratuitamente i diversi corsi (pugilato, Hyrox, PB Hiit) per scegliere quello più adatto a te." },
   { question: "La prova gratuita è adatta ai principianti?", answer: "Assolutamente. La maggior parte di chi prova non ha mai fatto pugilato. Il coach adatta l'allenamento al tuo livello." },
 ];
+
+const pageSchema = buildPageSchema(
+  buildGymRef(),
+  buildWebPage(
+    "/prova-gratuita/",
+    "Prova Gratuita — Pugilistica Brianza",
+    "Prenota la tua prova gratuita a Pugilistica Brianza, palestra di pugilato a Barlassina. Senza impegno, vieni e allenati con noi.",
+  ),
+  buildFreeTrialOffer(),
+  buildFaqPage(faqItems, "prova-gratuita"),
+  buildBreadcrumb([{ name: "Prova gratuita", href: "/prova-gratuita/" }]),
+);
 ---
 
 <BaseLayout
   title="Prova Gratuita — Pugilistica Brianza | Barlassina"
   description="Prenota la tua prova gratuita a Pugilistica Brianza, palestra di pugilato a Barlassina. Senza impegno, vieni e allenati con noi."
+  schema={pageSchema}
 >
   <!-- HERO -->
   <Hero
@@ -120,7 +134,7 @@ const faqItems = [
       <SectionHeading topline="FAQ">
         Domande sulla <span class="text-brand">prova gratuita</span>
       </SectionHeading>
-      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+      <FaqAccordion items={faqItems} defaultOpen={0} />
     </div>
   </section>
 

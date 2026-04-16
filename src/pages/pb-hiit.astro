@@ -17,6 +17,7 @@ import CtaBlock from "../components/CtaBlock.astro";
 import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
 import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo } from "@/data/schema";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
@@ -91,11 +92,40 @@ const faqItems = [
   { question: "Cosa devo portare alla prima lezione?", answer: "Abbigliamento sportivo comodo e scarpe da ginnastica. Tutta l'attrezzatura necessaria per la lezione è disponibile in palestra. Abbiamo spogliatoi e docce." },
   { question: "In cosa si differenzia il PB Hiit dal corso Hyrox?", answer: "Il PB Hiit è un allenamento a intervalli ad alta intensità pensato per fitness, tono e condizione generale. Il corso Hyrox è orientato alla preparazione ibrida per la gara Hyrox, con focus su resistenza, corsa e stazioni funzionali. Entrambi sono intensi, ma con obiettivi e struttura diversi." },
 ];
+
+const pageSchema = buildPageSchema(
+  buildGymRef(),
+  buildWebPage(
+    "/pb-hiit/",
+    "PB Hiit a Barlassina | Pugilistica Brianza",
+    "Scopri il corso PB Hiit a Barlassina: per chi è adatto, come si svolge, benefici, prova gratuita e contatti di Pugilistica Brianza.",
+  ),
+  buildCourse({
+    name: "Corso PB Hiit",
+    slug: "pb-hiit",
+    description: "Allenamento intenso e dinamico a intervalli per fitness, tono e condizione. Circuiti sempre diversi con lavoro al sacco, esercizi funzionali e metabolici.",
+    price: "50",
+    coaches: [{ name: "Stefano Rizzo", slug: "stefano-rizzo" }],
+  }),
+  buildVideo(
+    {
+      name: "Allenamento PB Hiit alla Pugilistica Brianza di Barlassina",
+      description: "Video di un allenamento PB Hiit alla Pugilistica Brianza di Barlassina: circuiti a intervalli ad alta intensità con lavoro al sacco e esercizi funzionali.",
+      mp4Path: "/videos/corso-pb-hiit-pugilistica-brianza-barlassina.mp4",
+      posterPath: "/videos/corso-pb-hiit-pugilistica-brianza-barlassina.jpg",
+      uploadDate: "2026-04-14",
+    },
+    "pb-hiit",
+  ),
+  buildFaqPage(faqItems, "pb-hiit"),
+  buildBreadcrumb([{ name: "PB Hiit", href: "/pb-hiit/" }]),
+);
 ---
 
 <BaseLayout
   title="PB Hiit a Barlassina | Pugilistica Brianza"
   description="Scopri il corso PB Hiit a Barlassina: per chi è adatto, come si svolge, benefici, prova gratuita e contatti di Pugilistica Brianza."
+  schema={pageSchema}
 >
   <!-- 1. HERO -->
   <Hero
@@ -277,7 +307,7 @@ const faqItems = [
       <SectionHeading topline="FAQ">
         Domande frequenti su <span class="text-brand">PB Hiit</span>
       </SectionHeading>
-      <FaqAccordion items={faqItems} defaultOpen={0} withSchema />
+      <FaqAccordion items={faqItems} defaultOpen={0} />
     </div>
   </section>
 
