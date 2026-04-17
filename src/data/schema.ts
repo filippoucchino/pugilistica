@@ -151,11 +151,18 @@ export function buildGym(): Record<string, unknown> {
   };
 }
 
-/** Riferimento minimo alla palestra (per pagine che non la ridefiniscono) */
+/**
+ * Riferimento identificativo alla palestra (per pagine che non la ridefiniscono
+ * e per proprietà come provider, publisher, offeredBy, location, worksFor).
+ * Include @type, @id, name e url — il minimo che Google richiede per validare
+ * l'entità senza dover risolvere l'@id nel @graph.
+ */
 export function buildGymRef(): Record<string, unknown> {
   return {
     "@type": "SportsActivityLocation",
     "@id": GYM_ID,
+    name: siteInfo.name,
+    url: SITE_URL,
   };
 }
 
@@ -168,7 +175,7 @@ export function buildWebSite(): Record<string, unknown> {
     url: SITE_URL,
     description:
       "Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato, Hyrox e PB Hiit.",
-    publisher: { "@id": GYM_ID },
+    publisher: buildGymRef(),
     inLanguage: "it-IT",
   };
 }
@@ -246,7 +253,7 @@ export function buildCourse(opts: CourseSchemaOpts): Record<string, unknown> {
     name: opts.name,
     description: opts.description,
     url,
-    provider: { "@id": GYM_ID },
+    provider: buildGymRef(),
     inLanguage: "it-IT",
     offers: [
       {
@@ -355,7 +362,7 @@ export function buildService(opts: ServiceSchemaOpts): Record<string, unknown> {
     description: opts.description,
     url,
     serviceType: "Lezioni private di pugilato",
-    provider: { "@id": GYM_ID },
+    provider: buildGymRef(),
     areaServed: {
       "@type": "City",
       name: "Barlassina",
@@ -381,7 +388,7 @@ export function buildPerson(opts: PersonSchemaOpts): Record<string, unknown> {
     name: opts.name,
     jobTitle: opts.role,
     description: opts.description,
-    worksFor: { "@id": GYM_ID },
+    worksFor: buildGymRef(),
   };
 
   if (opts.credentials.length > 0) {
@@ -406,7 +413,7 @@ export function buildFreeTrialOffer(): Record<string, unknown> {
     price: "0",
     priceCurrency: "EUR",
     availability: "https://schema.org/InStock",
-    offeredBy: { "@id": GYM_ID },
+    offeredBy: buildGymRef(),
   };
 }
 
@@ -437,7 +444,7 @@ export function buildScheduleEvents(
     endDate,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     eventStatus: "https://schema.org/EventScheduled",
-    location: { "@id": GYM_ID },
+    location: buildGymRef(),
     organizer: {
       "@type": "SportsOrganization",
       name: siteInfo.name,

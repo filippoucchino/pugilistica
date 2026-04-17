@@ -612,9 +612,14 @@ Ultimo aggiornamento: 2026-04-17
     (Google li richiede anche quando `eventSchedule` è presente).
   - Aggiunto `repeatCount: 52` agli oggetti Schedule in `courseSchedule`
     (Google lo richiede per CourseInstance con schedule settimanale).
+  - **Riferimenti @id arricchiti**: `buildGymRef()` ora include `name` e `url` oltre
+    a `@type` e `@id`. Tutti i riferimenti alla palestra (`publisher`, `provider`,
+    `offeredBy`, `location`, `worksFor`) usano `buildGymRef()` invece di `{ "@id": GYM_ID }`
+    nudo. Google non risolve completamente gli @id nella validazione e richiede almeno
+    `@type` e `name` inline — risolve l'errore "Unnamed Item" in Rich Results Test.
   - Risolti: Event `startDate` mancante (critico), CourseInstance senza `courseSchedule`,
-    Offer senza `category`, Schedule senza `repeatCount`, location Event senza
-    name/address sulle pagine corso.
+    Offer senza `category`, Schedule senza `repeatCount`, riferimenti @id senza name,
+    location Event senza name/address sulle pagine corso.
 
 - Ottimizzazioni PageSpeed Insights (round 2):
   - **Font self-hosted**: rimossi i 3 `<link>` a Google Fonts da `BaseLayout.astro`,
