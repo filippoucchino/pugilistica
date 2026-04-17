@@ -574,6 +574,11 @@ Ultimo aggiornamento: 2026-04-17
   messaggio orientativo e 3 card di navigazione (Orari, Prova gratuita, Contatti).
   Astro genera `dist/404.html` automaticamente. Su Aruba servita via `ErrorDocument 404`
   nel `.htaccess`, su Vercel riconosciuta nativamente.
+  **Fix loop infinito rewrite**: aggiunta condizione `RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f`
+  nel `.htaccess` — la rewrite a `/$1/index.html` avviene solo se il file esiste davvero.
+  Senza questa guardia, URL inesistenti causavano un loop di redirect interni (Apache
+  riscriveva `/aaa` → `/aaa/index.html` → `/aaa/index.html/index.html` → ... fino al
+  limite di 10, restituendo 500 Internal Server Error invece della pagina 404).
 
 - Security headers HTTP (`public/.htaccess` + `vercel.json`):
   `.htaccess` per Aruba (Apache) e `vercel.json` per la demo Vercel.
@@ -647,6 +652,12 @@ Ultimo aggiornamento: 2026-04-17
 - Title e H1 homepage aggiornati: "Palestra di Pugilato e Hyrox a Barlassina"
   (aggiunto "e Hyrox" per posizionamento SEO su entrambe le keyword principali).
   Nell'H1 "pugilato" e "Hyrox" sono in rosso (`text-brand`), la "e" resta bianca.
+
+- Fix 404 su Aruba (errore 500 → pagina 404 corretta): aggiunta guardia
+  `RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f` al `.htaccess` per impedire il loop
+  infinito di redirect interni su URL inesistenti. Causa: la regola di rewrite
+  riscriveva ricorsivamente (es. `/aaa` → `/aaa/index.html` → `/aaa/index.html/index.html`...)
+  fino al limite Apache di 10, restituendo 500 invece di 404.
 
 ### In corso
 - Nessuna attività in corso

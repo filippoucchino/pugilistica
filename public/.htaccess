@@ -15,6 +15,9 @@ RewriteCond %{REQUEST_FILENAME} !-f
 # Se la cartella richiesta esiste già, servila direttamente
 RewriteCond %{REQUEST_FILENAME} !-d
 
+# Riscrivi solo se il file di destinazione esiste davvero (evita loop infinito → 500)
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+
 # Altrimenti cerca index.html dentro la cartella richiesta
 RewriteRule ^(.*)$ /$1/index.html [L]
 
