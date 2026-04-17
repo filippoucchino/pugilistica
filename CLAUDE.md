@@ -13,14 +13,16 @@ ai potenziali iscritti di prenotare una prova gratuita.
 - **Tailwind config**: `tailwind.config.ts` (TypeScript)
 - **Design tokens**: mappati in `tailwind.config.ts` (colori brand/surface/pb, spacing semantici, tipografia)
 - **CSS globale**: `src/styles/global.css` definisce le classi custom riutilizzabili (`pb-container`, `pb-section`, `pb-btn-primary`, ecc.)
-- **Font**: Bebas Neue (display) + Barlow (body) — caricati da Google Fonts via `<link>` in `BaseLayout.astro` (con preconnect)
+- **Font**: Bebas Neue (display) + Barlow (body) — self-hosted in `public/fonts/` (woff2),
+  `@font-face` in `global.css`. Nessuna dipendenza da Google Fonts a runtime
 - **Dati**: `src/data/shared.ts` (info sede, orari, nav links, zone servite, trust items) + `src/data/schema.ts` (builder JSON-LD Schema.org)
 - **CMS**: nessuno (contenuti statici nelle pagine e in `shared.ts`)
 - **Hosting produzione**: Aruba (sito statico su Apache, upload manuale di `dist/`)
 - **Hosting demo**: Vercel (deploy automatico da GitHub, `pugilistica.vercel.app`)
-- **Dominio canonico**: `pugilisticabrianza.it` (senza `www.`). Il `.htaccess` redirige 301
-  `www.pugilisticabrianza.it` → `pugilisticabrianza.it`. Il campo `site` in `astro.config.mjs`
-  usa lo stesso dominio senza www, così canonical, sitemap e JSON-LD sono coerenti.
+- **Dominio canonico**: `www.pugilisticabrianza.it` (con `www.`). Aruba hosting condiviso
+  forza il redirect non-www → www a livello server (non modificabile da `.htaccess`).
+  `site` in `astro.config.mjs`, `siteInfo.url` in `shared.ts` e `robots.txt` sono
+  allineati al dominio con www, così canonical, sitemap e JSON-LD sono coerenti.
 - **Sitemap**: generata automaticamente da `@astrojs/sitemap` a build-time
 - **Package manager**: npm
 
@@ -29,7 +31,8 @@ ai potenziali iscritti di prenotare una prova gratuita.
 ```
 pugilistica/
 ├── public/
-│   ├── .htaccess                      ← config Apache per Aruba (rewrite, 404, security headers)
+│   ├── .htaccess                      ← config Apache per Aruba (rewrite, 404, cache, security headers)
+│   ├── fonts/                         ← woff2 self-hosted (Bebas Neue + Barlow, subset latin/latin-ext)
 │   ├── robots.txt                     ← regole crawler + puntamento sitemap
 │   └── favicon.svg                    ← asset statici serviti direttamente
 ├── src/
@@ -419,9 +422,9 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 | Pagina | Tipi principali |
 |--------|----------------|
 | `/` | WebSite, SportsActivityLocation (full), WebPage, FAQPage, Offer |
-| `/pugilato/` | Course, VideoObject, FAQPage, Event ×3 (Boxe/Kids/Agonisti), BreadcrumbList |
-| `/hyrox/` | Course, VideoObject, FAQPage, Event ×1, BreadcrumbList |
-| `/pb-hiit/` | Course, VideoObject, FAQPage, Event ×1, BreadcrumbList |
+| `/pugilato/` | Course (con CourseInstance + courseSchedule), VideoObject, FAQPage, BreadcrumbList |
+| `/hyrox/` | Course (con CourseInstance + courseSchedule), VideoObject, FAQPage, BreadcrumbList |
+| `/pb-hiit/` | Course (con CourseInstance + courseSchedule), VideoObject, FAQPage, BreadcrumbList |
 | `/lezioni-private-pugilato/` | Service, FAQPage, BreadcrumbList |
 | `/chi-siamo/` | AboutPage, Person ×5, BreadcrumbList |
 | `/faq/` | FAQPage (15 items), BreadcrumbList |
@@ -438,8 +441,10 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 4. Includi sempre `buildBreadcrumb([...])` (tranne homepage).
 5. Se la pagina ha FAQ, includi `buildFaqPage(items, slug)` — **non** usare
    `withSchema` su `FaqAccordion` (la prop non esiste più).
-6. Se la pagina è un corso con orari, includi `...buildScheduleEvents(["tag"])` per
-   aggiungere Event con mappatura precisa slot→giorni (letti da `scheduleData.ts`).
+6. Se la pagina è un corso con orari, passa `scheduleTags: ["tag"]` a `buildCourse()`:
+   il CourseInstance includerà automaticamente `courseSchedule` con gli orari precisi
+   (letti da `scheduleData.ts`). **Non** usare `buildScheduleEvents()` sulle pagine corso
+   — gli Event sono riservati alla pagina `/orari/`.
 
 ## Comandi
 
@@ -461,7 +466,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-07-14
+Ultimo aggiornamento: 2026-04-17
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -591,10 +596,49 @@ Ultimo aggiornamento: 2026-07-14
 - Pagina prova-gratuita: aggiunto spazio (div wrapper con `mb-8`) tra il box
   "Quando: le prove gratuite..." e il bottone "Scrivimi su WhatsApp"
 
-- Dominio canonico senza www: aggiunta regola RewriteRule nel `.htaccess` che redirige
-  301 da `www.pugilisticabrianza.it` a `pugilisticabrianza.it`. La config Astro (`site`
-  in `astro.config.mjs`) era già impostata senza www, quindi canonical, sitemap e JSON-LD
-  sono coerenti. Risolve i 301 non-www→www trovati in Screaming Frog.
+- Dominio canonico www: Aruba hosting condiviso forza il redirect non-www → www a livello
+  server (non modificabile da `.htaccess`). Allineati `astro.config.mjs` (`site`),
+  `siteInfo.url` in `shared.ts`, `robots.txt` e commento in `schema.ts` al dominio
+  `www.pugilisticabrianza.it`. Canonical, sitemap e JSON-LD ora puntano alla versione
+  con www servita da Aruba, eliminando la catena di redirect trovata in Screaming Frog.
+
+- Fix dati strutturati Schema.org (errori Rich Results Test e Search Console):
+  - **Pagine corso** (pugilato, hyrox, pb-hiit): rimossi i nodi Event ridondanti,
+    gli orari ora vivono in `courseSchedule` dentro `CourseInstance` di `buildCourse()`.
+    Aggiunto `category` ("Paid"/"Free") alle Offer annidate nel Course.
+    Prop `scheduleTags` aggiunta a `CourseSchemaOpts` per generare il courseSchedule
+    automaticamente dai dati di `scheduleData.ts`.
+  - **Pagina /orari/**: aggiunti `startDate`/`endDate` a livello dell'Event
+    (Google li richiede anche quando `eventSchedule` è presente).
+  - Risolti: Event `startDate` mancante (critico), CourseInstance senza `courseSchedule`,
+    Offer senza `category`, location Event senza name/address sulle pagine corso.
+
+- Ottimizzazioni PageSpeed Insights (round 2):
+  - **Font self-hosted**: rimossi i 3 `<link>` a Google Fonts da `BaseLayout.astro`,
+    scaricati 12 file woff2 (Bebas Neue + Barlow, subset latin e latin-ext) in
+    `public/fonts/`, dichiarati via `@font-face` in `global.css` con `font-display: swap`
+    e `unicode-range`. Elimina la catena render-blocking HTML → Google Fonts CSS → woff2
+    (~1760ms di savings stimati da Lighthouse).
+  - **Cache headers**: aggiunto blocco `<IfModule mod_expires.c>` al `.htaccess` con
+    policy differenziate: HTML no-cache, CSS/JS/font 1 anno (file con hash Astro),
+    immagini/video 1 mese, manifest 1 settimana, XML 1 ora.
+  - **CSP aggiornata**: rimossi `fonts.googleapis.com` e `fonts.gstatic.com` dalla
+    Content-Security-Policy in `.htaccess` e `vercel.json` (non più necessari con
+    font self-hosted).
+  - **Logo retina**: `<Image>` del logo portato a `width={150} height={96}` in Header
+    e `width={252} height={160}` in Footer (2x del display size massimo). Astro genera
+    WebP a quella dimensione, CSS controlla la dimensione visuale. Logo nitido su retina.
+  - **Poster video WebP**: i 3 poster JPG delle pagine corso convertiti in WebP via
+    ffmpeg (stessa risoluzione 720×1280, ~60% di risparmio). Path aggiornati nelle
+    pagine e nello schema VideoObject.
+  - **Font preload**: aggiunti `<link rel="preload">` in `BaseLayout.astro` per i 2 font
+    critici above-the-fold (`bebas-neue-400-latin.woff2` e `barlow-400-latin.woff2`).
+    Il browser li scarica in parallelo col CSS, senza aspettare il parsing del foglio di stile.
+  - Risultato complessivo: FCP/LCP da 2.9s a 1.7s su mobile (Lighthouse).
+
+- Title e H1 homepage aggiornati: "Palestra di Pugilato e Hyrox a Barlassina"
+  (aggiunto "e Hyrox" per posizionamento SEO su entrambe le keyword principali).
+  Nell'H1 "pugilato" e "Hyrox" sono in rosso (`text-brand`), la "e" resta bianca.
 
 ### In corso
 - Nessuna attività in corso

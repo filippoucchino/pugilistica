@@ -3,7 +3,7 @@ import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://pugilisticabrianza.it",
+  site: "https://www.pugilisticabrianza.it",
   integrations: [
     tailwind({
       configFile: "./tailwind.config.ts",

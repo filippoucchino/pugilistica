@@ -9,11 +9,6 @@
 
 RewriteEngine On
 
-# --- Redirect www → non-www (dominio canonico: pugilisticabrianza.it) ---
-# Chi arriva su www.pugilisticabrianza.it viene rediretto 301 alla versione senza www
-RewriteCond %{HTTP_HOST} ^www\.pugilisticabrianza\.it [NC]
-RewriteRule ^(.*)$ https://pugilisticabrianza.it/$1 [R=301,L]
-
 # Se il file richiesto esiste già, servilo direttamente
 RewriteCond %{REQUEST_FILENAME} !-f
 
@@ -25,6 +20,32 @@ RewriteRule ^(.*)$ /$1/index.html [L]
 
 # --- Pagina di errore 404 personalizzata ---
 ErrorDocument 404 /404.html
+
+# --- Cache per risorse statiche ---
+# ExpiresByType: il browser riusa le risorse dalla cache locale
+# senza richiederle al server ad ogni visita.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # HTML: nessuna cache (contenuti sempre aggiornati ad ogni deploy)
+  ExpiresByType text/html "access plus 0 seconds"
+  # CSS e JS: Astro genera nomi con hash (es. chi-siamo.B4ETfhQf.css)
+  # → se il contenuto cambia, cambia il nome file → cache lunga sicura
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  # Font woff2: file statici self-hosted, non cambiano
+  ExpiresByType font/woff2 "access plus 1 year"
+  # Immagini: cache 1 mese (sicuro anche per file senza hash come poster e favicon)
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  # Video: cache 1 mese
+  ExpiresByType video/mp4 "access plus 1 month"
+  ExpiresByType video/webm "access plus 1 month"
+  # Manifest PWA e sitemap
+  ExpiresByType application/manifest+json "access plus 1 week"
+  ExpiresByType application/xml "access plus 1 hour"
+</IfModule>
 
 # --- Header di sicurezza HTTP ---
 
@@ -45,11 +66,11 @@ Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; prelo
 
 # Content Security Policy: definisce esattamente quali risorse il browser puo caricare
 # - script-src: script locali + inline (necessari per Astro is:inline)
-# - style-src: stili locali + inline (Tailwind) + Google Fonts
-# - font-src: font locali + Google Fonts
+# - style-src: stili locali + inline (Tailwind)
+# - font-src: solo locali (font self-hosted in /fonts/)
 # - connect-src: solo Web3Forms (form contatti)
 # - frame-src: solo Google Maps (iframe embed)
 # - media-src: video locali (public/videos/)
 # - object-src none: blocca Flash/Java
 # - frame-ancestors none: rinforzo anti-iframe
-Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.web3forms.com; frame-src https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'none'"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.web3forms.com; frame-src https://www.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'none'"

@@ -17,7 +17,7 @@ import CtaBlock from "../components/CtaBlock.astro";
 import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
 import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
-import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo, buildScheduleEvents } from "@/data/schema";
+import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo } from "@/data/schema";
 
 // Foto coach: importate come ES module così Astro le ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
@@ -114,19 +114,19 @@ const pageSchema = buildPageSchema(
       { name: "Stefano Rizzo", slug: "stefano-rizzo" },
       { name: "Moreno Bragato", slug: "moreno-bragato" },
     ],
+    scheduleTags: ["boxe", "boxe-agonisti", "kids-boxe"],
   }),
   buildVideo(
     {
       name: "Allenamento di pugilato alla Pugilistica Brianza di Barlassina",
       description: "Video di un allenamento di pugilato alla Pugilistica Brianza di Barlassina: tecnica, sacco, sparring e preparazione atletica.",
       mp4Path: "/videos/corso-pugilato-pugilistica-brianza-barlassina.mp4",
-      posterPath: "/videos/corso-pugilato-pugilistica-brianza-barlassina.jpg",
+      posterPath: "/videos/corso-pugilato-pugilistica-brianza-barlassina.webp",
       uploadDate: "2026-04-14",
     },
     "pugilato",
   ),
   buildFaqPage(faqItems, "pugilato"),
-  ...buildScheduleEvents(["boxe", "boxe-agonisti", "kids-boxe"]),
   buildBreadcrumb([{ name: "Pugilato", href: "/pugilato/" }]),
 );
 ---
@@ -165,7 +165,7 @@ const pageSchema = buildPageSchema(
         video={{
           mp4: "/videos/corso-pugilato-pugilistica-brianza-barlassina.mp4",
           webm: "/videos/corso-pugilato-pugilistica-brianza-barlassina.webm",
-          poster: "/videos/corso-pugilato-pugilistica-brianza-barlassina.jpg",
+          poster: "/videos/corso-pugilato-pugilistica-brianza-barlassina.webp",
           title: "Allenamento di pugilato alla Pugilistica Brianza di Barlassina",
         }}
       />

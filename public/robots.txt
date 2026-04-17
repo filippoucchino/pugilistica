@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pugilisticabrianza.it/sitemap-index.xml
+Sitemap: https://www.pugilisticabrianza.it/sitemap-index.xml

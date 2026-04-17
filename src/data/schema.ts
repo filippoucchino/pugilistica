@@ -13,7 +13,7 @@ import { buildEvents, type ActivityTag } from "./scheduleData";
 
 // ─── Costanti @id ──────────────────────────────────────────────────────────────
 
-const SITE_URL = siteInfo.url; // https://pugilisticabrianza.it
+const SITE_URL = siteInfo.url; // https://www.pugilisticabrianza.it
 
 export const GYM_ID = `${SITE_URL}/#gym`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -52,6 +52,8 @@ export interface CourseSchemaOpts {
   price: string;
   coaches: CoachRef[];
   video?: VideoSchemaOpts;
+  /** Tag delle attività per generare il courseSchedule nel CourseInstance */
+  scheduleTags?: ActivityTag[];
 }
 
 export interface PersonSchemaOpts {
@@ -249,6 +251,7 @@ export function buildCourse(opts: CourseSchemaOpts): Record<string, unknown> {
     offers: [
       {
         "@type": "Offer",
+        category: "Paid",
         price: opts.price,
         priceCurrency: "EUR",
         availability: "https://schema.org/InStock",
@@ -266,6 +269,7 @@ export function buildCourse(opts: CourseSchemaOpts): Record<string, unknown> {
       },
       {
         "@type": "Offer",
+        category: "Free",
         name: "Prova gratuita",
         price: "0",
         priceCurrency: "EUR",
@@ -275,17 +279,49 @@ export function buildCourse(opts: CourseSchemaOpts): Record<string, unknown> {
     ],
   };
 
-  if (opts.coaches.length > 0) {
-    // instructor è proprietà di CourseInstance, non di Course
-    node.hasCourseInstance = {
+  // CourseInstance: instructor + courseSchedule (orari ricorrenti dal calendario)
+  const hasCoaches = opts.coaches.length > 0;
+  const hasTags = opts.scheduleTags && opts.scheduleTags.length > 0;
+
+  if (hasCoaches || hasTags) {
+    const instance: Record<string, unknown> = {
       "@type": "CourseInstance",
       courseMode: "https://schema.org/OnSite",
-      instructor: opts.coaches.map((c) => ({
+    };
+
+    if (hasCoaches) {
+      instance.instructor = opts.coaches.map((c) => ({
         "@type": "Person",
         "@id": `${SITE_URL}/#person-${c.slug}`,
         name: c.name,
-      })),
-    };
+      }));
+    }
+
+    if (hasTags) {
+      const currentYear = new Date().getFullYear();
+      const allEvents = buildEvents();
+      const relevant = allEvents.filter((evt) =>
+        opts.scheduleTags!.includes(evt.tag),
+      );
+      // Ogni entry (fascia oraria + giorni) diventa un oggetto Schedule
+      const schedules = relevant.flatMap((evt) =>
+        evt.entries.map((entry) => ({
+          "@type": "Schedule",
+          repeatFrequency: "P1W",
+          byDay: entry.byDay.map((d) => `https://schema.org/${d}`),
+          startTime: entry.start,
+          endTime: entry.end,
+          startDate: `${currentYear}-01-01`,
+          endDate: `${currentYear}-12-31`,
+          scheduleTimezone: "Europe/Rome",
+        })),
+      );
+      if (schedules.length > 0) {
+        instance.courseSchedule = schedules;
+      }
+    }
+
+    node.hasCourseInstance = instance;
   }
 
   return node;
@@ -396,6 +432,8 @@ export function buildScheduleEvents(
     "@type": "Event",
     name: `${evt.name} — Pugilistica Brianza`,
     description: evt.description,
+    startDate,
+    endDate,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     eventStatus: "https://schema.org/EventScheduled",
     location: { "@id": GYM_ID },

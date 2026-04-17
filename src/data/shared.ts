@@ -23,7 +23,7 @@ export const siteInfo = {
   email: "pugilisticabrianza@gmail.com",
   founded: 2016,
   foundingDate: "9 gennaio 2016",
-  url: "https://pugilisticabrianza.it",
+  url: "https://www.pugilisticabrianza.it",
   // URL di embed Google Maps (quello dell'iframe src).
   mapEmbedUrl:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2788.8970827281223!2d9.1181697!3d45.652888499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478697b56d7815ed%3A0x1db0ce2fc198d53e!2sPugilistica%20Brianza!5e0!3m2!1sen!2sus!4v1776253444561!5m2!1sen!2sus",
