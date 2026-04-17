@@ -610,8 +610,11 @@ Ultimo aggiornamento: 2026-04-17
     automaticamente dai dati di `scheduleData.ts`.
   - **Pagina /orari/**: aggiunti `startDate`/`endDate` a livello dell'Event
     (Google li richiede anche quando `eventSchedule` è presente).
+  - Aggiunto `repeatCount: 52` agli oggetti Schedule in `courseSchedule`
+    (Google lo richiede per CourseInstance con schedule settimanale).
   - Risolti: Event `startDate` mancante (critico), CourseInstance senza `courseSchedule`,
-    Offer senza `category`, location Event senza name/address sulle pagine corso.
+    Offer senza `category`, Schedule senza `repeatCount`, location Event senza
+    name/address sulle pagine corso.
 
 - Ottimizzazioni PageSpeed Insights (round 2):
   - **Font self-hosted**: rimossi i 3 `<link>` a Google Fonts da `BaseLayout.astro`,

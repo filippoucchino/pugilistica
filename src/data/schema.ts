@@ -308,6 +308,7 @@ export function buildCourse(opts: CourseSchemaOpts): Record<string, unknown> {
         evt.entries.map((entry) => ({
           "@type": "Schedule",
           repeatFrequency: "P1W",
+          repeatCount: 52,
           byDay: entry.byDay.map((d) => `https://schema.org/${d}`),
           startTime: entry.start,
           endTime: entry.end,
