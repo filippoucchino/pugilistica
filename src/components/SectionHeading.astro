@@ -15,12 +15,10 @@ const { topline, description } = Astro.props;
       <span class="pb-topline__text">{topline}</span>
     </div>
   )}
-  <h2 class="text-display-md mb-4">
+  <h2>
     <slot />
   </h2>
   {description && (
-    <p class="text-lg text-pb-text-tertiary max-w-[560px] leading-normal">
-      {description}
-    </p>
+    <p>{description}</p>
   )}
 </div>

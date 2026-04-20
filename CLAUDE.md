@@ -733,6 +733,15 @@ Ultimo aggiornamento: 2026-04-20
     - Nessuna `description` su `SectionHeading` seguito da `DefinitionGrid` `introText` o
       `CoachBlock` bio (duplicazione prose evidente, si vede in browser)
 
+- `SectionHeading` description — larghezza leggibilità: la descrizione sotto il titolo di
+  sezione è larga `max-w-[960px]` (prima `560px`). Il vincolo di 560px — che su container
+  da 1200px occupava solo metà — faceva wrappare ogni descrizione su 3-4 righe anche
+  quando sarebbero bastate 1-2. 960px è un compromesso tra leggibilità (~100 chars/riga) e
+  densità visiva. Single source of truth: `.pb-section-heading p` in `src/styles/global.css`
+  (regola `@apply`). **Non** ripetere le stesse classi inline sul `<p>` in
+  `SectionHeading.astro` — erano duplicate e confondevano il debugging (la modifica sul
+  componente veniva sovrascritta dalla regola in `global.css`).
+
 ### In corso
 - Nessuna attività in corso
 

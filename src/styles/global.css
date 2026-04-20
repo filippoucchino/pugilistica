@@ -229,7 +229,7 @@
   }
 
   .pb-section-heading p {
-    @apply text-lg text-pb-text-tertiary max-w-[560px] leading-normal;
+    @apply text-lg text-pb-text-tertiary max-w-[960px] leading-normal;
   }
 
   /* CTA Buttons */
