@@ -451,7 +451,7 @@ export function buildScheduleEvents(
 
   return filtered.map((evt) => ({
     "@type": "Event",
-    name: `${evt.name} — Pugilistica Brianza`,
+    name: `${evt.name} - Pugilistica Brianza`,
     description: evt.description,
     startDate,
     endDate,

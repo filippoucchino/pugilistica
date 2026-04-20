@@ -23,7 +23,7 @@ interface Props {
   caption: string;
 }
 
-const { tags, caption } = Astro.props;
+const { tags, caption } = Astro.props as Props;
 
 /* — Struttura dati per la mini tabella —
  * Per ogni riga dello schedule completo, espandiamo le celle con colspan

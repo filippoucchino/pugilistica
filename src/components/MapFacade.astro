@@ -65,7 +65,7 @@ const { embedUrl, externalUrl, label, previewSrc } = Astro.props;
       class="map-facade__btn absolute inset-0 w-full h-full flex items-end justify-center pb-5
              text-white cursor-pointer focus-visible:outline focus-visible:outline-2
              focus-visible:outline-offset-[-4px] focus-visible:outline-brand"
-      aria-label={`Apri mappa interattiva — ${label}`}
+      aria-label={`Apri mappa interattiva: ${label}`}
     >
       <span
         class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full
@@ -96,7 +96,7 @@ const { embedUrl, externalUrl, label, previewSrc } = Astro.props;
         loading="lazy"
         allowfullscreen
         referrerpolicy="no-referrer-when-downgrade"
-        title={`Mappa Google — ${label}`}
+        title={`Mappa Google: ${label}`}
       ></iframe>
     </noscript>
   </div>
@@ -140,7 +140,7 @@ const { embedUrl, externalUrl, label, previewSrc } = Astro.props;
     iframe.loading = "eager";
     iframe.allowFullscreen = true;
     iframe.referrerPolicy = "no-referrer-when-downgrade";
-    iframe.title = "Mappa Google — Pugilistica Brianza";
+    iframe.title = "Mappa Google: Pugilistica Brianza";
 
     // Svuotiamo il wrapper (immagine, overlay, pin, bottone, noscript) e
     // inseriamo l'iframe reale. Il focus va all'iframe per accessibilità.

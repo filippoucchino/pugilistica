@@ -13,7 +13,7 @@ const pageSchema = buildPageSchema(
   buildGym(),
   buildWebPage(
     "/contatti/",
-    "Contatti — Pugilistica Brianza",
+    "Contatti | Pugilistica Brianza",
     "Contatta Pugilistica Brianza a Barlassina: indirizzo, telefono, email, orari e mappa.",
     "ContactPage",
   ),
@@ -22,7 +22,7 @@ const pageSchema = buildPageSchema(
 ---
 
 <BaseLayout
-  title="Contatti — Pugilistica Brianza | Barlassina (MB)"
+  title="Contatti | Pugilistica Brianza a Barlassina (MB)"
   description="Contatta Pugilistica Brianza a Barlassina: indirizzo, telefono, email, orari e mappa. Via Giovanni Segantini 29, facilmente raggiungibile da tutta la Brianza."
   schema={pageSchema}
 >
@@ -32,7 +32,7 @@ const pageSchema = buildPageSchema(
     subtitle="La Pugilistica Brianza si trova in Via Giovanni Segantini 29 a Barlassina (MB), nel cuore della Brianza. Palestra di pugilato, Hyrox e PB Hiit facilmente raggiungibile da Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò. Parcheggio gratuito in zona, spogliatoi e docce interne."
     watermark="CONTATTI"
   >
-    Contatti — Pugilistica <span class="text-brand">Brianza</span> a Barlassina
+    Contatti Pugilistica <span class="text-brand">Brianza</span> a Barlassina
   </Hero>
 
   <!-- CONTATTI PRINCIPALI -->
@@ -56,7 +56,7 @@ const pageSchema = buildPageSchema(
           icon='<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="none"/>'
           label="Indirizzo"
           value={siteInfo.address}
-          subtitle={`${siteInfo.cap} ${siteInfo.city} (${siteInfo.province}) — Brianza. Parcheggio gratuito nelle immediate vicinanze, in una zona residenziale tranquilla.`}
+          subtitle={`${siteInfo.cap} ${siteInfo.city} (${siteInfo.province}), Brianza. Parcheggio gratuito nelle immediate vicinanze, in una zona residenziale tranquilla.`}
         />
       </div>
     </div>

@@ -742,6 +742,41 @@ Ultimo aggiornamento: 2026-04-20
   `SectionHeading.astro` — erano duplicate e confondevano il debugging (la modifica sul
   componente veniva sovrascritta dalla regola in `global.css`).
 
+- Rimozione em-dash dai testi visibili del sito: eliminati tutti gli em-dash (`—`) dai
+  contenuti renderizzati (prosa delle pagine, JSON-LD, meta title, attributi
+  `aria-label`/`title`/`alt`). Em-dash lasciati solo nei commenti di codice (CSS, TS,
+  JSDoc, HTML, `{/* */}` Astro) perché non appaiono al visitatore.
+  - **Strategie di sostituzione contestuali** (no rimpiazzo meccanico):
+    - `:` due punti per pattern "Termine — spiegazione" in liste di definizioni
+      (privacy-policy aveva 20 occorrenze di questo pattern)
+    - `()` parentesi per inserzioni con elenco breve (es. "profili diversi — dai
+      principianti agli agonisti —" → "profili diversi (dai principianti agli agonisti)")
+    - `,` virgola per apposizioni leggere (es. "Barlassina — Brianza" → "Barlassina, Brianza")
+    - `|` pipe nei meta title SEO (es. "Chi Siamo — ASD Pugilistica Brianza" → "Chi Siamo
+      | ASD Pugilistica Brianza")
+    - `-` trattino singolo nel name JSON-LD Event
+    - Riformulazione prosa per pattern topline/brand (es. "Corso Hyrox — Pugilistica
+      Brianza" → "Corso Hyrox alla Pugilistica Brianza")
+  - **Regola editoriale per il futuro**: non introdurre em-dash in contenuti visibili
+    quando aggiungi o modifichi testi del sito. Preferire virgole, due punti, parentesi
+    o riformulazione. Em-dash accettati solo nei commenti di codice (dove servono da
+    separatore visivo in blocchi come `/* — Site info — */`).
+
+- Pulizia diagnostica `astro check` (hint silenziati, zero cambi funzionali):
+  - **`src/components/CourseScheduleMini.astro`**: l'interfaccia `Props` risultava
+    "declared but never used" (ts6196) solo in questo file fra i 26 componenti con lo
+    stesso pattern. Causa: è l'unico componente che referenzia un `import type` esterno
+    (`ActivityTag`) dentro l'interfaccia Props, e il language server non applica qui
+    l'inferenza automatica di Astro su `Astro.props`. Annotation esplicita
+    `: Props = Astro.props` fallisce perché `Astro.props` si risolve come
+    `Record<string, any>`. Soluzione: `const { tags, caption } = Astro.props as Props;`
+    (cast esplicito). L'interface resta come contract documentato.
+  - **`src/layouts/BaseLayout.astro`**: lo `<script type="application/ld+json">` del
+    JSON-LD emetteva `astro(4000)` (implicit is:inline). Aggiunto `is:inline` esplicito
+    al tag. Zero cambi nel HTML generato — lo script era già inline, Astro voleva solo
+    la dichiarazione esplicita per chiarezza.
+  - Risultato: `astro check` → 0 errors, 0 warnings, 0 hints. Build 12 pagine in 2.41s.
+
 ### In corso
 - Nessuna attività in corso
 

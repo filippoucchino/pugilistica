@@ -22,7 +22,7 @@ const pageSchema = buildPageSchema(
   buildGym(),
   buildWebPage(
     "/orari/",
-    "Orari Corsi — Pugilistica Brianza",
+    "Orari Corsi | Pugilistica Brianza",
     "Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB).",
   ),
   ...buildScheduleEvents(),
@@ -44,7 +44,7 @@ const legendTags: ActivityTag[] = [
 ---
 
 <BaseLayout
-  title="Orari Corsi — Pugilistica Brianza | Boxe, Hyrox, PB Hiit a Barlassina"
+  title="Orari Corsi | Pugilistica Brianza: Boxe, Hyrox, PB Hiit a Barlassina"
   description="Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB). Lezioni dal lunedì al sabato, prezzi e abbonamenti chiari."
   schema={pageSchema}
 >
@@ -56,7 +56,7 @@ const legendTags: ActivityTag[] = [
     ctaPrimary={{ label: "Prenota una prova gratuita", href: "/prova-gratuita/" }}
     ctaSecondary={{ label: "Chiamaci", href: siteInfo.phoneHref }}
   >
-    Orari <span class="text-brand">corsi</span> — Pugilistica Brianza
+    Orari dei <span class="text-brand">corsi</span> alla Pugilistica Brianza
   </Hero>
 
   {/* TABELLA ORARI */}
@@ -111,7 +111,7 @@ const legendTags: ActivityTag[] = [
       {/* Nota domenica chiusa */}
       <p class="mt-8 text-sm text-pb-text-muted leading-normal text-center">
         {scheduleNotes.closedDay}. Durante i periodi festivi (Natale, Pasqua, ponti estivi)
-        gli orari dei corsi possono subire variazioni — per conferme sulle chiusure
+        gli orari dei corsi possono subire variazioni: per conferme sulle chiusure
         stagionali, chiamaci direttamente.
       </p>
     </div>
@@ -122,7 +122,7 @@ const legendTags: ActivityTag[] = [
     <div class="pb-container">
       <SectionHeading
         topline="Prezzi e abbonamenti"
-        description="I prezzi dei corsi alla Pugilistica Brianza sono trasparenti, senza sorprese. Puoi iniziare con un ingresso singolo oppure scegliere un abbonamento mensile dedicato a boxe, Hyrox o PB Hiit — o la formula Open all-inclusive, che dà accesso a tutti i corsi della palestra. Nessun vincolo di durata."
+        description="I prezzi dei corsi alla Pugilistica Brianza sono trasparenti, senza sorprese. Puoi iniziare con un ingresso singolo oppure scegliere un abbonamento mensile dedicato a boxe, Hyrox o PB Hiit, o la formula Open all-inclusive che dà accesso a tutti i corsi della palestra. Nessun vincolo di durata."
       >
         Quanto <span class="text-brand">costa</span>
       </SectionHeading>
@@ -142,7 +142,7 @@ const legendTags: ActivityTag[] = [
       </div>
 
       <p class="mt-8 text-sm text-pb-text-muted leading-normal text-center">
-        {scheduleNotes.annualFee} — da versare una sola volta all'inizio della stagione
+        {scheduleNotes.annualFee}, da versare una sola volta all'inizio della stagione
         sportiva, copre l'assicurazione sportiva e il tesseramento alla Federazione
         Pugilistica Italiana (FPI), obbligatorio per chi pratica pugilato tesserato.
       </p>

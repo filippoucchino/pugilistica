@@ -84,7 +84,7 @@ const pageSchema = buildPageSchema(
   buildGymRef(),
   buildWebPage(
     "/faq/",
-    "FAQ — Domande Frequenti | Pugilistica Brianza",
+    "FAQ: Domande Frequenti | Pugilistica Brianza",
     "Risposte alle domande più frequenti su Pugilistica Brianza: corsi, prova gratuita, orari, costi e tutto quello che serve per iniziare.",
   ),
   buildFaqPage([...faqGeneral, ...faqPractical, ...faqCourses], "faq"),
@@ -93,13 +93,13 @@ const pageSchema = buildPageSchema(
 ---
 
 <BaseLayout
-  title="FAQ — Domande Frequenti | Pugilistica Brianza"
+  title="FAQ: Domande Frequenti | Pugilistica Brianza"
   description="Risposte alle domande più frequenti su Pugilistica Brianza: corsi, prova gratuita, orari, costi e tutto quello che serve per iniziare."
   schema={pageSchema}
 >
   <!-- HERO -->
   <Hero
-    topline="FAQ — Pugilistica Brianza"
+    topline="FAQ: Pugilistica Brianza"
     subtitle="Le domande più frequenti sulla Pugilistica Brianza di Barlassina: corsi di pugilato, Hyrox e PB Hiit, orari, prezzi degli abbonamenti, prova gratuita e tutto quello che serve sapere prima di iniziare. Se non trovi la risposta che cerchi, scrivici su WhatsApp."
     watermark="FAQ"
   >
