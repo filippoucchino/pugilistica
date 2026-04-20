@@ -14,7 +14,7 @@ interface Props {
 const { icon, title, description, ctaLabel = "Scopri il corso", ctaHref = "#" } = Astro.props;
 ---
 
-<div
+<li
   class="group bg-surface-card border border-pb-border-default rounded-md
          p-card-pad-lg transition-all duration-base ease-default
          flex flex-col gap-4 hover:bg-surface-card-hover hover:border-pb-border-medium"
@@ -33,7 +33,7 @@ const { icon, title, description, ctaLabel = "Scopri il corso", ctaHref = "#" } 
   </div>
 
   <!-- Title -->
-  <h3 class="font-display text-display-sm text-pb-text-primary">{title}</h3>
+  <p class="font-display text-display-sm text-pb-text-primary">{title}</p>
 
   <!-- Description -->
   <p class="text-sm text-pb-text-tertiary leading-normal flex-grow">{description}</p>
@@ -47,4 +47,4 @@ const { icon, title, description, ctaLabel = "Scopri il corso", ctaHref = "#" } 
     {ctaLabel}
     <span class="transition-transform duration-fast ease-default group-hover:translate-x-1">→</span>
   </a>
-</div>
+</li>

@@ -32,7 +32,7 @@ const currentPath = Astro.url.pathname;
     </a>
 
     <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-7">
+    <nav aria-label="Principale" class="hidden md:flex items-center gap-7">
       {navLinks.map((link) => (
         <a
           href={link.href}
@@ -73,6 +73,7 @@ const currentPath = Astro.url.pathname;
 <!-- Mobile nav overlay -->
 <nav
   id="mobile-nav"
+  aria-label="Menu mobile"
   class="hidden fixed top-header-h-mobile left-0 right-0 bottom-0
          bg-[rgba(10,10,10,0.97)] backdrop-blur-header z-overlay
          flex-col px-5 py-8 overflow-y-auto"

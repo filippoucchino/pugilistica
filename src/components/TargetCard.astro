@@ -14,7 +14,7 @@ interface Props {
 const { icon, title, description } = Astro.props;
 ---
 
-<div
+<li
   class="p-card-pad border border-pb-border-default rounded-md
          transition-all duration-base ease-default flex flex-col gap-4
          hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
@@ -30,6 +30,6 @@ const { icon, title, description } = Astro.props;
       set:html={icon}
     />
   </div>
-  <h3 class="font-display text-display-sm text-pb-text-primary">{title}</h3>
+  <p class="font-display text-display-sm text-pb-text-primary">{title}</p>
   <p class="text-sm text-pb-text-tertiary leading-normal">{description}</p>
-</div>
+</li>

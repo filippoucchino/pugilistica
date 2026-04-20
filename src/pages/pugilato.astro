@@ -181,11 +181,11 @@ const pageSchema = buildPageSchema(
       >
         Per chi è adatto il corso di <span class="text-brand">Pugilato?</span>
       </SectionHeading>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 list-none pl-0 m-0">
         {targets.map((t) => (
           <TargetCard icon={t.icon} title={t.title} description={t.description} />
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -198,9 +198,9 @@ const pageSchema = buildPageSchema(
       >
         I benefici del <span class="text-brand">Pugilato</span>
       </SectionHeading>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none pl-0 m-0">
         {benefits.map((b) => <BenefitItem text={b} />)}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -213,9 +213,9 @@ const pageSchema = buildPageSchema(
       >
         Come si svolge una lezione di <span class="text-brand">Pugilato?</span>
       </SectionHeading>
-      <div class="flex flex-col" style="counter-reset: step;">
+      <ol class="flex flex-col list-none pl-0 m-0" style="counter-reset: step;">
         {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
-      </div>
+      </ol>
     </div>
   </section>
 
@@ -265,11 +265,11 @@ const pageSchema = buildPageSchema(
       >
         Perché allenarti <span class="text-brand">con noi</span>
       </SectionHeading>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none pl-0 m-0">
         {whyUs.map((w) => (
           <WhyUsCard icon={w.icon} title={w.title} description={w.description} />
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -280,9 +280,9 @@ const pageSchema = buildPageSchema(
         Orari, prova e <span class="text-brand">iscrizione</span>
       </SectionHeading>
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 items-start">
-        <div>
+        <ul class="list-none pl-0 m-0">
           {infoRows.map((r) => <InfoRow icon={r.icon} text={r.text} />)}
-        </div>
+        </ul>
         <PricingCard
           title="Abbonamento mensile"
           price="€50"

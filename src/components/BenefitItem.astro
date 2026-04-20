@@ -12,7 +12,7 @@ interface Props {
 const { text } = Astro.props;
 ---
 
-<div class="flex items-start gap-3.5 py-4">
+<li class="flex items-start gap-3.5 py-4">
   <div
     class="w-7 h-7 border border-pb-border-accent rounded-sm
            flex items-center justify-center flex-shrink-0 mt-0.5"
@@ -26,4 +26,4 @@ const { text } = Astro.props;
     </svg>
   </div>
   <p class="text-base text-pb-text-secondary leading-snug [&>strong]:text-pb-text-primary [&>strong]:font-semibold" set:html={text} />
-</div>
+</li>

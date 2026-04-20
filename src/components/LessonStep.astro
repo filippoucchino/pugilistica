@@ -12,7 +12,7 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<div
+<li
   class="grid grid-cols-step gap-6 py-7 border-b border-pb-border-default
          last:border-b-0"
   style="counter-increment: step;"
@@ -27,7 +27,7 @@ const { title, description } = Astro.props;
 
   <!-- Content -->
   <div>
-    <h3 class="font-display text-display-sm text-pb-text-primary mb-1.5">{title}</h3>
+    <p class="font-display text-display-sm text-pb-text-primary mb-1.5">{title}</p>
     <p class="text-sm text-pb-text-tertiary leading-normal">{description}</p>
   </div>
-</div>
+</li>

@@ -86,7 +86,7 @@ const pageSchema = buildPageSchema(
       <SectionHeading topline="Benefici">
         I vantaggi di un percorso <span class="text-brand">individuale</span>
       </SectionHeading>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none pl-0 m-0">
         {[
           "<strong>Attenzione totale:</strong> il coach si dedica esclusivamente a te per tutta la sessione",
           "<strong>Progressione accelerata:</strong> impari più velocemente con feedback continuo",
@@ -95,7 +95,7 @@ const pageSchema = buildPageSchema(
           "<strong>Adatto a tutti:</strong> principianti, avanzati, donne, ragazzi e agonisti",
           "<strong>Privacy e comfort:</strong> ti alleni senza la pressione del gruppo, al tuo ritmo",
         ].map((b) => <BenefitItem text={b} />)}
-      </div>
+      </ul>
     </div>
   </section>
 

@@ -13,12 +13,12 @@ interface Props {
 const { title, description, linkLabel, linkHref } = Astro.props;
 ---
 
-<div
+<li
   class="p-card-pad border border-pb-border-default rounded-md
          transition-all duration-base ease-default
          hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
 >
-  <h3 class="font-display text-display-sm text-pb-text-primary mb-2">{title}</h3>
+  <p class="font-display text-display-sm text-pb-text-primary mb-2">{title}</p>
   <p class="text-sm text-pb-text-tertiary leading-normal mb-3">{description}</p>
   {linkLabel && linkHref && (
     <a
@@ -28,4 +28,4 @@ const { title, description, linkLabel, linkHref } = Astro.props;
       {linkLabel}
     </a>
   )}
-</div>
+</li>

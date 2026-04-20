@@ -236,7 +236,7 @@ const pageSchema = buildPageSchema(
       >
         Per chi <span class="text-brand">siamo</span>
       </SectionHeading>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 list-none pl-0 m-0">
         {[
           { icon: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>', title: "Principianti", description: "La maggior parte dei nostri iscritti ha iniziato da zero." },
           { icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>', title: "Donne", description: "Corso misto e inclusivo, in un ambiente rispettoso e motivante." },
@@ -245,7 +245,7 @@ const pageSchema = buildPageSchema(
         ].map((t) => (
           <TargetCard icon={t.icon} title={t.title} description={t.description} />
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 

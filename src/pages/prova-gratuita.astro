@@ -66,9 +66,9 @@ const pageSchema = buildPageSchema(
       >
         Come <span class="text-brand">prenotare</span> la prova
       </SectionHeading>
-      <div class="max-w-narrow flex flex-col" style="counter-reset: step;">
+      <ol class="max-w-narrow flex flex-col list-none pl-0 m-0" style="counter-reset: step;">
         {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
-      </div>
+      </ol>
     </div>
   </section>
 
@@ -78,14 +78,14 @@ const pageSchema = buildPageSchema(
       <SectionHeading topline="Cosa include">
         La prova gratuita <span class="text-brand">include</span>
       </SectionHeading>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-narrow">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-narrow list-none pl-0 m-0">
         {[
           "<strong>Lezione completa</strong> con il gruppo e il coach, non una versione ridotta",
           "<strong>Guantoni e fasce</strong> forniti dalla palestra per la prova",
           "<strong>Spogliatoi e docce</strong> a disposizione",
           "<strong>Zero vincoli:</strong> nessun pagamento, nessun obbligo di iscrizione",
         ].map((b) => <BenefitItem text={b} />)}
-      </div>
+      </ul>
     </div>
   </section>
 

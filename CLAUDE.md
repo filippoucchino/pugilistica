@@ -671,6 +671,29 @@ Ultimo aggiornamento: 2026-04-20
     (`2026-04-14T12:00:00+02:00`) al posto della data plain su pugilato, hyrox, pb-hiit.
     Google segnalava "Invalid datetime value" e "missing timezone" (optional).
 
+- Refactor HTML semantico: liste convertite da `<div class="grid">` a `<ul>`/`<ol>`.
+  Regola: quando un gruppo di card rappresenta item paritari di un elenco, il contenitore
+  deve essere `<ul>` (o `<ol>` se l'ordine è significativo), e ogni card deve essere `<li>`.
+  - **Componenti convertiti a `<li>`** (tag esterno `<div>` → `<li>`): `BenefitItem`,
+    `TargetCard`, `WhyUsCard`, `LessonStep` (wrapper `<ol>`), `InfoRow`, `ServiceCard`,
+    `SegmentCard`.
+  - **H3 → `<p>` con stessa classe tipografica** in `TargetCard`, `WhyUsCard`,
+    `LessonStep`, `ServiceCard`, `SegmentCard`. Motivo: il testo era un'etichetta di card
+    dentro una lista, non un heading di sotto-sezione — lasciare H3 sporcava la gerarchia
+    heading H1→H2→H3 per screen reader e SEO. La classe `font-display text-display-sm
+    text-pb-text-primary` è identica, design invariato.
+  - **Wrapper pagine**: in tutte le pagine che usano questi componenti, `<div class="grid …">`
+    → `<ul class="grid … list-none pl-0 m-0">` (pattern `list-none pl-0 m-0` serve a
+    rimuovere bullet/padding/margin default del browser, così il rendering resta identico
+    al `<div>`). `LessonStep` usa `<ol>` perché le fasi della lezione sono sequenziali;
+    il counter CSS esistente per il badge numerato è stato mantenuto.
+  - Pagine toccate: `index`, `pugilato`, `hyrox`, `pb-hiit`, `chi-siamo`,
+    `lezioni-private-pugilato`, `prova-gratuita`.
+
+- Accessibilità navigazione: aggiunto `aria-label` ai due `<nav>` nell'header.
+  Desktop nav → `aria-label="Principale"`, mobile nav → `aria-label="Menu mobile"`.
+  Motivo: screen reader annunciava due "navigation" indistinguibili. Ora le distingue.
+
 ### In corso
 - Nessuna attività in corso
 

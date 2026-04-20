@@ -184,7 +184,7 @@ const pageSchema = buildPageSchema(
         Corsi di pugilato, <span class="text-brand">Hyrox</span> e PB Hiit
       </SectionHeading>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 list-none pl-0 m-0">
         {services.map((s) => (
           <ServiceCard
             icon={s.icon}
@@ -194,7 +194,7 @@ const pageSchema = buildPageSchema(
             ctaHref={s.ctaHref}
           />
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -208,7 +208,7 @@ const pageSchema = buildPageSchema(
         Un percorso adatto a <span class="text-brand">ogni livello</span>
       </SectionHeading>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 list-none pl-0 m-0">
         {segments.map((s) => (
           <SegmentCard
             title={s.title}
@@ -217,7 +217,7 @@ const pageSchema = buildPageSchema(
             linkHref={s.linkHref}
           />
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -231,11 +231,11 @@ const pageSchema = buildPageSchema(
         Perché scegliere <span class="text-brand">Pugilistica Brianza</span>
       </SectionHeading>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none pl-0 m-0">
         {benefits.map((b) => (
           <BenefitItem text={b} />
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 

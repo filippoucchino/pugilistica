@@ -13,7 +13,7 @@ interface Props {
 const { icon, text } = Astro.props;
 ---
 
-<div class="flex items-start gap-4 py-4 border-b border-pb-border-default last:border-b-0">
+<li class="flex items-start gap-4 py-4 border-b border-pb-border-default last:border-b-0">
   <div
     class="w-10 h-10 border border-pb-border-accent rounded-md
            flex items-center justify-center flex-shrink-0 mt-0.5"
@@ -26,4 +26,4 @@ const { icon, text } = Astro.props;
     />
   </div>
   <p class="text-base text-pb-text-secondary leading-normal [&>strong]:text-pb-text-primary [&>strong]:font-semibold [&>strong]:block [&>strong]:mb-1" set:html={text} />
-</div>
+</li>
