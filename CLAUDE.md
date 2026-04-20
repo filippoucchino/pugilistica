@@ -466,7 +466,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-04-17
+Ultimo aggiornamento: 2026-04-20
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -658,6 +658,18 @@ Ultimo aggiornamento: 2026-04-17
   infinito di redirect interni su URL inesistenti. Causa: la regola di rewrite
   riscriveva ricorsivamente (es. `/aaa` → `/aaa/index.html` → `/aaa/index.html/index.html`...)
   fino al limite Apache di 10, restituendo 500 invece di 404.
+
+- Fix Rich Results Test round 2 (issue "non-critical" sulle pagine corso):
+  - **`buildGymRef()` arricchito**: aggiunti `telephone`, `priceRange`, `image` e
+    `address` (PostalAddress completo) al riferimento palestra usato nelle proprietà
+    `provider`/`publisher`/`offeredBy`/`location`/`worksFor`. Google non risolve gli
+    @id cross-page nella validazione, quindi il ref deve essere self-describing per
+    eliminare i "Missing field" (optional) segnalati per SportsActivityLocation.
+    Recensioni, orari di apertura e aggregateRating restano solo nel nodo completo di
+    `buildGym()` (home/contatti/orari).
+  - **`uploadDate` dei video**: formato ISO 8601 con timezone
+    (`2026-04-14T12:00:00+02:00`) al posto della data plain su pugilato, hyrox, pb-hiit.
+    Google segnalava "Invalid datetime value" e "missing timezone" (optional).
 
 ### In corso
 - Nessuna attività in corso

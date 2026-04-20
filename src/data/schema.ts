@@ -154,8 +154,10 @@ export function buildGym(): Record<string, unknown> {
 /**
  * Riferimento identificativo alla palestra (per pagine che non la ridefiniscono
  * e per proprietà come provider, publisher, offeredBy, location, worksFor).
- * Include @type, @id, name e url — il minimo che Google richiede per validare
- * l'entità senza dover risolvere l'@id nel @graph.
+ * Google non risolve gli @id cross-page nella validazione, quindi includiamo
+ * i campi che Rich Results Test segnala come "missing optional" per Local Business:
+ * telephone, priceRange, address, image. Le recensioni e gli orari di apertura
+ * restano solo nel nodo completo di buildGym() (home/contatti/orari).
  */
 export function buildGymRef(): Record<string, unknown> {
   return {
@@ -163,6 +165,17 @@ export function buildGymRef(): Record<string, unknown> {
     "@id": GYM_ID,
     name: siteInfo.name,
     url: SITE_URL,
+    telephone: siteInfo.phone,
+    priceRange: "€€",
+    image: `${SITE_URL}/brand/og-image.jpg`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteInfo.address,
+      addressLocality: siteInfo.city,
+      postalCode: siteInfo.cap,
+      addressRegion: siteInfo.province,
+      addressCountry: "IT",
+    },
   };
 }
 
