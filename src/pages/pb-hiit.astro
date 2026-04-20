@@ -37,60 +37,186 @@ const whatsappHref = buildWhatsappHref(
 /* — Dati pagina — */
 
 const definitionItems = [
-  { title: "Intervalli ad alta intensità", description: "Fasi di lavoro brevi e intense alternate a recuperi controllati. Il formato a intervalli è tra i più efficaci per il consumo calorico e il miglioramento cardiovascolare." },
-  { title: "Circuiti dinamici", description: "Ogni lezione propone circuiti sempre diversi che combinano esercizi a corpo libero, con attrezzi e lavoro metabolico. Nessuna sessione è uguale alla precedente." },
-  { title: "Lavoro al sacco", description: "Nei circuiti entra anche il lavoro al sacco pesante: combinazioni di colpi ad alta intensità per sfogarsi, unire cardio e boxe, dare al PB Hiit quel tocco di pugilato che lo rende unico." },
-  { title: "Adatto a ogni livello", description: "Il coach adatta intensità, tempi e varianti degli esercizi. Puoi iniziare da zero o usare il PB Hiit come complemento al tuo allenamento abituale." },
+  {
+    title: "Intervalli ad alta intensità",
+    description:
+      "Fasi di lavoro brevi e intense (20-40 secondi) alternate a recuperi controllati. Il formato HIIT a intervalli è tra i più efficaci per il consumo calorico, il miglioramento cardiovascolare e la stimolazione del metabolismo basale anche nelle ore successive (effetto EPOC).",
+  },
+  {
+    title: "Circuiti dinamici",
+    description:
+      "Ogni lezione PB Hiit propone circuiti sempre diversi che combinano esercizi a corpo libero, kettlebell, bilancieri e lavoro metabolico. Nessuna sessione è uguale alla precedente: corpo e mente restano sempre stimolati a nuovi adattamenti.",
+  },
+  {
+    title: "Lavoro al sacco",
+    description:
+      "Nei circuiti del PB Hiit entra anche il lavoro al sacco pesante: combinazioni di colpi di boxe (jab, cross, ganci) ad alta intensità per sfogarsi, unire cardio e tecnica pugilistica, dare al PB Hiit quel tocco di pugilato che lo rende unico alla Pugilistica Brianza.",
+  },
+  {
+    title: "Adatto a ogni livello",
+    description:
+      "Il coach adatta intensità, tempi di lavoro, carichi e varianti di ogni esercizio. Puoi iniziare il PB Hiit da zero oppure usarlo come complemento al tuo allenamento abituale (corsa, palestra, boxe).",
+  },
 ];
 
 const targets = [
-  { icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>', title: "Chi vuole rimettersi in forma", description: "Hai smesso di allenarti o non hai mai iniziato? Il PB Hiit è un percorso concreto per riprendere il controllo della tua condizione fisica, senza pressione." },
-  { icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>', title: "Chi vuole dimagrire", description: "L'allenamento a intervalli è tra i più efficaci per bruciare calorie, anche dopo la sessione. Combinato con costanza, porta a risultati visibili." },
-  { icon: '<path d="M18 20V10M12 20V4M6 20v-6"/>', title: "Chi cerca allenamenti dinamici", description: "Circuiti sempre diversi, ritmi sostenuti e varietà di esercizi. Se ti annoi con la solita routine, il PB Hiit è la risposta giusta." },
-  { icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>', title: "Chi vuole più energia e tono", description: "Più energia nella vita quotidiana, un corpo più tonico e una sensazione di benessere generale. Questo è quello che il PB Hiit costruisce sessione dopo sessione." },
+  {
+    icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>',
+    title: "Chi vuole rimettersi in forma",
+    description:
+      "Hai smesso di allenarti o non hai mai iniziato? Il PB Hiit è un percorso concreto per riprendere il controllo della tua condizione fisica e cardiovascolare, senza pressione e con progressione graduale.",
+  },
+  {
+    icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    title: "Chi vuole dimagrire",
+    description:
+      "L'allenamento HIIT a intervalli è tra i più efficaci per il consumo calorico, anche nelle ore successive alla sessione (effetto EPOC). Combinato con costanza e alimentazione equilibrata, il PB Hiit porta a risultati visibili sul peso e sul tono muscolare.",
+  },
+  {
+    icon: '<path d="M18 20V10M12 20V4M6 20v-6"/>',
+    title: "Chi cerca allenamenti dinamici",
+    description:
+      "Circuiti sempre diversi, ritmi sostenuti, varietà di esercizi con kettlebell, bilancieri e lavoro al sacco pesante. Se ti annoi con la solita routine in palestra, il PB Hiit è la risposta giusta.",
+  },
+  {
+    icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+    title: "Chi vuole più energia e tono",
+    description:
+      "Più energia nella vita quotidiana, un corpo più tonico, muscoli più reattivi e una sensazione di benessere generale: è quello che il corso PB Hiit costruisce sessione dopo sessione, due-tre volte a settimana.",
+  },
 ];
 
 const benefits = [
-  "<strong>Aumenta</strong> il consumo calorico durante e dopo ogni sessione di allenamento",
-  "<strong>Migliora</strong> il tono muscolare su tutto il corpo con esercizi funzionali completi",
-  "<strong>Sviluppa</strong> resistenza cardiovascolare e capacità di gestire lo sforzo",
-  "<strong>Costruisce</strong> velocità e reattività attraverso fasi di lavoro esplosive",
-  "<strong>Favorisce</strong> il benessere generale, riducendo stress e aumentando l'energia quotidiana",
-  "<strong>Aiuta</strong> a creare costanza con un formato breve, intenso e mai ripetitivo",
+  "<strong>Aumenta</strong> il consumo calorico durante e dopo ogni sessione di allenamento (effetto EPOC)",
+  "<strong>Migliora</strong> il tono muscolare su tutto il corpo con esercizi funzionali, kettlebell e bilancieri",
+  "<strong>Sviluppa</strong> resistenza cardiovascolare, soglia aerobica e capacità di gestire lo sforzo prolungato",
+  "<strong>Costruisce</strong> velocità, reattività e potenza esplosiva attraverso fasi di lavoro ad alta intensità",
+  "<strong>Favorisce</strong> il benessere generale, riduce lo stress e aumenta l'energia quotidiana anche fuori dalla palestra",
+  "<strong>Aiuta</strong> a creare costanza con un formato breve (45-50 min), intenso e mai ripetitivo",
 ];
 
 const steps = [
-  { title: "Attivazione", description: "Riscaldamento progressivo con mobilità articolare e attivazione muscolare. Il corpo si prepara allo sforzo con esercizi dinamici che aumentano gradualmente frequenza cardiaca e prontezza." },
-  { title: "Circuiti a intervalli", description: "Il cuore della lezione: rotazione su stazioni di esercizi a corpo libero, con attrezzi e lavoro metabolico. Ogni circuito alterna fasi di lavoro e fasi di recupero attivo." },
-  { title: "Fasi ad alta intensità", description: "Blocchi di lavoro esplosivo per spingere al massimo frequenza cardiaca e sforzo muscolare. Il coach adatta tempi e varianti in base al livello di ciascun partecipante." },
-  { title: "Recuperi attivi", description: "Tra un blocco e l'altro, fasi di recupero controllato che permettono di riprendere senza fermarsi completamente. Il ritmo resta alto, ma gestibile." },
-  { title: "Chiusura e defaticamento", description: "Ritorno alla calma con stretching, respirazione e feedback del coach. La chiusura è pensata per favorire il recupero muscolare e preparare il corpo alla sessione successiva." },
+  {
+    title: "Attivazione",
+    description:
+      "Riscaldamento progressivo con mobilità articolare, attivazione muscolare e lavoro cardiovascolare leggero. Il corpo si prepara allo sforzo del PB Hiit con esercizi dinamici che aumentano gradualmente frequenza cardiaca e prontezza neuromuscolare.",
+  },
+  {
+    title: "Circuiti a intervalli",
+    description:
+      "Il cuore della lezione PB Hiit: rotazione su stazioni di esercizi a corpo libero, kettlebell, bilancieri, sacco pesante e lavoro metabolico. Ogni circuito alterna fasi di lavoro (20-40 secondi) e fasi di recupero attivo controllato.",
+  },
+  {
+    title: "Fasi ad alta intensità",
+    description:
+      "Blocchi di lavoro esplosivo per spingere al massimo frequenza cardiaca e sforzo muscolare. Il coach adatta tempi, carichi e varianti in base al livello di ciascun partecipante al circuito.",
+  },
+  {
+    title: "Recuperi attivi",
+    description:
+      "Tra un blocco e l'altro, fasi di recupero controllato (jogging leggero o mobilità) che permettono di riprendere il fiato senza fermarsi completamente. Il ritmo resta alto, ma gestibile, mantenendo la stimolazione HIIT.",
+  },
+  {
+    title: "Chiusura e defaticamento",
+    description:
+      "Ritorno alla calma con stretching dinamico e statico, respirazione e feedback del coach sulla sessione. La chiusura favorisce il recupero muscolare, abbassa il cortisolo e prepara il corpo alla sessione successiva.",
+  },
 ];
 
 const whyUs = [
-  { icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>', title: "Ogni minuto conta", description: "Il formato HIIT è pensato per massimizzare ogni singolo minuto di allenamento. Sessioni brevi ma dense, per chi ha poco tempo e vuole risultati reali." },
-  { icon: '<path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/>', title: "Sfogati al sacco", description: "Nei circuiti entra il lavoro al sacco: colpi, combinazioni e intensità reale. Alleni fisico e mente insieme, e scarichi davvero la tensione della giornata." },
-  { icon: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>', title: "Fuori dalla comfort zone", description: "Ogni sessione ti spinge un po' più in là. Il coach alza l'asticella quando sei pronto, senza pressione ma senza sconti: è così che si cresce davvero." },
-  { icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>', title: "Community, non solo corso", description: "Qui non sei un numero. Il gruppo PB Hiit è una famiglia: ci si motiva a vicenda, si suda insieme, si cresce insieme. L'ambiente fa la differenza." },
-  { icon: '<polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>', title: "Mai la stessa sessione", description: "Circuiti sempre diversi, esercizi nuovi, varianti continue. Il coach progetta ogni lezione da zero, così non ti annoi mai e il corpo è sempre stimolato." },
-  { icon: '<path d="M5 3l14 9-14 9V3z"/>', title: "Prova gratuita senza impegno", description: "Vieni, fai una sessione vera con il gruppo e decidi con calma. Nessun vincolo, nessun pagamento anticipato." },
+  {
+    icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+    title: "Ogni minuto conta",
+    description:
+      "Il formato HIIT è pensato per massimizzare ogni singolo minuto di allenamento. Le sessioni di PB Hiit durano 45-50 minuti ma sono dense di lavoro reale, per chi ha poco tempo e vuole risultati concreti su peso e tono.",
+  },
+  {
+    icon: '<path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/>',
+    title: "Sfogati al sacco",
+    description:
+      "Nei circuiti del PB Hiit entra il lavoro al sacco pesante: colpi, combinazioni di boxe e intensità reale. Alleni fisico e mente insieme, e scarichi davvero la tensione accumulata nella giornata — una componente unica della Pugilistica Brianza.",
+  },
+  {
+    icon: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+    title: "Fuori dalla comfort zone",
+    description:
+      "Ogni sessione PB Hiit ti spinge un po' più in là. Il coach alza l'asticella quando sei pronto, con carichi, tempi e varianti adattati, senza pressione ma senza sconti: è così che si cresce davvero nel formato HIIT.",
+  },
+  {
+    icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
+    title: "Community, non solo corso",
+    description:
+      "Alla Pugilistica Brianza non sei un numero. Il gruppo PB Hiit è una famiglia: ci si motiva a vicenda, si suda insieme, si cresce insieme. L'ambiente familiare fa la differenza sulla costanza nel tempo.",
+  },
+  {
+    icon: '<polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>',
+    title: "Mai la stessa sessione",
+    description:
+      "Circuiti sempre diversi, esercizi nuovi (kettlebell, bilancieri, sacco, corpo libero), varianti continue. Il coach progetta ogni lezione da zero, così non ti annoi mai e il corpo è sempre stimolato a nuovi adattamenti.",
+  },
+  {
+    icon: '<path d="M5 3l14 9-14 9V3z"/>',
+    title: "Prova gratuita senza impegno",
+    description:
+      "Vieni, fai una sessione vera di PB Hiit con il gruppo e decidi con calma. Nessun vincolo, nessun pagamento anticipato: la prima lezione è gratuita.",
+  },
 ];
 
 const infoRows = [
-  { icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>', text: "<strong>Quando si svolge</strong>Il corso PB Hiit si tiene il lunedì e il mercoledì, dalle 19:00 alle 20:00." },
-  { icon: '<path d="M5 3l14 9-14 9V3z"/>', text: "<strong>Prova gratuita</strong>La prima lezione è gratuita e senza impegno. Vieni, allenati e decidi con calma." },
-  { icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>', text: "<strong>Come iscriversi</strong>Contatto diretto: scrivici su WhatsApp o passa in palestra. L'iscrizione è semplice e veloce." },
-  { icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>', text: "<strong>Cosa portare</strong>Abbigliamento sportivo comodo e scarpe da ginnastica. Tutta l'attrezzatura necessaria è disponibile in palestra." },
+  {
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+    text: "<strong>Quando si svolge</strong>Il corso PB Hiit alla Pugilistica Brianza si tiene il lunedì e il mercoledì dalle 19:00 alle 20:00, una fascia serale pensata per chi lavora e vuole scaricare la giornata con un allenamento intenso da 60 minuti.",
+  },
+  {
+    icon: '<path d="M5 3l14 9-14 9V3z"/>',
+    text: "<strong>Prova gratuita</strong>La prima lezione PB Hiit è gratuita e senza impegno. Vieni, sudi con il gruppo e decidi con calma se iscriverti al corso.",
+  },
+  {
+    icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>',
+    text: "<strong>Come iscriversi</strong>Per iscriverti al corso PB Hiit scrivici su WhatsApp o passa direttamente in palestra a Barlassina. L'iscrizione è semplice e veloce: serve solo il certificato medico sportivo non agonistico dalla seconda lezione in poi.",
+  },
+  {
+    icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+    text: "<strong>Cosa portare</strong>Per l'allenamento PB Hiit servono abbigliamento sportivo comodo, scarpe da ginnastica pulite e una bottiglia d'acqua. Tutta l'attrezzatura (kettlebell, bilancieri, sacco pesante, corpo libero) è disponibile in palestra.",
+  },
 ];
 
 const faqItems = [
-  { question: "PB Hiit è adatto a chi parte da zero?", answer: "Sì. L'allenamento è strutturato per adattarsi a ogni livello. Il coach modifica intensità, tempi e varianti degli esercizi in base alla tua condizione attuale. La maggior parte dei nostri iscritti ha iniziato senza esperienza specifica." },
-  { question: "Il PB Hiit aiuta a dimagrire?", answer: "Sì. L'allenamento a intervalli ad alta intensità è tra i più efficaci per il consumo calorico, anche nelle ore successive alla sessione. Combinato con costanza e alimentazione equilibrata, è un percorso concreto per la perdita di peso." },
-  { question: "Quanto dura una lezione di PB Hiit?", answer: "Ogni lezione dura circa 45-50 minuti, incluse attivazione iniziale e defaticamento finale. È un formato intenso ma gestibile, pensato per ottenere il massimo in poco tempo." },
-  { question: "Quante volte a settimana dovrei fare PB Hiit?", answer: "Per ottenere risultati visibili consigliamo 2-3 sessioni a settimana. Il coach ti aiuta a trovare la frequenza giusta in base ai tuoi obiettivi e al tuo livello di partenza." },
-  { question: "Posso provare il corso PB Hiit gratuitamente?", answer: "Certo. La prima lezione è gratuita e senza impegno. Vieni in palestra a Barlassina, allenati con noi e decidi con calma. Puoi prenotare scrivendoci su WhatsApp o passando direttamente." },
-  { question: "Cosa devo portare alla prima lezione?", answer: "Abbigliamento sportivo comodo e scarpe da ginnastica. Tutta l'attrezzatura necessaria per la lezione è disponibile in palestra. Abbiamo spogliatoi e docce." },
-  { question: "In cosa si differenzia il PB Hiit dal corso Hyrox?", answer: "Il PB Hiit è un allenamento a intervalli ad alta intensità pensato per fitness, tono e condizione generale. Il corso Hyrox è orientato alla preparazione ibrida per la gara Hyrox, con focus su resistenza, corsa e stazioni funzionali. Entrambi sono intensi, ma con obiettivi e struttura diversi." },
+  {
+    question: "PB Hiit è adatto a chi parte da zero?",
+    answer:
+      "Sì, il corso PB Hiit della Pugilistica Brianza è adatto anche a chi parte da zero. L'allenamento è strutturato per adattarsi a ogni livello: il coach modifica intensità, tempi e varianti degli esercizi in base alla tua condizione attuale. La maggior parte degli iscritti al PB Hiit ha iniziato senza esperienza specifica nell'allenamento HIIT.",
+  },
+  {
+    question: "Il PB Hiit aiuta a dimagrire?",
+    answer:
+      "Sì, il corso PB Hiit della Pugilistica Brianza aiuta a dimagrire. L'allenamento a intervalli ad alta intensità (HIIT) è tra i più efficaci per il consumo calorico, anche nelle ore successive alla sessione grazie all'effetto EPOC. Combinato con costanza (2-3 sessioni a settimana) e alimentazione equilibrata, è un percorso concreto per la perdita di peso e il tono muscolare.",
+  },
+  {
+    question: "Quanto dura una lezione di PB Hiit?",
+    answer:
+      "Ogni lezione di PB Hiit alla Pugilistica Brianza dura circa 45-50 minuti, incluse attivazione iniziale e defaticamento finale. È un formato HIIT intenso ma gestibile, pensato per ottenere il massimo risultato in poco tempo — ideale per chi lavora e può dedicare solo un'ora all'allenamento.",
+  },
+  {
+    question: "Quante volte a settimana dovrei fare PB Hiit?",
+    answer:
+      "Alla Pugilistica Brianza consigliamo 2-3 sessioni di PB Hiit a settimana per ottenere risultati visibili su peso, tono muscolare e condizione cardiovascolare. Il coach ti aiuta a trovare la frequenza giusta in base ai tuoi obiettivi, al tuo livello di partenza e ai tempi di recupero tra una sessione HIIT e l'altra.",
+  },
+  {
+    question: "Posso provare il corso PB Hiit gratuitamente?",
+    answer:
+      "Sì, puoi provare il corso PB Hiit alla Pugilistica Brianza gratuitamente. La prima lezione è gratuita e senza impegno: vieni in palestra a Barlassina, allenati con il gruppo e decidi con calma se iscriverti. Puoi prenotare la prova scrivendoci su WhatsApp o passando direttamente in Via Giovanni Segantini 29.",
+  },
+  {
+    question: "Cosa devo portare alla prima lezione?",
+    answer:
+      "Per la prima lezione di PB Hiit alla Pugilistica Brianza bastano abbigliamento sportivo comodo, scarpe da ginnastica pulite e una bottiglia d'acqua. Tutta l'attrezzatura necessaria (kettlebell, bilancieri, sacco pesante, corpo libero) è disponibile in palestra. Abbiamo spogliatoi e docce per dopo l'allenamento.",
+  },
+  {
+    question: "In cosa si differenzia il PB Hiit dal corso Hyrox?",
+    answer:
+      "Il corso PB Hiit della Pugilistica Brianza è un allenamento a intervalli ad alta intensità (HIIT) pensato per fitness, tono muscolare e condizione cardiovascolare generale, con sessioni di 45-50 minuti che includono lavoro al sacco pesante. Il corso Hyrox è invece orientato alla preparazione ibrida per la gara Hyrox ufficiale, con focus su resistenza aerobica, corsa e stazioni funzionali specifiche (sled push, wall balls, rowing). Entrambi sono intensi, ma con obiettivi, format e struttura diversi.",
+  },
 ];
 
 const pageSchema = buildPageSchema(
@@ -131,7 +257,7 @@ const pageSchema = buildPageSchema(
   <!-- 1. HERO -->
   <Hero
     topline="Corso PB Hiit — Pugilistica Brianza"
-    subtitle="Allenati con un percorso intenso e dinamico per fitness, tono e condizione, in una palestra con ambiente familiare, coach qualificati e prova gratuita."
+    subtitle="Il corso PB Hiit (Pugilistica Brianza HIIT) è l'allenamento a intervalli ad alta intensità della Pugilistica Brianza di Barlassina (MB): circuiti dinamici che uniscono cardio, esercizi funzionali e lavoro al sacco pesante per fitness, tono muscolare e dimagrimento. Prima lezione di prova gratuita con coach certificato FIPE."
     watermark="HIIT"
     ctaPrimary={{ label: "Prenota su WhatsApp", href: whatsappHref }}
   >
@@ -152,7 +278,7 @@ const pageSchema = buildPageSchema(
         Che cos'è <span class="text-brand">PB Hiit?</span>
       </SectionHeading>
       <DefinitionGrid
-        introText="PB Hiit sta per Pugilistica Brianza HIIT: è l'HIIT rivisitato dalla nostra palestra, nato per chi cerca un allenamento intenso che unisce cardio e boxe — per sudare, sfogarsi e lavorare su tutto il corpo. Circuiti dinamici ad alta intensità, fasi di lavoro esplosivo, recuperi attivi e il lavoro al sacco tipico della nostra identità pugilistica."
+        introText="PB Hiit sta per Pugilistica Brianza HIIT: è l'HIIT (High-Intensity Interval Training) rivisitato dalla nostra palestra di Barlassina, nato per chi cerca un allenamento intenso che unisce cardio, esercizi funzionali e lavoro al sacco — per sudare, sfogarsi e lavorare su tutto il corpo. Circuiti dinamici ad alta intensità, fasi di lavoro esplosivo con kettlebell e bilancieri, recuperi attivi controllati e il lavoro al sacco pesante tipico della nostra identità pugilistica."
         items={definitionItems}
         video={{
           mp4: "/videos/corso-pb-hiit-pugilistica-brianza-barlassina.mp4",
@@ -169,7 +295,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Per chi"
-        description="Un allenamento pensato per chi vuole risultati concreti, in un formato intenso ma accessibile a tutti i livelli."
+        description="Il corso PB Hiit è pensato per chi vuole risultati concreti — dimagrimento, tono muscolare, più energia — in un formato intenso ma accessibile a tutti i livelli, dai principianti a chi cerca uno stimolo nuovo rispetto alla routine abituale."
       >
         Per chi è adatto <span class="text-brand">PB Hiit?</span>
       </SectionHeading>
@@ -186,7 +312,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Benefici"
-        description="Un allenamento completo che lavora su più fronti, dal consumo calorico alla resistenza, dal tono muscolare al benessere mentale."
+        description="Il PB Hiit è un allenamento completo che lavora su più fronti — dal consumo calorico alla resistenza cardiovascolare, dal tono muscolare al benessere mentale, passando per lo scarico emotivo sul sacco pesante."
       >
         I benefici di <span class="text-brand">PB Hiit</span>
       </SectionHeading>
@@ -201,7 +327,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="La lezione"
-        description="Ogni lezione dura circa 45-50 minuti ed è strutturata per massimizzare il lavoro in poco tempo, con progressione e adattamento al livello del gruppo."
+        description="Una lezione di PB Hiit dura circa 45-50 minuti ed è strutturata in cinque fasi — attivazione, circuiti a intervalli, fasi ad alta intensità, recuperi attivi, chiusura — pensate per massimizzare il lavoro in poco tempo, con progressione e adattamento al livello del gruppo."
       >
         Come si svolge una lezione di <span class="text-brand">PB Hiit?</span>
       </SectionHeading>
@@ -243,7 +369,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Perché noi"
-        description="Pugilistica Brianza non è una palestra generica. È un'ASD con un'identità chiara, dove l'allenamento è serio e l'ambiente è familiare."
+        description="ASD Pugilistica Brianza non è una palestra di soli corsi HIIT: è una palestra di pugilato che ha costruito il PB Hiit unendo HIIT e boxe. Identità chiara, coach FIPE, sacco pesante e ambiente familiare nel cuore della Brianza."
       >
         Perché allenarti <span class="text-brand">con noi</span>
       </SectionHeading>
@@ -258,7 +384,10 @@ const pageSchema = buildPageSchema(
   <!-- 7. ORARI, PROVA E ISCRIZIONE -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Info pratiche">
+      <SectionHeading
+        topline="Info pratiche"
+        description="Tutte le info pratiche per iniziare il corso PB Hiit: orari settimanali (lunedì e mercoledì 19:00-20:00), come funziona la prova gratuita, come iscriversi e cosa portare alla prima sessione."
+      >
         Orari, prova e <span class="text-brand">iscrizione</span>
       </SectionHeading>
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 items-start">
@@ -268,12 +397,12 @@ const pageSchema = buildPageSchema(
         <PricingCard
           title="Abbonamento mensile"
           price="€50"
-          note="+ Tesseramento annuale €20 (obbligatorio)"
+          note="+ Tesseramento annuale €20 (copre assicurazione sportiva e tesseramento)"
           features={[
             "Accesso illimitato al corso PB Hiit",
-            "Ingresso singolo: €15 (necessaria visita medica)",
-            "Formula Open (tutti i corsi): €90/mese",
-            "Prima lezione gratuita",
+            "Ingresso singolo a €15 per una singola lezione PB Hiit (certificato medico richiesto)",
+            "Formula Open all-inclusive (pugilato, Hyrox, PB Hiit e Open Gym): €90/mese",
+            "Prima lezione di prova gratuita e senza impegno",
           ]}
           ctaLabel="Prenota su WhatsApp"
           ctaHref={whatsappHref}
@@ -281,7 +410,7 @@ const pageSchema = buildPageSchema(
       </div>
       <CourseScheduleMini
         tags={["pb-hiit"]}
-        caption="Orari settimanali del corso PB Hiit alla Pugilistica Brianza"
+        caption="Orari settimanali del corso PB Hiit"
       />
     </div>
   </section>
@@ -289,15 +418,18 @@ const pageSchema = buildPageSchema(
   <!-- 8. GALLERY -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Gallery">
+      <SectionHeading
+        topline="Gallery"
+        description="Gli spazi e gli esercizi del corso PB Hiit: circuiti di gruppo, kettlebell swing, lavoro al sacco pesante, colpitori e bilancieri. Dai un'occhiata prima di venire a provare."
+      >
         Guarda <span class="text-brand">l'allenamento</span>
       </SectionHeading>
       <Gallery images={[
         { src: galCircuito, alt: "Circuito di gruppo PB Hiit alla Pugilistica Brianza: allieve su stazioni diverse con bilancieri e corpo libero" },
-        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione PB Hiit alla Pugilistica Brianza" },
-        { src: galSwing, alt: "Kettlebell swing e stacco con bilanciere nel circuito PB Hiit della Pugilistica Brianza" },
+        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione PB Hiit" },
+        { src: galSwing, alt: "Kettlebell swing e stacco con bilanciere nel circuito PB Hiit" },
         { src: galSacco, alt: "Allenamento al sacco pesante durante il corso PB Hiit alla Pugilistica Brianza di Barlassina" },
-        { src: galKettlebell, alt: "Esercizio con kettlebell davanti allo specchio durante il PB Hiit alla Pugilistica Brianza" },
+        { src: galKettlebell, alt: "Esercizio con kettlebell davanti allo specchio durante il PB Hiit" },
       ]} />
     </div>
   </section>
@@ -305,7 +437,10 @@ const pageSchema = buildPageSchema(
   <!-- 9. FAQ -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="FAQ">
+      <SectionHeading
+        topline="FAQ"
+        description="Le domande più frequenti sul corso PB Hiit: livello richiesto per iniziare, effetto sul dimagrimento, durata delle lezioni, frequenza consigliata, prova gratuita e differenze con il corso Hyrox."
+      >
         Domande frequenti su <span class="text-brand">PB Hiit</span>
       </SectionHeading>
       <FaqAccordion items={faqItems} defaultOpen={0} />
@@ -315,7 +450,10 @@ const pageSchema = buildPageSchema(
   <!-- 10. LOCAL -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Dove siamo">
+      <SectionHeading
+        topline="Dove siamo"
+        description="Il corso PB Hiit si tiene in Via Giovanni Segantini 29 a Barlassina (MB), nel cuore della Brianza. Facilmente raggiungibile dai comuni limitrofi: Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò."
+      >
         Allenati a <span class="text-brand">Barlassina,</span> in Brianza
       </SectionHeading>
       <LocalSection

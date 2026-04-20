@@ -41,61 +41,192 @@ const whatsappHref = buildWhatsappHref(
 /* — Dati pagina — */
 
 const definitionItems = [
-  { title: "Tecnica e coordinazione", description: "Impari i fondamentali della boxe — guardia, colpi, spostamenti, difese — con progressioni chiare e graduali." },
-  { title: "Preparazione atletica", description: "Ogni lezione include lavoro su resistenza, velocità e forza esplosiva, elementi centrali del pugilato." },
-  { title: "Disciplina e mentalità", description: "La boxe sviluppa concentrazione, gestione dello stress e fiducia in sé, dentro e fuori dalla palestra." },
-  { title: "Allenamento completo", description: "Cardio, tono muscolare, agilità e coordinazione in un unico percorso, con il supporto di un coach ex agonista." },
+  {
+    title: "Tecnica e coordinazione",
+    description:
+      "Impari i fondamentali della boxe — guardia, jab, cross, gancio, montante, spostamenti, schivate e parate — con progressioni chiare e graduali guidate dal coach.",
+  },
+  {
+    title: "Preparazione atletica",
+    description:
+      "Ogni lezione di pugilato alla Pugilistica Brianza include lavoro specifico su resistenza cardiovascolare, velocità esplosiva e forza funzionale: elementi centrali per reggere i round sul ring.",
+  },
+  {
+    title: "Disciplina e mentalità",
+    description:
+      "La boxe sviluppa concentrazione, gestione dello stress, autocontrollo e fiducia in sé. Benefici che l'atleta porta con sé dentro e fuori dalla palestra, nella vita quotidiana e sul ring.",
+  },
+  {
+    title: "Allenamento completo",
+    description:
+      "Cardio, tono muscolare, agilità, riflessi e coordinazione motoria in un unico percorso, con il supporto dei coach Stefano Rizzo e Moreno Bragato, entrambi ex pugili agonisti.",
+  },
 ];
 
 const targets = [
-  { icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>', title: "Principianti", description: "Non hai mai fatto boxe? La maggior parte dei nostri iscritti è partita da zero. Il coach ti guida passo dopo passo." },
-  { icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>', title: "Donne", description: "Corso misto e inclusivo. Alleniamo donne di ogni età in un ambiente rispettoso, motivante e sicuro." },
-  { icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>', title: "Ragazzi 8+", description: "L'età minima per il corso di pugilato è 8 anni. L'allenamento è adattato per garantire sicurezza e crescita graduale." },
-  { icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>', title: "Amatori", description: "Vuoi allenarti con costanza, migliorare la tecnica e stare in forma? Il percorso amatoriale è fatto per te." },
-  { icon: '<path d="M6 9l6 6 6-6"/><path d="M6 4h12M6 20h12"/>', title: "Agonisti", description: "Affiliati FPI, gareggiamo nella light-boxe e boxe dilettantistica. Costruiamo percorsi agonistici su misura." },
+  {
+    icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>',
+    title: "Principianti",
+    description:
+      "Non hai mai fatto boxe? La maggior parte degli iscritti della Pugilistica Brianza è partita da zero. Il coach ti guida passo dopo passo nei fondamentali: guardia, colpi e spostamenti.",
+  },
+  {
+    icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>',
+    title: "Donne",
+    description:
+      "Il corso di pugilato è misto e inclusivo. Alleniamo donne di ogni età in un ambiente rispettoso, motivante e sicuro, con tecnica e preparazione atletica.",
+  },
+  {
+    icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>',
+    title: "Ragazzi 8+",
+    description:
+      "L'età minima per iniziare il corso di pugilato è 8 anni. L'allenamento è adattato all'età per garantire sicurezza e crescita graduale dell'atleta.",
+  },
+  {
+    icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    title: "Amatori",
+    description:
+      "Vuoi allenarti con costanza, migliorare la tecnica della boxe e stare in forma? Il percorso amatoriale è fatto per te, senza obbligo di gara.",
+  },
+  {
+    icon: '<path d="M6 9l6 6 6-6"/><path d="M6 4h12M6 20h12"/>',
+    title: "Agonisti",
+    description:
+      "Affiliati FPI (Federazione Pugilistica Italiana), gareggiamo nella light-boxe e nella boxe dilettantistica. Costruiamo percorsi agonistici su misura con tecnica, sparring e preparazione specifica per l'incontro.",
+  },
 ];
 
 const benefits = [
-  "<strong>Migliora</strong> resistenza cardiovascolare e condizione fisica generale",
-  "<strong>Sviluppa</strong> forza esplosiva, velocità e coordinazione motoria",
-  "<strong>Aumenta</strong> concentrazione, disciplina e gestione dello stress",
-  "<strong>Aiuta</strong> dimagrimento, tono muscolare e benessere complessivo",
-  "<strong>Costruisce</strong> fiducia in sé, costanza e mentalità forte",
-  "<strong>Rafforza</strong> agilità, riflessi e consapevolezza del corpo",
+  "<strong>Migliora</strong> resistenza cardiovascolare, capacità polmonare e condizione fisica generale",
+  "<strong>Sviluppa</strong> forza esplosiva, velocità di reazione e coordinazione motoria",
+  "<strong>Aumenta</strong> concentrazione, disciplina, autocontrollo e gestione dello stress",
+  "<strong>Aiuta</strong> dimagrimento, tono muscolare e benessere complessivo di corpo e mente",
+  "<strong>Costruisce</strong> fiducia in sé, costanza e mentalità forte anche fuori dal ring",
+  "<strong>Rafforza</strong> agilità, riflessi, equilibrio e consapevolezza del corpo nello spazio",
 ];
 
 const steps = [
-  { title: "Riscaldamento", description: "Attivazione generale con corda, mobilità articolare e lavoro cardiovascolare leggero. Prepara il corpo all'intensità della lezione." },
-  { title: "Tecnica e fondamentali", description: "Guardia, spostamenti, combinazioni di colpi, schivate e parate. Per i principianti si lavora sui fondamentali; per gli avanzati su combinazioni e strategie." },
-  { title: "Lavoro al sacco e a coppie", description: "Applicazione della tecnica su sacchi, colpitori e guanti. Lavoro a coppie per sviluppare timing, distanza e reattività." },
-  { title: "Preparazione atletica", description: "Circuiti di forza, velocità e resistenza specifici per il pugilato. Esercizi mirati per migliorare la performance e la tenuta fisica." },
-  { title: "Defaticamento e chiusura", description: "Stretching, respirazione e ritorno alla calma. Il coach dà feedback individuali sulla lezione e sugli aspetti su cui lavorare." },
+  {
+    title: "Riscaldamento",
+    description:
+      "Attivazione generale con corda da boxe, mobilità articolare, circonduzioni e lavoro cardiovascolare leggero. Prepara il corpo all'intensità della lezione e al successivo lavoro tecnico.",
+  },
+  {
+    title: "Tecnica e fondamentali",
+    description:
+      "Guardia, spostamenti, combinazioni di colpi (jab, cross, gancio, montante), schivate e parate. Per i principianti si lavora sui fondamentali; per gli avanzati su combinazioni, timing e strategie di ring.",
+  },
+  {
+    title: "Lavoro al sacco e a coppie",
+    description:
+      "Applicazione della tecnica sui sacchi pesanti, sui colpitori e con i guantoni. Lavoro a coppie con paratibie per sviluppare timing, gestione della distanza e reattività nello scambio.",
+  },
+  {
+    title: "Preparazione atletica",
+    description:
+      "Circuiti di forza, velocità e resistenza specifici per il pugilato. Esercizi mirati con bilancieri, corpo libero e attrezzatura funzionale per migliorare la performance sul ring e la tenuta fisica nei round.",
+  },
+  {
+    title: "Defaticamento e chiusura",
+    description:
+      "Stretching, respirazione e ritorno alla calma post-allenamento. Il coach dà feedback individuali sulla lezione e sugli aspetti tecnici su cui lavorare alla prossima sessione.",
+  },
 ];
 
 const whyUs = [
-  { icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>', title: "Coach ex pugile agonista", description: "Stefano Rizzo è Maestro di 2° livello FPI ed ex pugile agonista. In palestra non trovi teoria: trovi esperienza reale sul ring, applicata in ogni lezione." },
-  { icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>', title: "Ring regolamentare per sparring", description: "Non un angolo con un sacco: abbiamo un ring vero, sacchi pesanti e attrezzatura completa. L'ambiente giusto per imparare la boxe sul serio." },
-  { icon: '<path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/>', title: "Percorsi agonistici FPI", description: "Se vuoi gareggiare, siamo affiliati FPI e prepariamo atleti per light-boxe e boxe dilettantistica. Costruiamo percorsi agonistici su misura con target concreti." },
-  { icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>', title: "Aperti a tutti, dagli 8 anni in su", description: "Principianti assoluti, donne, ragazzi dagli 8 anni, amatori e agonisti: il corso accoglie tutti i livelli con progressioni graduate e un approccio inclusivo." },
-  { icon: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>', title: "Tecnica prima di tutto", description: "Non si tratta di menare: si tratta di imparare a muoversi, leggere l'avversario e reagire. L'approccio è didattico e progressivo, dalla guardia allo sparring." },
-  { icon: '<path d="M5 3l14 9-14 9V3z"/>', title: "Prova gratuita senza impegno", description: "Vieni, allenati con il gruppo e decidi con calma. Nessun vincolo, nessun pagamento anticipato." },
+  {
+    icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>',
+    title: "Coach ex pugile agonista",
+    description:
+      "Stefano Rizzo è Maestro di 2° livello FPI ed ex pugile agonista con circa 40 incontri da dilettante. Nel corso di pugilato non trovi teoria: trovi esperienza reale sul ring, applicata in ogni lezione.",
+  },
+  {
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>',
+    title: "Ring regolamentare per sparring",
+    description:
+      "Qui non c'è un angolo con un sacco: c'è un ring regolamentare da boxe, sacchi pesanti, colpitori e attrezzatura completa. L'ambiente giusto per imparare il pugilato sul serio.",
+  },
+  {
+    icon: '<path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/>',
+    title: "Percorsi agonistici FPI",
+    description:
+      "Se vuoi gareggiare nella boxe, siamo affiliati FPI (Federazione Pugilistica Italiana) e prepariamo atleti per light-boxe e boxe dilettantistica. Costruiamo percorsi agonistici su misura con target concreti di gara.",
+  },
+  {
+    icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
+    title: "Aperti a tutti, dagli 8 anni in su",
+    description:
+      "Principianti assoluti, donne di ogni età, ragazzi dagli 8 anni, amatori e pugili agonisti: il corso di pugilato accoglie tutti i livelli con progressioni graduate e un approccio didattico inclusivo.",
+  },
+  {
+    icon: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>',
+    title: "Tecnica prima di tutto",
+    description:
+      "Alla Pugilistica Brianza la boxe non è menare: è imparare a muoversi in guardia, leggere l'avversario e reagire con i colpi giusti al momento giusto. L'approccio è didattico e progressivo, dalla guardia allo sparring.",
+  },
+  {
+    icon: '<path d="M5 3l14 9-14 9V3z"/>',
+    title: "Prova gratuita senza impegno",
+    description:
+      "Vieni, allenati con il gruppo e decidi con calma. La prima lezione di pugilato è gratuita, senza vincoli e senza pagamento anticipato.",
+  },
 ];
 
 const infoRows = [
-  { icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>', text: "<strong>Quando si svolge</strong>Il corso di pugilato si tiene dal lunedì al sabato, con lezioni per adulti, bambini (6–12 anni) e agonisti. Trovi gli orari nella tabella qui sotto." },
-  { icon: '<path d="M5 3l14 9-14 9V3z"/>', text: "<strong>Prova gratuita</strong>La prima lezione è gratuita e senza impegno. Vieni, allenati e decidi con calma." },
-  { icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>', text: "<strong>Come iscriversi</strong>Contatto diretto: scrivici su WhatsApp o passa in palestra. L'iscrizione è semplice e veloce." },
-  { icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>', text: "<strong>Cosa portare</strong>Abbigliamento sportivo, scarpe da ginnastica. Guantoni e fasce disponibili in palestra per la prova." },
+  {
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+    text: "<strong>Quando si svolge</strong>Il corso di pugilato alla Pugilistica Brianza si tiene dal lunedì al sabato, con fasce al mattino, in pausa pranzo e la sera. Lezioni dedicate per adulti, Kids Boxe (6–12 anni) e Boxe Agonisti. Gli orari completi sono nella tabella qui sotto.",
+  },
+  {
+    icon: '<path d="M5 3l14 9-14 9V3z"/>',
+    text: "<strong>Prova gratuita</strong>La prima lezione di pugilato è gratuita e senza impegno. Vieni, allenati con il gruppo e decidi con calma se iscriverti.",
+  },
+  {
+    icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>',
+    text: "<strong>Come iscriversi</strong>Per iscriverti al corso di pugilato scrivici su WhatsApp o passa direttamente in palestra a Barlassina. L'iscrizione è semplice e veloce: serve solo il certificato medico sportivo non agonistico, richiesto dalla seconda lezione in poi.",
+  },
+  {
+    icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+    text: "<strong>Cosa portare</strong>Alla prima lezione di pugilato servono abbigliamento sportivo comodo, scarpe da ginnastica pulite e una bottiglia d'acqua. Guantoni e fasce da boxe sono forniti dalla palestra per la prova gratuita.",
+  },
 ];
 
 const faqItems = [
-  { question: "Posso iniziare il corso di pugilato anche se sono principiante?", answer: "Assolutamente sì. La maggior parte dei nostri iscritti ha iniziato da zero. Il corso è strutturato per accogliere tutti i livelli, dai principianti assoluti a chi ha già esperienza. Il coach adatta gli esercizi in base al livello di ciascuno." },
-  { question: "Il corso di pugilato è adatto anche alle donne?", answer: "Sì, il corso è misto e pensato per essere inclusivo. Alleniamo donne di ogni età e livello, in un ambiente rispettoso e motivante. La boxe è uno degli allenamenti più completi anche per obiettivi di fitness e benessere." },
-  { question: "Da che età si può iniziare a fare pugilato?", answer: "Il corso di pugilato è aperto dagli 8 anni in su. L'allenamento è adattato all'età e al livello del ragazzo, con attenzione alla sicurezza e alla crescita graduale." },
-  { question: "Fate anche pugilato agonistico?", answer: "Sì, siamo affiliati alla Federazione Pugilistica Italiana (FPI) e gareggiamo nella light-boxe e nella boxe dilettantistica. Se vuoi crescere in ambito agonistico, possiamo costruire un percorso su misura per te." },
-  { question: "Posso prenotare una prova gratuita di pugilato?", answer: "Certo. La prova gratuita è senza impegno: vieni, allenati con noi e decidi con calma. Puoi prenotarla scrivendoci su WhatsApp o passando direttamente in palestra a Barlassina." },
-  { question: "Cosa devo portare alla prima lezione di pugilato?", answer: "Per la prima lezione bastano abbigliamento sportivo comodo e scarpe da ginnastica. Guantoni e fasce possono essere forniti dalla palestra per la prova. Abbiamo spogliatoi e docce a disposizione." },
-  { question: "Quante volte a settimana è consigliato allenarsi?", answer: "Per risultati costanti consigliamo 2-3 allenamenti a settimana. Il coach ti aiuterà a trovare la frequenza giusta in base ai tuoi obiettivi e alla tua disponibilità." },
+  {
+    question: "Posso iniziare il corso di pugilato anche se sono principiante?",
+    answer:
+      "Sì, puoi iniziare il corso di pugilato alla Pugilistica Brianza anche se sei principiante assoluto. La maggior parte degli iscritti ha iniziato da zero, senza alcuna esperienza pregressa nella boxe. Il corso è strutturato per accogliere tutti i livelli, dai principianti assoluti a chi ha già esperienza sul ring. Il coach adatta gli esercizi in base al livello di ciascun atleta.",
+  },
+  {
+    question: "Il corso di pugilato è adatto anche alle donne?",
+    answer:
+      "Sì, il corso di pugilato può essere frequentato anche dalle donne. Il corso di pugilato di Pugilistica Brianza è misto e pensato per essere inclusivo. Alleniamo donne di ogni età e livello, in un ambiente rispettoso e motivante. La boxe è uno degli allenamenti più completi anche per obiettivi di fitness e benessere.",
+  },
+  {
+    question: "Da che età si può iniziare a fare pugilato?",
+    answer:
+      "Alla Pugilistica Brianza si può iniziare a fare pugilato a partire dagli 8 anni. Il corso di pugilato per bambini e ragazzi è aperto dagli 8 anni in su, con allenamento adattato all'età e al livello di ciascuno, attenzione alla sicurezza e un approccio didattico orientato alla crescita graduale dell'atleta.",
+  },
+  {
+    question: "Fate anche pugilato agonistico?",
+    answer:
+      "Sì, alla Pugilistica Brianza facciamo anche pugilato agonistico. Siamo affiliati alla Federazione Pugilistica Italiana (FPI) e gareggiamo regolarmente nella light-boxe e nella boxe dilettantistica. Se vuoi crescere in ambito agonistico, costruiamo un percorso di allenamento su misura con tecnica, preparazione atletica e sparring specifici per l'incontro.",
+  },
+  {
+    question: "Posso prenotare una prova gratuita di pugilato?",
+    answer:
+      "Sì, puoi prenotare una prova gratuita del corso di pugilato alla Pugilistica Brianza di Barlassina. La prima lezione è gratuita e senza impegno: vieni, allenati con il gruppo e decidi con calma se iscriverti. Puoi prenotare la prova scrivendoci su WhatsApp o passando direttamente in palestra in Via Giovanni Segantini 29.",
+  },
+  {
+    question: "Cosa devo portare alla prima lezione di pugilato?",
+    answer:
+      "Alla prima lezione di pugilato alla Pugilistica Brianza bastano abbigliamento sportivo comodo e scarpe da ginnastica pulite per l'interno. Guantoni e fasce da boxe sono forniti dalla palestra per la prova gratuita, così non devi comprare attrezzatura prima di decidere se iscriverti. Abbiamo spogliatoi e docce a disposizione dopo l'allenamento.",
+  },
+  {
+    question: "Quante volte a settimana è consigliato allenarsi?",
+    answer:
+      "Alla Pugilistica Brianza consigliamo 2-3 allenamenti di pugilato a settimana per risultati costanti nella tecnica e nella preparazione atletica. Il coach ti aiuterà a trovare la frequenza giusta in base ai tuoi obiettivi, al tuo livello di partenza e alla disponibilità di tempo.",
+  },
 ];
 
 const pageSchema = buildPageSchema(
@@ -139,7 +270,7 @@ const pageSchema = buildPageSchema(
   <!-- 1. HERO -->
   <Hero
     topline="Corso di pugilato — Pugilistica Brianza"
-    subtitle="Allenati con un percorso adatto a ogni livello, dai principianti agli agonisti, in una palestra con ambiente familiare, coach qualificati e prova gratuita."
+    subtitle="Il corso di pugilato alla Pugilistica Brianza di Barlassina (MB) è aperto a principianti, donne, ragazzi dagli 8 anni, amatori e pugili agonisti. Tecnica, preparazione atletica e sparring leggero in una palestra con ring regolamentare, coach FPI (Maestro 2° livello) e prima lezione di prova gratuita."
     watermark="BOXE"
     ctaPrimary={{ label: "Prenota su WhatsApp", href: whatsappHref }}
   >
@@ -160,7 +291,7 @@ const pageSchema = buildPageSchema(
         Che cos'è il <span class="text-brand">Pugilato?</span>
       </SectionHeading>
       <DefinitionGrid
-        introText="Il pugilato è uno sport di combattimento che allena corpo e mente attraverso tecnica, coordinazione e preparazione atletica. A Pugilistica Brianza lo insegniamo in modo strutturato, adatto a ogni livello: da chi vuole scoprirlo per la prima volta a chi punta al ring."
+        introText="Il pugilato (o boxe) è uno sport di combattimento che allena corpo e mente attraverso tecnica, coordinazione, timing e preparazione atletica specifica. Alla Pugilistica Brianza di Barlassina lo insegniamo in modo strutturato, con progressioni graduali adatte a ogni livello: da chi vuole scoprirlo per la prima volta a chi punta a salire sul ring in gara, passando per chi lo pratica come fitness e disciplina."
         items={definitionItems}
         video={{
           mp4: "/videos/corso-pugilato-pugilistica-brianza-barlassina.mp4",
@@ -177,7 +308,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Per chi"
-        description="Il corso è pensato per accogliere profili diversi, con un approccio che si adatta al livello e all'obiettivo di ciascuno."
+        description="Il corso di pugilato è pensato per accogliere profili diversi — dai principianti assoluti ai pugili agonisti — con un approccio che si adatta al livello tecnico, all'età e agli obiettivi di ciascun atleta."
       >
         Per chi è adatto il corso di <span class="text-brand">Pugilato?</span>
       </SectionHeading>
@@ -194,7 +325,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Benefici"
-        description="Il pugilato è uno degli allenamenti più completi. Ecco cosa sviluppi con la pratica costante."
+        description="Il pugilato è uno degli allenamenti più completi a livello fisico e mentale. Ecco cosa sviluppi con la pratica costante del corso di boxe, in qualsiasi percorso tu scelga — amatoriale, fitness o agonistico."
       >
         I benefici del <span class="text-brand">Pugilato</span>
       </SectionHeading>
@@ -209,7 +340,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="La lezione"
-        description="Ogni lezione dura circa 60–90 minuti ed è strutturata in fasi progressive, adattate al livello del gruppo."
+        description="Una lezione di pugilato dura circa 60–90 minuti ed è strutturata in cinque fasi progressive — riscaldamento, tecnica e fondamentali, lavoro al sacco e a coppie, preparazione atletica, defaticamento — adattate al livello del gruppo e ai singoli atleti."
       >
         Come si svolge una lezione di <span class="text-brand">Pugilato?</span>
       </SectionHeading>
@@ -261,7 +392,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Perché noi"
-        description="Pugilistica Brianza non è una palestra generica. È un'ASD nata per il pugilato, con un'identità chiara e un approccio diretto."
+        description="ASD Pugilistica Brianza non è una palestra generica: è nata a Barlassina nel 2016 per il pugilato, con un'identità chiara, ring regolamentare, coach FPI e un approccio diretto all'insegnamento della boxe — amatoriale, fitness e agonistica."
       >
         Perché allenarti <span class="text-brand">con noi</span>
       </SectionHeading>
@@ -276,7 +407,10 @@ const pageSchema = buildPageSchema(
   <!-- 7. ORARI, PROVA E ISCRIZIONE -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Info pratiche">
+      <SectionHeading
+        topline="Info pratiche"
+        description="Tutte le info pratiche per iniziare il corso di pugilato: orari settimanali, come funziona la prova gratuita, come iscriversi, cosa portare alla prima lezione e certificato medico richiesto."
+      >
         Orari, prova e <span class="text-brand">iscrizione</span>
       </SectionHeading>
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 items-start">
@@ -286,12 +420,12 @@ const pageSchema = buildPageSchema(
         <PricingCard
           title="Abbonamento mensile"
           price="€50"
-          note="+ Tesseramento annuale €20 (obbligatorio)"
+          note="+ Tesseramento annuale €20 (copre assicurazione e tesseramento FPI)"
           features={[
             "Accesso illimitato al corso di pugilato",
-            "Ingresso singolo: €15 (necessaria visita medica)",
-            "Formula Open (tutti i corsi): €90/mese",
-            "Prima lezione gratuita",
+            "Ingresso singolo a €15 per una singola lezione (certificato medico richiesto)",
+            "Formula Open all-inclusive (pugilato, Hyrox, PB Hiit e Open Gym): €90/mese",
+            "Prima lezione di prova gratuita e senza impegno",
           ]}
           ctaLabel="Prenota su WhatsApp"
           ctaHref={whatsappHref}
@@ -299,7 +433,7 @@ const pageSchema = buildPageSchema(
       </div>
       <CourseScheduleMini
         tags={["boxe", "boxe-agonisti", "kids-boxe"]}
-        caption="Orari settimanali del corso di pugilato alla Pugilistica Brianza"
+        caption="Orari settimanali del corso di pugilato"
       />
     </div>
   </section>
@@ -307,17 +441,20 @@ const pageSchema = buildPageSchema(
   <!-- 8. GALLERY -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Gallery">
+      <SectionHeading
+        topline="Gallery"
+        description="Gli spazi della Pugilistica Brianza di Barlassina dedicati al pugilato: il ring regolamentare da boxe, la sala sacchi pesanti con decine di postazioni, l'area per il lavoro a coppie e ai colpitori. Dai un'occhiata prima di venire a provare."
+      >
         Guarda <span class="text-brand">l'allenamento</span>
       </SectionHeading>
       <Gallery images={[
         { src: galPanoramica, alt: "Vista panoramica della palestra Pugilistica Brianza: sala sacchi e ring da boxe con bandiere internazionali" },
         { src: galRing, alt: "Ring da boxe della Pugilistica Brianza di Barlassina con bandiera laterale e bandiere internazionali" },
-        { src: galAllenamento, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione alla Pugilistica Brianza" },
-        { src: galSacchi, alt: "Sacchi pesanti Leone e Combat Sports in fila nella sala boxe della Pugilistica Brianza" },
+        { src: galAllenamento, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione di boxe" },
+        { src: galSacchi, alt: "Sacchi pesanti Leone e Combat Sports in fila nella sala boxe" },
         { src: galSalaSacchi, alt: "Sala sacchi della Pugilistica Brianza: fila di sacchi pesanti appesi con pavimento rosso" },
-        { src: galRingSacco, alt: "Ring da boxe e sacco rosso Leone alla Pugilistica Brianza con logo sul bordo ring" },
-        { src: galAngolo, alt: "Dettaglio angolo del ring con corde rosse Pugilistica Brianza e bandiere internazionali" },
+        { src: galRingSacco, alt: "Ring da boxe e sacco rosso Leone con logo sul bordo ring" },
+        { src: galAngolo, alt: "Dettaglio angolo del ring con corde rosse e bandiere internazionali" },
         { src: galIngresso, alt: "Ingresso e reception della Pugilistica Brianza: bancone con logo, locandine eventi e scaffali attrezzatura" },
       ]} />
     </div>
@@ -326,7 +463,10 @@ const pageSchema = buildPageSchema(
   <!-- 9. FAQ -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="FAQ">
+      <SectionHeading
+        topline="FAQ"
+        description="Le domande più frequenti sul corso di pugilato: chi può iniziare, età minima, prova gratuita, pugilato agonistico FPI, cosa portare alla prima lezione e frequenza consigliata degli allenamenti."
+      >
         Domande frequenti sul <span class="text-brand">Pugilato</span>
       </SectionHeading>
       <FaqAccordion items={faqItems} defaultOpen={0} />
@@ -336,7 +476,10 @@ const pageSchema = buildPageSchema(
   <!-- 10. LOCAL -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Dove siamo">
+      <SectionHeading
+        topline="Dove siamo"
+        description="Il corso di pugilato si tiene in Via Giovanni Segantini 29 a Barlassina (MB), nel cuore della Brianza. Facilmente raggiungibile dai comuni limitrofi: Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò."
+      >
         Allenati a <span class="text-brand">Barlassina,</span> in Brianza
       </SectionHeading>
       <LocalSection

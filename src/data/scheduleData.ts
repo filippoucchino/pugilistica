@@ -221,9 +221,9 @@ export const pricingPlans: PricingPlan[] = [
     price: "15€",
     period: "/lezione",
     features: [
-      "Partecipa a una singola lezione",
-      "Nessun impegno mensile",
-      "Ideale per chi è di passaggio",
+      "Partecipa a una singola lezione di pugilato, Hyrox o PB Hiit",
+      "Nessun impegno mensile, paghi solo il giorno della lezione",
+      "Ideale per chi è di passaggio a Barlassina o vuole provare un corso specifico",
     ],
     ctaLabel: "Prenota una prova",
     ctaHref: "/prova-gratuita/",
@@ -233,9 +233,9 @@ export const pricingPlans: PricingPlan[] = [
     price: "50€",
     period: "/mese",
     features: [
-      "Accesso a tutte le Boxe Class",
-      "Lezioni dal lunedì al sabato",
-      "Seguito dal coach durante ogni lezione",
+      "Accesso a tutte le Boxe Class settimanali della Pugilistica Brianza",
+      "Lezioni di pugilato dal lunedì al sabato: mattina, pausa pranzo e serale",
+      "Seguito dal coach durante ogni lezione, con correzione tecnica individuale",
     ],
     ctaLabel: "Inizia con la boxe",
     ctaHref: "/pugilato/",
@@ -245,9 +245,9 @@ export const pricingPlans: PricingPlan[] = [
     price: "65€",
     period: "/mese",
     features: [
-      "Accesso a tutte le Hyrox Class",
-      "Preparazione specifica per la gara",
-      "Programmazione sotto coach certificato",
+      "Accesso a tutte le Hyrox Class settimanali della Pugilistica Brianza",
+      "Preparazione specifica per gli eventi Hyrox: corsa, sled push, burpees, rowing",
+      "Programmazione sotto coach certificato Hyrox",
     ],
     ctaLabel: "Scopri Hyrox",
     ctaHref: "/hyrox/",
@@ -257,9 +257,9 @@ export const pricingPlans: PricingPlan[] = [
     price: "50€",
     period: "/mese",
     features: [
-      "Accesso a tutte le PB Hiit Class",
-      "Allenamento funzionale ad alta intensità",
-      "Perfetto per dimagrimento e tono",
+      "Accesso a tutte le PB Hiit Class settimanali della Pugilistica Brianza",
+      "Allenamento funzionale ad alta intensità su circuiti a intervalli (HIIT)",
+      "Obiettivi: dimagrimento, tono muscolare e condizione cardiovascolare",
     ],
     ctaLabel: "Scopri PB Hiit",
     ctaHref: "/pb-hiit/",
@@ -270,9 +270,9 @@ export const pricingPlans: PricingPlan[] = [
     period: "/mese",
     note: "Formula all-inclusive",
     features: [
-      "Accesso illimitato a tutti i corsi",
-      "Boxe, Hyrox, PB Hiit e Open Gym",
-      "Massima libertà di allenamento",
+      "Accesso illimitato a tutti i corsi della Pugilistica Brianza di Barlassina",
+      "Boxe, Hyrox, PB Hiit e Open Gym dal lunedì al sabato",
+      "Massima libertà di allenamento: puoi combinare più discipline nella stessa settimana",
     ],
     ctaLabel: "Prenota una prova",
     ctaHref: "/prova-gratuita/",
@@ -282,11 +282,12 @@ export const pricingPlans: PricingPlan[] = [
 /* — Note aggiuntive della pagina — */
 
 export const scheduleNotes = {
-  closedDay: "Domenica chiusa",
+  closedDay: "La Pugilistica Brianza resta chiusa la domenica",
   annualFee: "Iscrizione annuale: 20€",
-  medical: "Certificato medico obbligatorio per l'accesso in palestra.",
+  medical:
+    "Per allenarsi alla Pugilistica Brianza è obbligatorio il certificato medico sportivo non agonistico, rilasciato dal medico di base o da un medico sportivo.",
   fisioMedical:
-    "Pugilistica Brianza è convenzionata con Fisio Medical di Cogliate (MB) per visite mediche sportive agevolate.",
+    "La Pugilistica Brianza è convenzionata con Fisio Medical di Cogliate (MB) per le visite mediche sportive non agonistiche: ottieni il certificato obbligatorio in una sola visita, a tariffa agevolata riservata agli iscritti della palestra.",
 } as const;
 
 /* — Etichette delle attività (per legenda e JSON-LD) —

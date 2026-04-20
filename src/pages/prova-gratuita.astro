@@ -15,19 +15,57 @@ const whatsappHref = buildWhatsappHref(
 );
 
 const steps = [
-  { title: "Scegli il corso", description: "Pugilato, Hyrox, PB Hiit o lezione privata. Se non sai quale scegliere, ti aiutiamo noi." },
-  { title: "Scrivici su WhatsApp", description: `Mandaci un messaggio al ${siteInfo.whatsappDisplay}. Le prove gratuite si tengono il lunedì, mercoledì e venerdì: ti confermiamo in chat giorno e orario.` },
-  { title: "Vieni in palestra", description: "Porta solo abbigliamento sportivo e scarpe da ginnastica. Guantoni e fasce li forniamo noi per la prova." },
-  { title: "Allenati con noi", description: "Partecipi a una lezione vera, con il gruppo e con il coach. Nessun obbligo, nessuna pressione." },
-  { title: "Decidi con calma", description: "Dopo la prova scegli tu se iscriverti. Zero vincoli, zero impegni anticipati." },
+  {
+    title: "Scegli il corso",
+    description:
+      "Pugilato, Hyrox, PB Hiit o lezione privata 1:1: scegli il corso che vuoi provare. Se non sai quale è più adatto, scrivici e ti aiutiamo a decidere in base ai tuoi obiettivi (fitness, dimagrimento, tecnica, preparazione gara).",
+  },
+  {
+    title: "Scrivici su WhatsApp",
+    description: `Mandaci un messaggio su WhatsApp al ${siteInfo.whatsappDisplay}. Le prove gratuite alla Pugilistica Brianza si tengono il lunedì, mercoledì e venerdì in più fasce orarie: ti confermiamo in chat giorno e orario esatto della lezione di prova.`,
+  },
+  {
+    title: "Vieni in palestra",
+    description:
+      "Presentati in Via Giovanni Segantini 29 a Barlassina 5 minuti prima dell'inizio della lezione. Porta solo abbigliamento sportivo e scarpe da ginnastica pulite per l'interno. Guantoni e fasce da boxe li forniamo noi per la prova gratuita.",
+  },
+  {
+    title: "Allenati con noi",
+    description:
+      "Partecipi a una lezione vera e completa, insieme al gruppo e seguito dal coach: non una versione ridotta o dimostrativa. Nessun obbligo, nessuna pressione commerciale.",
+  },
+  {
+    title: "Decidi con calma",
+    description:
+      "Dopo la prova gratuita scegli tu se iscriverti al corso. Zero vincoli, zero impegni anticipati: puoi pensarci a casa e decidere con calma se continuare.",
+  },
 ];
 
 const faqItems = [
-  { question: "Quando posso fare la prova gratuita?", answer: `Le prove gratuite si tengono il lunedì, mercoledì e venerdì. Scrivici su WhatsApp al ${siteInfo.whatsappDisplay} indicando il giorno che preferisci: ti confermiamo in chat l'orario esatto della lezione.` },
-  { question: "La prova gratuita è davvero senza impegno?", answer: "Sì, completamente. Non chiediamo pagamenti, dati della carta o impegni di alcun tipo. Vieni, prova e decidi con calma." },
-  { question: "Cosa devo portare alla prova gratuita?", answer: "Abbigliamento sportivo e scarpe da ginnastica. Guantoni e fasce vengono forniti dalla palestra per la prova." },
-  { question: "Posso provare più di un corso?", answer: "Sì, puoi provare gratuitamente i diversi corsi (pugilato, Hyrox, PB Hiit) per scegliere quello più adatto a te." },
-  { question: "La prova gratuita è adatta ai principianti?", answer: "Assolutamente. La maggior parte di chi prova non ha mai fatto pugilato. Il coach adatta l'allenamento al tuo livello." },
+  {
+    question: "Quando posso fare la prova gratuita?",
+    answer: `Le prove gratuite alla Pugilistica Brianza si tengono il lunedì, mercoledì e venerdì in più fasce orarie (mattino, pausa pranzo, pomeriggio o sera). Scrivici su WhatsApp al ${siteInfo.whatsappDisplay} indicando il giorno che preferisci e il corso che ti interessa provare: ti confermiamo in chat l'orario esatto della lezione.`,
+  },
+  {
+    question: "La prova gratuita è davvero senza impegno?",
+    answer:
+      "Sì, la prova gratuita alla Pugilistica Brianza è completamente senza impegno. Non chiediamo pagamenti, dati della carta di credito, moduli da compilare o impegni di alcun tipo. Vieni in palestra a Barlassina, prova il corso e decidi con calma a casa se iscriverti.",
+  },
+  {
+    question: "Cosa devo portare alla prova gratuita?",
+    answer:
+      "Per la prova gratuita alla Pugilistica Brianza bastano abbigliamento sportivo comodo e scarpe da ginnastica pulite per l'interno. Guantoni e fasce da boxe sono forniti direttamente dalla palestra per la prova, così non devi acquistare attrezzatura prima di decidere se iscriverti.",
+  },
+  {
+    question: "Posso provare più di un corso?",
+    answer:
+      "Sì, alla Pugilistica Brianza puoi provare gratuitamente più corsi: pugilato, Hyrox e PB Hiit hanno ciascuno la propria prova gratuita, così puoi scegliere quello più adatto ai tuoi obiettivi. Scrivici su WhatsApp per concordare le date delle singole prove.",
+  },
+  {
+    question: "La prova gratuita è adatta ai principianti?",
+    answer:
+      "Sì, la prova gratuita della Pugilistica Brianza è adatta anche ai principianti assoluti. La maggior parte di chi prova non ha mai fatto pugilato, Hyrox o PB Hiit prima. Il coach adatta l'allenamento al tuo livello, così puoi seguire la lezione anche se parti completamente da zero.",
+  },
 ];
 
 const pageSchema = buildPageSchema(
@@ -51,7 +89,7 @@ const pageSchema = buildPageSchema(
   <!-- HERO -->
   <Hero
     topline="Prova gratuita — Pugilistica Brianza"
-    subtitle="Vieni a Barlassina, allenati con noi e decidi con calma. Nessun impegno, nessun vincolo. La prima lezione è sempre gratuita."
+    subtitle="La prima lezione di pugilato, Hyrox o PB Hiit alla Pugilistica Brianza di Barlassina (MB) è sempre gratuita e senza impegno. Vieni in palestra, allenati con il gruppo e con il coach, e decidi con calma se iscriverti. Nessun vincolo, nessun pagamento anticipato."
     ctaPrimary={{ label: "Scrivimi su WhatsApp", href: whatsappHref }}
   >
     Prova <span class="text-brand">gratuita</span><br />senza impegno
@@ -62,7 +100,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Come funziona"
-        description="Dalla prenotazione all'allenamento in 5 passi semplici."
+        description="Dalla prenotazione via WhatsApp all'allenamento in palestra a Barlassina: ecco i 5 passi semplici per fare la tua prova gratuita. Nessun modulo da compilare, nessun pagamento anticipato."
       >
         Come <span class="text-brand">prenotare</span> la prova
       </SectionHeading>
@@ -75,15 +113,18 @@ const pageSchema = buildPageSchema(
   <!-- COSA INCLUDE -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Cosa include">
+      <SectionHeading
+        topline="Cosa include"
+        description="La prova gratuita non è una lezione dimostrativa o ridotta: è una sessione completa con il gruppo, con attrezzatura fornita e servizi inclusi."
+      >
         La prova gratuita <span class="text-brand">include</span>
       </SectionHeading>
       <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-narrow list-none pl-0 m-0">
         {[
-          "<strong>Lezione completa</strong> con il gruppo e il coach, non una versione ridotta",
-          "<strong>Guantoni e fasce</strong> forniti dalla palestra per la prova",
-          "<strong>Spogliatoi e docce</strong> a disposizione",
-          "<strong>Zero vincoli:</strong> nessun pagamento, nessun obbligo di iscrizione",
+          "<strong>Lezione completa</strong> di 60 minuti con il gruppo e il coach, non una versione ridotta o dimostrativa",
+          "<strong>Guantoni e fasce da boxe</strong> forniti dalla palestra per la prova gratuita: non devi acquistare attrezzatura",
+          "<strong>Spogliatoi e docce</strong> a disposizione per prepararti prima e rinfrescarti dopo l'allenamento",
+          "<strong>Zero vincoli:</strong> nessun pagamento anticipato, nessun obbligo di iscrizione dopo la prova gratuita",
         ].map((b) => <BenefitItem text={b} />)}
       </ul>
     </div>
@@ -94,7 +135,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Prenota"
-        description="Scrivici su WhatsApp: è il modo più veloce per fissare la tua prova. Ti rispondiamo in giornata con giorno e orario confermati."
+        description="Scrivici su WhatsApp al coach: è il modo più veloce per fissare la tua prova gratuita. Ti rispondiamo in giornata con giorno (lunedì, mercoledì o venerdì) e orario confermati."
       >
         Prenota la tua <span class="text-brand">prova gratuita</span>
       </SectionHeading>
@@ -107,7 +148,7 @@ const pageSchema = buildPageSchema(
             {siteInfo.whatsappDisplay}
           </p>
           <p class="text-pb-text-tertiary mb-6 max-w-prose mx-auto">
-            Dicci quale corso ti interessa — pugilato, Hyrox, PB Hiit o lezione privata — e quando vorresti venire. Ti rispondiamo personalmente per confermare data e orario della prova.
+            Dicci quale corso ti interessa provare — pugilato, Hyrox, PB Hiit o lezione privata 1:1 — e quando vorresti venire a Barlassina. Il coach ti risponderà personalmente per confermare data e orario della prova gratuita.
           </p>
           <div class="mb-8">
             <p class="inline-block border border-brand/40 bg-brand/10 text-white text-sm px-4 py-2 rounded-md">
@@ -123,7 +164,7 @@ const pageSchema = buildPageSchema(
             Scrivimi su WhatsApp
           </a>
           <p class="text-xs text-pb-text-muted mt-4">
-            Nessun impegno, nessun modulo da compilare. Rispondiamo direttamente in chat.
+            Nessun impegno, nessun modulo da compilare, nessun pagamento anticipato. Rispondiamo direttamente in chat WhatsApp.
           </p>
         </div>
       </div>
@@ -133,7 +174,10 @@ const pageSchema = buildPageSchema(
   <!-- FAQ -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="FAQ">
+      <SectionHeading
+        topline="FAQ"
+        description="Le domande più frequenti sulla prova gratuita: quando si tiene, cosa include, cosa portare, se è adatta ai principianti e se davvero è senza impegno."
+      >
         Domande sulla <span class="text-brand">prova gratuita</span>
       </SectionHeading>
       <FaqAccordion items={faqItems} defaultOpen={0} />
@@ -143,7 +187,10 @@ const pageSchema = buildPageSchema(
   <!-- LOCAL -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Dove siamo">
+      <SectionHeading
+        topline="Dove siamo"
+        description="La prova gratuita si tiene in Via Giovanni Segantini 29 a Barlassina (MB), nel cuore della Brianza. Facilmente raggiungibile dai comuni limitrofi: Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò."
+      >
         Ci trovi a <span class="text-brand">Barlassina</span>
       </SectionHeading>
       <LocalSection

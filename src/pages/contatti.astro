@@ -29,7 +29,7 @@ const pageSchema = buildPageSchema(
   <!-- HERO -->
   <Hero
     topline="Dove trovarci"
-    subtitle="Via Giovanni Segantini 29, Barlassina (MB). Palestra di pugilato nel cuore della Brianza, facile da raggiungere da Seveso, Lissone, Seregno, Desio e Muggiò. Parcheggio disponibile, spogliatoi e docce."
+    subtitle="La Pugilistica Brianza si trova in Via Giovanni Segantini 29 a Barlassina (MB), nel cuore della Brianza. Palestra di pugilato, Hyrox e PB Hiit facilmente raggiungibile da Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò. Parcheggio gratuito in zona, spogliatoi e docce interne."
     watermark="CONTATTI"
   >
     Contatti — Pugilistica <span class="text-brand">Brianza</span> a Barlassina
@@ -40,7 +40,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Contatti diretti"
-        description="Il modo più rapido per iniziare è chiamarci o passare direttamente. Rispondiamo dal lunedì al sabato."
+        description="Il modo più rapido per iniziare è chiamarci al telefono o passare direttamente in palestra a Barlassina. Rispondiamo dal lunedì al sabato negli orari di apertura."
       >
         Chiamaci, scrivici <span class="text-brand">o vieni</span> in palestra
       </SectionHeading>
@@ -50,13 +50,13 @@ const pageSchema = buildPageSchema(
           label="Telefono"
           value={siteInfo.phone}
           href={siteInfo.phoneHref}
-          subtitle="Chiamaci per informazioni o per prenotare la tua prova gratuita. Rispondiamo dal lunedì al sabato."
+          subtitle="Chiamaci per informazioni sui corsi di pugilato, Hyrox e PB Hiit, per prenotare una prova gratuita o per qualsiasi domanda. Rispondiamo dal lunedì al sabato negli orari di apertura della palestra a Barlassina."
         />
         <ContactCard
           icon='<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="none"/>'
           label="Indirizzo"
           value={siteInfo.address}
-          subtitle={`${siteInfo.cap} ${siteInfo.city} (${siteInfo.province}) — Brianza. Parcheggio gratuito disponibile nelle immediate vicinanze.`}
+          subtitle={`${siteInfo.cap} ${siteInfo.city} (${siteInfo.province}) — Brianza. Parcheggio gratuito nelle immediate vicinanze, in una zona residenziale tranquilla.`}
         />
       </div>
     </div>
@@ -67,7 +67,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Scrivici"
-        description="Compila il form: ti risponderemo entro 24 ore. Per richieste urgenti, preferisci il telefono."
+        description="Compila il form qui sotto con il tuo messaggio: il coach ti risponderà via email entro 24 ore nei giorni feriali. Per richieste urgenti, preferisci il telefono."
       >
         Mandaci un <span class="text-brand">messaggio</span>
       </SectionHeading>
@@ -121,7 +121,8 @@ const pageSchema = buildPageSchema(
         >
           <p class="text-display-sm font-display text-white mb-3">Grazie!</p>
           <p class="text-pb-text-secondary">
-            Il tuo messaggio è stato inviato. Ti risponderemo entro 24 ore.
+            Il tuo messaggio è stato inviato alla Pugilistica Brianza. Il coach
+            ti risponderà via email entro 24 ore nei giorni feriali.
           </p>
         </div>
       </div>
@@ -133,7 +134,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"
-        description="Siamo in Via Giovanni Segantini 29, Barlassina — una zona residenziale comoda da raggiungere sia in auto che con i mezzi."
+        description="La sede della Pugilistica Brianza è in Via Giovanni Segantini 29 a Barlassina (MB), in una zona residenziale tranquilla e comoda da raggiungere in auto dalle vicine Cogliate, Seveso, Seregno, Lissone e Meda."
       >
         Raggiungi la <span class="text-brand">palestra</span> a Barlassina
       </SectionHeading>
@@ -155,7 +156,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Seguici"
-        description="Foto, video e storie dalla palestra. Guarda gli allenamenti dal vivo, conosci il coach e il gruppo, e fatti un'idea prima di venire a trovarci."
+        description="Sui nostri canali social trovi foto e video degli allenamenti, storie dalla palestra di Barlassina, highlights dei corsi di pugilato, Hyrox e PB Hiit e momenti del gruppo. Guarda come si lavora dal vivo prima di venire a trovarci."
       >
         Seguici sui <span class="text-brand">social</span>
       </SectionHeading>
@@ -216,7 +217,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Orari"
-        description="La palestra è aperta dal lunedì al sabato. I corsi si svolgono in orari serali durante la settimana e al mattino il sabato."
+        description="La Pugilistica Brianza è aperta dal lunedì al venerdì dalle 08:00 alle 21:00, il sabato dalle 10:00 alle 12:00. I corsi si svolgono in fasce al mattino, in pausa pranzo e la sera durante la settimana; il sabato solo due fasce mattutine. Domenica la palestra resta chiusa."
       >
         Orari di <span class="text-brand">apertura</span>
       </SectionHeading>
@@ -235,7 +236,9 @@ const pageSchema = buildPageSchema(
           ))}
         </div>
         <p class="mt-5 text-sm text-pb-text-muted leading-normal">
-          Gli orari possono variare durante i periodi festivi. Per conferme, chiamaci direttamente o scrivici.
+          Gli orari possono subire variazioni durante i periodi
+          festivi (Natale, Pasqua, ponti estivi) e nelle chiusure stagionali. Per conferme,
+          chiamaci direttamente o scrivici via email.
         </p>
       </div>
     </div>

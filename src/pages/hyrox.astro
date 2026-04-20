@@ -40,60 +40,186 @@ const whatsappHref = buildWhatsappHref(
 /* — Dati pagina — */
 
 const definitionItems = [
-  { title: "Resistenza e corsa", description: "La corsa è il filo conduttore del format Hyrox. Ogni lezione include lavoro sulla capacità aerobica e sulla gestione del ritmo." },
-  { title: "Stazioni funzionali", description: "Sled push, sled pull, burpees, farmer carry, wall balls, rowing: alleni le stazioni che trovi in gara, con tecnica e progressione." },
-  { title: "Preparazione ibrida", description: "Non solo corsa, non solo forza: Hyrox è la combinazione delle due. Il corso sviluppa entrambe le capacità in modo equilibrato." },
-  { title: "Adatto a ogni livello", description: "Il coach adatta carichi, volumi e intensità. Puoi partire da zero o preparare la tua prossima gara Hyrox." },
+  {
+    title: "Resistenza e corsa",
+    description:
+      "La corsa è il filo conduttore del format Hyrox: nella gara ufficiale sono 8 tratti da 1 km alternati alle stazioni. Ogni lezione del corso include lavoro sulla capacità aerobica, sulla gestione del ritmo e sulla soglia anaerobica.",
+  },
+  {
+    title: "Stazioni funzionali",
+    description:
+      "Sled push, sled pull, burpees broad jump, farmer carry, wall balls, rowing, sandbag lunges e SkiErg: alleni le 8 stazioni reali che trovi in gara Hyrox, con tecnica corretta e progressione graduata del carico.",
+  },
+  {
+    title: "Preparazione ibrida",
+    description:
+      "Non solo corsa, non solo forza: Hyrox è la combinazione delle due. Il corso sviluppa entrambe le capacità in modo equilibrato per reggere il compound event di gara, dove forza funzionale e aerobica si alternano senza sosta.",
+  },
+  {
+    title: "Adatto a ogni livello",
+    description:
+      "Il coach Hyrox certificato (Accademia 365) adatta carichi, volumi e intensità di ogni circuito. Puoi partire da zero, usare Hyrox come stimolo nuovo al tuo fitness oppure preparare la tua prossima gara Hyrox (individuale, Doubles o Pro).",
+  },
 ];
 
 const targets = [
-  { icon: '<path d="M18 20V10M12 20V4M6 20v-6"/>', title: "Chi vuole migliorare la resistenza", description: "Cerchi un allenamento che ti porti a un livello superiore di condizione fisica? Il corso Hyrox lavora sulla resistenza in modo progressivo e strutturato." },
-  { icon: '<path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/>', title: "Chi vuole preparare le gare ufficiali", description: "Il corso Hyrox ti prepara ad affrontare le gare ufficiali del circuito, individuali o in coppia, con una progressione mirata e il coach che ti segue verso l'obiettivo." },
-  { icon: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>', title: "Chi pratica già fitness", description: "Vieni da crossfit, corsa o palestra e cerchi uno stimolo nuovo? Hyrox aggiunge struttura, competizione e varietà al tuo allenamento." },
-  { icon: '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>', title: "Chi cerca un percorso strutturato", description: "Non un allenamento improvvisato, ma un programma con progressione, obiettivi e un coach che ti segue settimana dopo settimana." },
+  {
+    icon: '<path d="M18 20V10M12 20V4M6 20v-6"/>',
+    title: "Chi vuole migliorare la resistenza",
+    description:
+      "Cerchi un allenamento che ti porti a un livello superiore di condizione fisica? Il corso Hyrox lavora sulla resistenza aerobica e anaerobica in modo progressivo e strutturato, alternando corsa e stazioni funzionali.",
+  },
+  {
+    icon: '<path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/>',
+    title: "Chi vuole preparare le gare ufficiali",
+    description:
+      "Il corso Hyrox ti prepara ad affrontare le gare ufficiali del circuito (individuali, Doubles o Pro) con una progressione mirata al compound event, stazioni reali e coach Hyrox certificato che ti segue verso l'obiettivo di gara.",
+  },
+  {
+    icon: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+    title: "Chi pratica già fitness",
+    description:
+      "Vieni da CrossFit, corsa, palestra o functional training e cerchi uno stimolo nuovo? Hyrox aggiunge struttura, competizione e varietà al tuo allenamento con un format misurabile e confrontabile.",
+  },
+  {
+    icon: '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+    title: "Chi cerca un percorso strutturato",
+    description:
+      "Non un allenamento improvvisato, ma un programma Hyrox con progressione settimanale, obiettivi misurabili e un coach certificato Accademia 365 che ti segue sessione dopo sessione.",
+  },
 ];
 
 const benefits = [
-  "<strong>Migliora</strong> resistenza aerobica e capacità di gestire sforzi prolungati",
-  "<strong>Sviluppa</strong> forza funzionale applicata a movimenti reali e completi",
-  "<strong>Aumenta</strong> capacità cardiovascolare, VO2max e soglia anaerobica",
-  "<strong>Costruisce</strong> mentalità forte, determinazione e capacità di gestire la fatica",
-  "<strong>Allena</strong> la preparazione ibrida: corsa e forza in un unico percorso integrato",
-  "<strong>Prepara</strong> il corpo alla competizione, con o senza gara come obiettivo finale",
+  "<strong>Migliora</strong> resistenza aerobica e capacità di gestire sforzi prolungati ad alta intensità",
+  "<strong>Sviluppa</strong> forza funzionale applicata a movimenti reali come sled push, wall balls e farmer carry",
+  "<strong>Aumenta</strong> capacità cardiovascolare, VO2max e soglia anaerobica grazie al format misto corsa-stazioni",
+  "<strong>Costruisce</strong> mentalità forte, determinazione e capacità di gestire la fatica sotto pressione",
+  "<strong>Allena</strong> la preparazione ibrida: corsa e forza funzionale in un unico percorso integrato",
+  "<strong>Prepara</strong> il corpo alle gare Hyrox ufficiali, con o senza competizione come obiettivo finale",
 ];
 
 const steps = [
-  { title: "Warm-up", description: "Attivazione generale con mobilità articolare, lavoro cardiovascolare leggero e preparazione muscolare specifica per la sessione. Serve a portare il corpo alla temperatura e alla prontezza giusta." },
-  { title: "Lavoro a stazioni", description: "Rotazione sulle stazioni tipiche del format Hyrox: sled push, sled pull, burpees, farmer carry, wall balls, rowing e altre varianti. Il coach corregge la tecnica e gestisce i tempi." },
-  { title: "Esercizi funzionali e corsa", description: "Blocchi di lavoro che combinano esercizi funzionali e tratti di corsa, simulando la struttura della gara. Focus sulla transizione tra sforzo di forza e sforzo aerobico." },
-  { title: "Ritmo e intensità", description: "Fasi ad alta intensità per sviluppare la capacità di mantenere il ritmo sotto fatica. Il coach adatta il livello in base alla preparazione di ciascuno." },
-  { title: "Recupero e chiusura", description: "Defaticamento, stretching e ritorno alla calma. Il coach dà feedback sulla sessione e indicazioni per il prossimo allenamento." },
+  {
+    title: "Warm-up",
+    description:
+      "Attivazione generale con mobilità articolare, lavoro cardiovascolare leggero su rower o SkiErg e preparazione muscolare specifica per le stazioni della sessione. Serve a portare il corpo alla temperatura e alla prontezza giusta per il format Hyrox.",
+  },
+  {
+    title: "Lavoro a stazioni",
+    description:
+      "Rotazione sulle stazioni tipiche del format Hyrox: sled push, sled pull, burpees broad jump, farmer carry, wall balls, rowing, SkiErg e altre varianti. Il coach corregge la tecnica e gestisce i tempi di lavoro e recupero.",
+  },
+  {
+    title: "Esercizi funzionali e corsa",
+    description:
+      "Blocchi di lavoro che combinano esercizi funzionali e tratti di corsa da 400-1000 m, simulando la struttura della gara Hyrox. Focus sulla transizione tra sforzo di forza e sforzo aerobico — il passaggio più difficile del compound event.",
+  },
+  {
+    title: "Ritmo e intensità",
+    description:
+      "Fasi ad alta intensità per sviluppare la capacità di mantenere il ritmo sotto fatica (pacing). Il coach Hyrox adatta il livello in base alla preparazione di ciascuno, con obiettivi di tempo e reps personalizzati.",
+  },
+  {
+    title: "Recupero e chiusura",
+    description:
+      "Defaticamento, stretching e ritorno alla calma post-sessione. Il coach dà feedback tecnici sulla sessione e indicazioni mirate per il prossimo allenamento Hyrox.",
+  },
 ];
 
 const whyUs = [
-  { icon: '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>', title: "Hyrox Training Club certificata", description: "Pugilistica Brianza è riconosciuta come Hyrox Training Club ufficiale: una delle poche palestre certificate per preparare il format di gara in modo strutturato e conforme agli standard del circuito." },
-  { icon: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>', title: "Simulazioni gara in palestra", description: "Periodicamente organizziamo simulazioni complete del format Hyrox — corsa, stazioni e tempi reali — per farti arrivare alla gara già pronto e consapevole." },
-  { icon: '<path d="M2 9a3 3 0 010 6v2a2 2 0 002 2h16a2 2 0 002-2v-2a3 3 0 010-6V7a2 2 0 00-2-2H4a2 2 0 00-2 2z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>', title: "Prelazione sui biglietti gara", description: "Gli iscritti hanno accesso prioritario all'acquisto dei biglietti per le gare ufficiali Hyrox prima dell'apertura al pubblico generale. Un vantaggio concreto per chi vuole competere." },
-  { icon: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 019.9-1"/>', title: "Aperto anche agli esterni", description: "Non devi essere iscritto in palestra per allenarti con noi: puoi accedere con ingresso singolo a €15, assicurazione inclusa (visita medica obbligatoria). Perfetto per sessioni occasionali o per testare il corso." },
-  { icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>', title: "Coach dedicato Hyrox", description: "Stefano Rizzo segue ogni sessione con un approccio strutturato, costruendo progressioni specifiche per la preparazione ibrida richiesta dal format." },
-  { icon: '<path d="M18 20V10M12 20V4M6 20v-6"/>', title: "Attrezzatura completa stazioni", description: "Sled, farmer carry, wall balls, rowing, area functional dedicata: tutta l'attrezzatura ufficiale delle stazioni Hyrox, per allenarti esattamente come in gara." },
+  {
+    icon: '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
+    title: "Hyrox Training Club certificata",
+    description:
+      "La Pugilistica Brianza è riconosciuta come Hyrox Training Club ufficiale (HTC): una delle poche palestre in Brianza certificate per preparare il format di gara Hyrox in modo strutturato e conforme agli standard del circuito internazionale.",
+  },
+  {
+    icon: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+    title: "Simulazioni gara in palestra",
+    description:
+      "Periodicamente organizziamo simulazioni complete del format Hyrox — 8 tratti di corsa, 8 stazioni e tempi reali — per farti arrivare alla gara già pronto, consapevole del pacing e abituato alla fatica del compound event.",
+  },
+  {
+    icon: '<path d="M2 9a3 3 0 010 6v2a2 2 0 002 2h16a2 2 0 002-2v-2a3 3 0 010-6V7a2 2 0 00-2-2H4a2 2 0 00-2 2z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>',
+    title: "Prelazione sui biglietti gara",
+    description:
+      "I nostri iscritti hanno accesso prioritario all'acquisto dei biglietti per le gare Hyrox ufficiali prima dell'apertura al pubblico generale. Un vantaggio concreto per chi vuole competere nel circuito Hyrox internazionale.",
+  },
+  {
+    icon: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 019.9-1"/>',
+    title: "Aperto anche agli esterni",
+    description:
+      "Non devi essere iscritto in palestra per allenarti al corso Hyrox: puoi accedere con ingresso singolo a €15, assicurazione inclusa (certificato medico sportivo obbligatorio). Perfetto per sessioni occasionali o per testare il format prima di iscriverti.",
+  },
+  {
+    icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>',
+    title: "Coach dedicato Hyrox",
+    description:
+      "Stefano Rizzo, certificato Coach Hyrox (Accademia 365) e atleta attivo nel circuito, segue ogni sessione con un approccio strutturato e costruisce progressioni specifiche per la preparazione ibrida richiesta dal format di gara.",
+  },
+  {
+    icon: '<path d="M18 20V10M12 20V4M6 20v-6"/>',
+    title: "Attrezzatura completa stazioni",
+    description:
+      "Sled, farmer carry, wall balls, rowing, SkiErg, area functional dedicata: tutta l'attrezzatura ufficiale delle 8 stazioni Hyrox, per allenarti esattamente come in gara.",
+  },
 ];
 
 const infoRows = [
-  { icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>', text: "<strong>Quando si svolge</strong>Il corso Hyrox si tiene dal lunedì al sabato, in diverse fasce orarie. Trovi gli orari nella tabella qui sotto." },
-  { icon: '<path d="M5 3l14 9-14 9V3z"/>', text: "<strong>Prova gratuita</strong>La prima lezione è gratuita e senza impegno. Vieni, allenati e decidi con calma." },
-  { icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>', text: "<strong>Come iscriversi</strong>Contatto diretto: scrivici su WhatsApp o passa in palestra. L'iscrizione è semplice e veloce." },
-  { icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>', text: "<strong>Cosa portare</strong>Abbigliamento sportivo comodo e scarpe da ginnastica adatte al movimento funzionale. Attrezzatura disponibile in palestra." },
+  {
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+    text: "<strong>Quando si svolge</strong>Il corso Hyrox alla Pugilistica Brianza si tiene dal lunedì al sabato in più fasce orarie — mattino, pausa pranzo e sera — per adattarsi ai tempi di chi lavora e di chi è libero nel weekend. Gli orari completi sono nella tabella qui sotto.",
+  },
+  {
+    icon: '<path d="M5 3l14 9-14 9V3z"/>',
+    text: "<strong>Prova gratuita</strong>La prima lezione Hyrox è gratuita e senza impegno. Vieni, allenati sulle stazioni con il gruppo e decidi con calma se iscriverti al corso.",
+  },
+  {
+    icon: '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>',
+    text: "<strong>Come iscriversi</strong>Per iscriverti al corso Hyrox scrivici su WhatsApp o passa direttamente in palestra a Barlassina. L'iscrizione è semplice e veloce: serve solo il certificato medico sportivo non agonistico, richiesto dalla seconda lezione in poi.",
+  },
+  {
+    icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+    text: "<strong>Cosa portare</strong>Per l'allenamento Hyrox servono abbigliamento sportivo comodo e scarpe da ginnastica adatte al movimento funzionale (non troppo ammortizzate per sled e lunges). Tutta l'attrezzatura delle stazioni è disponibile in palestra.",
+  },
 ];
 
 const faqItems = [
-  { question: "Devo essere già allenato per iniziare Hyrox?", answer: "No. Il corso è strutturato per adattarsi a diversi livelli di preparazione. Il coach modifica carichi, intensità e volumi in base alla tua condizione attuale. Molti dei nostri iscritti hanno iniziato senza esperienza specifica in Hyrox." },
-  { question: "Hyrox è adatto ai principianti?", answer: "Sì. L'allenamento è progressivo: si parte dalle basi degli esercizi funzionali e della corsa, per poi aumentare gradualmente intensità e complessità. Non serve un livello minimo per iniziare." },
-  { question: "Quante volte a settimana dovrei allenarmi per Hyrox?", answer: "Per una buona progressione consigliamo 2-3 sessioni a settimana. Il coach ti aiuta a trovare la frequenza giusta in base ai tuoi obiettivi e al tuo livello di partenza." },
-  { question: "Posso fare una prova gratuita del corso Hyrox?", answer: "Certo. La prima lezione è gratuita e senza impegno. Vieni in palestra a Barlassina, allenati con noi e decidi con calma. Puoi prenotare scrivendoci su WhatsApp o passando direttamente." },
-  { question: "Cosa devo portare alla prima lezione di Hyrox?", answer: "Abbigliamento sportivo comodo e scarpe da ginnastica adatte al movimento funzionale. Tutta l'attrezzatura necessaria per la lezione è disponibile in palestra. Abbiamo spogliatoi e docce." },
-  { question: "In cosa si differenzia il corso Hyrox dal PB Hiit?", answer: "Il corso Hyrox è orientato alla preparazione ibrida per la gara Hyrox, con focus su resistenza, corsa e stazioni funzionali. Il PB Hiit è un allenamento a intervalli ad alta intensità pensato per fitness, tono e condizione generale. Entrambi sono intensi, ma con obiettivi e struttura diversi." },
-  { question: "Posso partecipare a gare Hyrox dopo il corso?", answer: "Sì. Il corso ti prepara per affrontare le gare Hyrox ufficiali, sia in formato individuale che in coppia. Il coach costruisce percorsi di preparazione specifici per chi vuole gareggiare." },
+  {
+    question: "Devo essere già allenato per iniziare Hyrox?",
+    answer:
+      "No, non devi essere già allenato per iniziare il corso Hyrox alla Pugilistica Brianza. Il corso è strutturato per adattarsi a diversi livelli di preparazione: il coach Hyrox certificato modifica carichi, intensità e volumi in base alla tua condizione attuale. Molti degli iscritti del corso Hyrox hanno iniziato senza esperienza specifica nel format ibrido.",
+  },
+  {
+    question: "Hyrox è adatto ai principianti?",
+    answer:
+      "Sì, il corso Hyrox della Pugilistica Brianza è adatto anche ai principianti. L'allenamento è progressivo: si parte dalle basi degli esercizi funzionali (sled push, wall balls, burpees) e dalla corsa aerobica, per poi aumentare gradualmente intensità, carichi e complessità. Non serve un livello minimo di fitness per iniziare Hyrox.",
+  },
+  {
+    question: "Quante volte a settimana dovrei allenarmi per Hyrox?",
+    answer:
+      "Alla Pugilistica Brianza consigliamo 2-3 sessioni di Hyrox a settimana per una buona progressione nella preparazione ibrida. Il coach Hyrox certificato ti aiuta a trovare la frequenza giusta in base ai tuoi obiettivi (gara ufficiale o fitness), al tuo livello di partenza e ai tempi di recupero tra una sessione e l'altra.",
+  },
+  {
+    question: "Posso fare una prova gratuita del corso Hyrox?",
+    answer:
+      "Sì, puoi fare una prova gratuita del corso Hyrox alla Pugilistica Brianza di Barlassina. La prima lezione è gratuita e senza impegno: vieni, allenati con il gruppo sulle stazioni reali e decidi con calma se iscriverti. Puoi prenotare la prova scrivendoci su WhatsApp o passando direttamente in palestra in Via Giovanni Segantini 29.",
+  },
+  {
+    question: "Cosa devo portare alla prima lezione di Hyrox?",
+    answer:
+      "Per la prima lezione di Hyrox alla Pugilistica Brianza bastano abbigliamento sportivo comodo e scarpe da ginnastica adatte al movimento funzionale (non troppo ammortizzate per sled push e sandbag lunges). Tutta l'attrezzatura delle stazioni Hyrox è disponibile in palestra. Abbiamo spogliatoi e docce per gli iscritti.",
+  },
+  {
+    question: "In cosa si differenzia il corso Hyrox dal PB Hiit?",
+    answer:
+      "Il corso Hyrox alla Pugilistica Brianza è orientato alla preparazione ibrida per la gara Hyrox ufficiale, con focus su resistenza aerobica, corsa e stazioni funzionali specifiche (sled push, wall balls, farmer carry, rowing). Il corso PB Hiit è un allenamento a intervalli ad alta intensità (HIIT) pensato per fitness, tono muscolare e condizione cardiovascolare generale. Entrambi sono intensi, ma con obiettivi, format e struttura diversi.",
+  },
+  {
+    question: "Posso partecipare a gare Hyrox dopo il corso?",
+    answer:
+      "Sì, il corso Hyrox della Pugilistica Brianza ti prepara per affrontare le gare Hyrox ufficiali del circuito, sia in formato individuale sia in coppia (Hyrox Doubles) sia nella categoria Pro. Il coach Hyrox certificato costruisce percorsi di preparazione specifici per chi vuole gareggiare, con simulazioni complete del format e target di tempo misurabili.",
+  },
 ];
 
 const pageSchema = buildPageSchema(
@@ -134,7 +260,7 @@ const pageSchema = buildPageSchema(
   <!-- 1. HERO -->
   <Hero
     topline="Corso Hyrox — Pugilistica Brianza"
-    subtitle="Allenati con un percorso orientato alla performance, per migliorare resistenza, forza e preparazione ibrida, in una palestra con ambiente familiare, coach qualificati e prova gratuita."
+    subtitle="Il corso Hyrox alla Pugilistica Brianza di Barlassina (MB) è un percorso orientato alla performance ibrida: resistenza aerobica, forza funzionale e preparazione alle gare Hyrox ufficiali. Allenati sulle stazioni reali (sled push, sled pull, burpees, wall balls, rowing, farmer carry) con coach Hyrox certificato (Accademia 365) e prima lezione di prova gratuita."
     watermark="HYROX"
     ctaPrimary={{ label: "Prenota su WhatsApp", href: whatsappHref }}
   >
@@ -155,7 +281,7 @@ const pageSchema = buildPageSchema(
         Che cos'è <span class="text-brand">Hyrox?</span>
       </SectionHeading>
       <DefinitionGrid
-        introText="Hyrox è un format di gara e allenamento che combina corsa e stazioni di esercizi funzionali in un percorso ibrido ad alta intensità. A Pugilistica Brianza lo prepariamo con lezioni strutturate che allenano resistenza, forza e capacità cardiovascolare, adattando il lavoro al livello di ciascuno."
+        introText="Hyrox è un format di gara e allenamento ibrido nato per combinare la corsa (8 tratti da 1 km) con 8 stazioni di esercizi funzionali: sled push, sled pull, burpees broad jump, rowing, farmer carry, sandbag lunges, wall balls e SkiErg. Alla Pugilistica Brianza di Barlassina lo prepariamo con lezioni strutturate che allenano resistenza, forza e capacità cardiovascolare, adattando il carico al livello di ciascun atleta — dai principianti a chi prepara una gara ufficiale."
         items={definitionItems}
         video={{
           mp4: "/videos/corso-hyrox-pugilistica-brianza-barlassina.mp4",
@@ -172,7 +298,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Per chi"
-        description="Il corso è pensato per profili diversi, accomunati dalla voglia di allenarsi con intensità e obiettivi chiari."
+        description="Il corso Hyrox è pensato per profili diversi — dai principianti agli atleti che gareggiano nel circuito Hyrox ufficiale — accomunati dalla voglia di allenarsi con intensità, metodo e obiettivi chiari."
       >
         Per chi è adatto il corso <span class="text-brand">Hyrox?</span>
       </SectionHeading>
@@ -189,7 +315,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Benefici"
-        description="Hyrox è uno degli allenamenti più completi per chi vuole costruire una forma fisica solida e funzionale."
+        description="Hyrox è uno degli allenamenti più completi al mondo per chi vuole costruire una forma fisica solida, funzionale e applicabile. Ecco cosa sviluppi con la pratica costante del corso."
       >
         I benefici di <span class="text-brand">Hyrox</span>
       </SectionHeading>
@@ -204,7 +330,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="La lezione"
-        description="Ogni lezione dura circa 60 minuti ed è strutturata per replicare il formato gara con progressione e adattamento al livello del gruppo."
+        description="Una lezione Hyrox dura circa 60 minuti ed è strutturata in cinque fasi — warm-up, lavoro a stazioni, esercizi funzionali e corsa, ritmo e intensità, recupero — pensate per replicare il formato gara con progressione e adattamento al livello del gruppo."
       >
         Come si svolge una lezione di <span class="text-brand">Hyrox?</span>
       </SectionHeading>
@@ -246,7 +372,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Perché noi"
-        description="Pugilistica Brianza non è una palestra generica. È un'ASD con un'identità chiara, dove l'allenamento è serio e l'ambiente è familiare."
+        description="ASD Pugilistica Brianza è Hyrox Training Club ufficialmente certificata a Barlassina (MB): una delle poche palestre in Brianza riconosciute per la preparazione al format Hyrox. Identità chiara, attrezzatura completa delle 8 stazioni, ambiente familiare."
       >
         Perché allenarti <span class="text-brand">con noi</span>
       </SectionHeading>
@@ -261,7 +387,10 @@ const pageSchema = buildPageSchema(
   <!-- 7. ORARI, PROVA E ISCRIZIONE -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Info pratiche">
+      <SectionHeading
+        topline="Info pratiche"
+        description="Tutte le info pratiche per iniziare il corso Hyrox: orari settimanali, come funziona la prova gratuita, come iscriversi, cosa portare alla prima sessione di allenamento."
+      >
         Orari, prova e <span class="text-brand">iscrizione</span>
       </SectionHeading>
       <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 items-start">
@@ -271,12 +400,12 @@ const pageSchema = buildPageSchema(
         <PricingCard
           title="Abbonamento mensile"
           price="€65"
-          note="+ Tesseramento annuale €20 (obbligatorio)"
+          note="+ Tesseramento annuale €20 (copre assicurazione sportiva e tesseramento)"
           features={[
             "Accesso illimitato al corso Hyrox",
-            "Ingresso singolo: €15 (necessaria visita medica)",
-            "Formula Open (tutti i corsi): €90/mese",
-            "Prima lezione gratuita",
+            "Ingresso singolo a €15 per una singola lezione Hyrox (certificato medico richiesto)",
+            "Formula Open all-inclusive (pugilato, Hyrox, PB Hiit e Open Gym): €90/mese",
+            "Prima lezione di prova gratuita e senza impegno",
           ]}
           ctaLabel="Prenota su WhatsApp"
           ctaHref={whatsappHref}
@@ -284,7 +413,7 @@ const pageSchema = buildPageSchema(
       </div>
       <CourseScheduleMini
         tags={["hyrox"]}
-        caption="Orari settimanali del corso Hyrox alla Pugilistica Brianza"
+        caption="Orari settimanali del corso Hyrox"
       />
     </div>
   </section>
@@ -292,17 +421,20 @@ const pageSchema = buildPageSchema(
   <!-- 8. GALLERY -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Gallery">
+      <SectionHeading
+        topline="Gallery"
+        description="Gli spazi della Pugilistica Brianza dedicati al corso Hyrox: area functional con rower, sled, SkiErg, bilancieri, farmer carry e wall balls. Guarda come si allena prima di venire a provare."
+      >
         Guarda <span class="text-brand">l'allenamento</span>
       </SectionHeading>
       <Gallery images={[
         { src: galPanoramica, alt: "Vista panoramica dell'area Hyrox alla Pugilistica Brianza: rower, sled, bilancieri e attrezzatura funzionale" },
         { src: galSimulazione, alt: "Simulazione gara Hyrox alla Pugilistica Brianza: sled push e rope pull con il gruppo che osserva" },
-        { src: galSledPush, alt: "Ragazza che esegue sled push durante l'allenamento Hyrox alla Pugilistica Brianza" },
-        { src: galSledPull, alt: "Ragazzo che esegue sled pull con fune durante il corso Hyrox alla Pugilistica Brianza" },
+        { src: galSledPush, alt: "Ragazza che esegue sled push durante l'allenamento Hyrox" },
+        { src: galSledPull, alt: "Ragazzo che esegue sled pull con fune durante il corso Hyrox" },
         { src: galWallBalls, alt: "Due allieve con maglie Pugilistica Brianza lanciano wall balls durante il corso Hyrox" },
-        { src: galAssaultBike, alt: "Allenamento su assault bike durante una sessione Hyrox alla Pugilistica Brianza di Barlassina" },
-        { src: galRower, alt: "Rower nell'area Hyrox della Pugilistica Brianza con atleta in allenamento sullo sfondo" },
+        { src: galAssaultBike, alt: "Allenamento su assault bike durante una sessione Hyrox" },
+        { src: galRower, alt: "Rower nell'area Hyrox con atleta in allenamento sullo sfondo" },
         { src: galSled, alt: "Sled carico con dischi nell'area Hyrox della Pugilistica Brianza di Barlassina" },
       ]} />
     </div>
@@ -311,7 +443,10 @@ const pageSchema = buildPageSchema(
   <!-- 9. FAQ -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="FAQ">
+      <SectionHeading
+        topline="FAQ"
+        description="Le domande più frequenti sul corso Hyrox: livello richiesto per iniziare, frequenza consigliata degli allenamenti, prova gratuita, preparazione alle gare Hyrox ufficiali e differenze con PB Hiit."
+      >
         Domande frequenti su <span class="text-brand">Hyrox</span>
       </SectionHeading>
       <FaqAccordion items={faqItems} defaultOpen={0} />
@@ -321,7 +456,10 @@ const pageSchema = buildPageSchema(
   <!-- 10. LOCAL -->
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Dove siamo">
+      <SectionHeading
+        topline="Dove siamo"
+        description="Il corso Hyrox si tiene in Via Giovanni Segantini 29 a Barlassina (MB), nel cuore della Brianza. Facilmente raggiungibile dai comuni limitrofi: Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò."
+      >
         Allenati a <span class="text-brand">Barlassina,</span> in Brianza
       </SectionHeading>
       <LocalSection

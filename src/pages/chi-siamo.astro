@@ -54,7 +54,7 @@ const teamMembers = [
     role: "Co-Fondatore e Presidente",
     bio: "Bruno Elli è co-fondatore e presidente di Pugilistica Brianza. Ex nuotatore agonista, scopre la boxe a 21 anni e la porta avanti fino a disputare 22 incontri da dilettante. La stessa passione che lo ha avvicinato al ring lo ha spinto a costruire, insieme ai soci, una palestra vera in Brianza.",
     credentials: [
-      "Co-fondatore di Pugilistica Brianza",
+      "Co-fondatore della palestra",
       "22 match da pugile dilettante",
       "Presidente ASD Pugilistica Brianza dal 2025",
     ],
@@ -66,7 +66,7 @@ const teamMembers = [
     role: "Co-Fondatore e Vicepresidente",
     bio: "Riccardo Sparano, di Seregno, è co-fondatore e vicepresidente di Pugilistica Brianza. Dopo anni passati a cercare il suo sport, tra calcio, nuoto e basket, ha trovato nella boxe e nel gruppo che ha dato vita alla palestra il posto in cui sentirsi davvero a casa. Oggi contribuisce a costruire ogni giorno la realtà dell'associazione.",
     credentials: [
-      "Co-fondatore di Pugilistica Brianza",
+      "Co-fondatore della palestra",
       "Vicepresidente ASD Pugilistica Brianza",
     ],
     photo: riccardoPhoto,
@@ -140,7 +140,7 @@ const pageSchema = buildPageSchema(
   <!-- HERO -->
   <Hero
     topline="Chi siamo — Pugilistica Brianza"
-    subtitle="Dal 9 gennaio 2016 a Barlassina, una palestra di pugilato fondata su tecnica, ambiente e rispetto. Affiliata FPI, FIPE e Hyrox, guidata da un coach ex agonista."
+    subtitle="ASD Pugilistica Brianza è nata il 9 gennaio 2016 a Barlassina (MB), nel cuore della Brianza, come palestra di pugilato fondata su tecnica, ambiente e rispetto. Oggi ospita anche i corsi di Hyrox e PB Hiit, ed è affiliata FPI, FIPE e Hyrox sotto la guida del coach Stefano Rizzo, ex pugile agonista."
     watermark="PUGILISTICA"
     ctaPrimary={{ label: "Prenota su WhatsApp", href: whatsappHref }}
   >
@@ -157,7 +157,7 @@ const pageSchema = buildPageSchema(
         </div>
         <div>
           <div class="font-display text-display-lg text-pb-text-primary mb-2">20<span class="text-brand">16</span></div>
-          <p class="text-sm text-pb-text-tertiary">Fondata il 9 gennaio<br>a Barlassina</p>
+          <p class="text-sm text-pb-text-tertiary">Fondata il 9 gennaio<br>a Barlassina (MB)</p>
         </div>
         <div>
           <div class="font-display text-display-lg text-pb-text-primary mb-2">Barlassina</div>
@@ -170,7 +170,10 @@ const pageSchema = buildPageSchema(
   <!-- FILOSOFIA -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="La nostra filosofia">
+      <SectionHeading
+        topline="La nostra filosofia"
+        description="La filosofia della Pugilistica Brianza: tecnica seria, ambiente familiare, rispetto reciproco. Tre valori guidano ogni lezione — disciplina, unione e arte del pugilato — e si traducono in un modo preciso di allenare principianti, amatori e agonisti."
+      >
         La nostra idea di <span class="text-brand">allenamento</span>
       </SectionHeading>
       <div class="max-w-narrow">
@@ -178,17 +181,17 @@ const pageSchema = buildPageSchema(
           Crediamo nella boxe, nella sua arte, e nel suo spirito di unione. Non è solo sport: è disciplina, crescita personale e rispetto.
         </p>
         <p class="text-base text-pb-text-tertiary leading-normal mb-4">
-          Pugilistica Brianza nasce da una visione precisa: creare un luogo dove il pugilato viene insegnato con serietà tecnica, in un ambiente che accoglie tutti. Non una palestra generica con un sacco in un angolo, ma un posto dove la boxe è al centro di tutto — dall'allenamento alla mentalità.
+          ASD Pugilistica Brianza nasce a Barlassina da una visione precisa: creare un luogo dove il pugilato viene insegnato con serietà tecnica, in un ambiente che accoglie tutti — dai principianti assoluti a chi sale sul ring in gara. Non una palestra generica con un sacco in un angolo, ma un posto dove la boxe è al centro di tutto, dall'allenamento al gesto tecnico fino alla mentalità di chi combatte.
         </p>
         <p class="text-base text-pb-text-tertiary leading-normal mb-10">
-          Qui l'atmosfera è familiare, ma l'impegno è reale. Ti alleni con persone che vogliono migliorare, seguite da un coach che ha combattuto davvero. Che tu voglia competere, rimetterti in forma o semplicemente staccare dalla giornata, trovi un percorso costruito per te.
+          Qui l'atmosfera è familiare, ma l'impegno è reale. Ti alleni con persone che vogliono migliorare, seguite da un coach che ha combattuto davvero nella boxe dilettantistica. Che tu voglia competere in gara, rimetterti in forma o semplicemente staccare dalla giornata, trovi un percorso costruito per te.
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             { icon: '<path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/>', title: "Disciplina", desc: "Il pugilato insegna costanza, rispetto e autocontrollo. Ogni allenamento è un passo avanti, dentro e fuori dal ring." },
-            { icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>', title: "Unione", desc: "L'allenamento è individuale, ma la crescita è collettiva. In palestra si costruisce un gruppo vero, motivante e inclusivo." },
-            { icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>', title: "Arte", desc: "La boxe è tecnica, ritmo, intelligenza. Non si tratta di menare: si tratta di imparare a muoversi, leggere l'avversario e reagire." },
+            { icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>', title: "Unione", desc: "Qui l'allenamento è individuale, ma la crescita è collettiva. In palestra si costruisce un gruppo vero, motivante e inclusivo." },
+            { icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>', title: "Arte", desc: "La boxe è tecnica, ritmo e intelligenza. Non si tratta di menare: si tratta di muoversi in guardia, leggere l'avversario e reagire con i colpi giusti al momento giusto." },
           ].map((v) => (
             <div class="text-center">
               <div class="w-12 h-12 border border-pb-border-accent rounded-md flex items-center justify-center mx-auto mb-4">
@@ -208,7 +211,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Il team"
-        description="Il team che guida Pugilistica Brianza: dai fondatori ai tecnici, ecco chi lavora ogni giorno per costruire una palestra di pugilato vera in Brianza."
+        description="Il team che guida ASD Pugilistica Brianza a Barlassina: cinque persone tra fondatori, head coach e tecnici FPI che lavorano ogni giorno per costruire una palestra di pugilato vera nel cuore della Brianza — dal ring alla gestione dell'associazione sportiva dilettantistica."
       >
         Chi guida la <span class="text-brand">palestra</span>
       </SectionHeading>
@@ -232,16 +235,16 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="A chi ci rivolgiamo"
-        description="Accogliamo tutti, con un percorso adatto a ciascuno. Non serve esperienza: serve voglia di iniziare."
+        description="Accogliamo principianti assoluti, donne di ogni età, ragazzi dagli 8 anni, amatori e pugili agonisti: un percorso adatto a ciascun livello ed età, dal primo allenamento al ring da gara. Non serve esperienza pregressa, serve solo voglia di iniziare."
       >
         Per chi <span class="text-brand">siamo</span>
       </SectionHeading>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 list-none pl-0 m-0">
         {[
-          { icon: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>', title: "Principianti", description: "La maggior parte dei nostri iscritti ha iniziato da zero." },
-          { icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>', title: "Donne", description: "Corso misto e inclusivo, in un ambiente rispettoso e motivante." },
-          { icon: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>', title: "Ragazzi 8+", description: "Corso di pugilato dagli 8 anni in su. Allenamento adattato all'età e al livello, approccio educativo." },
-          { icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>', title: "Amatori e agonisti", description: "Percorsi su misura per fitness o competizione in light-boxe e boxe dilettantistica." },
+          { icon: '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>', title: "Principianti", description: "La maggior parte dei nostri iscritti ha iniziato da zero: ti insegniamo i fondamenti della boxe passo dopo passo." },
+          { icon: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>', title: "Donne", description: "Il corso di pugilato è misto, inclusivo e frequentato da donne di ogni età, in un ambiente rispettoso e motivante." },
+          { icon: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>', title: "Ragazzi 8+", description: "Corso di pugilato per ragazzi e bambini dagli 8 anni in su, con allenamento adattato all'età e al livello, approccio educativo e sicurezza prioritaria." },
+          { icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>', title: "Amatori e agonisti", description: "Percorsi su misura per chi allena la boxe come fitness e per chi prepara incontri di light-boxe e boxe dilettantistica tesserata FPI." },
         ].map((t) => (
           <TargetCard icon={t.icon} title={t.title} description={t.description} />
         ))}
@@ -254,17 +257,17 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Gli spazi"
-        description="Tutto quello che serve per allenarsi bene, in uno spazio pensato per il pugilato e la preparazione atletica."
+        description="Gli spazi della Pugilistica Brianza a Barlassina: ring regolamentare da boxe, sala sacchi pesanti, area Hyrox con rower, sled, kettlebell e bilancieri, zona functional per i circuiti PB Hiit. Tutto quello che serve per allenarsi bene, in uno spazio pensato per il pugilato e la preparazione atletica."
       >
         La <span class="text-brand">palestra</span>
       </SectionHeading>
       <Gallery images={[
         { src: galPanoramica, alt: "Vista panoramica della Pugilistica Brianza: sala sacchi pesanti e ring da boxe con bandiere internazionali" },
-        { src: galCircuito, alt: "Circuito di gruppo PB Hiit alla Pugilistica Brianza: allieve su stazioni diverse con bilancieri e corpo libero" },
+        { src: galCircuito, alt: "Circuito di gruppo PB Hiit: allieve su stazioni diverse con bilancieri e corpo libero" },
         { src: galRing, alt: "Ring da boxe della Pugilistica Brianza di Barlassina con bandiera laterale e bandiere internazionali" },
-        { src: galHyrox, alt: "Area Hyrox e functional training della Pugilistica Brianza: rower, sled, bilancieri e attrezzatura completa" },
+        { src: galHyrox, alt: "Area Hyrox e functional training: rower, sled, bilancieri e attrezzatura completa" },
         { src: galSacchi, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione di boxe alla Pugilistica Brianza" },
-        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione di allenamento alla Pugilistica Brianza" },
+        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione di allenamento" },
         { src: galSimulazione, alt: "Simulazione gara Hyrox alla Pugilistica Brianza: sled push e rope pull con il gruppo che osserva" },
         { src: galIngresso, alt: "Ingresso e reception della Pugilistica Brianza: bancone con logo, locandine eventi e scaffali attrezzatura" },
       ]} />
@@ -274,7 +277,10 @@ const pageSchema = buildPageSchema(
   <!-- LOCAL -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Dove siamo">
+      <SectionHeading
+        topline="Dove siamo"
+        description="La sede della Pugilistica Brianza è in Via Giovanni Segantini 29 a Barlassina (MB), nel cuore della Brianza. Facilmente raggiungibile dai comuni limitrofi: Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò."
+      >
         Ci trovi a <span class="text-brand">Barlassina</span>
       </SectionHeading>
       <LocalSection

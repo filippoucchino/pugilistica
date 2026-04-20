@@ -51,7 +51,7 @@ const legendTags: ActivityTag[] = [
   {/* HERO */}
   <Hero
     topline="Orari e prezzi"
-    subtitle="Tutti gli orari dei corsi dal lunedì al sabato: pugilato, Hyrox, PB Hiit, Kids Boxe, Boxe Agonisti e Open Gym. Scegli la fascia che ti viene comoda e vieni a fare una prova."
+    subtitle="Orari settimanali dei corsi di pugilato, Hyrox, PB Hiit, Kids Boxe, Boxe Agonisti e Open Gym alla Pugilistica Brianza di Barlassina (MB). Fasce al mattino, in pausa pranzo e serali dal lunedì al sabato: scegli quella che ti viene comoda e vieni a fare una prova."
     watermark="ORARI"
     ctaPrimary={{ label: "Prenota una prova gratuita", href: "/prova-gratuita/" }}
     ctaSecondary={{ label: "Chiamaci", href: siteInfo.phoneHref }}
@@ -64,7 +64,7 @@ const legendTags: ActivityTag[] = [
     <div class="pb-container">
       <SectionHeading
         topline="Settimana tipo"
-        description="La palestra è aperta dal lunedì al sabato. I corsi seguono fasce orarie fisse: scegli l'orario che preferisci e non serve prenotare, basta presentarsi 5 minuti prima."
+        description="Alla Pugilistica Brianza di Barlassina i corsi di pugilato, Hyrox, PB Hiit, Kids Boxe, Boxe Agonisti e Open Gym seguono fasce orarie fisse dal lunedì al sabato. Non serve prenotare: scegli l'orario che preferisci e presentati in palestra 5 minuti prima dell'inizio della lezione."
       >
         Orari settimanali <span class="text-brand">dei corsi</span>
       </SectionHeading>
@@ -110,8 +110,9 @@ const legendTags: ActivityTag[] = [
 
       {/* Nota domenica chiusa */}
       <p class="mt-8 text-sm text-pb-text-muted leading-normal text-center">
-        {scheduleNotes.closedDay}. Gli orari possono variare durante i periodi festivi —
-        per conferme, chiamaci direttamente.
+        {scheduleNotes.closedDay}. Durante i periodi festivi (Natale, Pasqua, ponti estivi)
+        gli orari dei corsi possono subire variazioni — per conferme sulle chiusure
+        stagionali, chiamaci direttamente.
       </p>
     </div>
   </section>
@@ -121,7 +122,7 @@ const legendTags: ActivityTag[] = [
     <div class="pb-container">
       <SectionHeading
         topline="Prezzi e abbonamenti"
-        description="Tariffe chiare, senza sorprese. Puoi iniziare con una lezione singola oppure scegliere l'abbonamento mensile del corso che preferisci. Nessun vincolo di durata."
+        description="I prezzi dei corsi alla Pugilistica Brianza sono trasparenti, senza sorprese. Puoi iniziare con un ingresso singolo oppure scegliere un abbonamento mensile dedicato a boxe, Hyrox o PB Hiit — o la formula Open all-inclusive, che dà accesso a tutti i corsi della palestra. Nessun vincolo di durata."
       >
         Quanto <span class="text-brand">costa</span>
       </SectionHeading>
@@ -141,8 +142,9 @@ const legendTags: ActivityTag[] = [
       </div>
 
       <p class="mt-8 text-sm text-pb-text-muted leading-normal text-center">
-        {scheduleNotes.annualFee} — una tantum all'inizio della stagione, copre
-        l'assicurazione e il tesseramento FPI.
+        {scheduleNotes.annualFee} — da versare una sola volta all'inizio della stagione
+        sportiva, copre l'assicurazione sportiva e il tesseramento alla Federazione
+        Pugilistica Italiana (FPI), obbligatorio per chi pratica pugilato tesserato.
       </p>
     </div>
   </section>
@@ -152,7 +154,7 @@ const legendTags: ActivityTag[] = [
     <div class="pb-container">
       <SectionHeading
         topline="Prima di iniziare"
-        description="Due cose pratiche da sapere prima di mettere piede in palestra per la prima volta."
+        description="Due aspetti pratici da conoscere prima di iniziare alla Pugilistica Brianza: il certificato medico sportivo non agonistico e la convenzione con Fisio Medical di Cogliate per le visite mediche agevolate."
       >
         Info <span class="text-brand">pratiche</span>
       </SectionHeading>
@@ -175,8 +177,9 @@ const legendTags: ActivityTag[] = [
             </h3>
           </div>
           <p class="text-base text-pb-text-tertiary leading-normal">
-            {scheduleNotes.medical} Per la prima lezione di prova basta presentarsi:
-            il certificato serve dalla seconda lezione in poi.
+            {scheduleNotes.medical} Per la prima lezione di prova gratuita non serve
+            ancora: il certificato è richiesto solo dalla seconda lezione in poi, così
+            puoi iniziare subito senza attese e ottenere il documento nei giorni successivi.
           </p>
         </div>
 

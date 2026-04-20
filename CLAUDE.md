@@ -678,10 +678,13 @@ Ultimo aggiornamento: 2026-04-20
     `TargetCard`, `WhyUsCard`, `LessonStep` (wrapper `<ol>`), `InfoRow`, `ServiceCard`,
     `SegmentCard`.
   - **H3 → `<p>` con stessa classe tipografica** in `TargetCard`, `WhyUsCard`,
-    `LessonStep`, `ServiceCard`, `SegmentCard`. Motivo: il testo era un'etichetta di card
-    dentro una lista, non un heading di sotto-sezione — lasciare H3 sporcava la gerarchia
-    heading H1→H2→H3 per screen reader e SEO. La classe `font-display text-display-sm
-    text-pb-text-primary` è identica, design invariato.
+    `LessonStep`, `ServiceCard`, `SegmentCard`, `CoachBlock`, `TeamMemberCard`,
+    `PricingCard`. Motivo: il testo era un'etichetta di card (titolo obiettivo, nome coach,
+    nome membro team, titolo piano prezzo) dentro una lista o una card standalone, non un
+    heading di sotto-sezione — lasciare H3 sporcava la gerarchia heading H1→H2→H3 per
+    screen reader e SEO. La classe `font-display text-display-sm text-pb-text-primary` è
+    identica, design invariato. `TeamMemberCard` mantiene `itemprop="name"` sul `<p>`
+    (microdata Schema.org Person) — il tag HTML non influisce sull'estrazione dati.
   - **Wrapper pagine**: in tutte le pagine che usano questi componenti, `<div class="grid …">`
     → `<ul class="grid … list-none pl-0 m-0">` (pattern `list-none pl-0 m-0` serve a
     rimuovere bullet/padding/margin default del browser, così il rendering resta identico
@@ -693,6 +696,42 @@ Ultimo aggiornamento: 2026-04-20
 - Accessibilità navigazione: aggiunto `aria-label` ai due `<nav>` nell'header.
   Desktop nav → `aria-label="Principale"`, mobile nav → `aria-label="Menu mobile"`.
   Motivo: screen reader annunciava due "navigation" indistinguibili. Ora le distingue.
+
+- SEO density — principio di autocontenimento del passaggio (self-contained passage):
+  - **Contesto**: SemRush warning "9 pages have low text-HTML ratio" su tutte le pagine
+    principali. Fase 1 densificazione applicata sistematicamente a 11 pagine (home, pugilato,
+    hyrox, pb-hiit, chi-siamo, faq, contatti, orari, prova-gratuita, lezioni-private-pugilato).
+  - **Principio**: ogni unità semanticamente recuperabile (FAQ answer, card description,
+    paragrafo di sezione) deve reggersi autonomamente estratta fuori dal contesto DOM —
+    rilevante per BERT/Passage Ranking (Google 2020+), JSON-LD `acceptedAnswer.text` e citazioni
+    in AI Overview/Perplexity/ChatGPT Search.
+  - **Entità densificate**: brand, località (Barlassina MB + comuni limitrofi Cogliate,
+    Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno, Muggiò), discipline (pugilato,
+    Hyrox, PB Hiit), credenziali (FPI, FIPE, Hyrox Training Club, Coach Hyrox certificato
+    Accademia 365), terminologia tecnica (guardia/jab/cross/gancio/montante; sled push, wall
+    balls, rowing, farmer carry; HIIT, effetto EPOC), logistica (certificato medico non
+    agonistico, tesseramento FPI).
+  - **Correzione fattuale**: FAQ orari apertura corretti da "09:00-22:00" errato al reale
+    08:00-21:00 Lun-Ven + 10:00-12:00 Sab (fonte: `shared.ts`, `/orari/`).
+  - **Round di riduzione brand** (over-use correction): l'applicazione troppo meccanica
+    aveva portato "Pugilistica Brianza" a 292 occorrenze totali (40+ su alcune pagine
+    corso). Ridotto a 205 (-30%) mantenendo l'autocontenimento. Regola operativa: **1
+    menzione "completa" del brand per unità semanticamente recuperabile**; per le frasi
+    successive dello stesso blocco, anchor più leggeri ("la palestra", "il coach", "qui",
+    "noi", voce 1ª plurale). Verifica rapida: `grep -c "Pugilistica Brianza" src/pages/*.astro`.
+  - **Preservato** (autocontenimento critico): prime frasi di tutte le FAQ answer
+    (JSON-LD), hero subtitle, prime frasi di paragrafi introduttivi (DefinitionGrid
+    `introText`), SectionHeading "Dove siamo" (geo-anchor), identity statements (es. "ASD
+    Pugilistica Brianza è Hyrox Training Club"), bio team/CoachBlock, credenziali formali.
+  - **Tagliato**: card description ridondanti in grid, seconde frasi dello stesso
+    paragrafo, SectionHeading `description` che duplicavano DefinitionGrid `introText` o
+    CoachBlock bio, gallery alt decorativi senza valore identificativo.
+  - **Regole di stile consolidate** (memorizzate in `.claude/` memory):
+    - CTA/button copy off-limits da allungamenti SEO (rompono design compatto dei bottoni)
+    - Solo claim geo verificati: no affermazioni specifiche su stazioni ferroviarie, linee,
+      tempi di percorrenza; lista comuni Brianza include Cogliate (convenzione Fisio Medical)
+    - Nessuna `description` su `SectionHeading` seguito da `DefinitionGrid` `introText` o
+      `CoachBlock` bio (duplicazione prose evidente, si vede in browser)
 
 ### In corso
 - Nessuna attività in corso

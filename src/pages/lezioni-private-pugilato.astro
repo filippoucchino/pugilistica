@@ -21,11 +21,31 @@ const whatsappHref = buildWhatsappHref(
 );
 
 const faqItems = [
-  { question: "Come funzionano le lezioni private di pugilato?", answer: "Le lezioni private sono sessioni individuali 1:1 con il coach. Lavori su tecnica, preparazione atletica o obiettivi specifici con un programma costruito su misura per te." },
-  { question: "Qual è la durata di una lezione privata?", answer: "Ogni sessione dura circa 60 minuti, interamente dedicati a te." },
-  { question: "Posso scegliere gli orari?", answer: "Sì, gli orari delle lezioni private sono flessibili e concordati direttamente con il coach." },
-  { question: "Le lezioni private sono adatte ai principianti?", answer: "Assolutamente. Sono ideali per chi vuole iniziare con un percorso individuale e imparare i fondamentali con calma." },
-  { question: "Quanto costano le lezioni private?", answer: "Il costo varia in base alla frequenza. Contattaci per un preventivo personalizzato." },
+  {
+    question: "Come funzionano le lezioni private di pugilato?",
+    answer:
+      "Le lezioni private di pugilato della Pugilistica Brianza sono sessioni individuali 1:1 con il coach Stefano Rizzo (Maestro 2° livello FPI, ex pugile agonista). In ogni sessione privata lavori su tecnica, preparazione atletica o obiettivi specifici con un programma costruito su misura per te, dal principiante assoluto al pugile che prepara un incontro.",
+  },
+  {
+    question: "Qual è la durata di una lezione privata?",
+    answer:
+      "Ogni lezione privata di pugilato alla Pugilistica Brianza dura circa 60 minuti, interamente dedicati al tuo percorso individuale. Riscaldamento, lavoro tecnico, lavoro al sacco o ai colpitori, preparazione atletica e defaticamento: tutto calibrato sul tuo livello e sui tuoi obiettivi.",
+  },
+  {
+    question: "Posso scegliere gli orari?",
+    answer:
+      "Sì, gli orari delle lezioni private di pugilato della Pugilistica Brianza sono flessibili e concordati direttamente con il coach Stefano Rizzo via WhatsApp. Puoi fissare sessioni al mattino, in pausa pranzo, nel pomeriggio o alla sera in base alla tua disponibilità e a quella del coach.",
+  },
+  {
+    question: "Le lezioni private sono adatte ai principianti?",
+    answer:
+      "Sì, le lezioni private di pugilato della Pugilistica Brianza sono ideali anche per i principianti assoluti. Sono il modo più veloce per imparare i fondamentali della boxe con calma — guardia, colpi, spostamenti — prima o in parallelo al corso di gruppo, con il coach che ti segue personalmente lezione dopo lezione.",
+  },
+  {
+    question: "Quanto costano le lezioni private?",
+    answer:
+      "Il costo delle lezioni private di pugilato della Pugilistica Brianza varia in base alla frequenza e al pacchetto scelto. Contattaci via WhatsApp per un preventivo personalizzato: dicci quante sessioni ti servono e quali sono i tuoi obiettivi, ti rispondiamo con la proposta migliore.",
+  },
 ];
 
 const pageSchema = buildPageSchema(
@@ -53,7 +73,7 @@ const pageSchema = buildPageSchema(
 >
   <Hero
     topline="Lezioni private — Pugilistica Brianza"
-    subtitle="Percorso personalizzato 1:1 con il coach. Tecnica, preparazione e obiettivi specifici, con orari flessibili e programma costruito su misura."
+    subtitle="Lezioni private di pugilato 1:1 con il coach Stefano Rizzo alla Pugilistica Brianza di Barlassina (MB). Percorso personalizzato su tecnica, preparazione atletica, obiettivi specifici o preparazione gara, con orari flessibili concordati direttamente e programma costruito su misura."
     watermark="1:1"
     ctaPrimary={{ label: "Scrivici su WhatsApp", href: whatsappHref }}
   >
@@ -70,12 +90,28 @@ const pageSchema = buildPageSchema(
         Cosa sono le lezioni <span class="text-brand">private?</span>
       </SectionHeading>
       <DefinitionGrid
-        introText="Le lezioni private di pugilato sono sessioni individuali 1:1 con il coach. Un percorso su misura per chi vuole lavorare su aspetti specifici della tecnica, della preparazione atletica o della crescita agonistica, con la massima attenzione e flessibilità."
+        introText="Le lezioni private di pugilato alla Pugilistica Brianza sono sessioni individuali 1:1 con il coach Stefano Rizzo (Maestro 2° livello FPI, ex pugile agonista). Un percorso su misura per chi vuole lavorare su aspetti specifici della tecnica della boxe, della preparazione atletica o della crescita agonistica, con la massima attenzione del coach e flessibilità di orari."
         items={[
-          { title: "Allenamento 1:1", description: "Tutta l'attenzione del coach è dedicata a te. Ogni sessione è costruita sui tuoi punti di forza e sulle aree da migliorare." },
-          { title: "Percorso personalizzato", description: "Obiettivi chiari, progressione misurabile. Il programma si adatta ai tuoi tempi e al tuo livello." },
-          { title: "Orari flessibili", description: "Gli orari vengono concordati direttamente con il coach, in base alla tua disponibilità." },
-          { title: "Preparazione mirata", description: "Tecnica avanzata, preparazione a gare, miglioramento specifico: lavoriamo su quello che serve davvero." },
+          {
+            title: "Allenamento 1:1",
+            description:
+              "Tutta l'attenzione del coach Stefano Rizzo è dedicata a te, senza distrazioni del gruppo. Ogni sessione di lezione privata è costruita sui tuoi punti di forza tecnici e sulle aree da migliorare, con feedback continuo e immediato sul gesto.",
+          },
+          {
+            title: "Percorso personalizzato",
+            description:
+              "Obiettivi chiari (tecnica, sparring, fitness pugilistico, preparazione gara), progressione misurabile sessione per sessione. Il programma della lezione privata si adatta ai tuoi tempi e al tuo livello attuale.",
+          },
+          {
+            title: "Orari flessibili",
+            description:
+              "Gli orari delle lezioni private di pugilato vengono concordati direttamente con il coach via WhatsApp, in base alla tua disponibilità — mattino, pausa pranzo, pomeriggio o sera.",
+          },
+          {
+            title: "Preparazione mirata",
+            description:
+              "Tecnica avanzata (guardia, jab, cross, gancio, montante, footwork, difese), preparazione a incontri di light-boxe o boxe dilettantistica, miglioramento specifico: nelle lezioni private lavoriamo solo su quello che serve davvero al tuo obiettivo.",
+          },
         ]}
       />
     </div>
@@ -83,17 +119,20 @@ const pageSchema = buildPageSchema(
 
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Benefici">
+      <SectionHeading
+        topline="Benefici"
+        description="I vantaggi delle lezioni private di pugilato rispetto al corso di gruppo: attenzione totale del coach, progressione tecnica più veloce, flessibilità di orari e obiettivi, privacy dell'allenamento."
+      >
         I vantaggi di un percorso <span class="text-brand">individuale</span>
       </SectionHeading>
       <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none pl-0 m-0">
         {[
-          "<strong>Attenzione totale:</strong> il coach si dedica esclusivamente a te per tutta la sessione",
-          "<strong>Progressione accelerata:</strong> impari più velocemente con feedback continuo",
-          "<strong>Flessibilità:</strong> orari e frequenza su misura, concordati con il coach",
-          "<strong>Obiettivi specifici:</strong> tecnica, preparazione agonistica o fitness puro",
-          "<strong>Adatto a tutti:</strong> principianti, avanzati, donne, ragazzi e agonisti",
-          "<strong>Privacy e comfort:</strong> ti alleni senza la pressione del gruppo, al tuo ritmo",
+          "<strong>Attenzione totale:</strong> il coach Stefano Rizzo si dedica esclusivamente a te per tutta la sessione di lezione privata",
+          "<strong>Progressione accelerata:</strong> impari la tecnica della boxe più velocemente grazie al feedback tecnico continuo sul gesto",
+          "<strong>Flessibilità oraria:</strong> orari e frequenza delle lezioni su misura, concordati direttamente con il coach via WhatsApp",
+          "<strong>Obiettivi specifici:</strong> tecnica, preparazione agonistica a light-boxe e boxe dilettantistica, o fitness pugilistico puro",
+          "<strong>Adatto a tutti i livelli:</strong> principianti assoluti, pugili avanzati, donne, ragazzi dagli 8 anni e agonisti FPI",
+          "<strong>Privacy e comfort:</strong> ti alleni senza la pressione del gruppo, al tuo ritmo, con ring e attrezzatura a disposizione",
         ].map((b) => <BenefitItem text={b} />)}
       </ul>
     </div>
@@ -117,7 +156,10 @@ const pageSchema = buildPageSchema(
 
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
-      <SectionHeading topline="FAQ">
+      <SectionHeading
+        topline="FAQ"
+        description="Le domande più frequenti sulle lezioni private di pugilato: come funzionano, durata di ogni sessione, flessibilità degli orari, adattamento ai principianti e costi personalizzati."
+      >
         Domande sulle lezioni <span class="text-brand">private</span>
       </SectionHeading>
       <FaqAccordion items={faqItems} defaultOpen={0} />
@@ -126,7 +168,10 @@ const pageSchema = buildPageSchema(
 
   <section class="pb-section fade-up">
     <div class="pb-container">
-      <SectionHeading topline="Dove siamo">
+      <SectionHeading
+        topline="Dove siamo"
+        description="Le lezioni private di pugilato si tengono in Via Giovanni Segantini 29 a Barlassina (MB), nel cuore della Brianza. Facilmente raggiungibile dai comuni limitrofi: Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò."
+      >
         Allenati a <span class="text-brand">Barlassina</span>
       </SectionHeading>
       <LocalSection
