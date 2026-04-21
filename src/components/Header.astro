@@ -36,6 +36,7 @@ const currentPath = Astro.url.pathname;
       {navLinks.map((link) => (
         <a
           href={link.href}
+          aria-current={currentPath === link.href ? "page" : undefined}
           class:list={[
             "font-body text-sm font-medium tracking-wide no-underline transition-colors duration-base ease-default",
             currentPath === link.href
@@ -81,9 +82,12 @@ const currentPath = Astro.url.pathname;
   {navLinks.map((link) => (
     <a
       href={link.href}
-      class="font-body text-lg font-medium text-pb-text-tertiary no-underline
-             py-4 border-b border-pb-border-default transition-colors
-             duration-base ease-default hover:text-pb-text-primary"
+      aria-current={currentPath === link.href ? "page" : undefined}
+      class:list={[
+        "font-body text-lg font-medium no-underline py-4 border-b border-pb-border-default",
+        "transition-colors duration-base ease-default hover:text-pb-text-primary",
+        currentPath === link.href ? "text-pb-text-primary" : "text-pb-text-tertiary",
+      ]}
     >
       {link.label}
     </a>

@@ -97,9 +97,10 @@ export function buildGym(): Record<string, unknown> {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 45.6529,
-      longitude: 9.1182,
+      latitude: 45.65292782389744,
+      longitude: 9.118172383931599,
     },
+    hasMap: siteInfo.mapExternalUrl,
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",

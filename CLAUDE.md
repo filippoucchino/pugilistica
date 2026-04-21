@@ -466,7 +466,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-04-20
+Ultimo aggiornamento: 2026-04-21
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -776,6 +776,43 @@ Ultimo aggiornamento: 2026-04-20
     al tag. Zero cambi nel HTML generato — lo script era già inline, Astro voleva solo
     la dichiarazione esplicita per chiarezza.
   - Risultato: `astro check` → 0 errors, 0 warnings, 0 hints. Build 12 pagine in 2.41s.
+
+- Allineamento con SOP "Local Business Website" (quick wins accessibilità/SEO/config):
+  - **Accessibilità WCAG**: aggiunto skip-to-content link come primo elemento focusabile
+    del `<body>` in `BaseLayout.astro` (visibile solo al focus da tastiera, stilato con
+    `sr-only`/`focus:not-sr-only`). Target: `<main id="main-content">` (id aggiunto).
+    `aria-current="page"` sul link attivo sia nella nav desktop che mobile di
+    `Header.astro` (prima il link attivo era distinto solo dal colore — invisibile agli
+    screen reader).
+  - **Schema LocalBusiness arricchito** (`src/data/schema.ts`, `buildGym()`):
+    coordinate `geo` portate alla precisione reale del civico
+    (`45.65292782389744, 9.118172383931599`) e aggiunto `hasMap: siteInfo.mapExternalUrl`.
+    `buildGymRef()` lasciato minimale (telephone/priceRange/address/image) — hasMap solo
+    nel nodo completo usato da home/contatti/orari, dove il Local Business è protagonista.
+  - **Config Astro** (`astro.config.mjs`): `output: "static"` esplicitato (era default),
+    `trailingSlash: "always"` impostato per coerenza con gli URL esistenti, `sitemap()`
+    con `filter: (page) => !page.includes("/404")` per escludere la pagina utility.
+  - **Robots meta**: `<meta name="robots" content="index, follow">` di default in
+    `BaseLayout.astro`. Nuova prop `noindex?: boolean` sul layout per override su pagine
+    utility. `src/pages/404.astro` passa `noindex` → emette `noindex, nofollow`.
+  - **Trailing slash — nota editoriale**: la SOP consiglia `"never"`, ma il progetto usa
+    già URL con `/` finale in tutto il codice (header, footer, JSON-LD, sitemap, CTA,
+    canonical) e Apache su Aruba serve correttamente la struttura `dist/pagina/index.html`.
+    Cambiare a `"never"` avrebbe richiesto di riscrivere decine di link, rigenerare
+    canonical, riconfigurare `.htaccess` e aspettare la reindicizzazione Google.
+    `"always"` è stato scelto per blindare la coerenza esistente: se in futuro scrivi
+    per errore un link senza slash finale, Astro lo normalizza in dev.
+    **Regola**: link interni sempre con `/` finale (`/contatti/`, non `/contatti`).
+  - Non implementato dalla SOP (decisioni consapevoli, non mancanze):
+    - **Componente `Breadcrumb.astro` visibile**: lo schema `BreadcrumbList` è già emesso
+      in JSON-LD da `buildBreadcrumb()` per tutte le pagine interne, ma l'HTML visibile
+      non c'è. Su un sito con una gerarchia piatta (11 pagine, tutte a 1 livello sotto
+      la home) il beneficio UX è marginale; da valutare solo se la struttura si approfondisce.
+    - **`PROJECT_SCOPE.md`** nel formato della SOP: non creato, `CLAUDE.md` copre già il
+      contenuto (stato, decisioni, comandi) in formato diario continuo più utile per il
+      lavoro iterativo con Claude.
+    - **Design bright/welcoming** della SOP: il progetto usa tema scuro, coerente col
+      brand boxing. Decisione brand, non deviazione.
 
 ### In corso
 - Nessuna attività in corso

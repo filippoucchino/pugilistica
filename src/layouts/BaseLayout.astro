@@ -9,9 +9,11 @@ interface Props {
   description: string;
   /** Aggiunge Schema.org JSON-LD alla pagina */
   schema?: Record<string, unknown>;
+  /** Se true, emette robots "noindex, nofollow" (usato dalla 404). Default: index, follow */
+  noindex?: boolean;
 }
 
-const { title, description, schema } = Astro.props;
+const { title, description, schema, noindex = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 // URL assoluta dell'OG image (richiesta da Facebook/WhatsApp/LinkedIn per le anteprime).
 const ogImageURL = new URL("/brand/og-image.jpg", Astro.site).href;
@@ -24,6 +26,7 @@ const ogImageURL = new URL("/brand/og-image.jpg", Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <link rel="canonical" href={canonicalURL.href} />
 
     <!-- Font: self-hosted in public/fonts/, @font-face in global.css.
@@ -65,9 +68,18 @@ const ogImageURL = new URL("/brand/og-image.jpg", Astro.site).href;
     )}
   </head>
   <body>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:top-4 focus:left-4
+             focus:bg-brand focus:text-white focus:px-5 focus:py-3 focus:rounded-md
+             focus:font-bold focus:no-underline focus:outline-none focus:ring-2
+             focus:ring-white focus:ring-offset-2 focus:ring-offset-pb-bg"
+    >
+      Vai al contenuto principale
+    </a>
     <Header />
 
-    <main>
+    <main id="main-content">
       <slot />
     </main>
 
