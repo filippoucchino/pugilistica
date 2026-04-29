@@ -15,7 +15,8 @@
   <div class="mx-auto flex max-w-container items-center justify-between gap-6 max-md:flex-col max-md:items-start max-md:gap-4">
     <p class="max-w-[640px] text-sm leading-normal text-pb-text-secondary">
       Questo sito utilizza cookie tecnici necessari al funzionamento.
-      Potremmo utilizzare cookie di analisi per migliorare la tua esperienza, previo tuo consenso.
+      Con il tuo consenso utilizziamo anche cookie di analisi (Google Analytics, Microsoft Clarity)
+      per capire come migliorare la tua esperienza.
       <a
         href="/privacy-policy/"
         class="text-brand underline transition-colors duration-base hover:text-brand-light"
@@ -43,9 +44,36 @@
 </div>
 
 <script is:inline>
-  // Nasconde il banner se l'utente ha già espresso una preferenza
+  // ID del container Google Tag Manager. Modifica qui se cambia.
+  // Dentro GTM sono configurati i tag Google Analytics 4 e Microsoft Clarity.
+  var GTM_ID = "GTM-T955C9C7";
+
+  // Inietta GTM solo dopo il consenso esplicito dell'utente.
+  // Lo snippet sotto è quello ufficiale di Google, racchiuso in una funzione
+  // così possiamo invocarlo sia al pageload (se consenso già dato in passato)
+  // sia al click su "Accetta".
+  function loadGTM() {
+    if (window.__gtmLoaded) return; // evita doppio caricamento
+    window.__gtmLoaded = true;
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", GTM_ID);
+  }
+
+  // All'apertura della pagina:
+  // - se l'utente aveva già accettato, carica GTM e nascondi il banner
+  // - se aveva rifiutato, nascondi il banner senza caricare nulla
+  // - se non ha ancora scelto, lascia il banner visibile
   (function () {
     var consent = localStorage.getItem("cookie_consent");
+    if (consent === "accepted") loadGTM();
     if (consent) {
       var banner = document.getElementById("cookie-banner");
       if (banner) banner.remove();
@@ -56,14 +84,7 @@
     localStorage.setItem("cookie_consent", "accepted");
     var banner = document.getElementById("cookie-banner");
     if (banner) banner.remove();
-    // Per aggiungere Google Analytics (GA4) in futuro:
-    // 1. Controllare: localStorage.getItem("cookie_consent") === "accepted"
-    // 2. Solo se accettato, iniettare lo script gtag.js qui.
-    // Esempio:
-    //   var s = document.createElement("script");
-    //   s.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX";
-    //   s.async = true;
-    //   document.head.appendChild(s);
+    loadGTM();
   });
 
   document.getElementById("cookie-reject")?.addEventListener("click", function () {

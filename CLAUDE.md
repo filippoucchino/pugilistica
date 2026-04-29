@@ -466,7 +466,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-04-21
+Ultimo aggiornamento: 2026-04-29
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -813,6 +813,38 @@ Ultimo aggiornamento: 2026-04-21
       lavoro iterativo con Claude.
     - **Design bright/welcoming** della SOP: il progetto usa tema scuro, coerente col
       brand boxing. Decisione brand, non deviazione.
+
+- Google Tag Manager + Google Analytics 4 + Microsoft Clarity (load-on-consent, GDPR-compliant):
+  - **Pattern scelto**: GTM viene iniettato dinamicamente da `CookieBanner.astro` solo
+    quando `localStorage.cookie_consent === "accepted"`, sia al pageload (per visitatori
+    di ritorno) sia al click su "Accetta". Dentro GTM (lato Google) sono configurati i
+    tag GA4 e Clarity. Codice GTM ID: `GTM-T955C9C7` hardcoded in `CookieBanner.astro`
+    con commento esplicativo (precedente: Web3Forms `access_key` in `contatti.astro`).
+  - **`<noscript>` GTM omesso volutamente**: lo snippet di Google standard include un
+    `<iframe>` di fallback per browser senza JS. Quel fallback fa partire GTM (e quindi
+    GA4/Clarity) **bypassando il consenso** — incompatibile con load-on-consent. Visitatori
+    senza JS non vengono tracciati: scelta GDPR-corretta.
+  - **CSP estesa** in `public/.htaccess` e `vercel.json` per consentire i domini necessari.
+    `script-src` aggiunge `googletagmanager.com`, `google-analytics.com`, `*.clarity.ms`.
+    `connect-src` aggiunge `google-analytics.com`, `*.analytics.google.com`,
+    `*.google-analytics.com`, `*.clarity.ms`. `img-src` aggiunge i tracking pixel di GTM,
+    GA4 e Clarity. Wildcard subdomain (`*.clarity.ms`) per coprire `c.clarity.ms`,
+    `b.clarity.ms`, `www.clarity.ms` senza enumerarli.
+  - **Privacy policy aggiornata**: 3 nuove sottosezioni in §5 (Servizi terze parti) per
+    GTM, GA4, Clarity con finalità, base giuridica, fornitore e link alla policy.
+    §6 (Cookie) ristrutturata in 2 blocchi: "tecnici (sempre attivi)" e "di analisi (solo
+    con consenso)" con elenco dei cookie effettivi (`_ga`, `_ga_*`, `_clck`, `_clsk`).
+    §7 (Trasferimenti extra-UE) aggiunge Microsoft (Clarity) sotto EU-U.S. DPF.
+    §8 (Conservazione) aggiunge GA4 (14 mesi) e Clarity (1 anno).
+    §3 e §4 menzionano gli strumenti tra finalità e base giuridica del consenso.
+  - **Banner cookie aggiornato**: testo cita esplicitamente "Google Analytics, Microsoft
+    Clarity" invece del generico "cookie di analisi". Logica del banner inalterata
+    (binary accept/reject), ma la funzione `loadGTM()` viene chiamata solo dopo "Accetta".
+  - **Aggiungere un nuovo strumento di tracking in futuro** (es. Meta Pixel, Hotjar):
+    1) Aggiungere il tag dentro GTM lato Google (no modifiche al codice del sito).
+    2) Estendere la CSP in `.htaccess` + `vercel.json` con i nuovi domini (script/connect/img).
+    3) Aggiornare `CookieBanner.astro` (testo del banner) e `privacy-policy.astro`
+       (nuova sottosezione §5 + voci in §6, §7, §8).
 
 ### In corso
 - Nessuna attività in corso

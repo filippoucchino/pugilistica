@@ -93,6 +93,12 @@ const pageSchema = buildPageSchema(
             Google Maps viene caricato solo quando decidi di cliccare su "Apri mappa",
             per mostrarti la posizione della palestra.
           </li>
+          <li>
+            <strong class="text-pb-text-primary">Analisi del traffico (con il tuo consenso)</strong>:
+            per capire come gli utenti utilizzano il sito e migliorarlo, utilizziamo
+            Google Analytics 4 e Microsoft Clarity. Questi strumenti vengono attivati
+            solo se accetti tramite il banner cookie.
+          </li>
         </ul>
       </div>
     </div>
@@ -107,7 +113,8 @@ const pageSchema = buildPageSchema(
         <ul class="list-disc space-y-2 pl-5">
           <li>
             <strong class="text-pb-text-primary">Consenso</strong> (art. 6.1.a):
-            per l'eventuale utilizzo di cookie non essenziali e futuri strumenti di analisi.
+            per l'utilizzo di cookie non essenziali e degli strumenti di analisi
+            (Google Analytics, Microsoft Clarity).
           </li>
           <li>
             <strong class="text-pb-text-primary">Esecuzione di misure precontrattuali</strong> (art. 6.1.b):
@@ -162,6 +169,46 @@ const pageSchema = buildPageSchema(
         </div>
 
         <div>
+          <h3 class="text-lg font-semibold text-pb-text-primary">Google Tag Manager</h3>
+          <p class="mt-2">
+            Utilizziamo Google Tag Manager (GTM) come container per gestire l'attivazione
+            degli strumenti di analisi elencati di seguito. GTM viene caricato
+            <strong class="text-pb-text-primary">solo dopo il tuo consenso</strong>
+            tramite il banner cookie. Il container in sé non setta cookie di profilazione,
+            ma può raccogliere dati tecnici (IP, user-agent) e attiva i tag configurati.
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy di Google</a>.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-pb-text-primary">Google Analytics 4</h3>
+          <p class="mt-2">
+            Per analizzare il traffico del sito in forma aggregata utilizziamo
+            Google Analytics 4 (GA4), caricato tramite Google Tag Manager
+            <strong class="text-pb-text-primary">solo previo tuo consenso</strong>.
+            GA4 raccoglie dati come pagine visitate, durata della sessione, dispositivo,
+            browser, paese di provenienza e indirizzo IP (anonimizzato di default).
+            I dati sono conservati per 14 mesi. Il fornitore è Google Ireland Limited
+            (con trasferimento negli Stati Uniti).
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy di Google</a>.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-pb-text-primary">Microsoft Clarity</h3>
+          <p class="mt-2">
+            Per migliorare l'usabilità del sito utilizziamo Microsoft Clarity, caricato
+            tramite Google Tag Manager <strong class="text-pb-text-primary">solo previo tuo consenso</strong>.
+            Clarity registra in forma anonima le interazioni con la pagina (movimenti
+            del mouse, click, scroll) e genera heatmap e session replay aggregati.
+            I campi di input sensibili (modulo di contatto) sono mascherati di default
+            e il loro contenuto non viene mai registrato. Il fornitore è Microsoft Corporation
+            (con trasferimento negli Stati Uniti).
+            <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">Informativa sulla privacy di Microsoft</a>.
+          </p>
+        </div>
+
+        <div>
           <h3 class="text-lg font-semibold text-pb-text-primary">WhatsApp (Meta)</h3>
           <p class="mt-2">
             Alcuni pulsanti del sito aprono una conversazione WhatsApp.
@@ -192,7 +239,8 @@ const pageSchema = buildPageSchema(
         <p>
           Il sito <strong class="text-pb-text-primary">non imposta cookie propri di profilazione</strong>.
         </p>
-        <p>Ecco cosa utilizziamo:</p>
+
+        <h3 class="text-lg font-semibold text-pb-text-primary mt-6">Cookie tecnici (sempre attivi)</h3>
         <ul class="list-disc space-y-2 pl-5">
           <li>
             <strong class="text-pb-text-primary">Preferenza cookie</strong>:
@@ -210,12 +258,32 @@ const pageSchema = buildPageSchema(
             sul dominio google.com.
           </li>
         </ul>
+
+        <h3 class="text-lg font-semibold text-pb-text-primary mt-6">Cookie di analisi (solo con il tuo consenso)</h3>
         <p>
-          In futuro potranno essere utilizzati cookie di analisi (es. Google Analytics)
-          per comprendere come viene utilizzato il sito. Questi cookie verranno attivati
-          <strong class="text-pb-text-primary">solo previo tuo consenso</strong> tramite
-          il banner mostrato alla prima visita.
+          I cookie di analisi vengono attivati
+          <strong class="text-pb-text-primary">solo se accetti tramite il banner</strong>
+          mostrato alla prima visita. Puoi cambiare idea in qualsiasi momento cancellando
+          i dati del sito dal tuo browser: alla visita successiva il banner ricomparirà.
         </p>
+        <ul class="list-disc space-y-2 pl-5">
+          <li>
+            <strong class="text-pb-text-primary">Google Analytics 4</strong>:
+            cookie come <code class="text-xs text-pb-text-tertiary">_ga</code> e
+            <code class="text-xs text-pb-text-tertiary">_ga_*</code> (durata fino a 2 anni)
+            per identificare in modo anonimo la sessione del visitatore.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Microsoft Clarity</strong>:
+            cookie come <code class="text-xs text-pb-text-tertiary">_clck</code> e
+            <code class="text-xs text-pb-text-tertiary">_clsk</code> (durata fino a 1 anno)
+            per registrare in forma anonima le interazioni del visitatore con la pagina.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Google Tag Manager</strong>:
+            non setta cookie propri di profilazione, ma carica gli strumenti elencati sopra.
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -231,7 +299,11 @@ const pageSchema = buildPageSchema(
         </p>
         <ul class="list-disc space-y-2 pl-5">
           <li>
-            <strong class="text-pb-text-primary">Google</strong> (Fonts, Maps): aderisce al
+            <strong class="text-pb-text-primary">Google</strong> (Fonts, Maps, Tag Manager,
+            Analytics 4): aderisce al EU-U.S. Data Privacy Framework.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Microsoft</strong> (Clarity): aderisce al
             EU-U.S. Data Privacy Framework.
           </li>
           <li>
@@ -257,7 +329,15 @@ const pageSchema = buildPageSchema(
             a rispondere alla richiesta.
           </li>
           <li>
-            <strong class="text-pb-text-primary">Dati di navigazione</strong>:
+            <strong class="text-pb-text-primary">Dati di Google Analytics 4</strong>:
+            conservati per 14 mesi (impostazione di default), poi eliminati automaticamente.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Dati di Microsoft Clarity</strong>:
+            conservati per 1 anno, poi eliminati automaticamente.
+          </li>
+          <li>
+            <strong class="text-pb-text-primary">Altri dati di navigazione</strong>:
             non vengono conservati dal sito. La conservazione da parte di Google
             (Fonts, Maps) segue la loro rispettiva policy sulla privacy.
           </li>
@@ -330,7 +410,7 @@ const pageSchema = buildPageSchema(
           aggiornamenti verranno pubblicati su questa pagina.
         </p>
         <p class="text-pb-text-tertiary text-sm">
-          Ultimo aggiornamento: 16 aprile 2026
+          Ultimo aggiornamento: 29 aprile 2026
         </p>
       </div>
     </div>
