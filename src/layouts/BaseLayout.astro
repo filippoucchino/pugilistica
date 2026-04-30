@@ -29,6 +29,38 @@ const ogImageURL = new URL("/brand/og-image.jpg", Astro.site).href;
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <link rel="canonical" href={canonicalURL.href} />
 
+    <!-- Google Consent Mode v2: stato di default impostato PRIMA di GTM.
+         Tutto cio' che richiede consenso esplicito parte "denied"; le categorie
+         tecniche (functionality, security) sono "granted" perche' essenziali al
+         funzionamento. "wait_for_update": GTM attende fino a 500ms un eventuale
+         segnale di consenso prima di firare i tag (utile per visitatori di ritorno
+         con consenso gia' dato). L'update viene emesso da CookieBanner.astro al
+         click su "Accetta". Vedi sezione "GTM + Consent Mode v2" in CLAUDE.md. -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'personalization_storage': 'denied',
+        'functionality_storage': 'granted',
+        'security_storage': 'granted',
+        'wait_for_update': 500
+      });
+    </script>
+
+    <!-- Google Tag Manager: container caricato sempre. Il firing dei tag (GA4,
+         Clarity) e' condizionato al consenso tramite "Built-in Consent Settings"
+         configurati lato GTM (analytics_storage richiesto su entrambi i tag).
+         Se il GTM ID cambia, aggiorna anche il <noscript> in fondo al <body>. -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T955C9C7');</script>
+
     <!-- Font: self-hosted in public/fonts/, @font-face in global.css.
          Preload dei 2 font critici above-the-fold per evitare la catena CSS → woff2. -->
     <link rel="preload" href="/fonts/bebas-neue-400-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -68,6 +100,21 @@ const ogImageURL = new URL("/brand/og-image.jpg", Astro.site).href;
     )}
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) — fallback per browser senza JS.
+         Con Consent Mode v2 + tag configurati con consent gating su analytics_storage,
+         in noscript i tag non firano comunque (lo stato di consenso default e' denied
+         e non puo' essere aggiornato senza JS). Se il GTM ID cambia, aggiorna anche
+         lo script bootstrap in <head>. -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-T955C9C7"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+        title="Google Tag Manager"
+      ></iframe>
+    </noscript>
+
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:top-4 focus:left-4

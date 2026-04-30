@@ -44,36 +44,30 @@
 </div>
 
 <script is:inline>
-  // ID del container Google Tag Manager. Modifica qui se cambia.
-  // Dentro GTM sono configurati i tag Google Analytics 4 e Microsoft Clarity.
-  var GTM_ID = "GTM-T955C9C7";
-
-  // Inietta GTM solo dopo il consenso esplicito dell'utente.
-  // Lo snippet sotto è quello ufficiale di Google, racchiuso in una funzione
-  // così possiamo invocarlo sia al pageload (se consenso già dato in passato)
-  // sia al click su "Accetta".
-  function loadGTM() {
-    if (window.__gtmLoaded) return; // evita doppio caricamento
-    window.__gtmLoaded = true;
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != "dataLayer" ? "&l=" + l : "";
-      j.async = true;
-      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, "script", "dataLayer", GTM_ID);
+  // Notifica a GTM (via Google Consent Mode v2) il consenso accordato dall'utente.
+  // GTM e' gia' caricato dal BaseLayout con i default Consent Mode v2 (denied su
+  // tutto cio' che richiede consenso). Qui aggiorniamo lo stato per "sbloccare"
+  // i tag configurati con consent gating su analytics_storage (GA4, Clarity).
+  // Concediamo solo le categorie effettivamente utilizzate dal sito: analytics
+  // e personalization. Le categorie ad_* restano denied perche' il sito non usa
+  // pubblicita'. Se in futuro aggiungi Google Ads, aggiorna questo elenco.
+  function grantConsent() {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("consent", "update", {
+      analytics_storage: "granted",
+      personalization_storage: "granted",
+    });
   }
 
   // All'apertura della pagina:
-  // - se l'utente aveva già accettato, carica GTM e nascondi il banner
-  // - se aveva rifiutato, nascondi il banner senza caricare nulla
-  // - se non ha ancora scelto, lascia il banner visibile
+  // - se l'utente aveva gia' accettato, rilascia subito il consenso (i tag in
+  //   attesa partono entro la finestra "wait_for_update": 500ms)
+  // - se aveva rifiutato (o non scelto), non fare nulla: i default "denied"
+  //   restano in vigore e i tag non firano
+  // In entrambi i casi (accepted/rejected) il banner viene rimosso.
   (function () {
     var consent = localStorage.getItem("cookie_consent");
-    if (consent === "accepted") loadGTM();
+    if (consent === "accepted") grantConsent();
     if (consent) {
       var banner = document.getElementById("cookie-banner");
       if (banner) banner.remove();
@@ -84,12 +78,14 @@
     localStorage.setItem("cookie_consent", "accepted");
     var banner = document.getElementById("cookie-banner");
     if (banner) banner.remove();
-    loadGTM();
+    grantConsent();
   });
 
   document.getElementById("cookie-reject")?.addEventListener("click", function () {
     localStorage.setItem("cookie_consent", "rejected");
     var banner = document.getElementById("cookie-banner");
     if (banner) banner.remove();
+    // Nessun update di consenso: i default "denied" del Consent Mode v2 restano
+    // in vigore e i tag (GA4, Clarity) non firano per la sessione corrente.
   });
 </script>

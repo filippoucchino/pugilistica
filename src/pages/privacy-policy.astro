@@ -172,10 +172,15 @@ const pageSchema = buildPageSchema(
           <h3 class="text-lg font-semibold text-pb-text-primary">Google Tag Manager</h3>
           <p class="mt-2">
             Utilizziamo Google Tag Manager (GTM) come container per gestire l'attivazione
-            degli strumenti di analisi elencati di seguito. GTM viene caricato
-            <strong class="text-pb-text-primary">solo dopo il tuo consenso</strong>
-            tramite il banner cookie. Il container in sé non setta cookie di profilazione,
-            ma può raccogliere dati tecnici (IP, user-agent) e attiva i tag configurati.
+            degli strumenti di analisi elencati di seguito. GTM viene caricato sempre
+            durante la navigazione, ma applica il framework
+            <strong class="text-pb-text-primary">Google Consent Mode v2</strong>:
+            prima del tuo consenso esplicito, lo stato di consenso è impostato a
+            "denied" su tutte le categorie non strettamente tecniche e i tag al suo
+            interno (Google Analytics 4, Microsoft Clarity)
+            <strong class="text-pb-text-primary">non vengono attivati</strong> e non
+            raccolgono dati personali. Solo dopo il click su "Accetta" nel banner
+            cookie lo stato passa a "granted" e i tag iniziano a funzionare.
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy di Google</a>.
           </p>
         </div>
@@ -184,12 +189,18 @@ const pageSchema = buildPageSchema(
           <h3 class="text-lg font-semibold text-pb-text-primary">Google Analytics 4</h3>
           <p class="mt-2">
             Per analizzare il traffico del sito in forma aggregata utilizziamo
-            Google Analytics 4 (GA4), caricato tramite Google Tag Manager
-            <strong class="text-pb-text-primary">solo previo tuo consenso</strong>.
-            GA4 raccoglie dati come pagine visitate, durata della sessione, dispositivo,
-            browser, paese di provenienza e indirizzo IP (anonimizzato di default).
-            I dati sono conservati per 14 mesi. Il fornitore è Google Ireland Limited
-            (con trasferimento negli Stati Uniti).
+            Google Analytics 4 (GA4), gestito tramite Google Tag Manager con
+            consent gating attivo. I cookie analytics e la raccolta di dati
+            personali avvengono <strong class="text-pb-text-primary">solo previo
+            tuo consenso</strong> tramite il banner. Quando attivo, GA4 raccoglie
+            dati come pagine visitate, durata della sessione, dispositivo, browser,
+            paese di provenienza e indirizzo IP (anonimizzato di default).
+            In assenza di consenso, Google Consent Mode v2 può inviare al server
+            di Google segnali anonimi e aggregati ("cookieless pings") che non
+            utilizzano cookie e non identificano l'utente, esclusivamente per il
+            modeling statistico aggregato lato Google.
+            I dati sono conservati per 14 mesi. Il fornitore è Google Ireland
+            Limited (con trasferimento negli Stati Uniti).
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy di Google</a>.
           </p>
         </div>
@@ -197,8 +208,10 @@ const pageSchema = buildPageSchema(
         <div>
           <h3 class="text-lg font-semibold text-pb-text-primary">Microsoft Clarity</h3>
           <p class="mt-2">
-            Per migliorare l'usabilità del sito utilizziamo Microsoft Clarity, caricato
-            tramite Google Tag Manager <strong class="text-pb-text-primary">solo previo tuo consenso</strong>.
+            Per migliorare l'usabilità del sito utilizziamo Microsoft Clarity, gestito
+            tramite Google Tag Manager con consent gating attivo: si attiva
+            <strong class="text-pb-text-primary">solo previo tuo consenso</strong>
+            tramite il banner cookie.
             Clarity registra in forma anonima le interazioni con la pagina (movimenti
             del mouse, click, scroll) e genera heatmap e session replay aggregati.
             I campi di input sensibili (modulo di contatto) sono mascherati di default
@@ -410,7 +423,7 @@ const pageSchema = buildPageSchema(
           aggiornamenti verranno pubblicati su questa pagina.
         </p>
         <p class="text-pb-text-tertiary text-sm">
-          Ultimo aggiornamento: 29 aprile 2026
+          Ultimo aggiornamento: 30 aprile 2026
         </p>
       </div>
     </div>

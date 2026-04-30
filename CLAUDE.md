@@ -466,7 +466,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-04-29
+Ultimo aggiornamento: 2026-04-30
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -814,37 +814,56 @@ Ultimo aggiornamento: 2026-04-29
     - **Design bright/welcoming** della SOP: il progetto usa tema scuro, coerente col
       brand boxing. Decisione brand, non deviazione.
 
-- Google Tag Manager + Google Analytics 4 + Microsoft Clarity (load-on-consent, GDPR-compliant):
-  - **Pattern scelto**: GTM viene iniettato dinamicamente da `CookieBanner.astro` solo
-    quando `localStorage.cookie_consent === "accepted"`, sia al pageload (per visitatori
-    di ritorno) sia al click su "Accetta". Dentro GTM (lato Google) sono configurati i
-    tag GA4 e Clarity. Codice GTM ID: `GTM-T955C9C7` hardcoded in `CookieBanner.astro`
-    con commento esplicativo (precedente: Web3Forms `access_key` in `contatti.astro`).
-  - **`<noscript>` GTM omesso volutamente**: lo snippet di Google standard include un
-    `<iframe>` di fallback per browser senza JS. Quel fallback fa partire GTM (e quindi
-    GA4/Clarity) **bypassando il consenso** — incompatibile con load-on-consent. Visitatori
-    senza JS non vengono tracciati: scelta GDPR-corretta.
-  - **CSP estesa** in `public/.htaccess` e `vercel.json` per consentire i domini necessari.
-    `script-src` aggiunge `googletagmanager.com`, `google-analytics.com`, `*.clarity.ms`.
-    `connect-src` aggiunge `google-analytics.com`, `*.analytics.google.com`,
-    `*.google-analytics.com`, `*.clarity.ms`. `img-src` aggiunge i tracking pixel di GTM,
-    GA4 e Clarity. Wildcard subdomain (`*.clarity.ms`) per coprire `c.clarity.ms`,
-    `b.clarity.ms`, `www.clarity.ms` senza enumerarli.
-  - **Privacy policy aggiornata**: 3 nuove sottosezioni in §5 (Servizi terze parti) per
-    GTM, GA4, Clarity con finalità, base giuridica, fornitore e link alla policy.
-    §6 (Cookie) ristrutturata in 2 blocchi: "tecnici (sempre attivi)" e "di analisi (solo
-    con consenso)" con elenco dei cookie effettivi (`_ga`, `_ga_*`, `_clck`, `_clsk`).
-    §7 (Trasferimenti extra-UE) aggiunge Microsoft (Clarity) sotto EU-U.S. DPF.
-    §8 (Conservazione) aggiunge GA4 (14 mesi) e Clarity (1 anno).
-    §3 e §4 menzionano gli strumenti tra finalità e base giuridica del consenso.
-  - **Banner cookie aggiornato**: testo cita esplicitamente "Google Analytics, Microsoft
-    Clarity" invece del generico "cookie di analisi". Logica del banner inalterata
-    (binary accept/reject), ma la funzione `loadGTM()` viene chiamata solo dopo "Accetta".
+- Google Tag Manager + Google Analytics 4 + Microsoft Clarity (Google Consent Mode v2):
+  - **Pattern scelto**: GTM caricato sempre dal `<head>` di `BaseLayout.astro`, con
+    Google Consent Mode v2 default state ("denied" su tutte le categorie non tecniche)
+    impostato **prima** dello snippet GTM. `CookieBanner.astro` non inietta più GTM:
+    al click su "Accetta" emette `gtag('consent', 'update', { analytics_storage:
+    'granted', personalization_storage: 'granted' })` per sbloccare i tag in attesa.
+    GTM ID `GTM-T955C9C7` hardcoded in 2 punti di `BaseLayout.astro` (script bootstrap
+    in `<head>` + `<noscript>` iframe in `<body>`); se cambia, aggiornare entrambi.
+  - **Migrazione da load-on-consent (precedente) a Consent Mode v2 (attuale)**:
+    motivazione = uniformità con gli altri siti WP del cliente che usano CMP con
+    Consent Mode v2; debuggability di GTM Preview (sezione "Inizializzazione del
+    consenso" mostra ora la tabella delle categorie); preparazione per eventuale
+    futuro Google Ads (modeling delle conversioni). Trade-off accettato: ora GTM
+    si carica anche per chi rifiuta (~30 KB), ma i tag non firano e GA4 invia solo
+    "cookieless pings" anonimi.
+  - **Categorie consenso**: di default `functionality_storage` e `security_storage`
+    sono "granted" (essenziali al funzionamento, non richiedono consenso).
+    `analytics_storage`, `personalization_storage`, `ad_storage`, `ad_user_data`,
+    `ad_personalization` partono "denied". Su "Accetta" si concedono solo
+    `analytics_storage` e `personalization_storage` perché il sito non usa pubblicità.
+    Se in futuro si aggiunge Google Ads, estendere `grantConsent()` in `CookieBanner.astro`
+    con `ad_storage`, `ad_user_data`, `ad_personalization` = "granted" e aggiornare
+    il testo del banner per citare la finalità marketing.
+  - **`wait_for_update: 500`**: GTM attende fino a 500ms un eventuale update del
+    consenso prima di firare i tag. Per visitatori di ritorno con consenso già dato,
+    `CookieBanner.astro` chiama `grantConsent()` immediatamente al pageload, ben prima
+    della scadenza dei 500ms.
+  - **Configurazione lato GTM (non nel codice del sito)**: ogni tag (GA4 e Clarity)
+    deve avere "Built-in Consent Settings" → "Require additional consent" →
+    `analytics_storage`. Senza questo settaggio i tag firano sempre, ignorando il
+    Consent Mode v2. Da configurare sulla dashboard `tagmanager.google.com`.
+  - **`<noscript>` GTM incluso**: con CMv2 + tag con consent gating, anche il fallback
+    no-JS rispetta i default "denied" perché lo stato di consenso non puo' essere
+    aggiornato senza JS, quindi i tag non firano. CSP `frame-src` estesa con
+    `https://www.googletagmanager.com` per consentire l'iframe.
+  - **CSP** in `public/.htaccess` e `vercel.json`: `script-src` con `googletagmanager.com`,
+    `google-analytics.com`, `*.clarity.ms`; `connect-src` con `google-analytics.com`,
+    `*.analytics.google.com`, `*.google-analytics.com`, `*.clarity.ms` (cookieless pings
+    inclusi); `img-src` con i tracking pixel; `frame-src` con `googletagmanager.com`.
+  - **Privacy policy aggiornata**: §5 sezione GTM riscritta per spiegare CMv2;
+    §5 sezione GA4 menziona i cookieless pings come comunicazione anonima aggregata
+    in assenza di consenso; §6 (Cookie) struttura "tecnici" + "analisi" invariata;
+    §7 (extra-UE) e §8 (conservazione) invariate.
   - **Aggiungere un nuovo strumento di tracking in futuro** (es. Meta Pixel, Hotjar):
-    1) Aggiungere il tag dentro GTM lato Google (no modifiche al codice del sito).
-    2) Estendere la CSP in `.htaccess` + `vercel.json` con i nuovi domini (script/connect/img).
-    3) Aggiornare `CookieBanner.astro` (testo del banner) e `privacy-policy.astro`
-       (nuova sottosezione §5 + voci in §6, §7, §8).
+    1) Aggiungere il tag dentro GTM lato Google con i consent settings appropriati
+       (es. Meta Pixel richiede `ad_storage` e `ad_user_data`).
+    2) Estendere la CSP in `.htaccess` + `vercel.json` con i nuovi domini (script/connect/img/frame).
+    3) Aggiornare `grantConsent()` in `CookieBanner.astro` con le categorie aggiuntive
+       (es. se aggiungi pubblicità: `ad_storage`, `ad_user_data`, `ad_personalization`).
+    4) Aggiornare il testo del banner e la privacy policy (§5 nuova sottosezione + §6, §7, §8).
 
 ### In corso
 - Nessuna attività in corso
