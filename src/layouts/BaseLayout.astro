@@ -32,10 +32,16 @@ const ogImageURL = new URL("/brand/og-image.jpg", Astro.site).href;
     <!-- Google Consent Mode v2: stato di default impostato PRIMA di GTM.
          Tutto cio' che richiede consenso esplicito parte "denied"; le categorie
          tecniche (functionality, security) sono "granted" perche' essenziali al
-         funzionamento. "wait_for_update": GTM attende fino a 500ms un eventuale
-         segnale di consenso prima di firare i tag (utile per visitatori di ritorno
-         con consenso gia' dato). L'update viene emesso da CookieBanner.astro al
-         click su "Accetta". Vedi sezione "GTM + Consent Mode v2" in CLAUDE.md. -->
+         funzionamento.
+         Subito dopo il default, controlliamo localStorage: se il visitatore aveva
+         gia' accettato in una sessione precedente, emettiamo l'update qui in
+         <head> PRIMA del bootstrap GTM. Questo garantisce che quando GTM carica
+         il container e fira il page view trigger, lo stato di consenso e' gia'
+         "granted" e i tag (GA4, Clarity) firano al primo pageview senza dover
+         aspettare un update tardivo. Per i first-time accepters il click su
+         "Accetta" emette comunque un update da CookieBanner.astro, ma il page
+         view della pagina corrente puo' andare perso se il click arriva oltre
+         la finestra wait_for_update di 500ms (limitazione nota di CMv2). -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -49,6 +55,14 @@ const ogImageURL = new URL("/brand/og-image.jpg", Astro.site).href;
         'security_storage': 'granted',
         'wait_for_update': 500
       });
+      try {
+        if (localStorage.getItem('cookie_consent') === 'accepted') {
+          gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+            'personalization_storage': 'granted'
+          });
+        }
+      } catch (e) { /* localStorage non disponibile (modalita' privacy) */ }
     </script>
 
     <!-- Google Tag Manager: container caricato sempre. Il firing dei tag (GA4,

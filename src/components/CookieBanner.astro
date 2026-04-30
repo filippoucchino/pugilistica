@@ -45,12 +45,13 @@
 
 <script is:inline>
   // Notifica a GTM (via Google Consent Mode v2) il consenso accordato dall'utente.
-  // GTM e' gia' caricato dal BaseLayout con i default Consent Mode v2 (denied su
-  // tutto cio' che richiede consenso). Qui aggiorniamo lo stato per "sbloccare"
-  // i tag configurati con consent gating su analytics_storage (GA4, Clarity).
-  // Concediamo solo le categorie effettivamente utilizzate dal sito: analytics
-  // e personalization. Le categorie ad_* restano denied perche' il sito non usa
+  // Concediamo solo le categorie effettivamente utilizzate dal sito: analytics e
+  // personalization. Le categorie ad_* restano denied perche' il sito non usa
   // pubblicita'. Se in futuro aggiungi Google Ads, aggiorna questo elenco.
+  // NB: il check di localStorage al pageload (per visitatori di ritorno con
+  // consenso gia' dato) avviene in BaseLayout.astro nel <head>, prima del
+  // bootstrap GTM, per garantire che i tag firano gia' al primo pageview.
+  // Qui in CookieBanner gestiamo solo l'evento di click sul banner.
   function grantConsent() {
     if (typeof window.gtag !== "function") return;
     window.gtag("consent", "update", {
@@ -59,16 +60,11 @@
     });
   }
 
-  // All'apertura della pagina:
-  // - se l'utente aveva gia' accettato, rilascia subito il consenso (i tag in
-  //   attesa partono entro la finestra "wait_for_update": 500ms)
-  // - se aveva rifiutato (o non scelto), non fare nulla: i default "denied"
-  //   restano in vigore e i tag non firano
-  // In entrambi i casi (accepted/rejected) il banner viene rimosso.
+  // All'apertura della pagina, se l'utente ha gia' espresso una preferenza
+  // (accept o reject), rimuovi il banner. Il consent update per gli "accepted"
+  // di ritorno e' gia' stato emesso in <head> dal BaseLayout.
   (function () {
-    var consent = localStorage.getItem("cookie_consent");
-    if (consent === "accepted") grantConsent();
-    if (consent) {
+    if (localStorage.getItem("cookie_consent")) {
       var banner = document.getElementById("cookie-banner");
       if (banner) banner.remove();
     }

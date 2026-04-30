@@ -815,13 +815,15 @@ Ultimo aggiornamento: 2026-04-30
       brand boxing. Decisione brand, non deviazione.
 
 - Google Tag Manager + Google Analytics 4 + Microsoft Clarity (Google Consent Mode v2):
-  - **Pattern scelto**: GTM caricato sempre dal `<head>` di `BaseLayout.astro`, con
-    Google Consent Mode v2 default state ("denied" su tutte le categorie non tecniche)
-    impostato **prima** dello snippet GTM. `CookieBanner.astro` non inietta più GTM:
-    al click su "Accetta" emette `gtag('consent', 'update', { analytics_storage:
-    'granted', personalization_storage: 'granted' })` per sbloccare i tag in attesa.
-    GTM ID `GTM-T955C9C7` hardcoded in 2 punti di `BaseLayout.astro` (script bootstrap
-    in `<head>` + `<noscript>` iframe in `<body>`); se cambia, aggiornare entrambi.
+  - **Pattern scelto**: GTM caricato sempre dal `<head>` di `BaseLayout.astro`. In
+    `<head>`, in quest'ordine: (1) consent default "denied" su tutte le categorie
+    non tecniche, (2) check di `localStorage.cookie_consent` — se "accepted" emette
+    subito `gtag('consent', 'update', ...)` per visitatori di ritorno, (3) bootstrap
+    GTM. `CookieBanner.astro` gestisce solo il click sul banner (chiama
+    `grantConsent()` per first-time accepters) e la rimozione del banner per chi ha
+    già scelto. GTM ID `GTM-T955C9C7` hardcoded in 2 punti di `BaseLayout.astro`
+    (script bootstrap in `<head>` + `<noscript>` iframe in `<body>`); se cambia,
+    aggiornare entrambi.
   - **Migrazione da load-on-consent (precedente) a Consent Mode v2 (attuale)**:
     motivazione = uniformità con gli altri siti WP del cliente che usano CMP con
     Consent Mode v2; debuggability di GTM Preview (sezione "Inizializzazione del
@@ -838,9 +840,24 @@ Ultimo aggiornamento: 2026-04-30
     con `ad_storage`, `ad_user_data`, `ad_personalization` = "granted" e aggiornare
     il testo del banner per citare la finalità marketing.
   - **`wait_for_update: 500`**: GTM attende fino a 500ms un eventuale update del
-    consenso prima di firare i tag. Per visitatori di ritorno con consenso già dato,
-    `CookieBanner.astro` chiama `grantConsent()` immediatamente al pageload, ben prima
-    della scadenza dei 500ms.
+    consenso prima di firare i tag con stato di default.
+  - **Check localStorage in `<head>` (NON in CookieBanner)**: il ramo "visitatore di
+    ritorno con consenso già dato" è gestito da uno snippet inline in
+    `BaseLayout.astro`, **subito dopo il consent default e prima del bootstrap GTM**.
+    Senza questo, il check arriverebbe troppo tardi: `CookieBanner.astro` vive in
+    fondo al `<body>` (dopo Footer), e su un sito con molti asset il parser HTML
+    raggiunge il suo `<script>` solo dopo che GTM ha già caricato il container e
+    fatto firare il page view trigger con stato "denied". Eseguendo il check in
+    `<head>`, quando GTM consuma il dataLayer trova già il consent update e fira
+    i tag al primo pageview. `CookieBanner.astro` mantiene solo il click handler
+    per i first-time accepters e la rimozione del banner.
+  - **Limitazione nota — first-time accepters**: il pageview della pagina di
+    atterraggio va perso quando l'utente clicca "Accetta" per la prima volta,
+    perché il tempo umano per leggere e cliccare supera quasi sempre i 500ms del
+    `wait_for_update`. I tag firano normalmente dalla pagina successiva. Per
+    recuperare anche il primo pageview, configurare lato GTM un trigger custom
+    sull'evento `consent_update` e farlo firare a GA4/Clarity in aggiunta a "All
+    Pages". Non implementato perché perdita di 1 pageview/sessione è accettabile.
   - **Configurazione lato GTM (non nel codice del sito)**: ogni tag (GA4 e Clarity)
     deve avere "Built-in Consent Settings" → "Require additional consent" →
     `analytics_storage`. Senza questo settaggio i tag firano sempre, ignorando il
