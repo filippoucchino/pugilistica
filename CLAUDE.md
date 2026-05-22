@@ -950,9 +950,25 @@ Ultimo aggiornamento: 2026-05-22
     "Il file contiene un virus"; `Get-MpThreatDetection` come oracolo per identificare il
     file colpito e il nome della signature.
 
+- Fix Hero section spacing: `py-[140px_80px]` era sintassi non valida in Tailwind 3 (`py-`
+  accetta un solo valore), causando spaziatura inconsistente tra header e H1 a seconda
+  dell'altezza del contenuto di ogni pagina. Sostituito con `pt-[140px] pb-[80px]` (desktop)
+  e `max-lg:pt-[130px] max-md:pt-[130px]` (schermi piccoli). Fix in `src/components/Hero.astro`.
+
+- YouTube aggiunto ai canali social della palestra (`https://www.youtube.com/@pugilisticabrianza`):
+  `siteInfo.social.youtube` in `shared.ts`; icona SVG stroke-style (rect + triangle) in
+  `SocialLinks.astro` (footer); terza card nella sezione "Seguici sui Social" di `contatti.astro`
+  (griglia da 2 a 3 colonne); YouTube aggiunto all'array `sameAs` del JSON-LD in `schema.ts`.
+
+- Orari di apertura corretti su tutte le sorgenti dati basandosi sul Google Business Profile
+  ufficiale. Orari GBP: Lun–Ven 08:00–11:00 / 12:30–13:30 / 17:00–21:00; Sab 10:00–12:00;
+  Dom chiuso. Aggiornati: `hours` in `shared.ts`, `openingHoursSpecification` in `schema.ts`,
+  testo descrittivo della sezione "Orari di apertura" in `contatti.astro`.
+  **Regola**: fonte degli orari = Google Business Profile, non il calendario corsi.
+
 ### In corso
 - Nessuna attività in corso
 
 ### Prossimo step
 - Verificare la leggibilità del favicon a 16×16 (il pugile ha molti dettagli): se non si distingue,
-  valutare una versione semplificata o un monogramma "PB" per le dimensioni piccole
+  valutare una versione semplificata o un monogramma "PB" per le piccole dimensioni

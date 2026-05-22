@@ -74,5 +74,22 @@ const alignClass = align === "center" ? "items-center text-center" : "items-star
         <circle cx="17.5" cy="6.5" r=".5" fill="currentColor" />
       </svg>
     </a>
+    <a
+      href={siteInfo.social.youtube}
+      target="_blank"
+      rel="noopener"
+      aria-label="YouTube Pugilistica Brianza"
+      class:list={[
+        box,
+        "border border-pb-border-default rounded-md flex items-center justify-center",
+        "transition-all duration-base ease-default",
+        "hover:border-brand hover:bg-[rgba(196,30,30,0.1)]",
+      ]}
+    >
+      <svg class:list={[icon, "fill-none stroke-pb-text-muted"]} viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="4"/>
+        <polygon points="10 8 16 12 10 16" class="fill-pb-text-muted" stroke="none"/>
+      </svg>
+    </a>
   </div>
 </div>

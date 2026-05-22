@@ -160,7 +160,7 @@ const pageSchema = buildPageSchema(
       >
         Seguici sui <span class="text-brand">social</span>
       </SectionHeading>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-narrow">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Instagram */}
         <a
           href={siteInfo.social.instagram}
@@ -208,6 +208,30 @@ const pageSchema = buildPageSchema(
             </div>
           </div>
         </a>
+
+        {/* YouTube */}
+        <a
+          href={siteInfo.social.youtube}
+          target="_blank"
+          rel="noopener"
+          class="group p-card-pad-lg border border-pb-border-default rounded-md bg-surface-card flex items-center gap-5 transition-all duration-base ease-default hover:border-brand hover:bg-[rgba(196,30,30,0.05)]"
+          aria-label="Apri canale YouTube di Pugilistica Brianza in una nuova scheda"
+        >
+          <span class="shrink-0 w-14 h-14 rounded-md border border-pb-border-default flex items-center justify-center bg-surface-base transition-colors duration-base group-hover:border-brand group-hover:bg-brand/10">
+            <svg class="w-7 h-7 fill-none stroke-pb-text-primary transition-colors duration-base group-hover:stroke-brand" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="4"/>
+              <polygon points="10 8 16 12 10 16" class="fill-pb-text-primary group-hover:fill-brand transition-colors duration-base" stroke="none"/>
+            </svg>
+          </span>
+          <div class="flex-1 min-w-0">
+            <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-1">YouTube</div>
+            <div class="text-lg font-semibold text-pb-text-primary truncate">@pugilisticabrianza</div>
+            <div class="text-sm text-pb-text-tertiary mt-1 flex items-center gap-1">
+              Seguici
+              <span class="transition-transform duration-base group-hover:translate-x-1">→</span>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -217,7 +241,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Orari"
-        description="La Pugilistica Brianza è aperta dal lunedì al venerdì dalle 08:00 alle 21:00, il sabato dalle 10:00 alle 12:00. I corsi si svolgono in fasce al mattino, in pausa pranzo e la sera durante la settimana; il sabato solo due fasce mattutine. Domenica la palestra resta chiusa."
+        description="La Pugilistica Brianza è aperta dal lunedì al venerdì dalle 08:00 alle 11:00, dalle 12:30 alle 13:30 e dalle 17:00 alle 21:00. Il sabato dalle 10:00 alle 12:00. Domenica la palestra resta chiusa. I corsi si svolgono in fasce al mattino, in pausa pranzo e la sera durante la settimana."
       >
         Orari di <span class="text-brand">apertura</span>
       </SectionHeading>
