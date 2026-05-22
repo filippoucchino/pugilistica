@@ -68,7 +68,7 @@ export const ACTIVITIES: Record<string, Activity> = {
   openGym:      { label: "OPEN GYM",       tags: ["open-gym"] },
   boxe:         { label: "BOXE",           tags: ["boxe"] },
   boxeAgonisti: { label: "BOXE AGONISTI",  tags: ["boxe-agonisti"] },
-  kidsBoxe:     { label: "KIDS BOXE",      tags: ["kids-boxe"], note: "6–12 anni" },
+  kidsBoxe:     { label: "KIDS BOXE",      tags: ["kids-boxe"], note: "8–12 anni" },
   hyrox:        { label: "HYROX",          tags: ["hyrox"] },
   pbHiit:       { label: "PB HIIT",        tags: ["pb-hiit"] },
 };
@@ -312,7 +312,7 @@ const activityDescriptions: Record<ActivityTag, string> = {
     "Sessione di allenamento libera in palestra con disponibilità di sacchi, pesi e attrezzature.",
   boxe: "Corso di pugilato per tutti i livelli con tecnica, sparring leggero e preparazione atletica.",
   "boxe-agonisti": "Allenamento avanzato riservato ai pugili agonisti in preparazione ai match.",
-  "kids-boxe": "Corso di pugilato per bambini e ragazzi dai 6 ai 12 anni.",
+  "kids-boxe": "Corso di pugilato per bambini e ragazzi dagli 8 ai 12 anni.",
   hyrox: "Allenamento Hyrox: forza funzionale, corsa e stazioni tematiche.",
   "pb-hiit": "Allenamento PB Hiit: interval training ad alta intensità per forza e resistenza.",
 };
