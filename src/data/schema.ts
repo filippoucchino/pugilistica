@@ -106,6 +106,18 @@ export function buildGym(): Record<string, unknown> {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         opens: "08:00",
+        closes: "11:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "12:30",
+        closes: "13:30",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "17:00",
         closes: "21:00",
       },
       {
@@ -122,7 +134,7 @@ export function buildGym(): Record<string, unknown> {
       contactType: "customer service",
       availableLanguage: "Italian",
     },
-    sameAs: [siteInfo.social.facebook, siteInfo.social.instagram],
+    sameAs: [siteInfo.social.facebook, siteInfo.social.instagram, siteInfo.social.youtube],
     areaServed: [
       "Barlassina",
       "Seveso",
