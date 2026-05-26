@@ -44,13 +44,20 @@ const pageSchema = buildPageSchema(
       >
         Chiamaci, scrivici <span class="text-brand">o vieni</span> in palestra
       </SectionHeading>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-narrow">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <ContactCard
           icon='<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>'
           label="Telefono"
           value={siteInfo.phone}
           href={siteInfo.phoneHref}
           subtitle="Chiamaci per informazioni sui corsi di pugilato, Hyrox e PB Hiit, per prenotare una prova gratuita o per qualsiasi domanda. Rispondiamo dal lunedì al sabato negli orari di apertura della palestra a Barlassina."
+        />
+        <ContactCard
+          icon='<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>'
+          label="Email"
+          value={siteInfo.email}
+          href={`mailto:${siteInfo.email}`}
+          subtitle="Scrivici per qualsiasi informazione. Per richieste urgenti preferisci il telefono o WhatsApp."
         />
         <ContactCard
           icon='<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="none"/>'
@@ -145,6 +152,7 @@ const pageSchema = buildPageSchema(
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
+        mapDirectionsUrl={siteInfo.mapDirectionsUrl}
         mapPreviewSrc={siteInfo.mapPreviewSrc}
         mapLabel={siteInfo.shortName}
       />

@@ -3,7 +3,7 @@
  * Footer — 4 colonne: brand, percorsi, info, contatti + bottom bar con social.
  */
 import { Image } from "astro:assets";
-import logoSrc from "@/assets/brand/logo.png";
+import logoSrc from "@/assets/brand/logo-pugilistica-brianza.svg";
 import { siteInfo, courseLinks, infoLinks } from "@/data/shared";
 import SocialLinks from "./SocialLinks.astro";
 
@@ -22,7 +22,7 @@ const currentYear = new Date().getFullYear();
             alt="Pugilistica Brianza"
             width={252}
             height={160}
-            class="h-20 w-auto"
+            class="h-32 w-auto"
             loading="lazy"
             decoding="async"
           />
@@ -68,6 +68,18 @@ const currentYear = new Date().getFullYear();
         <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-muted mb-4">
           Contatti
         </div>
+        <a
+          href={siteInfo.phoneHref}
+          class="block text-sm text-pb-text-tertiary py-[5px] no-underline transition-colors duration-base hover:text-pb-text-primary"
+        >
+          {siteInfo.phone}
+        </a>
+        <a
+          href={`mailto:${siteInfo.email}`}
+          class="block text-sm text-pb-text-tertiary py-[5px] no-underline transition-colors duration-base hover:text-pb-text-primary break-all"
+        >
+          {siteInfo.email}
+        </a>
         <span class="block text-sm text-pb-text-tertiary py-[5px]">{siteInfo.address}</span>
         <span class="block text-sm text-pb-text-tertiary py-[5px]">{siteInfo.city} ({siteInfo.province})</span>
         <span class="block text-sm text-pb-text-tertiary py-[5px]">Lun – Sab</span>

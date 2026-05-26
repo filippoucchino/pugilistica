@@ -471,7 +471,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-05-22
+Ultimo aggiornamento: 2026-05-26
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -965,6 +965,36 @@ Ultimo aggiornamento: 2026-05-22
   Dom chiuso. Aggiornati: `hours` in `shared.ts`, `openingHoursSpecification` in `schema.ts`,
   testo descrittivo della sezione "Orari di apertura" in `contatti.astro`.
   **Regola**: fonte degli orari = Google Business Profile, non il calendario corsi.
+
+- Logo SVG: Header e Footer ora usano `src/assets/brand/logo-pugilistica-brianza.svg`
+  (formato quadrato 1038×1038, fill bianco sul tema scuro) al posto del precedente `logo.png`.
+  Dimensioni CSS aumentate per compensare il rapporto quadrato: Header `h-20` (mobile `h-14`),
+  Footer `h-32`. Il file `logo-pugilistica-brianza-negativo.svg` (fill nero) è presente in
+  `src/assets/brand/` ma non usato nel sito.
+
+- Gallery aggiornate con nuove foto reali:
+  - **Pugilato**: 8 vecchie foto sostituite con 9 nuove da `src/assets/images/pugilato/New/`
+    (ring, pugile all'angolo, area sacchi, corde brandizzate, coach memorial, abbraccio trofeo,
+    Martina Caruso con destro e ai colpitori).
+  - **PB Hiit**: 1 foto aggiunta in coda (`prima-lezione-gratuita-hiit-...`) da `pb-hiit/New/`.
+  - **Hyrox**: 4 foto aggiunte in testa alla gallery (`sled-push`, `sled-pull`, `wall-ball`,
+    `sled-push-pesi`) da `hyrox/New/`. Inserite prima delle 8 esistenti.
+
+- Bottone "Indicazioni stradali" aggiunto a tutte le 8 pagine con sezione mappa.
+  Implementazione: `siteInfo.mapDirectionsUrl` aggiunto in `shared.ts` (URL `maps/dir/` con
+  `destination_place_id=ChIJ7RV4bbWXhkcRPtWYwS_OsB0`); prop `directionsUrl` aggiunta a
+  `MapFacade.astro` e `LocalSection.astro`; bottone rosso brand (`pb-btn-primary`) affiancato
+  al link "Apri in Google Maps". Apre Google Maps direttamente in modalità navigazione verso
+  Pugilistica Brianza. Pagine aggiornate: home, pugilato, hyrox, pb-hiit, chi-siamo, contatti,
+  lezioni-private-pugilato, prova-gratuita.
+
+- Contatti — email aggiunta in più punti:
+  - **Footer** colonna "Contatti": telefono ed email spostati come primi due item (prima
+    di indirizzo e orari), entrambi come link cliccabili (`tel:` e `mailto:`).
+  - **Pagina `/contatti/`**: aggiunta terza `ContactCard` per l'email con icona busta,
+    link `mailto:` e sottotesto. Griglia allargata da `md:grid-cols-2` a `md:grid-cols-3`
+    per ospitare le tre card (Telefono / Email / Indirizzo) in una riga. L'email
+    (`pugilisticabrianza@gmail.com`) era già in `siteInfo.email` — nessuna duplicazione.
 
 ### In corso
 - Nessuna attività in corso

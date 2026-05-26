@@ -32,6 +32,9 @@ export const siteInfo = {
     "https://www.google.com/maps/search/?api=1&query=Pugilistica+Brianza+Barlassina",
   // Immagine statica usata come facade (generata dai tile OSM per evitare il caricamento iniziale dell'iframe).
   mapPreviewSrc: "/images/map-pugilistica-brianza.png",
+  // Link indicazioni stradali: apre Google Maps direttamente in modalità navigazione.
+  mapDirectionsUrl:
+    "https://www.google.com/maps/dir/?api=1&destination=Pugilistica+Brianza&destination_place_id=ChIJ7RV4bbWXhkcRPtWYwS_OsB0",
   social: {
     facebook: "https://www.facebook.com/pugilistica",
     instagram: "https://www.instagram.com/pugilisticabrianza",

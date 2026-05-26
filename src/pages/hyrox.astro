@@ -31,6 +31,10 @@ import galWallBalls from "../assets/images/hyrox/wall-balls-allenamento-hyrox-pu
 import galAssaultBike from "../assets/images/hyrox/assault-bike-allenamento-hyrox-pugilistica-brianza.jpg";
 import galRower from "../assets/images/hyrox/rower-area-hyrox-pugilistica-brianza.jpg";
 import galSled from "../assets/images/hyrox/sled-attrezzatura-hyrox-pugilistica-brianza.jpg";
+import galNewSledPush from "../assets/images/hyrox/New/sled-push-hyrox-pugilistica-brianza.jpg";
+import galNewSledPull from "../assets/images/hyrox/New/sled-pull-hyrox-pugilistica-brianza.jpg";
+import galNewWallBall from "../assets/images/hyrox/New/wall-ball-hyrox-pugilistica-brianza.jpg";
+import galNewSledPesi from "../assets/images/hyrox/New/sled-push-pesi-pugilistica-brianza.jpg";
 
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
@@ -428,6 +432,10 @@ const pageSchema = buildPageSchema(
         Guarda <span class="text-brand">l'allenamento</span>
       </SectionHeading>
       <Gallery images={[
+        { src: galNewSledPush, alt: "Sled push durante l'allenamento Hyrox alla Pugilistica Brianza di Barlassina" },
+        { src: galNewSledPull, alt: "Sled pull durante una sessione Hyrox alla Pugilistica Brianza" },
+        { src: galNewWallBall, alt: "Wall ball durante il corso Hyrox alla Pugilistica Brianza" },
+        { src: galNewSledPesi, alt: "Sled push con pesi durante l'allenamento Hyrox alla Pugilistica Brianza" },
         { src: galPanoramica, alt: "Vista panoramica dell'area Hyrox alla Pugilistica Brianza: rower, sled, bilancieri e attrezzatura funzionale" },
         { src: galSimulazione, alt: "Simulazione gara Hyrox alla Pugilistica Brianza: sled push e rope pull con il gruppo che osserva" },
         { src: galSledPush, alt: "Ragazza che esegue sled push durante l'allenamento Hyrox" },
@@ -469,6 +477,7 @@ const pageSchema = buildPageSchema(
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
+        mapDirectionsUrl={siteInfo.mapDirectionsUrl}
         mapPreviewSrc={siteInfo.mapPreviewSrc}
         mapLabel={siteInfo.shortName}
       />

@@ -21,6 +21,8 @@ interface Props {
   mapEmbedUrl?: string;
   /** Link "apri in Google Maps" per il fallback testuale sotto la mappa. */
   mapExternalUrl?: string;
+  /** Link indicazioni stradali: apre Maps in modalità navigazione. */
+  mapDirectionsUrl?: string;
   /** Immagine statica di preview usata dal facade. */
   mapPreviewSrc?: string;
   /** Etichetta usata negli aria-label/alt della mappa. */
@@ -34,11 +36,12 @@ const {
   details = [],
   mapEmbedUrl,
   mapExternalUrl,
+  mapDirectionsUrl,
   mapPreviewSrc,
   mapLabel = "Pugilistica Brianza",
 } = Astro.props;
 
-const hasMap = Boolean(mapEmbedUrl && mapExternalUrl && mapPreviewSrc);
+const hasMap = Boolean(mapEmbedUrl && mapExternalUrl && mapDirectionsUrl && mapPreviewSrc);
 ---
 
 <div class="grid grid-cols-local gap-12 items-start max-md:grid-cols-1">
@@ -84,6 +87,7 @@ const hasMap = Boolean(mapEmbedUrl && mapExternalUrl && mapPreviewSrc);
     <MapFacade
       embedUrl={mapEmbedUrl!}
       externalUrl={mapExternalUrl!}
+      directionsUrl={mapDirectionsUrl!}
       previewSrc={mapPreviewSrc!}
       label={mapLabel}
     />

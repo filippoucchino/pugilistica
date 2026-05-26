@@ -24,14 +24,15 @@ import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 import morenoPhoto from "../assets/images/bio/moreno-bragato.jpg";
 
 // Foto gallery: importate come ES module per ottimizzazione automatica (WebP, width/height, compressione).
-import galPanoramica from "../assets/images/pugilato/palestra-panoramica-ring-pugilistica-brianza.jpg";
-import galRing from "../assets/images/pugilato/ring-boxe-pugilistica-brianza-barlassina.jpg";
-import galAllenamento from "../assets/images/pugilato/allenamento-sacchi-pugili-pugilistica-brianza.jpg";
-import galSacchi from "../assets/images/pugilato/sacchi-pesanti-boxe-pugilistica-brianza.jpg";
-import galSalaSacchi from "../assets/images/pugilato/sala-sacchi-panoramica-pugilistica-brianza.jpg";
-import galRingSacco from "../assets/images/pugilato/ring-sacco-rosso-pugilistica-brianza.jpg";
-import galAngolo from "../assets/images/pugilato/angolo-ring-corde-pugilistica-brianza.jpg";
-import galIngresso from "../assets/images/pugilato/ingresso-reception-pugilistica-brianza.jpg";
+import galPugileRing from "../assets/images/pugilato/New/pugile-ring-corde-pugilistica-brianza.jpg";
+import galPugileAngolo from "../assets/images/pugilato/New/pugile-angolo-ring-pugilistica-brianza.jpg";
+import galAreaSacchi from "../assets/images/pugilato/New/area-sacchi-allenamento-pugilistica-brianza.jpg";
+import galRingPalestra from "../assets/images/pugilato/New/ring-palestra-pugilistica-brianza.jpg";
+import galCordeRing from "../assets/images/pugilato/New/corde-ring-brandizzate-pugilistica-brianza.jpg";
+import galCoachMemorial from "../assets/images/pugilato/New/coach-memorial-antiga-pisapia.jpg";
+import galAbbraccioTrofeo from "../assets/images/pugilato/New/abbraccio-coach-pugile-trofeo-barlassina.jpg";
+import galMartinaDestro from "../assets/images/pugilato/New/martina-caruso-diretto-destro-pugilistica-brianza.jpg";
+import galMartinaColpitori from "../assets/images/pugilato/New/martina-caruso-allenamento-colpitori-pugilistica-brianza.jpg";
 
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
@@ -448,14 +449,15 @@ const pageSchema = buildPageSchema(
         Guarda <span class="text-brand">l'allenamento</span>
       </SectionHeading>
       <Gallery images={[
-        { src: galPanoramica, alt: "Vista panoramica della palestra Pugilistica Brianza: sala sacchi e ring da boxe con bandiere internazionali" },
-        { src: galRing, alt: "Ring da boxe della Pugilistica Brianza di Barlassina con bandiera laterale e bandiere internazionali" },
-        { src: galAllenamento, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione di boxe" },
-        { src: galSacchi, alt: "Sacchi pesanti Leone e Combat Sports in fila nella sala boxe" },
-        { src: galSalaSacchi, alt: "Sala sacchi della Pugilistica Brianza: fila di sacchi pesanti appesi con pavimento rosso" },
-        { src: galRingSacco, alt: "Ring da boxe e sacco rosso Leone con logo sul bordo ring" },
-        { src: galAngolo, alt: "Dettaglio angolo del ring con corde rosse e bandiere internazionali" },
-        { src: galIngresso, alt: "Ingresso e reception della Pugilistica Brianza: bancone con logo, locandine eventi e scaffali attrezzatura" },
+        { src: galPugileRing, alt: "Pugile sul ring della Pugilistica Brianza tra le corde durante l'allenamento" },
+        { src: galPugileAngolo, alt: "Pugile nell'angolo del ring durante una sessione di boxe alla Pugilistica Brianza" },
+        { src: galAreaSacchi, alt: "Area sacchi pesanti durante un allenamento di boxe alla Pugilistica Brianza di Barlassina" },
+        { src: galRingPalestra, alt: "Ring da boxe della palestra Pugilistica Brianza a Barlassina" },
+        { src: galCordeRing, alt: "Corde del ring con brand Pugilistica Brianza" },
+        { src: galCoachMemorial, alt: "Coach al Memorial Antiga Pisapia, torneo di pugilato" },
+        { src: galAbbraccioTrofeo, alt: "Coach e pugile si abbracciano con il trofeo a Barlassina" },
+        { src: galMartinaDestro, alt: "Martina Caruso esegue un diretto destro durante l'allenamento alla Pugilistica Brianza" },
+        { src: galMartinaColpitori, alt: "Martina Caruso si allena ai colpitori alla Pugilistica Brianza" },
       ]} />
     </div>
   </section>
@@ -489,6 +491,7 @@ const pageSchema = buildPageSchema(
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
+        mapDirectionsUrl={siteInfo.mapDirectionsUrl}
         mapPreviewSrc={siteInfo.mapPreviewSrc}
         mapLabel={siteInfo.shortName}
       />

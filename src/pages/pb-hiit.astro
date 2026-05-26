@@ -28,6 +28,7 @@ import galColpitori from "../assets/images/pb-hiit/lavoro-colpitori-boxe-pb-hiit
 import galSwing from "../assets/images/pb-hiit/kettlebell-swing-circuito-pb-hiit-pugilistica-brianza.jpg";
 import galSacco from "../assets/images/pb-hiit/sacco-pesante-boxe-pb-hiit-pugilistica-brianza.jpg";
 import galKettlebell from "../assets/images/pb-hiit/esercizio-kettlebell-pb-hiit-pugilistica-brianza.jpg";
+import galPrimaLezione from "../assets/images/pb-hiit/New/prima-lezione-gratuita-hiit-pugilistica-brianza-barlassina.jpg";
 
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
@@ -430,6 +431,7 @@ const pageSchema = buildPageSchema(
         { src: galSwing, alt: "Kettlebell swing e stacco con bilanciere nel circuito PB Hiit" },
         { src: galSacco, alt: "Allenamento al sacco pesante durante il corso PB Hiit alla Pugilistica Brianza di Barlassina" },
         { src: galKettlebell, alt: "Esercizio con kettlebell davanti allo specchio durante il PB Hiit" },
+        { src: galPrimaLezione, alt: "Prima lezione gratuita del corso PB Hiit alla Pugilistica Brianza di Barlassina" },
       ]} />
     </div>
   </section>
@@ -463,6 +465,7 @@ const pageSchema = buildPageSchema(
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
+        mapDirectionsUrl={siteInfo.mapDirectionsUrl}
         mapPreviewSrc={siteInfo.mapPreviewSrc}
         mapLabel={siteInfo.shortName}
       />
