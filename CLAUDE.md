@@ -471,7 +471,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-05-27
+Ultimo aggiornamento: 2026-05-28
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -1031,6 +1031,15 @@ Ultimo aggiornamento: 2026-05-27
     aggiornamento testo. Pill attiva: `border-brand text-pb-text-primary`.
   - **8 pagine aggiornate** (index, pugilato, hyrox, pb-hiit, chi-siamo, lezioni-private-pugilato,
     contatti, prova-gratuita): import `zones` → `zonesInfo`, prop `zones={zones}` → `zonesInfo={zonesInfo}`.
+
+- Gallery persone riunita nella sezione "Come si svolge" (pugilato, hyrox, pb-hiit):
+  rimosso l'heading separato (topline, titolo "XXX in azione" e testo descrittivo) che
+  apriva una sezione indipendente dopo "Come si svolge". Le immagini sono ora posizionate
+  direttamente sotto la lista `LessonStep`, all'interno della stessa `<section>` e `<div class="pb-container">`.
+  Nessuna modifica alle immagini o ai loro `alt`.
+
+- Descrizione pill "Brianza" corretta: "Brianza milanese" → "Brianza occidentale"
+  in `zonesInfo` dentro `src/data/shared.ts`.
 
 ### In corso
 - Nessuna attività in corso

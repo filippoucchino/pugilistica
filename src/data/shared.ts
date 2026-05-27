@@ -108,7 +108,7 @@ export const zonesInfo = [
   { name: "Seregno",   description: "Da Seregno sono circa 6-8 km e 10-14 minuti in auto via SP131, percorso breve su viabilità locale verso Barlassina." },
   { name: "Desio",     description: "Da Desio sono circa 10-12 km e 15-20 minuti in auto via SP131 verso Seregno, stima senza traffico intenso." },
   { name: "Muggiò",    description: "Da Muggiò sono circa 16-19 km e 22-30 minuti in auto via SP131 passando per Desio e Seregno, più esposto al traffico nelle ore di punta." },
-  { name: "Brianza",   description: "Pugilistica Brianza è al centro della Brianza milanese: raggiungiamo Meda, Cesano Maderno, Cogliate, Carate Brianza e tutta la zona." },
+  { name: "Brianza",   description: "Pugilistica Brianza è al centro della Brianza occidentale: raggiungiamo Meda, Cesano Maderno, Cogliate, Carate Brianza e tutta la zona." },
 ];
 export const zones = zonesInfo.map((z) => z.name);
 
