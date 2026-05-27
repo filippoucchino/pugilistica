@@ -12,10 +12,16 @@ interface Detail {
   text: string;
 }
 
+interface ZoneInfo {
+  name: string;
+  description: string;
+}
+
 interface Props {
   address: string;
   addressLabel?: string;
   zones?: string[];
+  zonesInfo?: ZoneInfo[];
   details?: Detail[];
   /** URL di embed Google Maps (src dell'iframe). */
   mapEmbedUrl?: string;
@@ -33,6 +39,7 @@ const {
   address,
   addressLabel = "Sede",
   zones = [],
+  zonesInfo,
   details = [],
   mapEmbedUrl,
   mapExternalUrl,
@@ -42,6 +49,8 @@ const {
 } = Astro.props;
 
 const hasMap = Boolean(mapEmbedUrl && mapExternalUrl && mapDirectionsUrl && mapPreviewSrc);
+const hasZonesInfo = zonesInfo && zonesInfo.length > 0;
+const pillList = hasZonesInfo ? zonesInfo : zones.map((name) => ({ name, description: "" }));
 ---
 
 <div class="grid grid-cols-local gap-12 items-start max-md:grid-cols-1">
@@ -52,16 +61,45 @@ const hasMap = Boolean(mapEmbedUrl && mapExternalUrl && mapDirectionsUrl && mapP
       <span set:html={address} />
     </div>
 
-    {zones.length > 0 && (
-      <div class="flex gap-2 flex-wrap">
-        {zones.map((zone) => (
-          <span
-            class="py-[5px] px-3.5 border border-pb-border-default rounded-full
-                   text-xs text-pb-text-muted font-medium"
+    {pillList.length > 0 && (
+      <div>
+        <div class="flex gap-2 flex-wrap" id="zone-pills">
+          {pillList.map((zone) => (
+            hasZonesInfo ? (
+              <button
+                class="py-[5px] px-3.5 border border-pb-border-default rounded-full
+                       text-xs text-pb-text-muted font-medium transition-colors duration-150
+                       hover:border-brand hover:text-pb-text-primary
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand
+                       cursor-pointer"
+                data-zone={zone.name}
+                data-description={zone.description}
+                aria-expanded="false"
+                type="button"
+              >
+                {zone.name}
+              </button>
+            ) : (
+              <span
+                class="py-[5px] px-3.5 border border-pb-border-default rounded-full
+                       text-xs text-pb-text-muted font-medium"
+              >
+                {zone.name}
+              </span>
+            )
+          ))}
+        </div>
+        {hasZonesInfo && (
+          <div
+            id="zone-desc"
+            aria-live="polite"
+            class="overflow-hidden transition-all duration-200"
+            style="max-height: 0;"
           >
-            {zone}
-          </span>
-        ))}
+            <p class="mt-3 text-sm text-pb-text-secondary leading-relaxed
+                      border-l-2 border-brand pl-3" id="zone-desc-text"></p>
+          </div>
+        )}
       </div>
     )}
 
@@ -101,3 +139,39 @@ const hasMap = Boolean(mapEmbedUrl && mapExternalUrl && mapDirectionsUrl && mapP
     </div>
   )}
 </div>
+
+<script is:inline>
+  (function () {
+    var pills = document.querySelectorAll("#zone-pills [data-zone]");
+    var descBox = document.getElementById("zone-desc");
+    var descText = document.getElementById("zone-desc-text");
+    if (!pills.length || !descBox || !descText) return;
+
+    var active = null;
+
+    pills.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var isSame = active === btn;
+
+        // Resetta tutti i bottoni
+        pills.forEach(function (b) {
+          b.classList.remove("border-brand", "text-pb-text-primary");
+          b.setAttribute("aria-expanded", "false");
+        });
+
+        if (isSame) {
+          // Chiudi
+          active = null;
+          descBox.style.maxHeight = "0";
+        } else {
+          // Apri con il testo della città selezionata
+          active = btn;
+          btn.classList.add("border-brand", "text-pb-text-primary");
+          btn.setAttribute("aria-expanded", "true");
+          descText.textContent = btn.getAttribute("data-description");
+          descBox.style.maxHeight = descBox.scrollHeight + 120 + "px";
+        }
+      });
+    });
+  })();
+</script>

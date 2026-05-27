@@ -101,15 +101,16 @@ export const localDetails = [
 ];
 
 /* — Zone servite — */
-export const zones = [
-  "Barlassina",
-  "Seveso",
-  "Lissone",
-  "Seregno",
-  "Desio",
-  "Muggiò",
-  "Brianza",
+export const zonesInfo = [
+  { name: "Barlassina", description: "La palestra è in Via Giovanni Segantini 29, nel cuore di Barlassina. In auto sei lì in 3-5 minuti (1-2 km); a piedi dal centro circa 12-15 minuti lungo Via Roma." },
+  { name: "Seveso",     description: "Seveso è vicinissima: circa 3-4 km e 6-9 minuti in auto lungo la SS35 dei Giovi, tutto su viabilità locale senza autostrada." },
+  { name: "Lissone",   description: "Da Lissone sono circa 13-15 km e 18-25 minuti in auto via SP131, con percorso variabile a seconda che si passi per Seregno o Desio." },
+  { name: "Seregno",   description: "Da Seregno sono circa 6-8 km e 10-14 minuti in auto via SP131, percorso breve su viabilità locale verso Barlassina." },
+  { name: "Desio",     description: "Da Desio sono circa 10-12 km e 15-20 minuti in auto via SP131 verso Seregno, stima senza traffico intenso." },
+  { name: "Muggiò",    description: "Da Muggiò sono circa 16-19 km e 22-30 minuti in auto via SP131 passando per Desio e Seregno, più esposto al traffico nelle ore di punta." },
+  { name: "Brianza",   description: "Pugilistica Brianza è al centro della Brianza milanese: raggiungiamo Meda, Cesano Maderno, Cogliate, Carate Brianza e tutta la zona." },
 ];
+export const zones = zonesInfo.map((z) => z.name);
 
 /* — Nav links (usati in Header e Footer) — */
 export const navLinks = [

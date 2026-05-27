@@ -6,7 +6,7 @@ import BenefitItem from "../components/BenefitItem.astro";
 import LessonStep from "../components/LessonStep.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import LocalSection from "../components/LocalSection.astro";
-import { localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildFreeTrialOffer } from "@/data/schema";
 
 // Unica CTA della pagina: contatto diretto via WhatsApp al numero del coach.
@@ -196,7 +196,7 @@ const pageSchema = buildPageSchema(
       <LocalSection
         address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
         addressLabel={siteInfo.name}
-        zones={zones}
+        zonesInfo={zonesInfo}
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}

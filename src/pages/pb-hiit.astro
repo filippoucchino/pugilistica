@@ -16,7 +16,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
-import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo } from "@/data/schema";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
@@ -28,7 +28,7 @@ import galColpitori from "../assets/images/pb-hiit/lavoro-colpitori-boxe-pb-hiit
 import galSwing from "../assets/images/pb-hiit/kettlebell-swing-circuito-pb-hiit-pugilistica-brianza.jpg";
 import galSacco from "../assets/images/pb-hiit/sacco-pesante-boxe-pb-hiit-pugilistica-brianza.jpg";
 import galKettlebell from "../assets/images/pb-hiit/esercizio-kettlebell-pb-hiit-pugilistica-brianza.jpg";
-import galPrimaLezione from "../assets/images/pb-hiit/New/prima-lezione-gratuita-hiit-pugilistica-brianza-barlassina.jpg";
+
 
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
@@ -338,6 +338,25 @@ const pageSchema = buildPageSchema(
     </div>
   </section>
 
+  <!-- GALLERY PERSONE -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="In sessione"
+        description="Il corso è guidato da Stefano Rizzo (ex pugile agonista e certificato FIPE), che costruisce ogni sessione unendo l'alta intensità alla componente boxe della palestra. Le sessioni includono circuiti a stazioni, lavoro al sacco pesante, colpitori con guantoni e kettlebell, per un allenamento che combina cardio e forza, aperto a uomini e donne di ogni livello."
+      >
+        PB Hiit in <span class="text-brand">azione</span>
+      </SectionHeading>
+      <Gallery images={[
+        { src: galCircuito, alt: "Circuito di gruppo PB Hiit alla Pugilistica Brianza: allieve su stazioni diverse con bilancieri e corpo libero" },
+        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione PB Hiit" },
+        { src: galSwing, alt: "Kettlebell swing e stacco con bilanciere nel circuito PB Hiit" },
+        { src: galSacco, alt: "Allenamento al sacco pesante durante il corso PB Hiit alla Pugilistica Brianza di Barlassina" },
+        { src: galKettlebell, alt: "Esercizio con kettlebell davanti allo specchio durante il PB Hiit" },
+      ]} />
+    </div>
+  </section>
+
   <!-- IL COACH -->
   <section class="pb-section fade-up">
     <div class="pb-container">
@@ -417,25 +436,6 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 8. GALLERY -->
-  <section class="pb-section fade-up">
-    <div class="pb-container">
-      <SectionHeading
-        topline="Gallery"
-        description="Gli spazi e gli esercizi del corso PB Hiit: circuiti di gruppo, kettlebell swing, lavoro al sacco pesante, colpitori e bilancieri. Dai un'occhiata prima di venire a provare."
-      >
-        Guarda <span class="text-brand">l'allenamento</span>
-      </SectionHeading>
-      <Gallery images={[
-        { src: galCircuito, alt: "Circuito di gruppo PB Hiit alla Pugilistica Brianza: allieve su stazioni diverse con bilancieri e corpo libero" },
-        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione PB Hiit" },
-        { src: galSwing, alt: "Kettlebell swing e stacco con bilanciere nel circuito PB Hiit" },
-        { src: galSacco, alt: "Allenamento al sacco pesante durante il corso PB Hiit alla Pugilistica Brianza di Barlassina" },
-        { src: galKettlebell, alt: "Esercizio con kettlebell davanti allo specchio durante il PB Hiit" },
-        { src: galPrimaLezione, alt: "Prima lezione gratuita del corso PB Hiit alla Pugilistica Brianza di Barlassina" },
-      ]} />
-    </div>
-  </section>
-
   <!-- 9. FAQ -->
   <section class="pb-section pb-section--alt fade-up">
     <div class="pb-container">
@@ -461,7 +461,7 @@ const pageSchema = buildPageSchema(
       <LocalSection
         address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
         addressLabel={siteInfo.name}
-        zones={zones}
+        zonesInfo={zonesInfo}
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}

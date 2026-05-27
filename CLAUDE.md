@@ -471,7 +471,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-05-26
+Ultimo aggiornamento: 2026-05-27
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -996,9 +996,47 @@ Ultimo aggiornamento: 2026-05-26
     per ospitare le tre card (Telefono / Email / Indirizzo) in una riga. L'email
     (`pugilisticabrianza@gmail.com`) era già in `siteInfo.email` — nessuna duplicazione.
 
+- Gallery riorganizzate in due sezioni separate per pugilato e hyrox:
+  - **Struttura**: ogni pagina corso ha ora due sezioni gallery distinte — "persone in allenamento"
+    (inserita dopo "Come si svolge") e "attrezzatura/spazi" (rimasta nella posizione originale
+    prima delle FAQ). Per pb-hiit esiste solo la sezione persone (nessuna foto attrezzatura disponibile).
+  - **Pugilato**: persone (galPugileAngolo, galCoachMemorial, galAbbraccioTrofeo, galMartinaColpitori)
+    con topline "Sul ring", titolo "Boxe in azione"; attrezzatura (galAreaSacchi, galRingPalestra,
+    galCordeRing, galSacchiArea) con topline "Gli spazi", titolo "Il ring e la sala sacchi".
+  - **Hyrox**: persone (8 foto azione: sled push/pull, wall ball, sled pesi, ski-erg, assault bike,
+    rower, manubri) con topline "In sessione", titolo "Hyrox in azione"; attrezzatura (panoramica,
+    rower, sled, sled push/pull) con topline "L'attrezzatura", titolo "Sled, rower e SkiErg".
+  - **PB Hiit**: persone (circuito, colpitori, swing, sacco, kettlebell) con topline "In sessione",
+    titolo "PB Hiit in azione". Sezione attrezzatura da aggiungere quando ci saranno le foto.
+  - **Testi descrittivi** nelle sezioni "persone": ogni pagina corso ha un paragrafo che contestualizza
+    le figure nelle foto. Pugilato: Stefano Rizzo + Moreno Bragato (con credenziali tra parentesi) +
+    Bruno Elli + menzione Martina Caruso come esempio di boxe femminile. Hyrox: Stefano Rizzo (Coach
+    Hyrox certificato Accademia 365), attività delle stazioni, simulazione Hyrox singolo/coppia, misto
+    uomini/donne. PB Hiit: Stefano Rizzo (ex pugile agonista + FIPE), circuiti a stazioni, sacco/colpitori/
+    kettlebell, cardio+forza, aperto a tutti i livelli.
+  - **Regola editoriale gallery persone**: testo focalizzato sulle figure presenti nelle foto, credenziali
+    tra parentesi (es. "Stefano Rizzo (Maestro 2° livello FPI ed ex pugile agonista)"), nessun em-dash,
+    frase scorrevole senza capoversi marcatori tipo ":".
+
+- Zone pill interattive nella sezione "Dove siamo" (tutte le 8 pagine con LocalSection):
+  - **`src/data/shared.ts`**: `zones` (array di stringhe) sostituito con `zonesInfo` tipizzato
+    `{ name: string; description: string }[]`. `zones` mantenuto come alias derivato
+    `zonesInfo.map(z => z.name)` per backward compat. Descrizioni includono distanza in km,
+    tempo in auto e nome della strada principale (SS35 dei Giovi per Seveso; SP131 per Lissone,
+    Seregno, Desio, Muggiò; Via Roma per Barlassina a piedi).
+  - **`src/components/LocalSection.astro`**: nuova interfaccia `ZoneInfo` e prop `zonesInfo?`.
+    Quando passata, le pill vengono renderizzate come `<button>` con `data-zone` e
+    `data-description`. Sotto le pill: `<div id="zone-desc" aria-live="polite">` con animazione
+    CSS `max-height` (0 → scrollHeight px). `<script is:inline>` gestisce toggle attivo e
+    aggiornamento testo. Pill attiva: `border-brand text-pb-text-primary`.
+  - **8 pagine aggiornate** (index, pugilato, hyrox, pb-hiit, chi-siamo, lezioni-private-pugilato,
+    contatti, prova-gratuita): import `zones` → `zonesInfo`, prop `zones={zones}` → `zonesInfo={zonesInfo}`.
+
 ### In corso
 - Nessuna attività in corso
 
 ### Prossimo step
+- Aggiungere foto attrezzatura a pb-hiit e creare la seconda sezione gallery (topline "La palestra")
+  seguendo lo stesso pattern di pugilato e hyrox
 - Verificare la leggibilità del favicon a 16×16 (il pugile ha molti dettagli): se non si distingue,
   valutare una versione semplificata o un monogramma "PB" per le piccole dimensioni

@@ -6,7 +6,7 @@ import ContactCard from "../components/ContactCard.astro";
 import FormField from "../components/FormField.astro";
 import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
-import { localDetails, zones, siteInfo, hours } from "@/data/shared";
+import { localDetails, zonesInfo, siteInfo, hours } from "@/data/shared";
 import { buildPageSchema, buildGym, buildWebPage, buildBreadcrumb } from "@/data/schema";
 
 const pageSchema = buildPageSchema(
@@ -148,7 +148,7 @@ const pageSchema = buildPageSchema(
       <LocalSection
         address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
         addressLabel={siteInfo.name}
-        zones={zones}
+        zonesInfo={zonesInfo}
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}

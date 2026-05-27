@@ -16,7 +16,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
-import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo } from "@/data/schema";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
@@ -24,17 +24,17 @@ import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 
 // Foto gallery: importate come ES module per ottimizzazione automatica (WebP, width/height, compressione).
 import galPanoramica from "../assets/images/hyrox/area-functional-panoramica-hyrox-pugilistica-brianza.jpg";
-import galSimulazione from "../assets/images/hyrox/simulazione-gara-hyrox-pugilistica-brianza.jpg";
-import galSledPush from "../assets/images/hyrox/sled-push-allenamento-hyrox-pugilistica-brianza.jpg";
-import galSledPull from "../assets/images/hyrox/sled-pull-fune-hyrox-pugilistica-brianza.jpg";
-import galWallBalls from "../assets/images/hyrox/wall-balls-allenamento-hyrox-pugilistica-brianza.jpg";
-import galAssaultBike from "../assets/images/hyrox/assault-bike-allenamento-hyrox-pugilistica-brianza.jpg";
 import galRower from "../assets/images/hyrox/rower-area-hyrox-pugilistica-brianza.jpg";
 import galSled from "../assets/images/hyrox/sled-attrezzatura-hyrox-pugilistica-brianza.jpg";
 import galNewSledPush from "../assets/images/hyrox/New/sled-push-hyrox-pugilistica-brianza.jpg";
 import galNewSledPull from "../assets/images/hyrox/New/sled-pull-hyrox-pugilistica-brianza.jpg";
 import galNewWallBall from "../assets/images/hyrox/New/wall-ball-hyrox-pugilistica-brianza.jpg";
 import galNewSledPesi from "../assets/images/hyrox/New/sled-push-pesi-pugilistica-brianza.jpg";
+import galNewSledPushPull from "../assets/images/hyrox/New/sled-push-pull-simulazione-hyrox-pugilistica-brianza.jpg";
+import galNewSkiErg from "../assets/images/hyrox/New/ski-erg-gruppo-hyrox-pugilistica-brianza.jpg";
+import galNewAssaultBike from "../assets/images/hyrox/New/assault-bike-cardio-hyrox-pugilistica-brianza.jpg";
+import galNewRower from "../assets/images/hyrox/New/rower-allenamento-hyrox-pugilistica-brianza.jpg";
+import galNewManubri from "../assets/images/hyrox/New/manubri-esagonali-pugilistica-brianza.jpg";
 
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
@@ -344,6 +344,28 @@ const pageSchema = buildPageSchema(
     </div>
   </section>
 
+  <!-- GALLERY PERSONE -->
+  <section class="pb-section fade-up">
+    <div class="pb-container">
+      <SectionHeading
+        topline="In sessione"
+        description="Il corso è guidato da Stefano Rizzo (Coach Hyrox certificato Accademia 365), ancora atleta attivo nelle gare Hyrox. Le sessioni coprono tutte le stazioni della gara, sled push e pull, wall ball, ski-erg, assault bike e rower, con simulazioni Hyrox per una preparazione Hyrox completa, in singolo o in coppia. Uomini e donne si allenano insieme con lo stesso metodo."
+      >
+        Hyrox in <span class="text-brand">azione</span>
+      </SectionHeading>
+      <Gallery images={[
+        { src: galNewSledPush, alt: "Sled push durante l'allenamento Hyrox alla Pugilistica Brianza di Barlassina" },
+        { src: galNewSledPull, alt: "Sled pull durante una sessione Hyrox alla Pugilistica Brianza" },
+        { src: galNewWallBall, alt: "Wall ball durante il corso Hyrox alla Pugilistica Brianza" },
+        { src: galNewSledPesi, alt: "Sled push con pesi durante l'allenamento Hyrox alla Pugilistica Brianza" },
+        { src: galNewSkiErg, alt: "Gruppo che si allena allo ski-erg durante il corso Hyrox alla Pugilistica Brianza" },
+        { src: galNewAssaultBike, alt: "Allenamento cardio su assault bike durante una sessione Hyrox alla Pugilistica Brianza" },
+        { src: galNewRower, alt: "Atleta al rower durante l'allenamento Hyrox alla Pugilistica Brianza di Barlassina" },
+        { src: galNewManubri, alt: "Manubri esagonali nell'area Hyrox della Pugilistica Brianza" },
+      ]} />
+    </div>
+  </section>
+
   <!-- IL COACH -->
   <section class="pb-section fade-up">
     <div class="pb-container">
@@ -426,24 +448,16 @@ const pageSchema = buildPageSchema(
   <section class="pb-section fade-up">
     <div class="pb-container">
       <SectionHeading
-        topline="Gallery"
-        description="Gli spazi della Pugilistica Brianza dedicati al corso Hyrox: area functional con rower, sled, SkiErg, bilancieri, farmer carry e wall balls. Guarda come si allena prima di venire a provare."
+        topline="L'attrezzatura"
+        description="Gli spazi della Pugilistica Brianza dedicati al corso Hyrox: area functional con rower, sled, SkiErg, bilancieri, farmer carry e wall balls. Dai un'occhiata prima di venire a provare."
       >
-        Guarda <span class="text-brand">l'allenamento</span>
+        Sled, rower e <span class="text-brand">SkiErg</span>
       </SectionHeading>
       <Gallery images={[
-        { src: galNewSledPush, alt: "Sled push durante l'allenamento Hyrox alla Pugilistica Brianza di Barlassina" },
-        { src: galNewSledPull, alt: "Sled pull durante una sessione Hyrox alla Pugilistica Brianza" },
-        { src: galNewWallBall, alt: "Wall ball durante il corso Hyrox alla Pugilistica Brianza" },
-        { src: galNewSledPesi, alt: "Sled push con pesi durante l'allenamento Hyrox alla Pugilistica Brianza" },
         { src: galPanoramica, alt: "Vista panoramica dell'area Hyrox alla Pugilistica Brianza: rower, sled, bilancieri e attrezzatura funzionale" },
-        { src: galSimulazione, alt: "Simulazione gara Hyrox alla Pugilistica Brianza: sled push e rope pull con il gruppo che osserva" },
-        { src: galSledPush, alt: "Ragazza che esegue sled push durante l'allenamento Hyrox" },
-        { src: galSledPull, alt: "Ragazzo che esegue sled pull con fune durante il corso Hyrox" },
-        { src: galWallBalls, alt: "Due allieve con maglie Pugilistica Brianza lanciano wall balls durante il corso Hyrox" },
-        { src: galAssaultBike, alt: "Allenamento su assault bike durante una sessione Hyrox" },
         { src: galRower, alt: "Rower nell'area Hyrox con atleta in allenamento sullo sfondo" },
         { src: galSled, alt: "Sled carico con dischi nell'area Hyrox della Pugilistica Brianza di Barlassina" },
+        { src: galNewSledPushPull, alt: "Simulazione sled push e pull durante una sessione Hyrox alla Pugilistica Brianza" },
       ]} />
     </div>
   </section>
@@ -473,7 +487,7 @@ const pageSchema = buildPageSchema(
       <LocalSection
         address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
         addressLabel={siteInfo.name}
-        zones={zones}
+        zonesInfo={zonesInfo}
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
