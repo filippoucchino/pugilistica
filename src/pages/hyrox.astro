@@ -341,18 +341,6 @@ const pageSchema = buildPageSchema(
       <ol class="flex flex-col list-none pl-0 m-0" style="counter-reset: step;">
         {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
       </ol>
-    </div>
-  </section>
-
-  <!-- GALLERY PERSONE -->
-  <section class="pb-section fade-up">
-    <div class="pb-container">
-      <SectionHeading
-        topline="In sessione"
-        description="Il corso è guidato da Stefano Rizzo (Coach Hyrox certificato Accademia 365), ancora atleta attivo nelle gare Hyrox. Le sessioni coprono tutte le stazioni della gara, sled push e pull, wall ball, ski-erg, assault bike e rower, con simulazioni Hyrox per una preparazione Hyrox completa, in singolo o in coppia. Uomini e donne si allenano insieme con lo stesso metodo."
-      >
-        Hyrox in <span class="text-brand">azione</span>
-      </SectionHeading>
       <Gallery images={[
         { src: galNewSledPush, alt: "Sled push durante l'allenamento Hyrox alla Pugilistica Brianza di Barlassina" },
         { src: galNewSledPull, alt: "Sled pull durante una sessione Hyrox alla Pugilistica Brianza" },

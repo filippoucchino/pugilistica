@@ -335,18 +335,6 @@ const pageSchema = buildPageSchema(
       <ol class="flex flex-col list-none pl-0 m-0" style="counter-reset: step;">
         {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
       </ol>
-    </div>
-  </section>
-
-  <!-- GALLERY PERSONE -->
-  <section class="pb-section fade-up">
-    <div class="pb-container">
-      <SectionHeading
-        topline="In sessione"
-        description="Il corso è guidato da Stefano Rizzo (ex pugile agonista e certificato FIPE), che costruisce ogni sessione unendo l'alta intensità alla componente boxe della palestra. Le sessioni includono circuiti a stazioni, lavoro al sacco pesante, colpitori con guantoni e kettlebell, per un allenamento che combina cardio e forza, aperto a uomini e donne di ogni livello."
-      >
-        PB Hiit in <span class="text-brand">azione</span>
-      </SectionHeading>
       <Gallery images={[
         { src: galCircuito, alt: "Circuito di gruppo PB Hiit alla Pugilistica Brianza: allieve su stazioni diverse con bilancieri e corpo libero" },
         { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione PB Hiit" },

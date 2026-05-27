@@ -347,18 +347,6 @@ const pageSchema = buildPageSchema(
       <ol class="flex flex-col list-none pl-0 m-0" style="counter-reset: step;">
         {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
       </ol>
-    </div>
-  </section>
-
-  <!-- GALLERY PERSONE -->
-  <section class="pb-section fade-up">
-    <div class="pb-container">
-      <SectionHeading
-        topline="Sul ring"
-        description="Da Pugilistica Brianza troverai l'esperienza di Stefano Rizzo (Maestro di 2° livello FPI ed ex pugile agonista), affiancato da Moreno Bragato (Tecnico FPI ed ex pugile con decenni di esperienza nel ring) e da Bruno Elli (co-fondatore della palestra). Tra gli atleti che hanno scelto questa palestra c'è Martina Caruso, pugile professionista che si è allenata qui per anni, a riprova di quanto la boxe femminile sia di casa."
-      >
-        Boxe in <span class="text-brand">azione</span>
-      </SectionHeading>
       <Gallery images={[
         { src: galPugileAngolo, alt: "Stefano Rizzo, head coach della Pugilistica Brianza, nell'angolo del ring durante una sessione di boxe" },
         { src: galCoachMemorial, alt: "Stefano Rizzo al Memorial Antiga Pisapia, torneo di pugilato a Barlassina" },
