@@ -1041,6 +1041,24 @@ Ultimo aggiornamento: 2026-05-28
 - Descrizione pill "Brianza" corretta: "Brianza milanese" → "Brianza occidentale"
   in `zonesInfo` dentro `src/data/shared.ts`.
 
+- Thumbnail video con lightbox (pattern Gallery) nella sezione "Per chi è adatto" di pugilato e hyrox:
+  - **Pattern**: thumbnail quadrata (aspect-ratio 1:1, object-fit cover) con icona play sovrapposta.
+    Click → `<dialog>` lightbox con overlay scuro. `<video>` con `preload="none"`, `controls`,
+    `playsinline`, poster WebP. **Nessun autoplay** all'apertura del dialog (coerente con tutti gli
+    altri video del sito). `video.load()` alla chiusura per resettare al poster e liberare il buffer.
+  - **Collegamento btn→dialog**: `data-dialog="<id>"` sul button, unico `querySelectorAll` loop
+    nel `<script is:inline>`. Style e script dentro `<BaseLayout>`, subito dopo i dialog e prima
+    della sezione successiva.
+  - **Griglia**: `grid-cols-2 sm:grid-cols-4 gap-4` su entrambe le pagine (stesso classe),
+    così le thumbnail hanno la stessa dimensione visiva indipendentemente dal numero di video.
+  - **pugilato.astro**: 4 video (boxe-sport-per-tutti, boxe-disciplina-mentalita, boxe-femminile,
+    boxe-sport-completo). Asset in `public/videos/` con naming
+    `<soggetto>-pugilistica-brianza-barlassina.{mp4,webm,webp}`.
+  - **hyrox.astro**: 2 video (hyrox-mix-completo, your-only-limit-hyrox). Stessi naming convention
+    e stessa griglia 4 colonne (i 2 elementi occupano le prime 2 colonne, spazio vuoto a destra).
+  - **Generazione asset ffmpeg**: WebM VP9 2-pass (CRF 33, Opus 96k), WebP poster estratto con
+    `-frames:v 1 -update 1`. Tutti i file in `public/videos/`.
+
 ### In corso
 - Nessuna attività in corso
 

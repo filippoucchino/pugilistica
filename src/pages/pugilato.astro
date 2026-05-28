@@ -317,6 +317,151 @@ const pageSchema = buildPageSchema(
           <TargetCard icon={t.icon} title={t.title} description={t.description} />
         ))}
       </ul>
+
+      <!-- Griglia 4 thumbnail video: click → lightbox, stesso pattern della Gallery -->
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-v1" aria-label="Guarda il video: la boxe è uno sport per tutti">
+          <img src="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.webp" alt="La boxe è uno sport per tutti alla Pugilistica Brianza" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true"><svg viewBox="0 0 80 80" width="56" height="56"><circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/><polygon points="32,24 60,40 32,56" fill="white"/></svg></div>
+        </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-v2" aria-label="Guarda il video: boxe disciplina e mentalità">
+          <img src="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.webp" alt="Boxe: disciplina e mentalità alla Pugilistica Brianza" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true"><svg viewBox="0 0 80 80" width="56" height="56"><circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/><polygon points="32,24 60,40 32,56" fill="white"/></svg></div>
+        </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-v3" aria-label="Guarda il video: boxe femminile">
+          <img src="/videos/boxe-femminile-pugilistica-brianza-barlassina.webp" alt="Boxe femminile alla Pugilistica Brianza di Barlassina" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true"><svg viewBox="0 0 80 80" width="56" height="56"><circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/><polygon points="32,24 60,40 32,56" fill="white"/></svg></div>
+        </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-v4" aria-label="Guarda il video: la boxe è uno sport completo">
+          <img src="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.webp" alt="La boxe è uno sport completo alla Pugilistica Brianza" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true"><svg viewBox="0 0 80 80" width="56" height="56"><circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/><polygon points="32,24 60,40 32,56" fill="white"/></svg></div>
+        </button>
+      </div>
+
+      <dialog class="video-lightbox" id="dlg-v1" aria-label="Video: la boxe è uno sport per tutti">
+        <div class="video-lightbox-overlay">
+          <button type="button" class="video-lightbox-close" aria-label="Chiudi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <video class="video-lightbox-video" controls playsinline preload="none" poster="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.webp" aria-label="La boxe è uno sport per tutti alla Pugilistica Brianza">
+            <source src="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.webm" type="video/webm" />
+            <source src="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+            <p class="p-4 text-sm text-pb-text-tertiary">Il tuo browser non supporta il tag video. <a href="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.</p>
+          </video>
+        </div>
+      </dialog>
+
+      <dialog class="video-lightbox" id="dlg-v2" aria-label="Video: boxe disciplina e mentalità">
+        <div class="video-lightbox-overlay">
+          <button type="button" class="video-lightbox-close" aria-label="Chiudi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <video class="video-lightbox-video" controls playsinline preload="none" poster="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.webp" aria-label="Boxe: disciplina e mentalità alla Pugilistica Brianza">
+            <source src="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.webm" type="video/webm" />
+            <source src="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+            <p class="p-4 text-sm text-pb-text-tertiary">Il tuo browser non supporta il tag video. <a href="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.</p>
+          </video>
+        </div>
+      </dialog>
+
+      <dialog class="video-lightbox" id="dlg-v3" aria-label="Video: boxe femminile">
+        <div class="video-lightbox-overlay">
+          <button type="button" class="video-lightbox-close" aria-label="Chiudi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <video class="video-lightbox-video" controls playsinline preload="none" poster="/videos/boxe-femminile-pugilistica-brianza-barlassina.webp" aria-label="Boxe femminile alla Pugilistica Brianza di Barlassina">
+            <source src="/videos/boxe-femminile-pugilistica-brianza-barlassina.webm" type="video/webm" />
+            <source src="/videos/boxe-femminile-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+            <p class="p-4 text-sm text-pb-text-tertiary">Il tuo browser non supporta il tag video. <a href="/videos/boxe-femminile-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.</p>
+          </video>
+        </div>
+      </dialog>
+
+      <dialog class="video-lightbox" id="dlg-v4" aria-label="Video: la boxe è uno sport completo">
+        <div class="video-lightbox-overlay">
+          <button type="button" class="video-lightbox-close" aria-label="Chiudi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <video class="video-lightbox-video" controls playsinline preload="none" poster="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.webp" aria-label="La boxe è uno sport completo alla Pugilistica Brianza">
+            <source src="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.webm" type="video/webm" />
+            <source src="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+            <p class="p-4 text-sm text-pb-text-tertiary">Il tuo browser non supporta il tag video. <a href="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.</p>
+          </video>
+        </div>
+      </dialog>
+
+      <style>
+        .video-thumb-btn {
+          position: relative; width: 100%; aspect-ratio: 1 / 1;
+          overflow: hidden; border-radius: 8px; cursor: pointer;
+          border: none; padding: 0; background: none;
+        }
+        .video-thumb-btn:focus-visible { outline: 2px solid #c41e1e; outline-offset: 2px; }
+        .video-thumb-img {
+          width: 100%; height: 100%; object-fit: cover; display: block;
+          transition: transform 300ms ease;
+        }
+        .video-thumb-btn:hover .video-thumb-img { transform: scale(1.05); }
+        .video-thumb-play {
+          position: absolute; inset: 0; display: flex;
+          align-items: center; justify-content: center;
+          background: rgba(0,0,0,0.2); transition: background 200ms;
+        }
+        .video-thumb-btn:hover .video-thumb-play { background: rgba(0,0,0,0.35); }
+
+        .video-lightbox {
+          position: fixed; inset: 0; width: 100vw; height: 100vh;
+          max-width: none; max-height: none; margin: 0; padding: 0;
+          border: none; background: rgba(10,10,10,0.95); z-index: 100;
+        }
+        .video-lightbox::backdrop { background: transparent; }
+        .video-lightbox[open] {
+          display: flex; justify-content: center; align-items: center;
+          animation: vl-fade-in 200ms ease-out;
+        }
+        @keyframes vl-fade-in { from { opacity: 0; } to { opacity: 1; } }
+        .video-lightbox-overlay {
+          display: flex; justify-content: center; align-items: center;
+          width: 100%; height: 100%; pointer-events: none;
+        }
+        .video-lightbox-overlay > * { pointer-events: auto; }
+        .video-lightbox-video { max-width: 90vw; max-height: 85vh; border-radius: 4px; }
+        .video-lightbox-close {
+          position: fixed; top: 16px; right: 16px; z-index: 10;
+          background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+          border-radius: 50%; width: 44px; height: 44px; display: flex;
+          align-items: center; justify-content: center; color: white;
+          cursor: pointer; transition: background 200ms;
+        }
+        .video-lightbox-close:hover,
+        .video-lightbox-close:focus-visible { background: rgba(255,255,255,0.25); }
+      </style>
+
+      <script is:inline>
+        (function() {
+          document.querySelectorAll('.video-thumb-btn').forEach(function(btn) {
+            var dialogId = btn.getAttribute('data-dialog');
+            var dialog = document.getElementById(dialogId);
+            if (!dialog) return;
+            var video = dialog.querySelector('video');
+            var closeBtn = dialog.querySelector('.video-lightbox-close');
+
+            btn.addEventListener('click', function() {
+              dialog.showModal();
+              document.body.style.overflow = 'hidden';
+            });
+
+            function closeDialog() {
+              video.load();
+              dialog.close();
+              document.body.style.overflow = '';
+            }
+
+            closeBtn.addEventListener('click', closeDialog);
+            var mousedownTarget = null;
+            dialog.addEventListener('mousedown', function(e) { mousedownTarget = e.target; });
+            dialog.addEventListener('click', function(e) {
+              if (e.target === dialog && mousedownTarget === dialog) closeDialog();
+            });
+            dialog.addEventListener('close', function() {
+              video.load();
+              document.body.style.overflow = '';
+            });
+          });
+        })();
+      </script>
     </div>
   </section>
 
