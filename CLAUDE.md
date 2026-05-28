@@ -471,7 +471,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-05-22
+Ultimo aggiornamento: 2026-05-28
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -966,9 +966,104 @@ Ultimo aggiornamento: 2026-05-22
   testo descrittivo della sezione "Orari di apertura" in `contatti.astro`.
   **Regola**: fonte degli orari = Google Business Profile, non il calendario corsi.
 
+- Logo SVG: Header e Footer ora usano `src/assets/brand/logo-pugilistica-brianza.svg`
+  (formato quadrato 1038×1038, fill bianco sul tema scuro) al posto del precedente `logo.png`.
+  Dimensioni CSS aumentate per compensare il rapporto quadrato: Header `h-20` (mobile `h-14`),
+  Footer `h-32`. Il file `logo-pugilistica-brianza-negativo.svg` (fill nero) è presente in
+  `src/assets/brand/` ma non usato nel sito.
+
+- Gallery aggiornate con nuove foto reali:
+  - **Pugilato**: 8 vecchie foto sostituite con 9 nuove da `src/assets/images/pugilato/New/`
+    (ring, pugile all'angolo, area sacchi, corde brandizzate, coach memorial, abbraccio trofeo,
+    Martina Caruso con destro e ai colpitori).
+  - **PB Hiit**: 1 foto aggiunta in coda (`prima-lezione-gratuita-hiit-...`) da `pb-hiit/New/`.
+  - **Hyrox**: 4 foto aggiunte in testa alla gallery (`sled-push`, `sled-pull`, `wall-ball`,
+    `sled-push-pesi`) da `hyrox/New/`. Inserite prima delle 8 esistenti.
+
+- Bottone "Indicazioni stradali" aggiunto a tutte le 8 pagine con sezione mappa.
+  Implementazione: `siteInfo.mapDirectionsUrl` aggiunto in `shared.ts` (URL `maps/dir/` con
+  `destination_place_id=ChIJ7RV4bbWXhkcRPtWYwS_OsB0`); prop `directionsUrl` aggiunta a
+  `MapFacade.astro` e `LocalSection.astro`; bottone rosso brand (`pb-btn-primary`) affiancato
+  al link "Apri in Google Maps". Apre Google Maps direttamente in modalità navigazione verso
+  Pugilistica Brianza. Pagine aggiornate: home, pugilato, hyrox, pb-hiit, chi-siamo, contatti,
+  lezioni-private-pugilato, prova-gratuita.
+
+- Contatti — email aggiunta in più punti:
+  - **Footer** colonna "Contatti": telefono ed email spostati come primi due item (prima
+    di indirizzo e orari), entrambi come link cliccabili (`tel:` e `mailto:`).
+  - **Pagina `/contatti/`**: aggiunta terza `ContactCard` per l'email con icona busta,
+    link `mailto:` e sottotesto. Griglia allargata da `md:grid-cols-2` a `md:grid-cols-3`
+    per ospitare le tre card (Telefono / Email / Indirizzo) in una riga. L'email
+    (`pugilisticabrianza@gmail.com`) era già in `siteInfo.email` — nessuna duplicazione.
+
+- Gallery riorganizzate in due sezioni separate per pugilato e hyrox:
+  - **Struttura**: ogni pagina corso ha ora due sezioni gallery distinte — "persone in allenamento"
+    (inserita dopo "Come si svolge") e "attrezzatura/spazi" (rimasta nella posizione originale
+    prima delle FAQ). Per pb-hiit esiste solo la sezione persone (nessuna foto attrezzatura disponibile).
+  - **Pugilato**: persone (galPugileAngolo, galCoachMemorial, galAbbraccioTrofeo, galMartinaColpitori)
+    con topline "Sul ring", titolo "Boxe in azione"; attrezzatura (galAreaSacchi, galRingPalestra,
+    galCordeRing, galSacchiArea) con topline "Gli spazi", titolo "Il ring e la sala sacchi".
+  - **Hyrox**: persone (8 foto azione: sled push/pull, wall ball, sled pesi, ski-erg, assault bike,
+    rower, manubri) con topline "In sessione", titolo "Hyrox in azione"; attrezzatura (panoramica,
+    rower, sled, sled push/pull) con topline "L'attrezzatura", titolo "Sled, rower e SkiErg".
+  - **PB Hiit**: persone (circuito, colpitori, swing, sacco, kettlebell) con topline "In sessione",
+    titolo "PB Hiit in azione". Sezione attrezzatura da aggiungere quando ci saranno le foto.
+  - **Testi descrittivi** nelle sezioni "persone": ogni pagina corso ha un paragrafo che contestualizza
+    le figure nelle foto. Pugilato: Stefano Rizzo + Moreno Bragato (con credenziali tra parentesi) +
+    Bruno Elli + menzione Martina Caruso come esempio di boxe femminile. Hyrox: Stefano Rizzo (Coach
+    Hyrox certificato Accademia 365), attività delle stazioni, simulazione Hyrox singolo/coppia, misto
+    uomini/donne. PB Hiit: Stefano Rizzo (ex pugile agonista + FIPE), circuiti a stazioni, sacco/colpitori/
+    kettlebell, cardio+forza, aperto a tutti i livelli.
+  - **Regola editoriale gallery persone**: testo focalizzato sulle figure presenti nelle foto, credenziali
+    tra parentesi (es. "Stefano Rizzo (Maestro 2° livello FPI ed ex pugile agonista)"), nessun em-dash,
+    frase scorrevole senza capoversi marcatori tipo ":".
+
+- Zone pill interattive nella sezione "Dove siamo" (tutte le 8 pagine con LocalSection):
+  - **`src/data/shared.ts`**: `zones` (array di stringhe) sostituito con `zonesInfo` tipizzato
+    `{ name: string; description: string }[]`. `zones` mantenuto come alias derivato
+    `zonesInfo.map(z => z.name)` per backward compat. Descrizioni includono distanza in km,
+    tempo in auto e nome della strada principale (SS35 dei Giovi per Seveso; SP131 per Lissone,
+    Seregno, Desio, Muggiò; Via Roma per Barlassina a piedi).
+  - **`src/components/LocalSection.astro`**: nuova interfaccia `ZoneInfo` e prop `zonesInfo?`.
+    Quando passata, le pill vengono renderizzate come `<button>` con `data-zone` e
+    `data-description`. Sotto le pill: `<div id="zone-desc" aria-live="polite">` con animazione
+    CSS `max-height` (0 → scrollHeight px). `<script is:inline>` gestisce toggle attivo e
+    aggiornamento testo. Pill attiva: `border-brand text-pb-text-primary`.
+  - **8 pagine aggiornate** (index, pugilato, hyrox, pb-hiit, chi-siamo, lezioni-private-pugilato,
+    contatti, prova-gratuita): import `zones` → `zonesInfo`, prop `zones={zones}` → `zonesInfo={zonesInfo}`.
+
+- Gallery persone riunita nella sezione "Come si svolge" (pugilato, hyrox, pb-hiit):
+  rimosso l'heading separato (topline, titolo "XXX in azione" e testo descrittivo) che
+  apriva una sezione indipendente dopo "Come si svolge". Le immagini sono ora posizionate
+  direttamente sotto la lista `LessonStep`, all'interno della stessa `<section>` e `<div class="pb-container">`.
+  Nessuna modifica alle immagini o ai loro `alt`.
+
+- Descrizione pill "Brianza" corretta: "Brianza milanese" → "Brianza occidentale"
+  in `zonesInfo` dentro `src/data/shared.ts`.
+
+- Thumbnail video con lightbox (pattern Gallery) nella sezione "Per chi è adatto" di pugilato e hyrox:
+  - **Pattern**: thumbnail quadrata (aspect-ratio 1:1, object-fit cover) con icona play sovrapposta.
+    Click → `<dialog>` lightbox con overlay scuro. `<video>` con `preload="none"`, `controls`,
+    `playsinline`, poster WebP. **Nessun autoplay** all'apertura del dialog (coerente con tutti gli
+    altri video del sito). `video.load()` alla chiusura per resettare al poster e liberare il buffer.
+  - **Collegamento btn→dialog**: `data-dialog="<id>"` sul button, unico `querySelectorAll` loop
+    nel `<script is:inline>`. Style e script dentro `<BaseLayout>`, subito dopo i dialog e prima
+    della sezione successiva.
+  - **Griglia**: `grid-cols-2 sm:grid-cols-4 gap-4` su entrambe le pagine (stesso classe),
+    così le thumbnail hanno la stessa dimensione visiva indipendentemente dal numero di video.
+  - **pugilato.astro**: 4 video (boxe-sport-per-tutti, boxe-disciplina-mentalita, boxe-femminile,
+    boxe-sport-completo). Asset in `public/videos/` con naming
+    `<soggetto>-pugilistica-brianza-barlassina.{mp4,webm,webp}`.
+  - **hyrox.astro**: 2 video (hyrox-mix-completo, your-only-limit-hyrox). Stessi naming convention
+    e stessa griglia 4 colonne (i 2 elementi occupano le prime 2 colonne, spazio vuoto a destra).
+  - **Generazione asset ffmpeg**: WebM VP9 2-pass (CRF 33, Opus 96k), WebP poster estratto con
+    `-frames:v 1 -update 1`. Tutti i file in `public/videos/`.
+
 ### In corso
 - Nessuna attività in corso
 
 ### Prossimo step
+- Aggiungere foto attrezzatura a pb-hiit e creare la seconda sezione gallery (topline "La palestra")
+  seguendo lo stesso pattern di pugilato e hyrox
 - Verificare la leggibilità del favicon a 16×16 (il pugile ha molti dettagli): se non si distingue,
   valutare una versione semplificata o un monogramma "PB" per le piccole dimensioni

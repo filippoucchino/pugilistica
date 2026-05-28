@@ -16,7 +16,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
-import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo } from "@/data/schema";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
@@ -24,13 +24,17 @@ import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 
 // Foto gallery: importate come ES module per ottimizzazione automatica (WebP, width/height, compressione).
 import galPanoramica from "../assets/images/hyrox/area-functional-panoramica-hyrox-pugilistica-brianza.jpg";
-import galSimulazione from "../assets/images/hyrox/simulazione-gara-hyrox-pugilistica-brianza.jpg";
-import galSledPush from "../assets/images/hyrox/sled-push-allenamento-hyrox-pugilistica-brianza.jpg";
-import galSledPull from "../assets/images/hyrox/sled-pull-fune-hyrox-pugilistica-brianza.jpg";
-import galWallBalls from "../assets/images/hyrox/wall-balls-allenamento-hyrox-pugilistica-brianza.jpg";
-import galAssaultBike from "../assets/images/hyrox/assault-bike-allenamento-hyrox-pugilistica-brianza.jpg";
 import galRower from "../assets/images/hyrox/rower-area-hyrox-pugilistica-brianza.jpg";
 import galSled from "../assets/images/hyrox/sled-attrezzatura-hyrox-pugilistica-brianza.jpg";
+import galNewSledPush from "../assets/images/hyrox/New/sled-push-hyrox-pugilistica-brianza.jpg";
+import galNewSledPull from "../assets/images/hyrox/New/sled-pull-hyrox-pugilistica-brianza.jpg";
+import galNewWallBall from "../assets/images/hyrox/New/wall-ball-hyrox-pugilistica-brianza.jpg";
+import galNewSledPesi from "../assets/images/hyrox/New/sled-push-pesi-pugilistica-brianza.jpg";
+import galNewSledPushPull from "../assets/images/hyrox/New/sled-push-pull-simulazione-hyrox-pugilistica-brianza.jpg";
+import galNewSkiErg from "../assets/images/hyrox/New/ski-erg-gruppo-hyrox-pugilistica-brianza.jpg";
+import galNewAssaultBike from "../assets/images/hyrox/New/assault-bike-cardio-hyrox-pugilistica-brianza.jpg";
+import galNewRower from "../assets/images/hyrox/New/rower-allenamento-hyrox-pugilistica-brianza.jpg";
+import galNewManubri from "../assets/images/hyrox/New/manubri-esagonali-pugilistica-brianza.jpg";
 
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
@@ -307,8 +311,168 @@ const pageSchema = buildPageSchema(
           <TargetCard icon={t.icon} title={t.title} description={t.description} />
         ))}
       </ul>
+
+      <!-- Thumbnail video: click → lightbox, stesso pattern della Gallery -->
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-hv1" aria-label="Guarda il video: mix di allenamento Hyrox alla Pugilistica Brianza">
+          <img src="/videos/hyrox-mix-completo-pugilistica-brianza-barlassina.webp" alt="Mix di allenamento Hyrox alla Pugilistica Brianza di Barlassina" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true">
+            <svg viewBox="0 0 80 80" width="56" height="56">
+              <circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/>
+              <polygon points="32,24 60,40 32,56" fill="white"/>
+            </svg>
+          </div>
+        </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-hv2" aria-label="Guarda il video: your only limit - allenamento Hyrox alla Pugilistica Brianza">
+          <img src="/videos/your-only-limit-hyrox-pugilistica-brianza-barlassina.webp" alt="Your only limit - allenamento Hyrox alla Pugilistica Brianza di Barlassina" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true">
+            <svg viewBox="0 0 80 80" width="56" height="56">
+              <circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/>
+              <polygon points="32,24 60,40 32,56" fill="white"/>
+            </svg>
+          </div>
+        </button>
+      </div>
     </div>
   </section>
+
+  <!-- Dialog lightbox video 1: mix Hyrox -->
+  <dialog class="video-lightbox" id="dlg-hv1" aria-label="Video: mix di allenamento Hyrox alla Pugilistica Brianza">
+    <div class="video-lightbox-overlay">
+      <button type="button" class="video-lightbox-close" aria-label="Chiudi">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <video
+        class="video-lightbox-video"
+        controls
+        playsinline
+        preload="none"
+        poster="/videos/hyrox-mix-completo-pugilistica-brianza-barlassina.webp"
+        aria-label="Mix di allenamento Hyrox alla Pugilistica Brianza di Barlassina"
+      >
+        <source src="/videos/hyrox-mix-completo-pugilistica-brianza-barlassina.webm" type="video/webm" />
+        <source src="/videos/hyrox-mix-completo-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+        <p class="p-4 text-sm text-pb-text-tertiary">
+          Il tuo browser non supporta il tag video.
+          <a href="/videos/hyrox-mix-completo-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.
+        </p>
+      </video>
+    </div>
+  </dialog>
+
+  <!-- Dialog lightbox video 2: your only limit Hyrox -->
+  <dialog class="video-lightbox" id="dlg-hv2" aria-label="Video: your only limit - allenamento Hyrox alla Pugilistica Brianza">
+    <div class="video-lightbox-overlay">
+      <button type="button" class="video-lightbox-close" aria-label="Chiudi">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <video
+        class="video-lightbox-video"
+        controls
+        playsinline
+        preload="none"
+        poster="/videos/your-only-limit-hyrox-pugilistica-brianza-barlassina.webp"
+        aria-label="Your only limit - allenamento Hyrox alla Pugilistica Brianza di Barlassina"
+      >
+        <source src="/videos/your-only-limit-hyrox-pugilistica-brianza-barlassina.webm" type="video/webm" />
+        <source src="/videos/your-only-limit-hyrox-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+        <p class="p-4 text-sm text-pb-text-tertiary">
+          Il tuo browser non supporta il tag video.
+          <a href="/videos/your-only-limit-hyrox-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.
+        </p>
+      </video>
+    </div>
+  </dialog>
+
+  <style>
+    /* Thumbnail video */
+    .video-thumb-btn {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      background: none;
+    }
+    .video-thumb-btn:focus-visible { outline: 2px solid #c41e1e; outline-offset: 2px; }
+    .video-thumb-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 300ms ease;
+    }
+    .video-thumb-btn:hover .video-thumb-img { transform: scale(1.05); }
+    .video-thumb-play {
+      position: absolute; inset: 0; display: flex;
+      align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.2); transition: background 200ms;
+    }
+    .video-thumb-btn:hover .video-thumb-play { background: rgba(0,0,0,0.35); }
+
+    /* Dialog lightbox */
+    .video-lightbox {
+      position: fixed; inset: 0; width: 100vw; height: 100vh;
+      max-width: none; max-height: none; margin: 0; padding: 0;
+      border: none; background: rgba(10,10,10,0.95); z-index: 100;
+    }
+    .video-lightbox::backdrop { background: transparent; }
+    .video-lightbox[open] {
+      display: flex; justify-content: center; align-items: center;
+      animation: vl-fade-in 200ms ease-out;
+    }
+    @keyframes vl-fade-in { from { opacity: 0; } to { opacity: 1; } }
+    .video-lightbox-overlay {
+      display: flex; justify-content: center; align-items: center;
+      width: 100%; height: 100%; pointer-events: none;
+    }
+    .video-lightbox-overlay > * { pointer-events: auto; }
+    .video-lightbox-video { max-width: 90vw; max-height: 85vh; border-radius: 4px; }
+    .video-lightbox-close {
+      position: fixed; top: 16px; right: 16px; z-index: 10;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%; width: 44px; height: 44px; display: flex;
+      align-items: center; justify-content: center; color: white;
+      cursor: pointer; transition: background 200ms;
+    }
+    .video-lightbox-close:hover,
+    .video-lightbox-close:focus-visible { background: rgba(255,255,255,0.25); }
+  </style>
+
+  <script is:inline>
+    (function() {
+      document.querySelectorAll('.video-thumb-btn').forEach(function(btn) {
+        var dialogId = btn.getAttribute('data-dialog');
+        var dialog = document.getElementById(dialogId);
+        if (!dialog) return;
+        var video = dialog.querySelector('video');
+        var closeBtn = dialog.querySelector('.video-lightbox-close');
+        btn.addEventListener('click', function() {
+          dialog.showModal();
+          document.body.style.overflow = 'hidden';
+        });
+        function closeDialog() {
+          video.load();
+          dialog.close();
+          document.body.style.overflow = '';
+        }
+        closeBtn.addEventListener('click', closeDialog);
+        var mousedownTarget = null;
+        dialog.addEventListener('mousedown', function(e) { mousedownTarget = e.target; });
+        dialog.addEventListener('click', function(e) {
+          if (e.target === dialog && mousedownTarget === dialog) closeDialog();
+        });
+        dialog.addEventListener('close', function() {
+          video.load();
+          document.body.style.overflow = '';
+        });
+      });
+    })();
+  </script>
 
   <!-- 4. BENEFICI -->
   <section class="pb-section fade-up">
@@ -337,6 +501,16 @@ const pageSchema = buildPageSchema(
       <ol class="flex flex-col list-none pl-0 m-0" style="counter-reset: step;">
         {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
       </ol>
+      <Gallery images={[
+        { src: galNewSledPush, alt: "Sled push durante l'allenamento Hyrox alla Pugilistica Brianza di Barlassina" },
+        { src: galNewSledPull, alt: "Sled pull durante una sessione Hyrox alla Pugilistica Brianza" },
+        { src: galNewWallBall, alt: "Wall ball durante il corso Hyrox alla Pugilistica Brianza" },
+        { src: galNewSledPesi, alt: "Sled push con pesi durante l'allenamento Hyrox alla Pugilistica Brianza" },
+        { src: galNewSkiErg, alt: "Gruppo che si allena allo ski-erg durante il corso Hyrox alla Pugilistica Brianza" },
+        { src: galNewAssaultBike, alt: "Allenamento cardio su assault bike durante una sessione Hyrox alla Pugilistica Brianza" },
+        { src: galNewRower, alt: "Atleta al rower durante l'allenamento Hyrox alla Pugilistica Brianza di Barlassina" },
+        { src: galNewManubri, alt: "Manubri esagonali nell'area Hyrox della Pugilistica Brianza" },
+      ]} />
     </div>
   </section>
 
@@ -422,20 +596,16 @@ const pageSchema = buildPageSchema(
   <section class="pb-section fade-up">
     <div class="pb-container">
       <SectionHeading
-        topline="Gallery"
-        description="Gli spazi della Pugilistica Brianza dedicati al corso Hyrox: area functional con rower, sled, SkiErg, bilancieri, farmer carry e wall balls. Guarda come si allena prima di venire a provare."
+        topline="L'attrezzatura"
+        description="Gli spazi della Pugilistica Brianza dedicati al corso Hyrox: area functional con rower, sled, SkiErg, bilancieri, farmer carry e wall balls. Dai un'occhiata prima di venire a provare."
       >
-        Guarda <span class="text-brand">l'allenamento</span>
+        Sled, rower e <span class="text-brand">SkiErg</span>
       </SectionHeading>
       <Gallery images={[
         { src: galPanoramica, alt: "Vista panoramica dell'area Hyrox alla Pugilistica Brianza: rower, sled, bilancieri e attrezzatura funzionale" },
-        { src: galSimulazione, alt: "Simulazione gara Hyrox alla Pugilistica Brianza: sled push e rope pull con il gruppo che osserva" },
-        { src: galSledPush, alt: "Ragazza che esegue sled push durante l'allenamento Hyrox" },
-        { src: galSledPull, alt: "Ragazzo che esegue sled pull con fune durante il corso Hyrox" },
-        { src: galWallBalls, alt: "Due allieve con maglie Pugilistica Brianza lanciano wall balls durante il corso Hyrox" },
-        { src: galAssaultBike, alt: "Allenamento su assault bike durante una sessione Hyrox" },
         { src: galRower, alt: "Rower nell'area Hyrox con atleta in allenamento sullo sfondo" },
         { src: galSled, alt: "Sled carico con dischi nell'area Hyrox della Pugilistica Brianza di Barlassina" },
+        { src: galNewSledPushPull, alt: "Simulazione sled push e pull durante una sessione Hyrox alla Pugilistica Brianza" },
       ]} />
     </div>
   </section>
@@ -465,10 +635,11 @@ const pageSchema = buildPageSchema(
       <LocalSection
         address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
         addressLabel={siteInfo.name}
-        zones={zones}
+        zonesInfo={zonesInfo}
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
+        mapDirectionsUrl={siteInfo.mapDirectionsUrl}
         mapPreviewSrc={siteInfo.mapPreviewSrc}
         mapLabel={siteInfo.shortName}
       />

@@ -12,7 +12,7 @@ import ReviewCard from "../components/ReviewCard.astro";
 import LocalSection from "../components/LocalSection.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
-import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref, reviews } from "@/data/shared";
+import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref, reviews } from "@/data/shared";
 import { buildPageSchema, buildGym, buildWebSite, buildWebPage, buildFaqPage, buildFreeTrialOffer } from "@/data/schema";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
@@ -403,10 +403,11 @@ const pageSchema = buildPageSchema(
       <LocalSection
         address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
         addressLabel={siteInfo.name}
-        zones={zones}
+        zonesInfo={zonesInfo}
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
+        mapDirectionsUrl={siteInfo.mapDirectionsUrl}
         mapPreviewSrc={siteInfo.mapPreviewSrc}
         mapLabel={siteInfo.shortName}
       />

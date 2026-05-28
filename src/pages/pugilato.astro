@@ -16,7 +16,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
-import { trustItems, localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo } from "@/data/schema";
 
 // Foto coach: importate come ES module così Astro le ottimizza in build (WebP, dimensioni esplicite).
@@ -24,14 +24,14 @@ import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 import morenoPhoto from "../assets/images/bio/moreno-bragato.jpg";
 
 // Foto gallery: importate come ES module per ottimizzazione automatica (WebP, width/height, compressione).
-import galPanoramica from "../assets/images/pugilato/palestra-panoramica-ring-pugilistica-brianza.jpg";
-import galRing from "../assets/images/pugilato/ring-boxe-pugilistica-brianza-barlassina.jpg";
-import galAllenamento from "../assets/images/pugilato/allenamento-sacchi-pugili-pugilistica-brianza.jpg";
-import galSacchi from "../assets/images/pugilato/sacchi-pesanti-boxe-pugilistica-brianza.jpg";
-import galSalaSacchi from "../assets/images/pugilato/sala-sacchi-panoramica-pugilistica-brianza.jpg";
-import galRingSacco from "../assets/images/pugilato/ring-sacco-rosso-pugilistica-brianza.jpg";
-import galAngolo from "../assets/images/pugilato/angolo-ring-corde-pugilistica-brianza.jpg";
-import galIngresso from "../assets/images/pugilato/ingresso-reception-pugilistica-brianza.jpg";
+import galPugileAngolo from "../assets/images/pugilato/New/pugile-angolo-ring-pugilistica-brianza.jpg";
+import galAreaSacchi from "../assets/images/pugilato/New/area-sacchi-allenamento-pugilistica-brianza.jpg";
+import galRingPalestra from "../assets/images/pugilato/New/ring-palestra-pugilistica-brianza.jpg";
+import galCordeRing from "../assets/images/pugilato/New/corde-ring-brandizzate-pugilistica-brianza.jpg";
+import galCoachMemorial from "../assets/images/pugilato/New/coach-memorial-antiga-pisapia.jpg";
+import galAbbraccioTrofeo from "../assets/images/pugilato/New/abbraccio-coach-pugile-trofeo-barlassina.jpg";
+import galMartinaColpitori from "../assets/images/pugilato/New/martina-caruso-allenamento-colpitori-pugilistica-brianza.jpg";
+import galSacchiArea from "../assets/images/pugilato/New/sacchi-pesanti-area-pugilato-pugilistica-brianza.jpg";
 
 // Unica CTA della pagina: WhatsApp al coach con messaggio precompilato specifico per il corso.
 const whatsappHref = buildWhatsappHref(
@@ -317,6 +317,151 @@ const pageSchema = buildPageSchema(
           <TargetCard icon={t.icon} title={t.title} description={t.description} />
         ))}
       </ul>
+
+      <!-- Griglia 4 thumbnail video: click → lightbox, stesso pattern della Gallery -->
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-v1" aria-label="Guarda il video: la boxe è uno sport per tutti">
+          <img src="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.webp" alt="La boxe è uno sport per tutti alla Pugilistica Brianza" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true"><svg viewBox="0 0 80 80" width="56" height="56"><circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/><polygon points="32,24 60,40 32,56" fill="white"/></svg></div>
+        </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-v2" aria-label="Guarda il video: boxe disciplina e mentalità">
+          <img src="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.webp" alt="Boxe: disciplina e mentalità alla Pugilistica Brianza" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true"><svg viewBox="0 0 80 80" width="56" height="56"><circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/><polygon points="32,24 60,40 32,56" fill="white"/></svg></div>
+        </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-v3" aria-label="Guarda il video: boxe femminile">
+          <img src="/videos/boxe-femminile-pugilistica-brianza-barlassina.webp" alt="Boxe femminile alla Pugilistica Brianza di Barlassina" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true"><svg viewBox="0 0 80 80" width="56" height="56"><circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/><polygon points="32,24 60,40 32,56" fill="white"/></svg></div>
+        </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-v4" aria-label="Guarda il video: la boxe è uno sport completo">
+          <img src="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.webp" alt="La boxe è uno sport completo alla Pugilistica Brianza" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true"><svg viewBox="0 0 80 80" width="56" height="56"><circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/><polygon points="32,24 60,40 32,56" fill="white"/></svg></div>
+        </button>
+      </div>
+
+      <dialog class="video-lightbox" id="dlg-v1" aria-label="Video: la boxe è uno sport per tutti">
+        <div class="video-lightbox-overlay">
+          <button type="button" class="video-lightbox-close" aria-label="Chiudi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <video class="video-lightbox-video" controls playsinline preload="none" poster="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.webp" aria-label="La boxe è uno sport per tutti alla Pugilistica Brianza">
+            <source src="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.webm" type="video/webm" />
+            <source src="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+            <p class="p-4 text-sm text-pb-text-tertiary">Il tuo browser non supporta il tag video. <a href="/videos/boxe-sport-per-tutti-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.</p>
+          </video>
+        </div>
+      </dialog>
+
+      <dialog class="video-lightbox" id="dlg-v2" aria-label="Video: boxe disciplina e mentalità">
+        <div class="video-lightbox-overlay">
+          <button type="button" class="video-lightbox-close" aria-label="Chiudi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <video class="video-lightbox-video" controls playsinline preload="none" poster="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.webp" aria-label="Boxe: disciplina e mentalità alla Pugilistica Brianza">
+            <source src="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.webm" type="video/webm" />
+            <source src="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+            <p class="p-4 text-sm text-pb-text-tertiary">Il tuo browser non supporta il tag video. <a href="/videos/boxe-disciplina-mentalita-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.</p>
+          </video>
+        </div>
+      </dialog>
+
+      <dialog class="video-lightbox" id="dlg-v3" aria-label="Video: boxe femminile">
+        <div class="video-lightbox-overlay">
+          <button type="button" class="video-lightbox-close" aria-label="Chiudi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <video class="video-lightbox-video" controls playsinline preload="none" poster="/videos/boxe-femminile-pugilistica-brianza-barlassina.webp" aria-label="Boxe femminile alla Pugilistica Brianza di Barlassina">
+            <source src="/videos/boxe-femminile-pugilistica-brianza-barlassina.webm" type="video/webm" />
+            <source src="/videos/boxe-femminile-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+            <p class="p-4 text-sm text-pb-text-tertiary">Il tuo browser non supporta il tag video. <a href="/videos/boxe-femminile-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.</p>
+          </video>
+        </div>
+      </dialog>
+
+      <dialog class="video-lightbox" id="dlg-v4" aria-label="Video: la boxe è uno sport completo">
+        <div class="video-lightbox-overlay">
+          <button type="button" class="video-lightbox-close" aria-label="Chiudi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <video class="video-lightbox-video" controls playsinline preload="none" poster="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.webp" aria-label="La boxe è uno sport completo alla Pugilistica Brianza">
+            <source src="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.webm" type="video/webm" />
+            <source src="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+            <p class="p-4 text-sm text-pb-text-tertiary">Il tuo browser non supporta il tag video. <a href="/videos/boxe-sport-completo-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.</p>
+          </video>
+        </div>
+      </dialog>
+
+      <style>
+        .video-thumb-btn {
+          position: relative; width: 100%; aspect-ratio: 1 / 1;
+          overflow: hidden; border-radius: 8px; cursor: pointer;
+          border: none; padding: 0; background: none;
+        }
+        .video-thumb-btn:focus-visible { outline: 2px solid #c41e1e; outline-offset: 2px; }
+        .video-thumb-img {
+          width: 100%; height: 100%; object-fit: cover; display: block;
+          transition: transform 300ms ease;
+        }
+        .video-thumb-btn:hover .video-thumb-img { transform: scale(1.05); }
+        .video-thumb-play {
+          position: absolute; inset: 0; display: flex;
+          align-items: center; justify-content: center;
+          background: rgba(0,0,0,0.2); transition: background 200ms;
+        }
+        .video-thumb-btn:hover .video-thumb-play { background: rgba(0,0,0,0.35); }
+
+        .video-lightbox {
+          position: fixed; inset: 0; width: 100vw; height: 100vh;
+          max-width: none; max-height: none; margin: 0; padding: 0;
+          border: none; background: rgba(10,10,10,0.95); z-index: 100;
+        }
+        .video-lightbox::backdrop { background: transparent; }
+        .video-lightbox[open] {
+          display: flex; justify-content: center; align-items: center;
+          animation: vl-fade-in 200ms ease-out;
+        }
+        @keyframes vl-fade-in { from { opacity: 0; } to { opacity: 1; } }
+        .video-lightbox-overlay {
+          display: flex; justify-content: center; align-items: center;
+          width: 100%; height: 100%; pointer-events: none;
+        }
+        .video-lightbox-overlay > * { pointer-events: auto; }
+        .video-lightbox-video { max-width: 90vw; max-height: 85vh; border-radius: 4px; }
+        .video-lightbox-close {
+          position: fixed; top: 16px; right: 16px; z-index: 10;
+          background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+          border-radius: 50%; width: 44px; height: 44px; display: flex;
+          align-items: center; justify-content: center; color: white;
+          cursor: pointer; transition: background 200ms;
+        }
+        .video-lightbox-close:hover,
+        .video-lightbox-close:focus-visible { background: rgba(255,255,255,0.25); }
+      </style>
+
+      <script is:inline>
+        (function() {
+          document.querySelectorAll('.video-thumb-btn').forEach(function(btn) {
+            var dialogId = btn.getAttribute('data-dialog');
+            var dialog = document.getElementById(dialogId);
+            if (!dialog) return;
+            var video = dialog.querySelector('video');
+            var closeBtn = dialog.querySelector('.video-lightbox-close');
+
+            btn.addEventListener('click', function() {
+              dialog.showModal();
+              document.body.style.overflow = 'hidden';
+            });
+
+            function closeDialog() {
+              video.load();
+              dialog.close();
+              document.body.style.overflow = '';
+            }
+
+            closeBtn.addEventListener('click', closeDialog);
+            var mousedownTarget = null;
+            dialog.addEventListener('mousedown', function(e) { mousedownTarget = e.target; });
+            dialog.addEventListener('click', function(e) {
+              if (e.target === dialog && mousedownTarget === dialog) closeDialog();
+            });
+            dialog.addEventListener('close', function() {
+              video.load();
+              document.body.style.overflow = '';
+            });
+          });
+        })();
+      </script>
     </div>
   </section>
 
@@ -347,6 +492,12 @@ const pageSchema = buildPageSchema(
       <ol class="flex flex-col list-none pl-0 m-0" style="counter-reset: step;">
         {steps.map((s) => <LessonStep title={s.title} description={s.description} />)}
       </ol>
+      <Gallery images={[
+        { src: galPugileAngolo, alt: "Stefano Rizzo, head coach della Pugilistica Brianza, nell'angolo del ring durante una sessione di boxe" },
+        { src: galCoachMemorial, alt: "Stefano Rizzo al Memorial Antiga Pisapia, torneo di pugilato a Barlassina" },
+        { src: galAbbraccioTrofeo, alt: "Bruno Elli, co-fondatore della Pugilistica Brianza, abbraccia un pugile con il trofeo a Barlassina" },
+        { src: galMartinaColpitori, alt: "Martina Caruso si allena ai colpitori alla Pugilistica Brianza" },
+      ]} />
     </div>
   </section>
 
@@ -442,20 +593,16 @@ const pageSchema = buildPageSchema(
   <section class="pb-section fade-up">
     <div class="pb-container">
       <SectionHeading
-        topline="Gallery"
+        topline="Gli spazi"
         description="Gli spazi della Pugilistica Brianza di Barlassina dedicati al pugilato: il ring regolamentare da boxe, la sala sacchi pesanti con decine di postazioni, l'area per il lavoro a coppie e ai colpitori. Dai un'occhiata prima di venire a provare."
       >
-        Guarda <span class="text-brand">l'allenamento</span>
+        Il <span class="text-brand">ring</span> e la sala sacchi
       </SectionHeading>
       <Gallery images={[
-        { src: galPanoramica, alt: "Vista panoramica della palestra Pugilistica Brianza: sala sacchi e ring da boxe con bandiere internazionali" },
-        { src: galRing, alt: "Ring da boxe della Pugilistica Brianza di Barlassina con bandiera laterale e bandiere internazionali" },
-        { src: galAllenamento, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione di boxe" },
-        { src: galSacchi, alt: "Sacchi pesanti Leone e Combat Sports in fila nella sala boxe" },
-        { src: galSalaSacchi, alt: "Sala sacchi della Pugilistica Brianza: fila di sacchi pesanti appesi con pavimento rosso" },
-        { src: galRingSacco, alt: "Ring da boxe e sacco rosso Leone con logo sul bordo ring" },
-        { src: galAngolo, alt: "Dettaglio angolo del ring con corde rosse e bandiere internazionali" },
-        { src: galIngresso, alt: "Ingresso e reception della Pugilistica Brianza: bancone con logo, locandine eventi e scaffali attrezzatura" },
+        { src: galAreaSacchi, alt: "Area sacchi pesanti durante un allenamento di boxe alla Pugilistica Brianza di Barlassina" },
+        { src: galRingPalestra, alt: "Ring da boxe della palestra Pugilistica Brianza a Barlassina" },
+        { src: galCordeRing, alt: "Corde del ring con brand Pugilistica Brianza" },
+        { src: galSacchiArea, alt: "Area sacchi pesanti della palestra Pugilistica Brianza a Barlassina" },
       ]} />
     </div>
   </section>
@@ -485,10 +632,11 @@ const pageSchema = buildPageSchema(
       <LocalSection
         address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
         addressLabel={siteInfo.name}
-        zones={zones}
+        zonesInfo={zonesInfo}
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
+        mapDirectionsUrl={siteInfo.mapDirectionsUrl}
         mapPreviewSrc={siteInfo.mapPreviewSrc}
         mapLabel={siteInfo.shortName}
       />

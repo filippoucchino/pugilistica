@@ -15,13 +15,15 @@ interface Props {
   embedUrl: string;
   /** URL "apri in Google Maps" per il link testuale sotto la mappa. */
   externalUrl: string;
+  /** URL indicazioni stradali: apre Maps in modalità navigazione. */
+  directionsUrl: string;
   /** Indirizzo leggibile da mostrare sul facade. */
   label: string;
   /** Immagine statica di preview (PNG/JPG già in /public). */
   previewSrc: string;
 }
 
-const { embedUrl, externalUrl, label, previewSrc } = Astro.props;
+const { embedUrl, externalUrl, directionsUrl, label, previewSrc } = Astro.props;
 ---
 
 <div class="map-facade-wrapper flex flex-col gap-3">
@@ -101,26 +103,36 @@ const { embedUrl, externalUrl, label, previewSrc } = Astro.props;
     </noscript>
   </div>
 
-  <!-- Link testuale permanente: funziona sempre, anche senza click sul facade. -->
-  <a
-    href={externalUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    class="inline-flex items-center gap-1.5 text-sm text-pb-text-tertiary
-           hover:text-brand transition-colors self-start"
-  >
-    Apri in Google Maps
-    <svg
-      class="w-3.5 h-3.5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      style="stroke-width: 2;"
-      aria-hidden="true"
+  <!-- Link e bottone sotto la mappa: sempre visibili, senza bisogno di JS. -->
+  <div class="flex flex-wrap items-center gap-3">
+    <a
+      href={externalUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-1.5 text-sm text-pb-text-tertiary
+             hover:text-brand transition-colors"
     >
-      <path d="M7 17L17 7M7 7h10v10"/>
-    </svg>
-  </a>
+      Apri in Google Maps
+      <svg
+        class="w-3.5 h-3.5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        style="stroke-width: 2;"
+        aria-hidden="true"
+      >
+        <path d="M7 17L17 7M7 7h10v10"/>
+      </svg>
+    </a>
+    <a
+      href={directionsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="pb-btn-primary text-sm"
+    >
+      Indicazioni stradali
+    </a>
+  </div>
 </div>
 
 <script>

@@ -7,7 +7,7 @@ import TargetCard from "../components/TargetCard.astro";
 import Gallery from "../components/Gallery.astro";
 import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
-import { localDetails, zones, siteInfo, buildWhatsappHref } from "@/data/shared";
+import { localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildPerson } from "@/data/schema";
 
 // Unica CTA della pagina: WhatsApp con messaggio generico (chi-siamo non è legata a un corso specifico).
@@ -286,10 +286,11 @@ const pageSchema = buildPageSchema(
       <LocalSection
         address={`${siteInfo.address}<br>${siteInfo.cap} ${siteInfo.city} (${siteInfo.province})`}
         addressLabel={siteInfo.name}
-        zones={zones}
+        zonesInfo={zonesInfo}
         details={localDetails}
         mapEmbedUrl={siteInfo.mapEmbedUrl}
         mapExternalUrl={siteInfo.mapExternalUrl}
+        mapDirectionsUrl={siteInfo.mapDirectionsUrl}
         mapPreviewSrc={siteInfo.mapPreviewSrc}
         mapLabel={siteInfo.shortName}
       />
