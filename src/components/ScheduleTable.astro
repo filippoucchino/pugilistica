@@ -82,6 +82,9 @@ const daySchedule = WEEKDAYS_FULL.map((dayName, dayIdx) => {
           </div>
         ))
       )}
+      {day.slots.length > 0 && (
+        <div class="pb-filter-empty">Nessun corso programmato per il filtro impostato</div>
+      )}
     </div>
   ))}
 </div>
@@ -445,6 +448,21 @@ const daySchedule = WEEKDAYS_FULL.map((dayName, dayIdx) => {
       font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
       font-size: 14px;
     }
+  }
+
+  /* Messaggio filtro vuoto: nascosto di default, visibile via :has() quando
+     il pannello attivo non contiene alcun slot non-filtrato */
+  .pb-filter-empty {
+    display: none;
+    text-align: center;
+    padding: 28px 0;
+    color: rgba(255, 255, 255, 0.35);
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+  }
+
+  .pb-schedule-mobile__panel.is-active:not(:has(.pb-schedule__slot:not(.is-filtered-out))) .pb-filter-empty {
+    display: block;
   }
 </style>
 

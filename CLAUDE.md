@@ -1095,6 +1095,16 @@ Ultimo aggiornamento: 2026-05-29
     Logo ridotto da `h-32` (128px) a `h-20` (80px) su mobile. Padding superiore footer
     ridotto da `pt-16` (64px) a `pt-10` (40px) su mobile, laterale da `px-8` a `px-5`.
 
+- Messaggio "nessun risultato" filtro mobile in `/orari/` (`ScheduleTable.astro`):
+  quando si seleziona un filtro corso e il giorno attivo non ha corsi di quel tipo,
+  appare "Nessun corso programmato per il filtro impostato". Soluzione CSS pura via
+  `:has()`: ogni pannello giorno (con corsi) contiene un `.pb-filter-empty` nascosto;
+  il selettore `.pb-schedule-mobile__panel.is-active:not(:has(.pb-schedule__slot:not(.is-filtered-out)))`
+  lo mostra quando tutti gli slot del pannello attivo hanno la classe `is-filtered-out`.
+  CSS ricalcola `:has()` in tempo reale quando il filtro JS aggiunge/rimuove la classe.
+  Distinto dal messaggio "Nessun corso programmato" (giorni senza corsi): quello è
+  renderizzato in frontmatter da Astro quando `day.slots.length === 0` e non ha `.pb-filter-empty`.
+
 ### In corso
 - Nessuna attività in corso
 
