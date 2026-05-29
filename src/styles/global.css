@@ -195,7 +195,8 @@
 
   /* Section padding */
   .pb-section {
-    @apply py-section-y;
+    padding-top: clamp(48px, 7vw, 80px);
+    padding-bottom: clamp(48px, 7vw, 80px);
   }
 
   .pb-section--lg {
@@ -222,6 +223,12 @@
   /* Section Heading */
   .pb-section-heading {
     @apply mb-12;
+  }
+
+  @media (max-width: 767px) {
+    .pb-section-heading {
+      margin-bottom: 32px;
+    }
   }
 
   .pb-section-heading h2 {

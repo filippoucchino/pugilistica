@@ -17,7 +17,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="flex gap-8 flex-wrap py-7 max-md:gap-5">
+<div class="grid grid-cols-2 gap-5 py-7 md:flex md:flex-wrap md:gap-8">
   {items.map((item) => (
     <div class="flex items-center gap-2.5">
       <div

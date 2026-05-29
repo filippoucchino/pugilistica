@@ -14,7 +14,7 @@ const { topline, subtitle, watermark = "PUGILISTICA", ctaPrimary, ctaSecondary }
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 ---
 
-<section class="relative pt-[140px] pb-[80px] overflow-hidden min-h-[90vh] flex items-center max-lg:pt-[130px] max-lg:min-h-auto max-md:pt-[130px] max-md:pb-12">
+<section class="relative pt-[clamp(90px,11vw,140px)] pb-[80px] overflow-hidden lg:min-h-[90vh] flex items-start lg:items-center max-md:pb-12">
   <!-- Glow -->
   <div class="pb-hero-glow"></div>
 
@@ -41,7 +41,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
     )}
 
     {(ctaPrimary || ctaSecondary) && (
-      <div class="flex gap-4 flex-wrap max-md:justify-start">
+      <div class="flex gap-4 flex-wrap max-md:justify-center">
         {ctaPrimary && (
           <a
             href={ctaPrimary.href}

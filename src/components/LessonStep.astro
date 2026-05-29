@@ -13,8 +13,9 @@ const { title, description } = Astro.props;
 ---
 
 <li
+  data-step-item
   class="grid grid-cols-step gap-6 py-7 border-b border-pb-border-default
-         last:border-b-0"
+         last:border-b-0 cursor-pointer md:cursor-auto items-center md:items-start"
   style="counter-increment: step;"
 >
   <!-- Number -->
@@ -27,7 +28,47 @@ const { title, description } = Astro.props;
 
   <!-- Content -->
   <div>
-    <p class="font-display text-display-sm text-pb-text-primary mb-1.5">{title}</p>
-    <p class="text-sm text-pb-text-tertiary leading-normal">{description}</p>
+    <!-- Riga titolo + icona espandi (icona visibile solo su mobile) -->
+    <div class="flex items-center justify-between">
+      <p class="font-display text-display-sm text-pb-text-primary mb-1.5">{title}</p>
+
+      <div
+        class="md:hidden w-7 h-7 border border-pb-border-default rounded-sm
+               flex items-center justify-center flex-shrink-0 ml-3
+               transition-all duration-base ease-default
+               [.is-open_&]:border-pb-border-accent"
+        data-step-icon
+      >
+        <svg
+          class="w-3.5 h-3.5 stroke-pb-text-muted fill-none
+                 transition-transform duration-base ease-default
+                 [.is-open_&]:stroke-brand [.is-open_&]:rotate-45"
+          style="stroke-width: 1.5;"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Descrizione: collassata su mobile, espansa al click, sempre visibile su desktop -->
+    <p
+      class="text-sm text-pb-text-tertiary leading-normal
+             overflow-hidden transition-all duration-slow ease-default
+             max-h-0 md:max-h-none [.is-open_&]:max-h-[300px]"
+      data-step-desc
+    >{description}</p>
   </div>
 </li>
+
+<script>
+  // Guard: evita doppie registrazioni se lo stesso script è incluso da più componenti
+  document.querySelectorAll("[data-step-item]:not([data-step-bound])").forEach((item) => {
+    item.setAttribute("data-step-bound", "1");
+    item.addEventListener("click", () => {
+      // Su desktop la descrizione è sempre visibile — nessun toggle
+      if (window.matchMedia("(min-width: 768px)").matches) return;
+      item.classList.toggle("is-open");
+    });
+  });
+</script>

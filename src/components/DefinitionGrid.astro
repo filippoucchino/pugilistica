@@ -75,12 +75,38 @@ const { introText, items, video } = Astro.props;
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {items.map((item) => (
           <div
+            data-step-item
             class="p-card-pad border border-pb-border-default rounded-md
                    transition-all duration-base ease-default
-                   hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
+                   hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
+                   cursor-pointer md:cursor-auto"
           >
-            <h3 class="font-display text-display-sm text-pb-text-primary mb-2">{item.title}</h3>
-            <p class="text-sm text-pb-text-tertiary leading-normal">{item.description}</p>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-display text-display-sm text-pb-text-primary">{item.title}</h3>
+              <div
+                class="md:hidden w-7 h-7 border border-pb-border-default rounded-sm
+                       flex items-center justify-center flex-shrink-0 ml-3
+                       transition-all duration-base ease-default
+                       [.is-open_&]:border-pb-border-accent"
+                data-step-icon
+              >
+                <svg
+                  class="w-3.5 h-3.5 stroke-pb-text-muted fill-none
+                         transition-transform duration-base ease-default
+                         [.is-open_&]:stroke-brand [.is-open_&]:rotate-45"
+                  style="stroke-width: 1.5;"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </div>
+            </div>
+            <p
+              class="text-sm text-pb-text-tertiary leading-normal
+                     overflow-hidden transition-[max-height] duration-slow ease-default
+                     max-h-0 md:max-h-none [.is-open_&]:max-h-[300px]"
+              data-step-desc
+            >{item.description}</p>
           </div>
         ))}
       </div>
@@ -95,14 +121,50 @@ const { introText, items, video } = Astro.props;
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       {items.map((item) => (
         <div
+          data-step-item
           class="p-card-pad border border-pb-border-default rounded-md
                  transition-all duration-base ease-default
-                 hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
+                 hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
+                 cursor-pointer md:cursor-auto"
         >
-          <h3 class="font-display text-display-sm text-pb-text-primary mb-2">{item.title}</h3>
-          <p class="text-sm text-pb-text-tertiary leading-normal">{item.description}</p>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-display text-display-sm text-pb-text-primary">{item.title}</h3>
+            <div
+              class="md:hidden w-7 h-7 border border-pb-border-default rounded-sm
+                     flex items-center justify-center flex-shrink-0 ml-3
+                     transition-all duration-base ease-default
+                     [.is-open_&]:border-pb-border-accent"
+              data-step-icon
+            >
+              <svg
+                class="w-3.5 h-3.5 stroke-pb-text-muted fill-none
+                       transition-transform duration-base ease-default
+                       [.is-open_&]:stroke-brand [.is-open_&]:rotate-45"
+                style="stroke-width: 1.5;"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </div>
+          </div>
+          <p
+            class="text-sm text-pb-text-tertiary leading-normal
+                   overflow-hidden transition-[max-height] duration-slow ease-default
+                   max-h-0 md:max-h-none [.is-open_&]:max-h-[300px]"
+            data-step-desc
+          >{item.description}</p>
         </div>
       ))}
     </div>
   </div>
 )}
+
+<script>
+  document.querySelectorAll("[data-step-item]:not([data-step-bound])").forEach((item) => {
+    item.setAttribute("data-step-bound", "1");
+    item.addEventListener("click", () => {
+      if (window.matchMedia("(min-width: 768px)").matches) return;
+      item.classList.toggle("is-open");
+    });
+  });
+</script>

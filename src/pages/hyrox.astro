@@ -312,8 +312,15 @@ const pageSchema = buildPageSchema(
         ))}
       </ul>
 
-      <!-- Thumbnail video: click → lightbox, stesso pattern della Gallery -->
-      <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <!-- Thumbnail video: slider su mobile, griglia su tablet/desktop -->
+      <div class="video-thumb-slider-wrapper mt-8">
+        <button type="button" class="video-thumb-slider-nav video-thumb-slider-nav--prev" aria-label="Video precedente">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="video-thumb-slider-nav video-thumb-slider-nav--next" aria-label="Video successivo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+        <div class="video-thumb-grid grid grid-cols-2 sm:grid-cols-4 gap-4">
         <button type="button" class="video-thumb-btn" data-dialog="dlg-hv1" aria-label="Guarda il video: mix di allenamento Hyrox alla Pugilistica Brianza">
           <img src="/videos/hyrox-mix-completo-pugilistica-brianza-barlassina.webp" alt="Mix di allenamento Hyrox alla Pugilistica Brianza di Barlassina" class="video-thumb-img" loading="lazy" />
           <div class="video-thumb-play" aria-hidden="true">
@@ -332,7 +339,9 @@ const pageSchema = buildPageSchema(
             </svg>
           </div>
         </button>
+        </div>
       </div>
+      <div class="video-thumb-slider-counter">1 / 2</div>
     </div>
   </section>
 
@@ -441,6 +450,33 @@ const pageSchema = buildPageSchema(
     }
     .video-lightbox-close:hover,
     .video-lightbox-close:focus-visible { background: rgba(255,255,255,0.25); }
+
+    /* Slider thumbnail video — mobile */
+    .video-thumb-slider-wrapper { position: relative; }
+    .video-thumb-slider-nav {
+      display: none; position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 2; width: 36px; height: 36px; border-radius: 50%;
+      align-items: center; justify-content: center;
+      background: rgba(10,10,10,0.65); border: 1px solid rgba(255,255,255,0.18);
+      color: white; cursor: pointer; padding: 0;
+    }
+    .video-thumb-slider-nav--prev { left: 10px; }
+    .video-thumb-slider-nav--next { right: 10px; }
+    .video-thumb-slider-counter {
+      display: none; text-align: center; margin-top: 10px;
+      font-size: 13px; color: rgba(255,255,255,0.5);
+    }
+    @media (max-width: 639px) {
+      .video-thumb-grid {
+        display: flex; flex-wrap: nowrap; overflow-x: scroll;
+        scroll-snap-type: x mandatory; scroll-behavior: smooth;
+        scrollbar-width: none; -ms-overflow-style: none; gap: 0;
+      }
+      .video-thumb-grid::-webkit-scrollbar { display: none; }
+      .video-thumb-grid > * { flex: 0 0 100%; scroll-snap-align: start; }
+      .video-thumb-slider-nav { display: flex; }
+      .video-thumb-slider-counter { display: block; }
+    }
   </style>
 
   <script is:inline>
@@ -471,6 +507,35 @@ const pageSchema = buildPageSchema(
           document.body.style.overflow = '';
         });
       });
+    })();
+
+    (function() {
+      var wrapper = document.querySelector('.video-thumb-slider-wrapper');
+      if (!wrapper) return;
+      var grid = wrapper.querySelector('.video-thumb-grid');
+      var prevBtn = wrapper.querySelector('.video-thumb-slider-nav--prev');
+      var nextBtn = wrapper.querySelector('.video-thumb-slider-nav--next');
+      var counter = document.querySelector('.video-thumb-slider-counter');
+      var thumbs = grid ? grid.querySelectorAll('.video-thumb-btn') : [];
+      var slideIndex = 0;
+      var scrollTimer;
+      function slideTo(index) {
+        var total = thumbs.length;
+        slideIndex = ((index % total) + total) % total;
+        grid.scrollTo({ left: slideIndex * grid.offsetWidth, behavior: 'smooth' });
+        if (counter) counter.textContent = (slideIndex + 1) + ' / ' + total;
+      }
+      if (prevBtn) prevBtn.addEventListener('click', function() { slideTo(slideIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { slideTo(slideIndex + 1); });
+      if (grid) {
+        grid.addEventListener('scroll', function() {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(function() {
+            slideIndex = Math.round(grid.scrollLeft / grid.offsetWidth);
+            if (counter) counter.textContent = (slideIndex + 1) + ' / ' + thumbs.length;
+          }, 80);
+        }, { passive: true });
+      }
     })();
   </script>
 
