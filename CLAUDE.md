@@ -471,7 +471,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-05-28
+Ultimo aggiornamento: 2026-05-29
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -1058,6 +1058,52 @@ Ultimo aggiornamento: 2026-05-28
     e stessa griglia 4 colonne (i 2 elementi occupano le prime 2 colonne, spazio vuoto a destra).
   - **Generazione asset ffmpeg**: WebM VP9 2-pass (CRF 33, Opus 96k), WebP poster estratto con
     `-frames:v 1 -update 1`. Tutti i file in `public/videos/`.
+
+- Ottimizzazioni layout responsive (sessione 2026-05-29):
+  - **ScheduleTable.astro — rewrite mobile con day-tab**: rimossa la logica "nascondi celle"
+    che non cambiava il layout. Aggiunta struttura HTML parallela `.pb-schedule-mobile`
+    (nascosta su desktop) con tab Lun–Sab e pannello per giorno. La trasposizione
+    (righe per orario → colonne per giorno) avviene nel frontmatter Astro a build-time.
+    I chip mobile riusano la classe `.pb-schedule__slot` così il filtro corso di `orari.astro`
+    funziona senza modifiche JS aggiuntive. CSS `:has()` nasconde le righe quando tutti
+    i chip del giorno sono filtrati. Stesso pattern applicato a `CourseScheduleMini.astro`
+    per le pagine corso (pugilato, hyrox, pb-hiit).
+  - **Hero CTA mobile**: bottoni CTA centrati su mobile (`max-md:justify-center`).
+  - **Filter pills /orari/ mobile**: container cambiato da `flex flex-wrap` a
+    `grid grid-cols-2` su mobile — pill a larghezza uguale, testo allineato a sinistra.
+  - **Spacing verticale mobile** (solo `max-md`, desktop invariato):
+    - `.pb-section`: padding ridotto da 80px a 48px su mobile (override `@media` in `global.css`)
+    - `.pb-section-heading`: margin-bottom ridotto da 48px a 32px su mobile
+    - Hero `pt`: ridotto da 130px a 110px su mobile
+  - **Sistema spacing fluido `clamp()`**: sostituita la coppia "valore fisso + override mobile"
+    con valori fluidi che scalano senza scatti tra dispositivi.
+    - **Hero**: `pt-[clamp(90px,11vw,140px)]` — scala con la larghezza del viewport
+      (su tutti i telefoni ≤630px wide: 90px fisso; desktop 1273px+: 140px cap).
+      Rimossi i 2 breakpoint espliciti `max-lg` e `max-md`.
+    - **`lg:min-h-[90vh]` + `items-start lg:items-center`**: fix critico — `min-h-[90vh]`
+      si applicava anche su mobile perché `max-lg:min-h-auto` non genera CSS in Tailwind 3
+      (`min-h-auto` non è un'utility valida). Con `flex items-center` + 90vh su schermi
+      di altezze diverse, il contenuto si centrava verticalmente producendo gap inconsistenti
+      (poco spazio su iPhone SE 667px, molto su iPhone 12 Pro 844px). Fix: `lg:min-h-[90vh]`
+      (solo desktop) e `items-start` su mobile (contenuto parte esattamente a padding-top),
+      `lg:items-center` su desktop (centratura verticale nella sezione alta).
+    - **`.pb-section`**: `padding: clamp(48px, 7vw, 80px)` — scala con la larghezza.
+      Sostituisce `@apply py-section-y` (80px fisso) e il blocco `@media (max-width: 767px)`
+      aggiunto in precedenza. Plateau a 48px su mobile stretto, a 80px da ~1140px in su.
+  - **Footer mobile compatto**: su schermi ≤639px la griglia passa da 1 colonna a 2 colonne.
+    Brand e Contatti occupano `col-span-2` (larghezza piena); Percorsi e Info sono affiancati.
+    Logo ridotto da `h-32` (128px) a `h-20` (80px) su mobile. Padding superiore footer
+    ridotto da `pt-16` (64px) a `pt-10` (40px) su mobile, laterale da `px-8` a `px-5`.
+
+- Messaggio "nessun risultato" filtro mobile in `/orari/` (`ScheduleTable.astro`):
+  quando si seleziona un filtro corso e il giorno attivo non ha corsi di quel tipo,
+  appare "Nessun corso programmato per il filtro impostato". Soluzione CSS pura via
+  `:has()`: ogni pannello giorno (con corsi) contiene un `.pb-filter-empty` nascosto;
+  il selettore `.pb-schedule-mobile__panel.is-active:not(:has(.pb-schedule__slot:not(.is-filtered-out)))`
+  lo mostra quando tutti gli slot del pannello attivo hanno la classe `is-filtered-out`.
+  CSS ricalcola `:has()` in tempo reale quando il filtro JS aggiunge/rimuove la classe.
+  Distinto dal messaggio "Nessun corso programmato" (giorni senza corsi): quello è
+  renderizzato in frontmatter da Astro quando `day.slots.length === 0` e non ha `.pb-filter-empty`.
 
 ### In corso
 - Nessuna attività in corso
