@@ -1,6 +1,9 @@
 ---
 /**
- * Card servizio — usata per i corsi nella home e come card generica.
+ * Card servizio — usata per i corsi nella home.
+ * Mobile/sm: riga icona + titolo + expand, descrizione collassata al click.
+ * md+: colonna completa (icona, titolo, descrizione, CTA).
+ * Replica esatta del pattern TargetCard delle pagine servizio.
  */
 
 interface Props {
@@ -15,36 +18,71 @@ const { icon, title, description, ctaLabel = "Scopri il corso", ctaHref = "#" } 
 ---
 
 <li
-  class="group bg-surface-card border border-pb-border-default rounded-md
-         p-card-pad-lg transition-all duration-base ease-default
-         flex flex-col gap-4 hover:bg-surface-card-hover hover:border-pb-border-medium"
+  data-service-item
+  class="p-card-pad border border-pb-border-default rounded-md
+         transition-all duration-base ease-default
+         flex flex-row items-center gap-4 md:flex-col md:items-start
+         hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
+         cursor-pointer md:cursor-auto"
 >
-  <!-- Icon -->
   <div
     class="w-11 h-11 border border-pb-border-accent rounded-md
-           flex items-center justify-center"
+           flex items-center justify-center flex-shrink-0"
   >
     <svg
       class="w-5 h-5 stroke-brand fill-none"
-      style="stroke-width: 1.5;"
+      style="stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
       viewBox="0 0 24 24"
       set:html={icon}
     />
   </div>
 
-  <!-- Title -->
-  <p class="font-display text-display-sm text-pb-text-primary">{title}</p>
+  <div class="flex-1 md:contents">
+    <div class="flex items-center justify-between">
+      <p class="font-display text-display-sm text-pb-text-primary">{title}</p>
 
-  <!-- Description -->
-  <p class="text-sm text-pb-text-tertiary leading-normal flex-grow">{description}</p>
+      <div
+        class="md:hidden w-7 h-7 border border-pb-border-default rounded-sm
+               flex items-center justify-center flex-shrink-0 ml-3
+               transition-all duration-base ease-default
+               [.is-open_&]:border-pb-border-accent"
+        data-service-icon
+      >
+        <svg
+          class="w-3.5 h-3.5 stroke-pb-text-muted fill-none
+                 transition-transform duration-base ease-default
+                 [.is-open_&]:stroke-brand [.is-open_&]:rotate-45"
+          style="stroke-width: 1.5;"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+      </div>
+    </div>
 
-  <!-- CTA -->
-  <a
-    href={ctaHref}
-    class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand
-           tracking-wide no-underline transition-colors duration-base hover:text-brand-light"
-  >
-    {ctaLabel}
-    <span class="transition-transform duration-fast ease-default group-hover:translate-x-1">→</span>
-  </a>
+    <p
+      class="text-sm text-pb-text-tertiary leading-normal
+             overflow-hidden transition-[max-height] duration-slow ease-default
+             max-h-0 md:max-h-none [.is-open_&]:max-h-[300px]"
+      data-service-desc
+    >{description}</p>
+
+    <a
+      href={ctaHref}
+      class="hidden [.is-open_&]:inline-flex md:inline-flex items-center gap-1.5 text-sm font-semibold text-brand
+             tracking-wide no-underline transition-colors duration-base hover:text-brand-light mt-3 md:mt-0"
+    >
+      {ctaLabel}<span class="transition-transform duration-fast ease-default group-hover:translate-x-1">→</span>
+    </a>
+  </div>
 </li>
+
+<script>
+  document.querySelectorAll("[data-service-item]:not([data-service-bound])").forEach((item) => {
+    item.setAttribute("data-service-bound", "1");
+    item.addEventListener("click", () => {
+      if (window.matchMedia("(min-width: 768px)").matches) return;
+      item.classList.toggle("is-open");
+    });
+  });
+</script>

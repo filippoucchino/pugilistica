@@ -339,9 +339,27 @@ const pageSchema = buildPageSchema(
             </svg>
           </div>
         </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-hv3" aria-label="Guarda il video: allenamento Hyrox alla Pugilistica Brianza">
+          <img src="/videos/allenamento-hyrox-pugilistica-brianza-barlassina.webp" alt="Allenamento Hyrox alla Pugilistica Brianza di Barlassina" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true">
+            <svg viewBox="0 0 80 80" width="56" height="56">
+              <circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/>
+              <polygon points="32,24 60,40 32,56" fill="white"/>
+            </svg>
+          </div>
+        </button>
+        <button type="button" class="video-thumb-btn" data-dialog="dlg-hv4" aria-label="Guarda il video: allenamento al vogatore Hyrox alla Pugilistica Brianza">
+          <img src="/videos/allenamento-vogatore-pugilistica-brianza-barlassina.webp" alt="Allenamento al vogatore Hyrox alla Pugilistica Brianza di Barlassina" class="video-thumb-img" loading="lazy" />
+          <div class="video-thumb-play" aria-hidden="true">
+            <svg viewBox="0 0 80 80" width="56" height="56">
+              <circle cx="40" cy="40" r="36" fill="rgba(0,0,0,0.5)"/>
+              <polygon points="32,24 60,40 32,56" fill="white"/>
+            </svg>
+          </div>
+        </button>
         </div>
       </div>
-      <div class="video-thumb-slider-counter">1 / 2</div>
+      <div class="video-thumb-slider-counter">1 / 4</div>
     </div>
   </section>
 
@@ -392,6 +410,58 @@ const pageSchema = buildPageSchema(
         <p class="p-4 text-sm text-pb-text-tertiary">
           Il tuo browser non supporta il tag video.
           <a href="/videos/your-only-limit-hyrox-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.
+        </p>
+      </video>
+    </div>
+  </dialog>
+
+  <!-- Dialog lightbox video 3: allenamento Hyrox -->
+  <dialog class="video-lightbox" id="dlg-hv3" aria-label="Video: allenamento Hyrox alla Pugilistica Brianza">
+    <div class="video-lightbox-overlay">
+      <button type="button" class="video-lightbox-close" aria-label="Chiudi">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <video
+        class="video-lightbox-video"
+        controls
+        playsinline
+        preload="none"
+        poster="/videos/allenamento-hyrox-pugilistica-brianza-barlassina.webp"
+        aria-label="Allenamento Hyrox alla Pugilistica Brianza di Barlassina"
+      >
+        <source src="/videos/allenamento-hyrox-pugilistica-brianza-barlassina.webm" type="video/webm" />
+        <source src="/videos/allenamento-hyrox-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+        <p class="p-4 text-sm text-pb-text-tertiary">
+          Il tuo browser non supporta il tag video.
+          <a href="/videos/allenamento-hyrox-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.
+        </p>
+      </video>
+    </div>
+  </dialog>
+
+  <!-- Dialog lightbox video 4: allenamento vogatore Hyrox -->
+  <dialog class="video-lightbox" id="dlg-hv4" aria-label="Video: allenamento al vogatore Hyrox alla Pugilistica Brianza">
+    <div class="video-lightbox-overlay">
+      <button type="button" class="video-lightbox-close" aria-label="Chiudi">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <video
+        class="video-lightbox-video"
+        controls
+        playsinline
+        preload="none"
+        poster="/videos/allenamento-vogatore-pugilistica-brianza-barlassina.webp"
+        aria-label="Allenamento al vogatore Hyrox alla Pugilistica Brianza di Barlassina"
+      >
+        <source src="/videos/allenamento-vogatore-pugilistica-brianza-barlassina.webm" type="video/webm" />
+        <source src="/videos/allenamento-vogatore-pugilistica-brianza-barlassina.mp4" type="video/mp4" />
+        <p class="p-4 text-sm text-pb-text-tertiary">
+          Il tuo browser non supporta il tag video.
+          <a href="/videos/allenamento-vogatore-pugilistica-brianza-barlassina.mp4" class="underline text-brand">Scarica il video</a>.
         </p>
       </video>
     </div>

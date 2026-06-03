@@ -149,29 +149,33 @@ const pillList = hasZonesInfo ? zonesInfo : zones.map((name) => ({ name, descrip
 
     var active = null;
 
+    function activate(btn) {
+      pills.forEach(function (b) {
+        b.classList.remove("border-brand", "text-pb-text-primary", "bg-brand", "text-white");
+        b.setAttribute("aria-expanded", "false");
+      });
+      active = btn;
+      btn.classList.add("border-brand", "bg-brand", "text-white");
+      btn.setAttribute("aria-expanded", "true");
+      descText.textContent = btn.getAttribute("data-description");
+      descBox.style.maxHeight = descBox.scrollHeight + 120 + "px";
+    }
+
     pills.forEach(function (btn) {
       btn.addEventListener("click", function () {
-        var isSame = active === btn;
-
-        // Resetta tutti i bottoni
-        pills.forEach(function (b) {
-          b.classList.remove("border-brand", "text-pb-text-primary");
-          b.setAttribute("aria-expanded", "false");
-        });
-
-        if (isSame) {
+        if (active === btn) {
           // Chiudi
+          btn.classList.remove("border-brand", "bg-brand", "text-white");
+          btn.setAttribute("aria-expanded", "false");
           active = null;
           descBox.style.maxHeight = "0";
         } else {
-          // Apri con il testo della città selezionata
-          active = btn;
-          btn.classList.add("border-brand", "text-pb-text-primary");
-          btn.setAttribute("aria-expanded", "true");
-          descText.textContent = btn.getAttribute("data-description");
-          descBox.style.maxHeight = descBox.scrollHeight + 120 + "px";
+          activate(btn);
         }
       });
     });
+
+    // Prima pill (Barlassina) attiva di default
+    activate(pills[0]);
   })();
 </script>

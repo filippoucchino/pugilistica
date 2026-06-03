@@ -185,12 +185,8 @@ const pageSchema = buildPageSchema(
             </svg>
           </span>
           <div class="flex-1 min-w-0">
-            <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-1">Instagram</div>
+            <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-1">Seguici su Instagram</div>
             <div class="text-lg font-semibold text-pb-text-primary truncate">@pugilisticabrianza</div>
-            <div class="text-sm text-pb-text-tertiary mt-1 flex items-center gap-1">
-              Seguici
-              <span class="transition-transform duration-base group-hover:translate-x-1">→</span>
-            </div>
           </div>
         </a>
 
@@ -208,12 +204,8 @@ const pageSchema = buildPageSchema(
             </svg>
           </span>
           <div class="flex-1 min-w-0">
-            <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-1">Facebook</div>
+            <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-1">Seguici su Facebook</div>
             <div class="text-lg font-semibold text-pb-text-primary truncate">Pugilistica Brianza</div>
-            <div class="text-sm text-pb-text-tertiary mt-1 flex items-center gap-1">
-              Seguici
-              <span class="transition-transform duration-base group-hover:translate-x-1">→</span>
-            </div>
           </div>
         </a>
 
@@ -232,12 +224,8 @@ const pageSchema = buildPageSchema(
             </svg>
           </span>
           <div class="flex-1 min-w-0">
-            <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-1">YouTube</div>
+            <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-faint mb-1">Seguici su YouTube</div>
             <div class="text-lg font-semibold text-pb-text-primary truncate">@pugilisticabrianza</div>
-            <div class="text-sm text-pb-text-tertiary mt-1 flex items-center gap-1">
-              Seguici
-              <span class="transition-transform duration-base group-hover:translate-x-1">→</span>
-            </div>
           </div>
         </a>
       </div>
@@ -261,9 +249,12 @@ const pageSchema = buildPageSchema(
               "closed" in h && h.closed ? "text-pb-text-muted" : "",
             ]}>
               <span class="text-base font-medium text-pb-text-secondary">{h.day}</span>
-              <span class:list={["text-base", "closed" in h && h.closed ? "text-pb-text-muted" : "text-pb-text-primary font-semibold"]}>
-                {h.time}
-              </span>
+              <span
+                class:list={["text-base", "closed" in h && h.closed ? "text-pb-text-muted" : "text-pb-text-primary font-semibold"]}
+                set:html={"closed" in h && h.closed
+                  ? h.time
+                  : h.time.replace(/\//g, '<span class="text-brand">/</span>')}
+              />
             </div>
           ))}
         </div>
