@@ -1177,6 +1177,68 @@ Ultimo aggiornamento: 2026-06-03
   2 thumbnail button (`dlg-hv3`, `dlg-hv4`) nella griglia `video-thumb-grid` e 2 `<dialog>`
   lightbox. Contatore slider aggiornato da `1 / 2` a `1 / 4`.
 
+- TOC (Table of Contents) sticky sulle 3 pagine corso (sessione 2026-06-04):
+
+  **Componente**: `src/components/TableOfContents.astro` — barra pillole orizzontale sticky
+  posizionata **sopra la Hero**, visibile dall'apertura della pagina. Accetta prop
+  `items: { id: string; label: string }[]`.
+
+  **Posizionamento**: `position: sticky; top: 72px` (desktop) / `top: 60px` (mobile),
+  `z-index: 40`. La barra rimane visibile durante tutto lo scroll della pagina.
+
+  **Struttura HTML**:
+  ```
+  <nav .pb-toc>
+    <div .pb-toc__track>     ← flex con justify-content:center, overflow-x:auto
+      <span .pb-toc__label>  ← "Menù" (desktop: flex item nel gruppo centrato;
+                                mobile: position:sticky left:0, background #0A0A0A)
+      <a .pb-toc__pill>…     ← una per sezione
+    <div .pb-toc__progress>  ← barra rossa 2px che si riempie con lo scroll
+  ```
+
+  **Scroll spy** (`<script is:inline>`, avvolto in `DOMContentLoaded`):
+  - OFFSET dinamico calcolato da `tocEl.getBoundingClientRect().bottom + 10` (non hardcoded)
+  - Ricalcolo su `resize`
+  - Default `best = -1`: nessuna pillola attiva sulla Hero (si attiva solo quando la prima
+    sezione entra nel viewport)
+  - Rilevamento "fondo pagina" per attivare l'ultima pillola
+  - Auto-scroll della barra per tenere la pillola attiva visibile
+
+  **Progress bar** (`.pb-toc__progress`): sostituisce il `border-b` del TOC. Sfondo grigio
+  `rgba(255,255,255,0.08)` → fill rosso `#c41e1e` che cresce linearmente con `window.scrollY`.
+  `width` aggiornato raw (nessuna transition) ad ogni evento scroll.
+
+  **CSS classi** aggiunte in `src/styles/global.css` (`@layer components`):
+  `.pb-toc`, `.pb-toc__track`, `.pb-toc__label`, `.pb-toc__pill`, `.pb-toc__pill:hover`,
+  `.pb-toc__pill:active`, `.pb-toc__pill.is-active`, `.pb-toc__pill.is-active:hover`,
+  `.pb-toc__pill.is-active:active`, `.pb-toc__progress`, `.pb-toc__progress-fill`,
+  `.pb-toc-section` (scroll-margin-top: 130px desktop / 118px mobile).
+
+  **Dettagli design pillole**:
+  - Font: 12px, `tracking-widest uppercase`, `font-body semibold`
+  - Inattiva: `text-pb-text-secondary` (0.75 opacity) — leggibilità WCAG AA
+  - Attiva: `bg-brand border-brand text-white` (sfondo rosso pieno)
+  - Hover attiva: `background #A51818` (brand-dark), tap attiva: `#7A1212` (brand-darker)
+  - `:active` inattiva: `opacity: 0.70`
+  - `isolation: isolate` su ogni pill — previene artifact GPU di sfondo rettangolare
+    durante compositing (problema identificato: `transition-all` → fix: transizione
+    solo `border-color` e `color`, background istantaneo)
+
+  **Mobile** (`≤767px`):
+  - `justify-content: flex-start` (pillole da sinistra, scroll orizzontale)
+  - Label "Menù": `position: sticky; left: 0; background: #0A0A0A` — rimane visibile
+    mentre le pillole scorrono, copre le pillole dietro
+  - Fade gradient destro (`::after` su `.pb-toc`): sfumatura `transparent → #0A0A0A`,
+    56px, indica che ci sono più pillole da scorrere
+
+  **Pagine modificate**: `pugilato.astro`, `hyrox.astro`, `pb-hiit.astro`.
+  Ogni pagina: import `TableOfContents`, blocco `<TableOfContents items={[...]}>`
+  prima di `<Hero>`, `id="..."` + classe `pb-toc-section` sulle `<section>`.
+  Labels pugilato: Il corso / Per chi / Benefici / La lezione / I coach / Perché noi /
+  Info pratiche / Gli spazi / FAQ / Dove siamo (10 pillole).
+  Hyrox: stesso schema con "Attrezzatura" al posto di "Gli spazi" (10).
+  PB Hiit: stesso schema senza gallery (9, sezione non ancora presente).
+
 ### In corso
 - Nessuna attività in corso
 

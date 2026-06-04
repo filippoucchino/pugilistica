@@ -16,6 +16,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo } from "@/data/schema";
 
@@ -267,6 +268,20 @@ const pageSchema = buildPageSchema(
   description="Scopri il corso di pugilato a Barlassina: per chi è adatto, come si svolge, benefici, prova gratuita e contatti di Pugilistica Brianza."
   schema={pageSchema}
 >
+  <!-- TOC — barra pillole sticky (sopra la hero) -->
+  <TableOfContents items={[
+    { id: "il-corso",      label: "Il corso" },
+    { id: "per-chi",       label: "Per chi" },
+    { id: "benefici",      label: "Benefici" },
+    { id: "la-lezione",    label: "La lezione" },
+    { id: "i-coach",       label: "I coach" },
+    { id: "perche-noi",    label: "Perché noi" },
+    { id: "info-pratiche", label: "Info pratiche" },
+    { id: "gallery",       label: "Gli spazi" },
+    { id: "faq",           label: "FAQ" },
+    { id: "dove-siamo",    label: "Dove siamo" },
+  ]} />
+
   <!-- 1. HERO -->
   <Hero
     topline="Corso di pugilato alla Pugilistica Brianza"
@@ -285,7 +300,7 @@ const pageSchema = buildPageSchema(
   </div>
 
   <!-- 2. CHE COS'È IL PUGILATO -->
-  <section class="pb-section fade-up">
+  <section id="il-corso" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading topline="Il corso">
         Che cos'è il <span class="text-brand">Pugilato?</span>
@@ -304,7 +319,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 3. PER CHI È ADATTO -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="per-chi" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Per chi"
@@ -531,7 +546,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 4. BENEFICI -->
-  <section class="pb-section fade-up">
+  <section id="benefici" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Benefici"
@@ -546,7 +561,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 5. COME SI SVOLGE UNA LEZIONE -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="la-lezione" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="La lezione"
@@ -567,7 +582,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- IL COACH -->
-  <section class="pb-section fade-up">
+  <section id="i-coach" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading topline="I coach">
         Chi ti guida sul <span class="text-brand">ring</span>
@@ -604,7 +619,7 @@ const pageSchema = buildPageSchema(
   </div>
 
   <!-- 6. PERCHÉ SCEGLIERE NOI -->
-  <section class="pb-section fade-up">
+  <section id="perche-noi" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Perché noi"
@@ -621,7 +636,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 7. ORARI, PROVA E ISCRIZIONE -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="info-pratiche" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Info pratiche"
@@ -655,7 +670,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 8. GALLERY -->
-  <section class="pb-section fade-up">
+  <section id="gallery" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Gli spazi"
@@ -673,7 +688,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 9. FAQ -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="faq" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="FAQ"
@@ -686,7 +701,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 10. LOCAL -->
-  <section class="pb-section fade-up">
+  <section id="dove-siamo" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"
