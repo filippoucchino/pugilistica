@@ -16,6 +16,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import CoachBlock from "../components/CoachBlock.astro";
 import CourseScheduleMini from "../components/CourseScheduleMini.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildCourse, buildVideo } from "@/data/schema";
 
@@ -255,6 +256,19 @@ const pageSchema = buildPageSchema(
   description="Scopri il corso PB Hiit a Barlassina: per chi è adatto, come si svolge, benefici, prova gratuita e contatti di Pugilistica Brianza."
   schema={pageSchema}
 >
+  <!-- TOC — barra pillole sticky (sopra la hero) -->
+  <TableOfContents items={[
+    { id: "il-corso",      label: "Il corso" },
+    { id: "per-chi",       label: "Per chi" },
+    { id: "benefici",      label: "Benefici" },
+    { id: "la-lezione",    label: "La lezione" },
+    { id: "il-coach",      label: "Il coach" },
+    { id: "perche-noi",    label: "Perché noi" },
+    { id: "info-pratiche", label: "Info pratiche" },
+    { id: "faq",           label: "FAQ" },
+    { id: "dove-siamo",    label: "Dove siamo" },
+  ]} />
+
   <!-- 1. HERO -->
   <Hero
     topline="Corso PB Hiit alla Pugilistica Brianza"
@@ -273,7 +287,7 @@ const pageSchema = buildPageSchema(
   </div>
 
   <!-- 2. CHE COS'È PB HIIT -->
-  <section class="pb-section fade-up">
+  <section id="il-corso" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading topline="Il corso">
         Che cos'è <span class="text-brand">PB Hiit?</span>
@@ -292,7 +306,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 3. PER CHI È ADATTO -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="per-chi" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Per chi"
@@ -309,7 +323,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 4. BENEFICI -->
-  <section class="pb-section fade-up">
+  <section id="benefici" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Benefici"
@@ -324,7 +338,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 5. COME SI SVOLGE UNA LEZIONE -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="la-lezione" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="La lezione"
@@ -346,7 +360,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- IL COACH -->
-  <section class="pb-section fade-up">
+  <section id="il-coach" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading topline="Il coach">
         Chi ti guida nelle sessioni di <span class="text-brand">PB Hiit</span>
@@ -373,7 +387,7 @@ const pageSchema = buildPageSchema(
   </div>
 
   <!-- 6. PERCHÉ SCEGLIERE NOI -->
-  <section class="pb-section fade-up">
+  <section id="perche-noi" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Perché noi"
@@ -390,7 +404,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 7. ORARI, PROVA E ISCRIZIONE -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="info-pratiche" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Info pratiche"
@@ -425,7 +439,7 @@ const pageSchema = buildPageSchema(
 
   <!-- 8. GALLERY -->
   <!-- 9. FAQ -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="faq" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="FAQ"
@@ -438,7 +452,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 10. LOCAL -->
-  <section class="pb-section fade-up">
+  <section id="dove-siamo" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"
