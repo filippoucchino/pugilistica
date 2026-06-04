@@ -17,7 +17,6 @@ const { icon, title, description } = Astro.props;
   data-step-item
   class="flex gap-4 items-center md:items-start p-card-pad cursor-pointer md:cursor-auto"
 >
-  <!-- Icona corso: sempre visibile -->
   <div
     class="w-11 h-11 border border-pb-border-accent rounded-md
            flex items-center justify-center flex-shrink-0"
@@ -30,9 +29,7 @@ const { icon, title, description } = Astro.props;
     />
   </div>
 
-  <!-- Content: titolo + descrizione -->
   <div>
-    <!-- Riga titolo + icona espandi (icona visibile solo su mobile) -->
     <div class="flex items-center justify-between">
       <p class="font-display text-display-sm text-pb-text-primary mb-1">{title}</p>
 
@@ -55,7 +52,6 @@ const { icon, title, description } = Astro.props;
       </div>
     </div>
 
-    <!-- Descrizione: collassata su mobile, espansa al click -->
     <p
       class="text-sm text-pb-text-tertiary leading-normal
              overflow-hidden transition-[max-height] duration-slow ease-default

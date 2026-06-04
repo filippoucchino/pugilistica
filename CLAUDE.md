@@ -471,7 +471,7 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 - Se trovi duplicazione di dati già presenti in `src/data/shared.ts`, proponi il refactor invece di perpetuarla
 
 ## Stato attuale
-Ultimo aggiornamento: 2026-05-29
+Ultimo aggiornamento: 2026-06-03
 
 ### Completato
 - Setup iniziale progetto Astro 5 + TypeScript (strict) + Tailwind 3
@@ -1104,6 +1104,78 @@ Ultimo aggiornamento: 2026-05-29
   CSS ricalcola `:has()` in tempo reale quando il filtro JS aggiunge/rimuove la classe.
   Distinto dal messaggio "Nessun corso programmato" (giorni senza corsi): quello è
   renderizzato in frontmatter da Astro quando `day.slots.length === 0` e non ha `.pb-filter-empty`.
+
+- Ottimizzazioni responsive homepage e pagine interne (sessione 2026-06-03):
+
+  **Progressive disclosure su mobile** — stesso pattern di `TargetCard` (pagine servizio) applicato a:
+  - `ServiceCard.astro` ("I nostri percorsi" homepage): `flex-row items-center` su mobile/sm,
+    `md:flex-col` su desktop. Descrizione `max-h-0 md:max-h-none [.is-open_&]:max-h-[300px]`.
+    CTA `hidden [.is-open_&]:inline-flex md:inline-flex`. Script toggle su breakpoint `md:` (768px).
+    Griglia homepage: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5`.
+  - `SegmentCard.astro` ("Per chi è" homepage): stessa logica senza icona. `flex flex-col md:gap-4`.
+    Descrizione collassata con `pt-2 md:pt-0` (padding clippato da `overflow-hidden` quando chiuso).
+    Griglia: invariata `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5`.
+  - Filosofia ("Disciplina / Unione / Arte") in `chi-siamo.astro`: pattern inline nel `.map()`,
+    `md:flex-col md:items-center md:text-center`, script con `data-filosofia-item`.
+    Griglia: `grid-cols-1 md:grid-cols-3 gap-5`.
+  - **Regola generale**: CTA/link usano `hidden [.is-open_&]:inline-flex md:inline-flex` (display:none
+    quando collassato, nessun contributo all'altezza — evita il bug degli `inline-flex` con `max-h-0`).
+    Per gli elementi da nascondere su mobile senza expand, usare sempre `hidden md:...` non `max-h-0`.
+
+  **LocalSection — pill Barlassina attiva di default**: refactored lo script in `LocalSection.astro`
+  con funzione `activate(btn)` riusabile. Chiamata su `pills[0]` all'init. Pill attiva: `bg-brand
+  border-brand text-white` (sfondo rosso pieno, non solo bordo).
+
+  **chi-siamo.astro — sezione statistiche (ASD / 2016 / BARLASSINA)**: `grid-cols-3` sempre
+  (non più `grid-cols-1 md:grid-cols-3`). Font stat: `text-lg sm:text-display-sm md:text-display-lg`.
+  Font descrizione: `text-xs md:text-sm`. Gap: `gap-4 md:gap-10`. Padding sezione: `max-md:py-8`.
+
+  **chi-siamo.astro — sezione team**: slider orizzontale su mobile (stesso pattern delle recensioni
+  in homepage). Wrapper: `flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide
+  lg:grid lg:grid-cols-2 lg:overflow-visible lg:snap-none lg:gap-8`. Ogni card: `w-[85%]
+  sm:w-[calc(50%-12px)] flex-none snap-start lg:w-auto`. Su lg+: torna al grid 2 colonne originale.
+
+  **ContactCard.astro** — layout a riga sempre (non più colonna su desktop):
+  `flex flex-row items-center gap-4` (rimossi `md:flex-col md:items-start`). Padding ridotto:
+  `p-4` fisso (rimosso `md:p-card-pad-lg`). Font valore: `text-base` (da `text-lg`). Su mobile
+  risolve il problema dell'email che andava a capo.
+
+  **contatti.astro — card social**: rimossa riga "Seguici →" con freccia. Label cambiata da
+  "INSTAGRAM/FACEBOOK/YOUTUBE" a "SEGUICI SU INSTAGRAM/FACEBOOK/YOUTUBE".
+
+  **contatti.astro — orari di apertura**: le `/` tra le fasce orarie colorate con `text-brand`
+  via `set:html` + `.replace(/\//g, '<span class="text-brand">/</span>')`. Solo per righe non chiuse.
+
+- Icone ServiceCard homepage aggiornate (sessione 2026-06-03):
+
+  **Pugilato — guantone da boxe orizzontale**: path SVG disegnato da zero in stile stroke 24×24.
+  Struttura: polsino rettangolare a sinistra (`M3 14V11Q3 9 5 9H8`), arco pollice in alto
+  (`Q9 5 12 5Q15 5 15 8`), corpo dita a semicerchio destro (`a5 5 0 010 10`), fondo (`H8V18H3z`).
+  Linee interne: cucitura diagonale pollice/dita (`M8 7L15 8`) + cucitura verticale polsino/pugno
+  (`M8 9V18`). Glove orizzontale, fist verso destra.
+
+  **Hyrox — logo ufficiale Hyrox**: 7 strisce parallelogramma (4 gruppo superiore + 3 gruppo
+  inferiore) riprodotte dal tracciato SVG originale del logo. Implementazione: `<svg>` annidato
+  con `viewBox="15 95 178 75" preserveAspectRatio="none"` (stretching orizzontale per avvicinarsi
+  al formato originale largo) e `<path style="fill:#c41e1e;stroke:none">` con i 7 sub-path del
+  logo. Il `fill:#c41e1e` inline sovrascrive la `fill:none` ereditata dal SVG padre.
+  **Nota**: le altre icone usano stroke puro; questa usa fill perché le strisce del logo Hyrox
+  sono parallelogrammi pieni, non path stroke.
+
+- PricingCard — prezzo in alto a destra accanto al titolo:
+  Layout header card cambiato da colonna (titolo poi prezzo sotto) a riga (`flex items-start
+  justify-between gap-4`): titolo a sinistra, prezzo+periodo impilati a destra (`text-right shrink-0`).
+  Font prezzo ridotto da `clamp(40px,5vw,56px)` a `clamp(28px,4vw,40px)` per stare nel formato
+  compatto. Colore prezzo: `text-brand` (rosso). Periodo (`/mese`, `/lezione`) come `<span>` separato
+  sotto il prezzo (`block`). Risparmio verticale significativo su mobile.
+
+- Hyrox — 2 nuovi video nella sezione "Per chi è adatto il corso Hyrox?":
+  File sorgente in `src/assets/images/hyrox/New/`: `allenamento-hyrox-pugilistica-brianza.mp4`
+  (sled push, 4.65s, 1920×1080) e `allenamento-vogatore-pugilistica-brianza.mp4` (vogatore, 6.55s).
+  Asset generati via ffmpeg: copiati in `public/videos/` con suffix `-barlassina`, poster `.webp`
+  estratti al secondo 2, webm VP9 CRF33 2-pass + Opus 96k. Aggiunti in `hyrox.astro`:
+  2 thumbnail button (`dlg-hv3`, `dlg-hv4`) nella griglia `video-thumb-grid` e 2 `<dialog>`
+  lightbox. Contatore slider aggiornato da `1 / 2` a `1 / 4`.
 
 ### In corso
 - Nessuna attività in corso

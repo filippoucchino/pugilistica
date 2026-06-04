@@ -22,7 +22,6 @@ const { icon, title, description } = Astro.props;
          hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
          cursor-pointer md:cursor-auto"
 >
-  <!-- Icona corso: sempre visibile, flex-shrink-0 per non ridursi nella riga mobile -->
   <div
     class="w-11 h-11 border border-pb-border-accent rounded-md
            flex items-center justify-center flex-shrink-0"
@@ -35,10 +34,7 @@ const { icon, title, description } = Astro.props;
     />
   </div>
 
-  <!-- Wrapper contenuto: flex-1 su mobile (prende lo spazio rimanente nella riga),
-       contents su desktop (i figli tornano diretti flex child del <li> per il layout flex-col originale) -->
   <div class="flex-1 md:contents">
-    <!-- Riga titolo + icona espandi (icona visibile solo su mobile) -->
     <div class="flex items-center justify-between">
       <p class="font-display text-display-sm text-pb-text-primary">{title}</p>
 
@@ -61,7 +57,6 @@ const { icon, title, description } = Astro.props;
       </div>
     </div>
 
-    <!-- Descrizione: collassata su mobile, espansa al click -->
     <p
       class="text-sm text-pb-text-tertiary leading-normal
              overflow-hidden transition-[max-height] duration-slow ease-default

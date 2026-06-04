@@ -1,6 +1,9 @@
 ---
 /**
- * Segment / Target card — "Per chi è" il corso.
+ * Segment Card — "Per chi è" il corso, nella homepage.
+ * Mobile/sm: riga titolo + expand, descrizione collassata al click.
+ * md+: layout colonna completa (titolo, descrizione, link).
+ * Stesso pattern di TargetCard, adattato per card senza icona.
  */
 
 interface Props {
@@ -14,18 +17,62 @@ const { title, description, linkLabel, linkHref } = Astro.props;
 ---
 
 <li
+  data-segment-item
   class="p-card-pad border border-pb-border-default rounded-md
-         transition-all duration-base ease-default
-         hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]"
+         transition-all duration-base ease-default flex flex-col md:gap-4
+         hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
+         cursor-pointer md:cursor-auto"
 >
-  <p class="font-display text-display-sm text-pb-text-primary mb-2">{title}</p>
-  <p class="text-sm text-pb-text-tertiary leading-normal mb-3">{description}</p>
+  <!-- Riga titolo + icona espandi (icona visibile solo su mobile/sm) -->
+  <div class="flex items-center justify-between">
+    <p class="font-display text-display-sm text-pb-text-primary">{title}</p>
+
+    <div
+      class="md:hidden w-7 h-7 border border-pb-border-default rounded-sm
+             flex items-center justify-center flex-shrink-0 ml-3
+             transition-all duration-base ease-default
+             [.is-open_&]:border-pb-border-accent"
+    >
+      <svg
+        class="w-3.5 h-3.5 stroke-pb-text-muted fill-none
+               transition-transform duration-base ease-default
+               [.is-open_&]:stroke-brand [.is-open_&]:rotate-45"
+        style="stroke-width: 1.5;"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Descrizione: collassata su mobile, espansa al click.
+       pt-2 è dentro l'elemento: viene clippato da overflow-hidden quando max-h-0,
+       compare naturalmente quando espanso. md:pt-0 perché il gap-4 del flex gestisce già lo spazio. -->
+  <p
+    class="text-sm text-pb-text-tertiary leading-normal
+           overflow-hidden transition-[max-height] duration-slow ease-default
+           max-h-0 md:max-h-none [.is-open_&]:max-h-[300px]
+           pt-2 md:pt-0"
+  >{description}</p>
+
+  <!-- Link: nascosto su mobile con display:none, visibile su md+ -->
   {linkLabel && linkHref && (
     <a
       href={linkHref}
-      class="text-xs font-semibold text-brand tracking-wide no-underline"
+      class="hidden [.is-open_&]:inline-flex md:inline-flex text-xs font-semibold text-brand tracking-wide no-underline
+             hover:text-brand-light transition-colors duration-base mt-3 md:mt-0"
     >
       {linkLabel}
     </a>
   )}
 </li>
+
+<script>
+  document.querySelectorAll("[data-segment-item]:not([data-segment-bound])").forEach((item) => {
+    item.setAttribute("data-segment-bound", "1");
+    item.addEventListener("click", () => {
+      if (window.matchMedia("(min-width: 768px)").matches) return;
+      item.classList.toggle("is-open");
+    });
+  });
+</script>

@@ -1,7 +1,8 @@
 ---
 /**
  * Contact Card — icona + label + valore + sottotesto.
- * Usata nella pagina Contatti.
+ * Mobile: riga [icona | label+valore] + sottotesto sotto.
+ * md+: colonna originale (icona, label, valore, sottotesto).
  */
 
 interface Props {
@@ -16,20 +17,32 @@ interface Props {
 const { icon, label, value, href, subtitle } = Astro.props;
 ---
 
-<div class="p-card-pad-lg border border-pb-border-default rounded-md flex flex-col gap-4">
-  <div class="w-11 h-11 border border-pb-border-accent rounded-md flex items-center justify-center">
-    <svg
-      class="w-5 h-5 stroke-brand fill-none"
-      style="stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
-      viewBox="0 0 24 24"
-      set:html={icon}
-    />
+<div class="p-4 border border-pb-border-default rounded-md flex flex-col gap-4">
+  <!-- Riga su mobile: icona a sinistra, label+valore a destra in colonna.
+       Colonna su md+: icona sopra, poi label e valore separati. -->
+  <div class="flex flex-row items-center gap-4">
+    <div class="w-11 h-11 border border-pb-border-accent rounded-md flex items-center justify-center flex-shrink-0">
+      <svg
+        class="w-5 h-5 stroke-brand fill-none"
+        style="stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+        viewBox="0 0 24 24"
+        set:html={icon}
+      />
+    </div>
+
+    <!-- Label + valore: vicini tra loro (gap-1), affiancati all'icona su mobile -->
+    <div class="min-w-0 flex flex-col gap-1">
+      <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-muted">{label}</div>
+      {href ? (
+        <a
+          href={href}
+          class="text-base font-semibold text-pb-text-primary no-underline hover:text-brand transition-colors break-all"
+        >{value}</a>
+      ) : (
+        <div class="text-base font-semibold text-pb-text-primary">{value}</div>
+      )}
+    </div>
   </div>
-  <div class="text-xxs font-semibold tracking-widest uppercase text-pb-text-muted">{label}</div>
-  {href ? (
-    <a href={href} class="text-lg font-semibold text-pb-text-primary no-underline hover:text-brand transition-colors">{value}</a>
-  ) : (
-    <div class="text-lg font-semibold text-pb-text-primary">{value}</div>
-  )}
+
   {subtitle && <p class="text-sm text-pb-text-tertiary leading-normal">{subtitle}</p>}
 </div>

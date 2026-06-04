@@ -148,20 +148,20 @@ const pageSchema = buildPageSchema(
   </Hero>
 
   <!-- STATS -->
-  <section class="pb-section fade-up">
+  <section class="pb-section max-md:py-8 fade-up">
     <div class="pb-container">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+      <div class="grid grid-cols-3 gap-4 md:gap-10 text-center">
         <div>
-          <div class="font-display text-display-lg text-pb-text-primary mb-2">ASD</div>
-          <p class="text-sm text-pb-text-tertiary">Associazione Sportiva Dilettantistica<br>affiliata FPI, FIPE e Hyrox</p>
+          <div class="font-display text-lg sm:text-display-sm md:text-display-lg text-pb-text-primary mb-1 md:mb-2">ASD</div>
+          <p class="text-xs md:text-sm text-pb-text-tertiary">Associazione Sportiva Dilettantistica<br>affiliata FPI, FIPE e Hyrox</p>
         </div>
         <div>
-          <div class="font-display text-display-lg text-pb-text-primary mb-2">20<span class="text-brand">16</span></div>
-          <p class="text-sm text-pb-text-tertiary">Fondata il 9 gennaio<br>a Barlassina (MB)</p>
+          <div class="font-display text-lg sm:text-display-sm md:text-display-lg text-pb-text-primary mb-1 md:mb-2">20<span class="text-brand">16</span></div>
+          <p class="text-xs md:text-sm text-pb-text-tertiary">Fondata il 9 gennaio<br>a Barlassina (MB)</p>
         </div>
         <div>
-          <div class="font-display text-display-lg text-pb-text-primary mb-2">Barlassina</div>
-          <p class="text-sm text-pb-text-tertiary">Via G. Segantini 29<br>nel cuore della Brianza</p>
+          <div class="font-display text-lg sm:text-display-sm md:text-display-lg text-pb-text-primary mb-1 md:mb-2">Barlassina</div>
+          <p class="text-xs md:text-sm text-pb-text-tertiary">Via G. Segantini 29<br>nel cuore della Brianza</p>
         </div>
       </div>
     </div>
@@ -187,21 +187,69 @@ const pageSchema = buildPageSchema(
           Qui l'atmosfera è familiare, ma l'impegno è reale. Ti alleni con persone che vogliono migliorare, seguite da un coach che ha combattuto davvero nella boxe dilettantistica. Che tu voglia competere in gara, rimetterti in forma o semplicemente staccare dalla giornata, trovi un percorso costruito per te.
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
             { icon: '<path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/>', title: "Disciplina", desc: "Il pugilato insegna costanza, rispetto e autocontrollo. Ogni allenamento è un passo avanti, dentro e fuori dal ring." },
             { icon: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>', title: "Unione", desc: "Qui l'allenamento è individuale, ma la crescita è collettiva. In palestra si costruisce un gruppo vero, motivante e inclusivo." },
             { icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>', title: "Arte", desc: "La boxe è tecnica, ritmo e intelligenza. Non si tratta di menare: si tratta di muoversi in guardia, leggere l'avversario e reagire con i colpi giusti al momento giusto." },
           ].map((v) => (
-            <div class="text-center">
-              <div class="w-12 h-12 border border-pb-border-accent rounded-md flex items-center justify-center mx-auto mb-4">
+            <div
+              data-filosofia-item
+              class="p-card-pad border border-pb-border-default rounded-md
+                     transition-all duration-base ease-default
+                     flex flex-row items-center gap-4 md:flex-col md:items-center md:gap-4 md:text-center
+                     hover:border-pb-border-accent hover:bg-[rgba(196,30,30,0.03)]
+                     cursor-pointer md:cursor-auto"
+            >
+              <!-- Icona: flex-shrink-0 nella riga mobile, centrata su md+ dal flex items-center del parent -->
+              <div class="w-11 h-11 border border-pb-border-accent rounded-md flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 stroke-brand fill-none" style="stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24" set:html={v.icon} />
               </div>
-              <h3 class="font-display text-display-sm text-pb-text-primary mb-2">{v.title}</h3>
-              <p class="text-sm text-pb-text-tertiary leading-normal">{v.desc}</p>
+
+              <!-- Wrapper: flex-1 su mobile, contents su md+ -->
+              <div class="flex-1 md:contents">
+                <!-- Riga titolo + icona espandi -->
+                <div class="flex items-center justify-between">
+                  <p class="font-display text-display-sm text-pb-text-primary">{v.title}</p>
+                  <div
+                    class="md:hidden w-7 h-7 border border-pb-border-default rounded-sm
+                           flex items-center justify-center flex-shrink-0 ml-3
+                           transition-all duration-base ease-default
+                           [.is-open_&]:border-pb-border-accent"
+                  >
+                    <svg
+                      class="w-3.5 h-3.5 stroke-pb-text-muted fill-none
+                             transition-transform duration-base ease-default
+                             [.is-open_&]:stroke-brand [.is-open_&]:rotate-45"
+                      style="stroke-width: 1.5;"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Descrizione: collassata su mobile, espansa al click -->
+                <p
+                  class="text-sm text-pb-text-tertiary leading-normal
+                         overflow-hidden transition-[max-height] duration-slow ease-default
+                         max-h-0 md:max-h-none [.is-open_&]:max-h-[300px]
+                         pt-2 md:pt-0"
+                >{v.desc}</p>
+              </div>
             </div>
           ))}
         </div>
+
+        <script>
+          document.querySelectorAll("[data-filosofia-item]:not([data-filosofia-bound])").forEach((item) => {
+            item.setAttribute("data-filosofia-bound", "1");
+            item.addEventListener("click", () => {
+              if (window.matchMedia("(min-width: 768px)").matches) return;
+              item.classList.toggle("is-open");
+            });
+          });
+        </script>
       </div>
     </div>
   </section>
@@ -215,16 +263,19 @@ const pageSchema = buildPageSchema(
       >
         Chi guida la <span class="text-brand">palestra</span>
       </SectionHeading>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+      <div class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide
+                  lg:grid lg:grid-cols-2 lg:overflow-visible lg:snap-none lg:gap-8">
         {teamMembers.map((m) => (
-          <TeamMemberCard
-            name={m.name}
-            role={m.role}
-            bio={m.bio}
-            credentials={[...m.credentials]}
-            photo={m.photo}
-            photoAlt={m.photoAlt}
-          />
+          <div class="w-[85%] sm:w-[calc(50%-12px)] flex-none snap-start lg:w-auto">
+            <TeamMemberCard
+              name={m.name}
+              role={m.role}
+              bio={m.bio}
+              credentials={[...m.credentials]}
+              photo={m.photo}
+              photoAlt={m.photoAlt}
+            />
+          </div>
         ))}
       </div>
     </div>
