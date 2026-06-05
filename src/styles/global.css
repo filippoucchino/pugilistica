@@ -314,27 +314,26 @@
     .pb-toc {
       top: 60px; /* header mobile */
     }
+  }
 
-    /* Punto 1 — fade gradient destro: indica che ci sono più pillole da scorrere */
-    .pb-toc::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 2px; /* non copre la progress bar */
-      width: 56px;
-      background: linear-gradient(to right, transparent, #0A0A0A);
-      pointer-events: none;
-      z-index: 2;
+  /* Bar: flex container per label + track.
+     Desktop: centra il gruppo label+pillole. Mobile: full-width, label a piena altezza. */
+  .pb-toc__bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .pb-toc__bar {
+      align-items: stretch; /* label si allunga all'altezza del track */
+      justify-content: flex-start;
     }
   }
 
-  /* Desktop: label è un normale flex item nel gruppo centrato.
-     Su mobile diventa sticky a sinistra dentro il track scrollabile. */
   .pb-toc__track {
     @apply flex gap-2 overflow-x-auto;
-    justify-content: center; /* centra label + pillole come gruppo */
-    padding: 14px 40px 9px;
+    padding: 14px 0 9px; /* desktop: bar centra il gruppo, padding orizzontale non serve */
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -345,11 +344,12 @@
 
   @media (max-width: 768px) {
     .pb-toc__track {
-      justify-content: flex-start;
-      padding: 14px 20px 9px;
+      flex: 1; /* prende tutto lo spazio dopo la label */
+      padding: 14px 20px 9px 12px; /* left: gap dopo il bordo della label */
     }
   }
 
+  /* Desktop: flex item nel bar, adiacente alla prima pillola */
   .pb-toc__label {
     @apply flex-shrink-0 font-body font-semibold tracking-widest uppercase whitespace-nowrap;
     font-size: 10px;
@@ -360,18 +360,16 @@
     border-right: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  /* Mobile: label sticky a sinistra — non scorre con le pillole */
+  /* Mobile: flex item con altezza piena grazie ad align-items: stretch sul bar */
   @media (max-width: 768px) {
     .pb-toc__label {
-      position: sticky;
-      left: 0;
-      background-color: #0A0A0A; /* copre le pillole che scorrono dietro */
-      z-index: 1;
-      align-self: stretch;
       display: flex;
       align-items: center;
+      align-self: stretch; /* sovrascrive align-self: center del desktop */
       padding: 0 12px 0 20px;
       margin-right: 0;
+      background: #0A0A0A;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
     }
   }
 

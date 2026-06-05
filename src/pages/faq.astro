@@ -6,6 +6,7 @@ import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage } from "@/data/schema";
+import TableOfContents from "../components/TableOfContents.astro";
 
 const whatsappHref = buildWhatsappHref(
   "Ciao, ho una domanda sulle attività di Pugilistica Brianza."
@@ -97,6 +98,12 @@ const pageSchema = buildPageSchema(
   description="Risposte alle domande più frequenti su Pugilistica Brianza: corsi, prova gratuita, orari, costi e tutto quello che serve per iniziare."
   schema={pageSchema}
 >
+  <TableOfContents items={[
+    { id: "domande-generali", label: "Palestra e corsi" },
+    { id: "info-pratiche",    label: "Orari, costi e logistica" },
+    { id: "i-corsi",          label: "I corsi" },
+  ]} />
+
   <!-- HERO -->
   <Hero
     topline="FAQ: Pugilistica Brianza"
@@ -107,7 +114,7 @@ const pageSchema = buildPageSchema(
   </Hero>
 
   <!-- FAQ GENERALI -->
-  <section class="pb-section fade-up">
+  <section id="domande-generali" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Domande generali"
@@ -120,7 +127,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- FAQ PRATICHE -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="info-pratiche" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Info pratiche"
@@ -133,7 +140,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- FAQ CORSI -->
-  <section class="pb-section fade-up">
+  <section id="i-corsi" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="I corsi"

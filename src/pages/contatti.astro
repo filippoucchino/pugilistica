@@ -8,6 +8,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { localDetails, zonesInfo, siteInfo, hours } from "@/data/shared";
 import { buildPageSchema, buildGym, buildWebPage, buildBreadcrumb } from "@/data/schema";
+import TableOfContents from "../components/TableOfContents.astro";
 
 const pageSchema = buildPageSchema(
   buildGym(),
@@ -26,6 +27,14 @@ const pageSchema = buildPageSchema(
   description="Contatta Pugilistica Brianza a Barlassina: indirizzo, telefono, email, orari e mappa. Via Giovanni Segantini 29, facilmente raggiungibile da tutta la Brianza."
   schema={pageSchema}
 >
+  <TableOfContents items={[
+    { id: "contatti",   label: "Contatti" },
+    { id: "scrivici",   label: "Scrivici" },
+    { id: "dove-siamo", label: "Dove siamo" },
+    { id: "social",     label: "Social" },
+    { id: "orari",      label: "Orari di apertura" },
+  ]} />
+
   <!-- HERO -->
   <Hero
     topline="Dove trovarci"
@@ -36,7 +45,7 @@ const pageSchema = buildPageSchema(
   </Hero>
 
   <!-- CONTATTI PRINCIPALI -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="contatti" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Contatti diretti"
@@ -70,7 +79,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- FORM CONTATTI -->
-  <section class="pb-section fade-up">
+  <section id="scrivici" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Scrivici"
@@ -137,7 +146,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- MAPPA + INFO -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="dove-siamo" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"
@@ -160,7 +169,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- SOCIAL -->
-  <section class="pb-section fade-up">
+  <section id="social" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Seguici"
@@ -233,7 +242,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- ORARI -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="orari" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Orari"
