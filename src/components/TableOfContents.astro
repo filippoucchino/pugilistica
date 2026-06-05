@@ -38,6 +38,7 @@ const { items } = Astro.props;
     var tocEl = document.querySelector('.pb-toc');
     var OFFSET = 140; // fallback iniziale
 
+    // Punto 8: calcola OFFSET dall'altezza reale del TOC sticky
     function calcOffset() {
       if (tocEl) OFFSET = tocEl.getBoundingClientRect().bottom + 10;
     }
@@ -74,6 +75,7 @@ const { items } = Astro.props;
       setActive(best);
     }
 
+    // Punto 10: progress bar — percentuale di pagina scorsa
     function updateProgress() {
       if (!progressFill) return;
       var max = document.documentElement.scrollHeight - window.innerHeight;
