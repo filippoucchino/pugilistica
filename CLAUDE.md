@@ -786,6 +786,8 @@ Ultimo aggiornamento: 2026-06-05
   - **Accessibilità WCAG**: aggiunto skip-to-content link come primo elemento focusabile
     del `<body>` in `BaseLayout.astro` (visibile solo al focus da tastiera, stilato con
     `sr-only`/`focus:not-sr-only`). Target: `<main id="main-content">` (id aggiunto).
+    L'id `main-content` è mantenuto in inglese (convenzione standard HTML landmark) —
+    non cambiare in `contenuto-principale` o simili.
     `aria-current="page"` sul link attivo sia nella nav desktop che mobile di
     `Header.astro` (prima il link attivo era distinto solo dal colore — invisibile agli
     screen reader).
