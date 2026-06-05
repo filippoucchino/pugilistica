@@ -7,13 +7,15 @@ const { items } = Astro.props;
 ---
 
 <nav class="pb-toc" aria-label="Sezioni della pagina">
-  <div class="pb-toc__track scrollbar-hide">
+  <div class="pb-toc__bar">
     <span class="pb-toc__label" aria-hidden="true">Menù</span>
-    {items.map(({ id, label }) => (
-      <a href={`#${id}`} class="pb-toc__pill" data-toc-id={id}>
-        {label}
-      </a>
-    ))}
+    <div class="pb-toc__track scrollbar-hide">
+      {items.map(({ id, label }) => (
+        <a href={`#${id}`} class="pb-toc__pill" data-toc-id={id}>
+          {label}
+        </a>
+      ))}
+    </div>
   </div>
   <div class="pb-toc__progress" aria-hidden="true">
     <div class="pb-toc__progress-fill"></div>
@@ -36,7 +38,6 @@ const { items } = Astro.props;
     var tocEl = document.querySelector('.pb-toc');
     var OFFSET = 140; // fallback iniziale
 
-    // Punto 8: calcola OFFSET dall'altezza reale del TOC sticky
     function calcOffset() {
       if (tocEl) OFFSET = tocEl.getBoundingClientRect().bottom + 10;
     }
@@ -52,17 +53,11 @@ const { items } = Astro.props;
       if (idx < 0 || idx >= sections.length) return;
       var activePill = sections[idx].pill;
       activePill.classList.add('is-active');
-      // Porta la pillola attiva nel campo visibile della barra
+      // Centra la pillola al centro dello schermo (istantaneo — smooth causerebbe vibrazione)
       var track = activePill.parentElement;
-      var pillLeft = activePill.offsetLeft;
-      var pillRight = pillLeft + activePill.offsetWidth;
-      var trackScrollLeft = track.scrollLeft;
-      var trackVisible = track.clientWidth;
-      if (pillLeft < trackScrollLeft + 8) {
-        track.scrollLeft = pillLeft - 8;
-      } else if (pillRight > trackScrollLeft + trackVisible - 8) {
-        track.scrollLeft = pillRight - trackVisible + 8;
-      }
+      var pillCenterFromNav = activePill.offsetLeft + activePill.offsetWidth / 2;
+      var navCenter = tocEl ? tocEl.offsetWidth / 2 : track.clientWidth / 2;
+      track.scrollLeft = pillCenterFromNav - navCenter;
     }
 
     function updateActive() {
@@ -79,7 +74,6 @@ const { items } = Astro.props;
       setActive(best);
     }
 
-    // Punto 10: progress bar — percentuale di pagina scorsa
     function updateProgress() {
       if (!progressFill) return;
       var max = document.documentElement.scrollHeight - window.innerHeight;

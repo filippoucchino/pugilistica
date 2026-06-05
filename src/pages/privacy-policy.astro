@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import { siteInfo } from "@/data/shared";
 import { buildPageSchema, buildBreadcrumb, buildWebPage } from "@/data/schema";
+import TableOfContents from "../components/TableOfContents.astro";
 
 const pageSchema = buildPageSchema(
   buildWebPage(
@@ -19,6 +20,20 @@ const pageSchema = buildPageSchema(
   description="Informativa sulla privacy di ASD Pugilistica Brianza ai sensi del Regolamento UE 2016/679 (GDPR). Come trattiamo i tuoi dati personali."
   schema={pageSchema}
 >
+  <TableOfContents items={[
+    { id: "titolare",        label: "Titolare" },
+    { id: "dati-raccolti",   label: "Dati raccolti" },
+    { id: "finalita",        label: "Finalità" },
+    { id: "base-giuridica",  label: "Basi legali" },
+    { id: "terze-parti",     label: "Terze parti" },
+    { id: "cookie",          label: "Cookie" },
+    { id: "extra-ue",        label: "Extra UE" },
+    { id: "conservazione",   label: "Conservazione" },
+    { id: "diritti",         label: "I tuoi diritti" },
+    { id: "minori",          label: "Minori" },
+    { id: "modifiche",       label: "Modifiche" },
+  ]} />
+
   <!-- HERO -->
   <Hero
     topline="Privacy Policy"
@@ -28,7 +43,7 @@ const pageSchema = buildPageSchema(
   </Hero>
 
   <!-- 1. TITOLARE DEL TRATTAMENTO -->
-  <section class="pb-section">
+  <section id="titolare" class="pb-section pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">1. Titolare del trattamento</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -46,7 +61,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 2. TIPI DI DATI RACCOLTI -->
-  <section class="pb-section pb-section--alt">
+  <section id="dati-raccolti" class="pb-section pb-section--alt pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">2. Tipi di dati raccolti</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -72,7 +87,8 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 3. FINALITÀ DEL TRATTAMENTO -->
-  <section class="pb-section">
+
+  <section id="finalita" class="pb-section pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">3. Finalità del trattamento</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -105,7 +121,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 4. BASE GIURIDICA -->
-  <section class="pb-section pb-section--alt">
+  <section id="base-giuridica" class="pb-section pb-section--alt pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">4. Base giuridica del trattamento</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -130,7 +146,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 5. SERVIZI DI TERZE PARTI -->
-  <section class="pb-section">
+  <section id="terze-parti" class="pb-section pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">5. Servizi di terze parti</h2>
       <div class="space-y-6 text-pb-text-secondary leading-relaxed">
@@ -245,7 +261,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 6. COOKIE -->
-  <section class="pb-section pb-section--alt">
+  <section id="cookie" class="pb-section pb-section--alt pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">6. Cookie e tecnologie di tracciamento</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -302,7 +318,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 7. TRASFERIMENTO DATI EXTRA-UE -->
-  <section class="pb-section">
+  <section id="extra-ue" class="pb-section pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">7. Trasferimento dati extra-UE</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -330,7 +346,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 8. CONSERVAZIONE DEI DATI -->
-  <section class="pb-section pb-section--alt">
+  <section id="conservazione" class="pb-section pb-section--alt pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">8. Conservazione dei dati</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -360,7 +376,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 9. DIRITTI DELL'INTERESSATO -->
-  <section class="pb-section">
+  <section id="diritti" class="pb-section pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">9. I tuoi diritti</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -389,7 +405,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 10. MINORI -->
-  <section class="pb-section pb-section--alt">
+  <section id="minori" class="pb-section pb-section--alt pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">10. Minori</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">
@@ -413,7 +429,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 11. MODIFICHE -->
-  <section class="pb-section">
+  <section id="modifiche" class="pb-section pb-toc-section">
     <div class="pb-container pb-container--narrow">
       <h2 class="text-display-sm mb-6">11. Modifiche all'informativa</h2>
       <div class="space-y-4 text-pb-text-secondary leading-relaxed">

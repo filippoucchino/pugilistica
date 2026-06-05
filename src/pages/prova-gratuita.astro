@@ -8,6 +8,7 @@ import FaqAccordion from "../components/FaqAccordion.astro";
 import LocalSection from "../components/LocalSection.astro";
 import { localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildFreeTrialOffer } from "@/data/schema";
+import TableOfContents from "../components/TableOfContents.astro";
 
 // Unica CTA della pagina: contatto diretto via WhatsApp al numero del coach.
 const whatsappHref = buildWhatsappHref(
@@ -86,6 +87,14 @@ const pageSchema = buildPageSchema(
   description="Prenota la tua prova gratuita a Pugilistica Brianza, palestra di pugilato a Barlassina. Senza impegno, vieni e allenati con noi."
   schema={pageSchema}
 >
+  <TableOfContents items={[
+    { id: "come-funziona", label: "Come funziona" },
+    { id: "cosa-include",  label: "Cosa include" },
+    { id: "prenota",       label: "Prenota" },
+    { id: "faq",           label: "FAQ" },
+    { id: "dove-siamo",    label: "Dove siamo" },
+  ]} />
+
   <!-- HERO -->
   <Hero
     topline="Prova gratuita alla Pugilistica Brianza"
@@ -96,7 +105,7 @@ const pageSchema = buildPageSchema(
   </Hero>
 
   <!-- COME FUNZIONA -->
-  <section class="pb-section fade-up">
+  <section id="come-funziona" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Come funziona"
@@ -111,7 +120,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- COSA INCLUDE -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="cosa-include" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Cosa include"
@@ -131,7 +140,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- CTA WHATSAPP -->
-  <section class="pb-section fade-up" id="prenota">
+  <section id="prenota" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Prenota"
@@ -172,7 +181,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- FAQ -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="faq" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="FAQ"
@@ -185,7 +194,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- LOCAL -->
-  <section class="pb-section fade-up">
+  <section id="dove-siamo" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"

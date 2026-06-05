@@ -14,6 +14,7 @@ import FaqAccordion from "../components/FaqAccordion.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref, reviews } from "@/data/shared";
 import { buildPageSchema, buildGym, buildWebSite, buildWebPage, buildFaqPage, buildFreeTrialOffer } from "@/data/schema";
+import TableOfContents from "../components/TableOfContents.astro";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
@@ -158,6 +159,17 @@ const pageSchema = buildPageSchema(
   description="Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato, Hyrox e PB Hiit per principianti, amatori e agonisti. Prova gratuita, ambiente familiare e coach qualificati."
   schema={pageSchema}
 >
+  <TableOfContents items={[
+    { id: "i-corsi",    label: "I nostri corsi" },
+    { id: "per-chi",    label: "Per chi siamo" },
+    { id: "perche-noi", label: "Perché sceglierci" },
+    { id: "il-coach",   label: "Il coach" },
+    { id: "palestra",   label: "La palestra" },
+    { id: "recensioni", label: "Recensioni" },
+    { id: "dove-siamo", label: "Dove siamo" },
+    { id: "faq",        label: "Domande frequenti" },
+  ]} />
+
   <!-- 1. HERO -->
   <Hero
     topline="ASD Pugilistica Brianza, Barlassina"
@@ -175,7 +187,7 @@ const pageSchema = buildPageSchema(
   </div>
 
   <!-- 3. SERVIZI -->
-  <section class="pb-section fade-up">
+  <section id="i-corsi" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="I nostri percorsi"
@@ -199,7 +211,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 4. PER CHI È -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="per-chi" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Per chi è"
@@ -222,7 +234,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 5. PERCHÉ SCEGLIERCI -->
-  <section class="pb-section fade-up">
+  <section id="perche-noi" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Perché noi"
@@ -240,7 +252,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 6. COACH -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="il-coach" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading topline="Il coach">
         Una guida tecnica con <span class="text-brand">esperienza reale</span>
@@ -263,7 +275,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 7. GALLERY -->
-  <section class="pb-section fade-up">
+  <section id="palestra" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="La palestra"
@@ -297,7 +309,7 @@ const pageSchema = buildPageSchema(
   </div>
 
   <!-- 9. RECENSIONI (slider orizzontale CSS scroll-snap) -->
-  <section class="pb-section fade-up">
+  <section id="recensioni" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <div class="flex items-end justify-between mb-12 gap-6 [&>.pb-section-heading]:mb-0">
         <SectionHeading
@@ -391,7 +403,7 @@ const pageSchema = buildPageSchema(
   </script>
 
   <!-- 10. LOCAL -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="dove-siamo" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"
@@ -421,7 +433,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- 11. FAQ -->
-  <section class="pb-section fade-up">
+  <section id="faq" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="FAQ"

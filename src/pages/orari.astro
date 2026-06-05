@@ -14,6 +14,7 @@ import {
   type ActivityTag,
 } from "@/data/scheduleData";
 import { buildPageSchema, buildGym, buildWebPage, buildBreadcrumb, buildScheduleEvents } from "@/data/schema";
+import TableOfContents from "../components/TableOfContents.astro";
 
 // JSON-LD: buildScheduleEvents() genera un Event per ogni attività con
 // mappatura precisa slot → giorni (es. Boxe 09:00-10:00 Lun/Mer/Ven,
@@ -48,6 +49,12 @@ const legendTags: ActivityTag[] = [
   description="Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB). Lezioni dal lunedì al sabato, prezzi e abbonamenti chiari."
   schema={pageSchema}
 >
+  <TableOfContents items={[
+    { id: "orari-corsi",    label: "Orari dei corsi" },
+    { id: "prezzi",         label: "Prezzi" },
+    { id: "info-pratiche",  label: "Certificato Medico" },
+  ]} />
+
   {/* HERO */}
   <Hero
     topline="Orari e prezzi"
@@ -60,7 +67,7 @@ const legendTags: ActivityTag[] = [
   </Hero>
 
   {/* TABELLA ORARI */}
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="orari-corsi" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Settimana tipo"
@@ -118,7 +125,7 @@ const legendTags: ActivityTag[] = [
   </section>
 
   {/* PREZZI */}
-  <section class="pb-section fade-up">
+  <section id="prezzi" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Prezzi e abbonamenti"
@@ -150,7 +157,7 @@ const legendTags: ActivityTag[] = [
   </section>
 
   {/* INFO PRATICHE */}
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="info-pratiche" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Prima di iniziare"

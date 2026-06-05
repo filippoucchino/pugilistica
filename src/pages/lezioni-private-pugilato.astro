@@ -11,6 +11,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { trustItems, localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildFaqPage, buildService } from "@/data/schema";
+import TableOfContents from "../components/TableOfContents.astro";
 
 // Foto coach: importata come ES module così Astro la ottimizza in build (WebP, dimensioni esplicite).
 import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
@@ -71,6 +72,14 @@ const pageSchema = buildPageSchema(
   description="Lezioni private di pugilato 1:1 a Barlassina con coach ex agonista. Percorso personalizzato, orari flessibili."
   schema={pageSchema}
 >
+  <TableOfContents items={[
+    { id: "il-percorso", label: "Il percorso" },
+    { id: "benefici",    label: "Benefici" },
+    { id: "il-coach",    label: "Il coach" },
+    { id: "faq",         label: "Domande frequenti" },
+    { id: "dove-siamo",  label: "Dove siamo" },
+  ]} />
+
   <Hero
     topline="Lezioni private alla Pugilistica Brianza"
     subtitle="Lezioni private di pugilato 1:1 con il coach Stefano Rizzo alla Pugilistica Brianza di Barlassina (MB). Percorso personalizzato su tecnica, preparazione atletica, obiettivi specifici o preparazione gara, con orari flessibili concordati direttamente e programma costruito su misura."
@@ -84,7 +93,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container"><TrustBar items={trustItems} /></div>
   </div>
 
-  <section class="pb-section fade-up">
+  <section id="il-percorso" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading topline="Il percorso">
         Cosa sono le lezioni <span class="text-brand">private?</span>
@@ -117,7 +126,7 @@ const pageSchema = buildPageSchema(
     </div>
   </section>
 
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="benefici" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Benefici"
@@ -138,7 +147,7 @@ const pageSchema = buildPageSchema(
     </div>
   </section>
 
-  <section class="pb-section fade-up">
+  <section id="il-coach" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading topline="Il coach">
         Chi ti segue nel percorso <span class="text-brand">privato</span>
@@ -154,7 +163,7 @@ const pageSchema = buildPageSchema(
     </div>
   </section>
 
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="faq" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="FAQ"
@@ -166,7 +175,7 @@ const pageSchema = buildPageSchema(
     </div>
   </section>
 
-  <section class="pb-section fade-up">
+  <section id="dove-siamo" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"

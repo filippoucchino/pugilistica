@@ -9,6 +9,7 @@ import LocalSection from "../components/LocalSection.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import { localDetails, zonesInfo, siteInfo, buildWhatsappHref } from "@/data/shared";
 import { buildPageSchema, buildGymRef, buildWebPage, buildBreadcrumb, buildPerson } from "@/data/schema";
+import TableOfContents from "../components/TableOfContents.astro";
 
 // Unica CTA della pagina: WhatsApp con messaggio generico (chi-siamo non è legata a un corso specifico).
 const whatsappHref = buildWhatsappHref(
@@ -137,6 +138,14 @@ const pageSchema = buildPageSchema(
   description="Scopri la storia, i valori e il team di Pugilistica Brianza, palestra di pugilato a Barlassina dal 9 gennaio 2016. Affiliati FPI, FIPE e Hyrox."
   schema={pageSchema}
 >
+  <TableOfContents items={[
+    { id: "filosofia",  label: "Filosofia" },
+    { id: "il-team",    label: "Il team" },
+    { id: "per-chi",    label: "Per chi siamo" },
+    { id: "gli-spazi",  label: "Gli spazi" },
+    { id: "dove-siamo", label: "Dove siamo" },
+  ]} />
+
   <!-- HERO -->
   <Hero
     topline="Chi siamo alla Pugilistica Brianza"
@@ -168,7 +177,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- FILOSOFIA -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="filosofia" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="La nostra filosofia"
@@ -255,7 +264,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- TEAM -->
-  <section class="pb-section fade-up">
+  <section id="il-team" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Il team"
@@ -282,7 +291,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- PER CHI SIAMO -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="per-chi" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="A chi ci rivolgiamo"
@@ -304,7 +313,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- GALLERY -->
-  <section class="pb-section fade-up">
+  <section id="gli-spazi" class="pb-section pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Gli spazi"
@@ -326,7 +335,7 @@ const pageSchema = buildPageSchema(
   </section>
 
   <!-- LOCAL -->
-  <section class="pb-section pb-section--alt fade-up">
+  <section id="dove-siamo" class="pb-section pb-section--alt pb-toc-section fade-up">
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"
