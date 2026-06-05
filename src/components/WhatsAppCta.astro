@@ -1,0 +1,31 @@
+---
+import { Image } from "astro:assets";
+import whatsappLogo from "@/assets/icons/whatsapp-logo.png";
+import { buildWhatsappHref } from "@/data/shared";
+
+const href = buildWhatsappHref(
+  "Ciao, vorrei informazioni sui corsi della Pugilistica Brianza."
+);
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contattaci su WhatsApp"
+  class="fixed z-sticky
+         right-6 bottom-6
+         flex flex-row items-center gap-1.5
+         transition-all duration-200 hover:scale-105 active:scale-95"
+>
+  <span class="px-3 py-1 rounded-full
+               bg-surface-raised border border-pb-border-default
+               text-[10px] font-semibold tracking-widest uppercase text-pb-text-muted">Contattaci</span>
+  <Image
+    src={whatsappLogo}
+    alt=""
+    width={36}
+    height={36}
+    class="shrink-0 drop-shadow-lg"
+  />
+</a>

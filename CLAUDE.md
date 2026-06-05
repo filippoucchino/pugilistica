@@ -1245,6 +1245,17 @@ Ultimo aggiornamento: 2026-06-05
   | `/prova-gratuita/` | Come funziona / Cosa include / Prenota / FAQ / Dove siamo |
   | `/privacy-policy/` | 11 sezioni legali abbreviate (Titolare ... Modifiche) |
 
+- CTA WhatsApp sticky (`src/components/WhatsAppCta.astro`): bottone fisso presente su tutte
+  le pagine, incluso in `BaseLayout.astro` tra `<Footer />` e `<CookieBanner />`.
+  - **Posizione**: centrato in basso su mobile (`bottom-6 left-1/2 -translate-x-1/2`),
+    angolo in basso a destra su desktop (`md:right-6 md:translate-x-0`).
+  - **Layout**: riga orizzontale — pill "CONTATTACI" a sinistra, logo WA (36px) a destra.
+    L'`<a>` esterno è trasparente; solo la scritta ha sfondo (`bg-surface-raised`, bordo,
+    `rounded-full`). Logo da `src/assets/icons/whatsapp-logo.png` (Astro lo converte in WebP).
+  - **z-index**: `z-sticky` (50) — sotto header (100), overlay menu (300) e cookie banner (500).
+    Il cookie banner sovrasta naturalmente la CTA finché l'utente non sceglie.
+  - **Link**: generato da `buildWhatsappHref()` in `shared.ts` (single source of truth sul numero).
+
 ### In corso
 - Nessuna attività in corso
 
