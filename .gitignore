@@ -30,3 +30,6 @@ Thumbs.db
 
 # Claude Code local session data
 .claude/
+
+# Video sorgenti grezzi (i file processati vivono in public/videos/)
+src/assets/images/**/New/*.mp4
