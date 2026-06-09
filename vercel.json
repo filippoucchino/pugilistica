@@ -1,4 +1,16 @@
 {
+  "redirects": [
+    { "source": "/wp-admin/:path*",                        "destination": "/", "permanent": true },
+    { "source": "/wp-content/:path*",                      "destination": "/", "permanent": true },
+    { "source": "/wp-includes/:path*",                     "destination": "/", "permanent": true },
+    { "source": "/wp-:slug.php",                           "destination": "/", "permanent": true },
+    { "source": "/hello-world",                            "destination": "/", "permanent": true },
+    { "source": "/hello-world/:path*",                     "destination": "/", "permanent": true },
+    { "source": "/category/uncategorized",                 "destination": "/", "permanent": true },
+    { "source": "/category/uncategorized/:path*",          "destination": "/", "permanent": true },
+    { "source": "/pugilistica_brianza_orari_2024.pdf",     "destination": "/orari/", "permanent": true },
+    { "source": "/privacy.html",                           "destination": "/privacy-policy/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
