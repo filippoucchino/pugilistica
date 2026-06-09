@@ -1256,6 +1256,28 @@ Ultimo aggiornamento: 2026-06-05
     Il cookie banner sovrasta naturalmente la CTA finché l'utente non sceglie.
   - **Link**: generato da `buildWhatsappHref()` in `shared.ts` (single source of truth sul numero).
 
+- Redirect 301 URL WordPress residue (2026-06-09):
+  Aggiunti in `public/.htaccess` (produzione Aruba) e `vercel.json` (demo Vercel) per ripulire
+  le URL junk del vecchio sito WordPress indicizzate da Google Search Console.
+  - **Regole Apache** (in testa al blocco RewriteEngine, prima del routing Astro):
+    - `wp-admin/*` → `/` (copre admin-ajax.php e tutto il pannello)
+    - `wp-content/*` → `/` (copre plugins, themes, uploads — regole sottocartelle accorpate)
+    - `wp-includes/*` → `/` (copre wp-emoji-release.min.js e simili)
+    - `wp-[^/]+\.php` → `/` (wp-login.php, wp-cron.php, ecc.)
+    - `\*` (asterisco letterale) → `/` (URL junk con `*` nel path, indicizzata da GSC)
+    - `hello-world/*` → `/` (copre /feed/ e ?replytocom=1 via flag QSD)
+    - `category/uncategorized/*` → `/` (copre /feed/)
+    - `pugilistica_brianza_orari_2024.pdf` → `/orari/`
+    - `privacy.html` → `/privacy-policy/`
+    - `/?s=*` → `/` (WordPress search query, match via RewriteCond su QUERY_STRING)
+  - **Flag QSD** su tutti i redirect: scarta i query string (?ver=6.9.1, ?replytocom=1, ecc.)
+    dalla URL di destinazione.
+  - **Escluso**: redirect wildcard `/*` → `/` avrebbe rediretto anche le pagine valide del sito.
+  - **Non implementato su Vercel**: `/?s=*` (query string non supportata) e asterisco letterale
+    (Vercel interpreta `*` come wildcard di percorso). Irrilevante perché Vercel è solo demo.
+  - **Come testare**: `curl -I https://www.pugilisticabrianza.it/hello-world/` dopo il deploy
+    su Aruba — risposta attesa `301` con `location: /`.
+
 ### In corso
 - Nessuna attività in corso
 

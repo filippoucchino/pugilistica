@@ -9,6 +9,39 @@
 
 RewriteEngine On
 
+# --- Redirect 301 — URL WordPress residue (vecchio sito) ---
+# Questi URL erano indicizzati dal vecchio WordPress e ora generano junk in Search Console.
+
+# wp-admin (admin-ajax.php e tutte le sottopagine)
+RewriteRule ^wp-admin(/.*)?$ / [R=301,L,QSD]
+
+# wp-content (plugins, themes, uploads e qualsiasi altra sottocartella)
+RewriteRule ^wp-content(/.*)?$ / [R=301,L,QSD]
+
+# wp-includes (file JS/CSS core WordPress, es. wp-emoji-release.min.js)
+RewriteRule ^wp-includes(/.*)?$ / [R=301,L,QSD]
+
+# File PHP WordPress (wp-login.php, wp-cron.php, wp-signup.php, ecc.)
+RewriteRule ^wp-[^/]+\.php$ / [R=301,L,QSD]
+
+# Path con asterisco letterale (URL junk indicizzata da Google)
+RewriteRule ^\*$ / [R=301,L]
+
+# Post e categorie WordPress residue
+RewriteRule ^hello-world(/.*)?$ / [R=301,L,QSD]
+RewriteRule ^category/uncategorized(/.*)?$ / [R=301,L,QSD]
+
+# PDF orari vecchio sito → pagina orari corrente
+RewriteRule ^pugilistica_brianza_orari_2024\.pdf$ /orari/ [R=301,L]
+
+# Vecchia pagina privacy → pagina privacy corrente
+RewriteRule ^privacy\.html$ /privacy-policy/ [R=301,L]
+
+# WordPress search query (?s=qualsiasi_termine) → homepage
+RewriteCond %{QUERY_STRING} ^s=
+RewriteRule ^$ / [R=301,L,QSD]
+
+# --- Routing pagine statiche Astro ---
 # Se il file richiesto esiste già, servilo direttamente
 RewriteCond %{REQUEST_FILENAME} !-f
 
