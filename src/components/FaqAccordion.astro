@@ -8,6 +8,7 @@
 interface FaqItem {
   question: string;
   answer: string;
+  answerHtml?: string;
 }
 
 interface Props {
@@ -65,9 +66,12 @@ const { items, defaultOpen } = Astro.props;
                max-h-0 [.is-open_&]:max-h-[300px]"
         data-faq-answer
       >
-        <div class="pb-5 text-sm text-pb-text-tertiary leading-relaxed max-w-[600px]">
-          {item.answer}
-        </div>
+        <div
+          class="pb-5 text-sm text-pb-text-tertiary leading-relaxed max-w-[600px]
+                 [&_a]:text-pb-text-primary [&_a]:underline [&_a]:underline-offset-2
+                 [&_a:hover]:text-brand [&_a]:transition-colors [&_a]:duration-base"
+          set:html={item.answerHtml ?? item.answer}
+        />
       </div>
     </div>
   ))}
