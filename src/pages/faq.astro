@@ -28,6 +28,7 @@ const faqGeneral = [
   {
     question: "Posso prenotare una prova gratuita?",
     answer: "Sì, puoi prenotare una prova gratuita alla Pugilistica Brianza di Barlassina. La prima lezione di pugilato, Hyrox o PB Hiit è gratuita e senza impegno: vieni, allenati con noi e decidi con calma se iscriverti. Puoi prenotare la prova chiamandoci al telefono, scrivendoci su WhatsApp o passando direttamente in palestra in Via Giovanni Segantini 29 a Barlassina.",
+    answerHtml: "Sì, puoi prenotare una prova gratuita alla Pugilistica Brianza di Barlassina. La prima lezione di pugilato, Hyrox o PB Hiit è gratuita e senza impegno: vieni, allenati con noi e decidi con calma se iscriverti. Puoi <a href=\"/prova-gratuita/\">prenotare la prova</a> chiamandoci al telefono, scrivendoci su WhatsApp o passando direttamente in palestra in Via Giovanni Segantini 29 a Barlassina.",
   },
   {
     question: "Fate anche pugilato agonistico?",
@@ -35,7 +36,8 @@ const faqGeneral = [
   },
   {
     question: "Avete lezioni private?",
-    answer: "Sì, la Pugilistica Brianza offre lezioni private di pugilato 1:1 con il coach Stefano Rizzo. Nelle lezioni private puoi lavorare su tecnica, preparazione atletica, obiettivi specifici o preparazione di un incontro, con orari flessibili concordati direttamente con il coach. Sono indicate per principianti che vogliono imparare velocemente, pugili che preparano una gara e adulti con orari particolari.",
+    answer: "Sì, la Pugilistica Brianza offre lezioni private di pugilato 1:1 con il coach Stefano Rizzo. Nelle lezioni private puoi lavorare su tecnica, preparazione atletica, obiettivi specifici o preparazione di un incontro, con orari flessibili concordati direttamente con il coach. Le lezioni di boxe private sono indicate per principianti che vogliono imparare velocemente, pugili che preparano una gara e adulti con orari particolari.",
+    answerHtml: "Sì, la Pugilistica Brianza offre lezioni private di pugilato 1:1 con il coach Stefano Rizzo. Nelle lezioni private puoi lavorare su tecnica, preparazione atletica, obiettivi specifici o preparazione di un incontro, con orari flessibili concordati direttamente con il coach. Le <a href=\"/lezioni-private-pugilato/\">lezioni di boxe private</a> sono indicate per principianti che vogliono imparare velocemente, pugili che preparano una gara e adulti con orari particolari.",
   },
 ];
 
@@ -50,7 +52,8 @@ const faqPractical = [
   },
   {
     question: "Quanto costa l'iscrizione?",
-    answer: "Alla Pugilistica Brianza gli abbonamenti mensili sono €50/mese per pugilato e PB Hiit, €65/mese per Hyrox. La formula Open all-inclusive, che dà accesso a tutti i corsi (pugilato, Hyrox, PB Hiit e Open Gym) dal lunedì al sabato, costa €90/mese. In alternativa puoi fare un ingresso singolo a €15 per una singola lezione. A tutti gli abbonamenti si aggiunge un tesseramento annuale obbligatorio di €20 che copre l'assicurazione sportiva e il tesseramento alla Federazione Pugilistica Italiana (FPI).",
+    answer: "Alla Pugilistica Brianza gli abbonamenti mensili sono €50/mese per pugilato e PB Hiit, €65/mese per Hyrox. La formula Open all-inclusive, che dà accesso a tutti i corsi (pugilato, Hyrox, PB Hiit e Open Gym) dal lunedì al sabato, costa €90/mese. In alternativa puoi fare un ingresso singolo a €15 per una singola lezione. A tutti gli abbonamenti di Pugilistica Brianza si aggiunge un tesseramento annuale obbligatorio di €20 che copre l'assicurazione sportiva e il tesseramento alla Federazione Pugilistica Italiana (FPI).",
+    answerHtml: "Alla Pugilistica Brianza gli abbonamenti mensili sono €50/mese per pugilato e PB Hiit, €65/mese per Hyrox. La formula Open all-inclusive, che dà accesso a tutti i corsi (pugilato, Hyrox, PB Hiit e Open Gym) dal lunedì al sabato, costa €90/mese. In alternativa puoi fare un ingresso singolo a €15 per una singola lezione. A tutti gli <a href=\"/orari/#prezzi\">abbonamenti di Pugilistica Brianza</a> si aggiunge un tesseramento annuale obbligatorio di €20 che copre l'assicurazione sportiva e il tesseramento alla Federazione Pugilistica Italiana (FPI).",
   },
   {
     question: "Avete parcheggio?",
@@ -62,7 +65,8 @@ const faqPractical = [
   },
   {
     question: "Quali sono gli orari di apertura?",
-    answer: "La Pugilistica Brianza è aperta dal lunedì al venerdì dalle 08:00 alle 21:00 e il sabato dalle 10:00 alle 12:00. Domenica la palestra resta chiusa. I corsi si svolgono in fasce al mattino, in pausa pranzo e la sera durante la settimana, mentre il sabato sono previste due sole fasce mattutine.",
+    answer: "La Pugilistica Brianza è aperta dal lunedì al venerdì dalle 08:00 alle 21:00 e il sabato dalle 10:00 alle 12:00. Domenica la palestra resta chiusa. I corsi si svolgono in fasce al mattino, in pausa pranzo e la sera durante la settimana, mentre il sabato sono previste due sole fasce mattutine. Per una panoramica completa dei corsi e delle fasce in cui si svolgono, visita la pagina dedicata agli orari di Pugilistica Brianza.",
+    answerHtml: "La Pugilistica Brianza è aperta dal lunedì al venerdì dalle 08:00 alle 21:00 e il sabato dalle 10:00 alle 12:00. Domenica la palestra resta chiusa. I corsi si svolgono in fasce al mattino, in pausa pranzo e la sera durante la settimana, mentre il sabato sono previste due sole fasce mattutine. Per una panoramica completa dei corsi e delle fasce in cui si svolgono, visita la pagina dedicata agli <a href=\"/orari/\">orari di Pugilistica Brianza</a>.",
   },
 ];
 
@@ -70,6 +74,7 @@ const faqCourses = [
   {
     question: "Qual è la differenza tra Pugilato, Hyrox e PB Hiit?",
     answer: "Alla Pugilistica Brianza i tre corsi hanno obiettivi e struttura differenti. Il corso di pugilato è un percorso tecnico completo che include guardia, colpi (jab, cross, gancio, montante), footwork e sparring leggero. Hyrox è un allenamento ibrido di forza e resistenza con stazioni come sled push, burpees, rowing e wall balls, pensato per chi prepara gli eventi Hyrox o cerca un lavoro atletico completo. PB Hiit sono circuiti a intervalli ad alta intensità (HIIT) per fitness, tono muscolare e condizione cardiovascolare. Puoi provare gratuitamente tutti e tre i corsi prima di scegliere.",
+    answerHtml: "Alla Pugilistica Brianza i tre corsi hanno obiettivi e struttura differenti. Il <a href=\"/pugilato/\">corso di pugilato</a> è un percorso tecnico completo che include guardia, colpi (jab, cross, gancio, montante), footwork e sparring leggero. <a href=\"/hyrox/\">Hyrox</a> è un allenamento ibrido di forza e resistenza con stazioni come sled push, burpees, rowing e wall balls, pensato per chi prepara gli eventi Hyrox o cerca un lavoro atletico completo. <a href=\"/pb-hiit/\">PB Hiit</a> sono circuiti a intervalli ad alta intensità (HIIT) per fitness, tono muscolare e condizione cardiovascolare. Puoi provare gratuitamente tutti e tre i corsi prima di scegliere.",
   },
   {
     question: "Posso frequentare più corsi?",

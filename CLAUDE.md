@@ -1278,6 +1278,39 @@ Ultimo aggiornamento: 2026-06-05
   - **Come testare**: `curl -I https://www.pugilisticabrianza.it/hello-world/` dopo il deploy
     su Aruba — risposta attesa `301` con `location: /`.
 
+- Descrizioni "Dove siamo" differenziate per pagina (2026-06-09, branch `dove-siamo-and-links`):
+  La formula ripetitiva "nel cuore della Brianza. Facilmente raggiungibile dai comuni limitrofi"
+  sostituita con testi contestuali unici su 8 pagine (home, pugilato, hyrox, pb-hiit, chi-siamo,
+  lezioni-private, contatti, prova-gratuita). Ogni descrizione menziona il corso/servizio specifico
+  e usa una formulazione diversa per la lista dei comuni (stessi 8 comuni, ordine leggermente variato).
+
+- Link interni nelle FAQ (2026-06-09):
+  - **Pattern `answerHtml`**: aggiunto campo opzionale `answerHtml?: string` all'interfaccia `FaqItem`
+    in `src/data/schema.ts`. Il campo `answer` rimane testo puro per il JSON-LD Schema.org;
+    `answerHtml` è usato solo per la visualizzazione nel componente.
+  - **`FaqAccordion.astro`** aggiornato: il `<div>` della risposta usa `set:html={item.answerHtml ?? item.answer}`.
+    Se non c'è `answerHtml`, comportamento identico a prima. Stili link inline aggiunti con varianti
+    Tailwind `[&_a]:` (underline, `text-pb-text-primary`, hover `text-brand`).
+  - **6 FAQ in `/faq/`** aggiornate con link interni:
+    - "Posso prenotare una prova gratuita?" → [prenotare la prova](/prova-gratuita/)
+    - "Avete lezioni private?" → [lezioni di boxe private](/lezioni-private-pugilato/)
+      (testo riformulato da "Sono indicate" a "Le lezioni di boxe private sono indicate")
+    - "Quanto costa l'iscrizione?" → [abbonamenti di Pugilistica Brianza](/orari/#prezzi)
+    - "Quali sono gli orari di apertura?" → frase aggiunta in fondo con link [orari di Pugilistica Brianza](/orari/)
+    - "Qual è la differenza tra i tre corsi?" → [corso di pugilato](/pugilato/), [Hyrox](/hyrox/), [PB Hiit](/pb-hiit/)
+  - **Regola per future FAQ con link**: aggiungere `answerHtml` all'item; `answer` resta plain text
+    invariato (o aggiornato solo per modifiche testuali, non per i link).
+
+- Anchor text ServiceCard homepage migliorati (2026-06-09):
+  `ctaLabel` delle 3 card corso aggiornati a testi descrittivi con keyword:
+  "Scopri il corso" → "Scopri il corso di pugilato";
+  "Scopri Hyrox" → "Scopri il corso Hyrox";
+  "Scopri PB Hiit" → "Scopri il corso PB Hiit".
+  "Richiedi informazioni" (lezioni private) invariato.
+
+- Footer: testo orari apertura aggiornato (2026-06-09):
+  "Lun – Sab" → "Aperti da lunedì a sabato" nella colonna Contatti del `Footer.astro`.
+
 ### In corso
 - Nessuna attività in corso
 

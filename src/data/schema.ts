@@ -24,6 +24,8 @@ export const FREE_TRIAL_ID = `${SITE_URL}/#free-trial`;
 export interface FaqItem {
   question: string;
   answer: string;
+  /** HTML con link interni (solo per display). Se assente, si usa `answer` come testo puro. */
+  answerHtml?: string;
 }
 
 export interface BreadcrumbItem {
