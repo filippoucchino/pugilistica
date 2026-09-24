@@ -18,35 +18,33 @@ import TableOfContents from "../components/TableOfContents.astro";
 
 // JSON-LD: buildScheduleEvents() genera un Event per ogni attività con
 // mappatura precisa slot → giorni (es. Boxe 09:00-10:00 Lun/Mer/Ven,
-// 12:30-13:30 Lun-Ven, ecc.). Nessun filtro = tutti i 6 tipi di attività.
+// 12:30-13:30 Lun-Ven, ecc.). Nessun filtro = tutti i 5 tipi di attività.
 const pageSchema = buildPageSchema(
   buildGym(),
   buildWebPage(
     "/orari/",
     "Orari Corsi | Pugilistica Brianza",
-    "Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB).",
+    "Orari settimanali dei corsi di pugilato e Hyrox alla Pugilistica Brianza di Barlassina (MB).",
   ),
   ...buildScheduleEvents(),
   buildBreadcrumb([{ name: "Orari", href: "/orari/" }]),
 );
 
 // Lista ordinata di ActivityTag per costruire la legenda-filtro sopra la tabella.
-// 6 voci: le combo "BOXE + HYROX" e "BOXE + PB HIIT" non hanno una voce propria —
-// rispondono a "Boxe"+"Hyrox" o "Boxe"+"PB Hiit" perché le loro celle hanno
-// entrambi i tag in data-tags.
+// 5 voci: la combo "BOXE + HYROX" non ha una voce propria — risponde a
+// "Boxe"+"Hyrox" perché le sue celle hanno entrambi i tag in data-tags.
 const legendTags: ActivityTag[] = [
   "boxe",
   "boxe-agonisti",
   "kids-boxe",
   "hyrox",
-  "pb-hiit",
   "open-gym",
 ];
 ---
 
 <BaseLayout
-  title="Orari Corsi | Pugilistica Brianza: Boxe, Hyrox, PB Hiit a Barlassina"
-  description="Orari settimanali dei corsi di pugilato, Hyrox e PB Hiit alla Pugilistica Brianza di Barlassina (MB). Lezioni dal lunedì al sabato, prezzi e abbonamenti chiari."
+  title="Orari Corsi | Pugilistica Brianza: Boxe e Hyrox a Barlassina"
+  description="Orari settimanali dei corsi di pugilato e Hyrox alla Pugilistica Brianza di Barlassina (MB). Lezioni dal lunedì al sabato, prezzi e abbonamenti chiari."
   schema={pageSchema}
 >
   <TableOfContents items={[
@@ -58,7 +56,7 @@ const legendTags: ActivityTag[] = [
   {/* HERO */}
   <Hero
     topline="Orari e prezzi"
-    subtitle="Orari settimanali dei corsi di pugilato, Hyrox, PB Hiit, Kids Boxe, Boxe Agonisti e Open Gym alla Pugilistica Brianza di Barlassina (MB). Fasce al mattino, in pausa pranzo e serali dal lunedì al sabato: scegli quella che ti viene comoda e vieni a fare una prova."
+    subtitle="Orari settimanali dei corsi di pugilato, Hyrox, Kids Boxe, Boxe Agonisti e accesso libero alla Pugilistica Brianza di Barlassina (MB). Fasce al mattino, in pausa pranzo e serali dal lunedì al sabato: scegli quella che ti viene comoda e vieni a fare una prova."
     watermark="ORARI"
     ctaPrimary={{ label: "Prenota una prova gratuita", href: "/prova-gratuita/" }}
     ctaSecondary={{ label: "Chiamaci", href: siteInfo.phoneHref }}
@@ -71,7 +69,7 @@ const legendTags: ActivityTag[] = [
     <div class="pb-container">
       <SectionHeading
         topline="Settimana tipo"
-        description="Alla Pugilistica Brianza di Barlassina i corsi di pugilato, Hyrox, PB Hiit, Kids Boxe, Boxe Agonisti e Open Gym seguono fasce orarie fisse dal lunedì al sabato. Non serve prenotare: scegli l'orario che preferisci e presentati in palestra 5 minuti prima dell'inizio della lezione."
+        description="Alla Pugilistica Brianza di Barlassina i corsi di pugilato, Hyrox, Kids Boxe, Boxe Agonisti e accesso libero seguono fasce orarie fisse dal lunedì al sabato. Non serve prenotare: scegli l'orario che preferisci e presentati in palestra 5 minuti prima dell'inizio della lezione."
       >
         Orari settimanali <span class="text-brand">dei corsi</span>
       </SectionHeading>
@@ -129,12 +127,12 @@ const legendTags: ActivityTag[] = [
     <div class="pb-container">
       <SectionHeading
         topline="Prezzi e abbonamenti"
-        description="I prezzi dei corsi alla Pugilistica Brianza sono trasparenti, senza sorprese. Puoi iniziare con un ingresso singolo oppure scegliere un abbonamento mensile dedicato a boxe, Hyrox o PB Hiit, o la formula Open all-inclusive che dà accesso a tutti i corsi della palestra. Nessun vincolo di durata."
+        description="I prezzi dei corsi alla Pugilistica Brianza sono trasparenti, senza sorprese. Puoi iniziare con un ingresso singolo oppure scegliere un abbonamento mensile dedicato a boxe o Hyrox, o la formula Open all-inclusive che dà accesso a tutti i corsi della palestra. Nessun vincolo di durata."
       >
         Quanto <span class="text-brand">costa</span>
       </SectionHeading>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {pricingPlans.map((plan) => (
           <PricingCard
             title={plan.title}
@@ -338,10 +336,6 @@ const legendTags: ActivityTag[] = [
   .pb-legend-dot--hyrox {
     background: rgba(59, 130, 246, 0.15);
     border-color: rgba(59, 130, 246, 0.6);
-  }
-  .pb-legend-dot--pb-hiit {
-    background: rgba(168, 85, 247, 0.15);
-    border-color: rgba(168, 85, 247, 0.6);
   }
   .pb-legend-dot--open-gym {
     background: rgba(255, 255, 255, 0.1);

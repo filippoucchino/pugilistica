@@ -21,11 +21,9 @@ import stefanoPhoto from "../assets/images/bio/stefano-rizzo.jpg";
 
 // Foto gallery home: mix da tutte le aree della palestra per dare una panoramica completa.
 import galPanoramica from "../assets/images/pugilato/palestra-panoramica-ring-pugilistica-brianza.jpg";
-import galCircuito from "../assets/images/pb-hiit/circuito-gruppo-pb-hiit-pugilistica-brianza.jpg";
 import galRing from "../assets/images/pugilato/ring-boxe-pugilistica-brianza-barlassina.jpg";
 import galHyrox from "../assets/images/hyrox/area-functional-panoramica-hyrox-pugilistica-brianza.jpg";
 import galSacchi from "../assets/images/pugilato/allenamento-sacchi-pugili-pugilistica-brianza.jpg";
-import galColpitori from "../assets/images/pb-hiit/lavoro-colpitori-boxe-pb-hiit-pugilistica-brianza.jpg";
 import galSimulazione from "../assets/images/hyrox/simulazione-gara-hyrox-pugilistica-brianza.jpg";
 import galIngresso from "../assets/images/pugilato/ingresso-reception-pugilistica-brianza.jpg";
 
@@ -34,7 +32,7 @@ const services = [
     icon: '<path d="M3 14V11Q3 9 5 9H8Q9 5 12 5Q15 5 15 8L18 8Q22 8 22 13Q22 18 18 18H8V18H3z"/><path d="M8 9L15 8M8 9V18"/>',
     title: "Pugilato",
     description:
-      "Corso di pugilato per chi vuole imparare tecnica, mettersi in forma o crescere anche in ottica agonistica. Dai principianti assoluti ai pugili dilettanti, passando per donne e ragazzi dagli 8 anni.",
+      "Corso di pugilato per chi vuole imparare tecnica, mettersi in forma o crescere anche in ottica agonistica. Dai principianti assoluti ai pugili dilettanti, passando per donne e ragazzi dai 6 anni.",
     ctaLabel: "Scopri il corso di pugilato",
     ctaHref: "/pugilato/",
   },
@@ -45,14 +43,6 @@ const services = [
       "Allenamento Hyrox performance-oriented per resistenza aerobica, forza funzionale e preparazione ibrida. Sulle stazioni reali di gara (sled push, wall balls, rowing, farmer carry) con coach certificato Hyrox.",
     ctaLabel: "Scopri il corso Hyrox",
     ctaHref: "/hyrox/",
-  },
-  {
-    icon: '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
-    title: "PB Hiit",
-    description:
-      "Allenamento PB Hiit intenso e dinamico per fitness, tono muscolare e condizione cardiovascolare. Circuiti HIIT a intervalli con lavoro al sacco pesante, pensati per chi vuole risultati visibili in poco tempo.",
-    ctaLabel: "Scopri il corso PB Hiit",
-    ctaHref: "/pb-hiit/",
   },
   {
     icon: '<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>',
@@ -80,9 +70,9 @@ const segments = [
     linkHref: "/pugilato/",
   },
   {
-    title: "Ragazzi dagli 8 anni",
+    title: "Bambini e ragazzi dai 6 anni",
     description:
-      "Corso di pugilato per ragazzi dagli 8 anni: disciplina, coordinazione e fiducia in un ambiente sano e formativo. L'allenamento è adattato all'età e al livello di ciascun atleta.",
+      "Corso di pugilato per ragazzi dai 6 anni: disciplina, coordinazione e fiducia in un ambiente sano e formativo. L'allenamento è adattato all'età e al livello di ciascun atleta.",
     linkLabel: "Scopri il corso →",
     linkHref: "/pugilato/",
   },
@@ -118,7 +108,7 @@ const faqItems = [
   {
     question: "Da che età si può fare pugilato?",
     answer:
-      "Alla Pugilistica Brianza il corso di pugilato è aperto dagli 8 anni in su. L'allenamento per bambini e ragazzi è adattato all'età e al livello di ciascuno, con attenzione alla sicurezza e approccio didattico graduale.",
+      "Alla Pugilistica Brianza il corso di pugilato è aperto dai 6 anni in su. L'allenamento per bambini e ragazzi è adattato all'età e al livello di ciascuno, con attenzione alla sicurezza e approccio didattico graduale.",
   },
   {
     question: "Fate anche pugilato agonistico?",
@@ -147,7 +137,7 @@ const pageSchema = buildPageSchema(
   buildWebPage(
     "/",
     "Palestra di Pugilato e Hyrox a Barlassina | Pugilistica Brianza",
-    "Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato, Hyrox e PB Hiit per principianti, amatori e agonisti.",
+    "Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato e Hyrox per principianti, amatori e agonisti.",
   ),
   buildFaqPage(faqItems, ""),
   buildFreeTrialOffer(),
@@ -156,7 +146,7 @@ const pageSchema = buildPageSchema(
 
 <BaseLayout
   title="Palestra di Pugilato e Hyrox a Barlassina | Pugilistica Brianza"
-  description="Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato, Hyrox e PB Hiit per principianti, amatori e agonisti. Prova gratuita, ambiente familiare e coach qualificati."
+  description="Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato e Hyrox per principianti, amatori e agonisti. Prova gratuita, ambiente familiare e coach qualificati."
   schema={pageSchema}
 >
   <TableOfContents items={[
@@ -173,7 +163,7 @@ const pageSchema = buildPageSchema(
   <!-- 1. HERO -->
   <Hero
     topline="ASD Pugilistica Brianza, Barlassina"
-    subtitle="ASD Pugilistica Brianza è una palestra di pugilato e allenamento funzionale a Barlassina (MB), nel cuore della Brianza. Corsi di pugilato, Hyrox e PB Hiit per principianti, donne, ragazzi dagli 8 anni, amatori e pugili agonisti. Prova gratuita senza impegno, ring regolamentare e coach qualificati FPI e Hyrox."
+    subtitle="ASD Pugilistica Brianza è una palestra di pugilato e allenamento funzionale a Barlassina (MB), nel cuore della Brianza. Corsi di pugilato e Hyrox per principianti, donne, ragazzi dai 6 anni, amatori e pugili agonisti. Prova gratuita senza impegno, ring regolamentare e coach qualificati FPI e Hyrox."
     ctaPrimary={{ label: "Prenota una prova gratuita", href: whatsappHref }}
   >
     Palestra di <span class="text-brand">pugilato</span> <br />e <span class="text-brand">Hyrox</span> a Barlassina <br />in Brianza
@@ -191,12 +181,12 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="I nostri percorsi"
-        description="Alla Pugilistica Brianza trovi quattro percorsi per obiettivi diversi (pugilato, Hyrox, PB Hiit e lezioni private 1:1) con lo stesso approccio: tecnica seria, ambiente familiare e risultati concreti. Tutti i corsi includono una prima lezione di prova gratuita."
+        description="Alla Pugilistica Brianza trovi tre percorsi per obiettivi diversi (pugilato, Hyrox e lezioni private 1:1) con lo stesso approccio: tecnica seria, ambiente familiare e risultati concreti. Tutti i corsi includono una prima lezione di prova gratuita."
       >
-        Corsi di pugilato, <span class="text-brand">Hyrox</span> e PB Hiit
+        Corsi di pugilato, <span class="text-brand">Hyrox</span> e lezioni private
       </SectionHeading>
 
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 list-none pl-0 m-0">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 list-none pl-0 m-0">
         {services.map((s) => (
           <ServiceCard
             icon={s.icon}
@@ -215,7 +205,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Per chi è"
-        description="Non importa da dove parti, importa dove vuoi arrivare. Accogliamo principianti, donne, ragazzi dagli 8 anni, amatori e pugili agonisti, con percorsi adattati al livello tecnico e agli obiettivi di ciascuno."
+        description="Non importa da dove parti, importa dove vuoi arrivare. Accogliamo principianti, donne, ragazzi dai 6 anni, amatori e pugili agonisti, con percorsi adattati al livello tecnico e agli obiettivi di ciascuno."
       >
         Un percorso adatto a <span class="text-brand">ogni livello</span>
       </SectionHeading>
@@ -279,18 +269,16 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="La palestra"
-        description="Gli spazi della Pugilistica Brianza a Barlassina: ring regolamentare da boxe, sala sacchi pesanti, area Hyrox con rower, sled, kettlebell e bilancieri, zona functional training per i circuiti PB Hiit. Tutto in un unico ambiente."
+        description="Gli spazi della Pugilistica Brianza a Barlassina: ring regolamentare da boxe, sala sacchi pesanti, area Hyrox con rower, sled, kettlebell, bilancieri e zona functional training. Tutto in un unico ambiente."
       >
         Dove ti <span class="text-brand">alleni</span>
       </SectionHeading>
 
       <Gallery images={[
         { src: galPanoramica, alt: "Vista panoramica della Pugilistica Brianza: sala sacchi pesanti e ring da boxe con bandiere internazionali" },
-        { src: galCircuito, alt: "Circuito di gruppo PB Hiit: allieve su stazioni diverse con bilancieri e corpo libero" },
         { src: galRing, alt: "Ring da boxe della Pugilistica Brianza di Barlassina con bandiera laterale e bandiere internazionali" },
         { src: galHyrox, alt: "Area Hyrox e functional training: rower, sled, bilancieri e attrezzatura completa" },
         { src: galSacchi, alt: "Pugili che si allenano ai sacchi pesanti durante una lezione di boxe alla Pugilistica Brianza" },
-        { src: galColpitori, alt: "Lavoro ai colpitori con guantoni durante una sessione di allenamento" },
         { src: galSimulazione, alt: "Simulazione gara Hyrox alla Pugilistica Brianza: sled push e rope pull con il gruppo che osserva" },
         { src: galIngresso, alt: "Ingresso e reception della Pugilistica Brianza: bancone con logo, locandine eventi e scaffali attrezzatura" },
       ]} />
@@ -314,7 +302,7 @@ const pageSchema = buildPageSchema(
       <div class="flex items-end justify-between mb-12 gap-6 [&>.pb-section-heading]:mb-0">
         <SectionHeading
           topline="Recensioni"
-          description="Chi ci sceglie, resta. 74 recensioni Google con media 5.0: leggi cosa dicono i nostri iscritti sul coach, sull'ambiente e sui percorsi di pugilato, Hyrox e PB Hiit."
+          description="Chi ci sceglie, resta. 74 recensioni Google con media 5.0: leggi cosa dicono i nostri iscritti sul coach, sull'ambiente e sui percorsi di pugilato e Hyrox."
         >
           Cosa dicono di <span class="text-brand">noi</span>
         </SectionHeading>
@@ -407,7 +395,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="Dove siamo"
-        description="Pugilistica Brianza è in Via Giovanni Segantini 29 a Barlassina (MB): boxe, Hyrox e PB Hiit in un'unica palestra. Raggiungerci è facile da tutta la Brianza: Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò."
+        description="Pugilistica Brianza è in Via Giovanni Segantini 29 a Barlassina (MB): boxe e Hyrox in un'unica palestra. Raggiungerci è facile da tutta la Brianza: Cogliate, Seveso, Lissone, Seregno, Desio, Meda, Cesano Maderno e Muggiò."
       >
         Ci trovi a <span class="text-brand">Barlassina</span>
       </SectionHeading>
@@ -437,7 +425,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="FAQ"
-        description="Le domande più frequenti sulla Pugilistica Brianza: corsi di pugilato, Hyrox e PB Hiit, età minima per iniziare, prova gratuita senza impegno, pugilato agonistico tesserato FPI e lezioni private 1:1 con il coach."
+        description="Le domande più frequenti sulla Pugilistica Brianza: corsi di pugilato e Hyrox, età minima per iniziare, prova gratuita senza impegno, pugilato agonistico tesserato FPI e lezioni private 1:1 con il coach."
       >
         Domande <span class="text-brand">frequenti</span>
       </SectionHeading>
