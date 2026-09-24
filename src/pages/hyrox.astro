@@ -216,11 +216,6 @@ const faqItems = [
       "Per la prima lezione di Hyrox alla Pugilistica Brianza bastano abbigliamento sportivo comodo e scarpe da ginnastica adatte al movimento funzionale (non troppo ammortizzate per sled push e sandbag lunges). Tutta l'attrezzatura delle stazioni Hyrox è disponibile in palestra. Abbiamo spogliatoi e docce per gli iscritti.",
   },
   {
-    question: "In cosa si differenzia il corso Hyrox dal PB Hiit?",
-    answer:
-      "Il corso Hyrox alla Pugilistica Brianza è orientato alla preparazione ibrida per la gara Hyrox ufficiale, con focus su resistenza aerobica, corsa e stazioni funzionali specifiche (sled push, wall balls, farmer carry, rowing). Il corso PB Hiit è un allenamento a intervalli ad alta intensità (HIIT) pensato per fitness, tono muscolare e condizione cardiovascolare generale. Entrambi sono intensi, ma con obiettivi, format e struttura diversi.",
-  },
-  {
     question: "Posso partecipare a gare Hyrox dopo il corso?",
     answer:
       "Sì, il corso Hyrox della Pugilistica Brianza ti prepara per affrontare le gare Hyrox ufficiali del circuito, sia in formato individuale sia in coppia (Hyrox Doubles) sia nella categoria Pro. Il coach Hyrox certificato costruisce percorsi di preparazione specifici per chi vuole gareggiare, con simulazioni complete del format e target di tempo misurabili.",
@@ -270,7 +265,7 @@ const pageSchema = buildPageSchema(
     { id: "la-lezione",    label: "La lezione" },
     { id: "il-coach",      label: "Il coach" },
     { id: "perche-noi",    label: "Perché sceglierci" },
-    { id: "info-pratiche", label: "Info pratiche" },
+    { id: "info-pratiche", label: "Orari e info" },
     { id: "gallery",       label: "Attrezzatura" },
     { id: "faq",           label: "Domande frequenti" },
     { id: "dove-siamo",    label: "Dove siamo" },
@@ -728,7 +723,7 @@ const pageSchema = buildPageSchema(
           features={[
             "Accesso illimitato al corso Hyrox",
             "Ingresso singolo a €15 per una singola lezione Hyrox (certificato medico richiesto)",
-            "Formula Open all-inclusive (pugilato, Hyrox, PB Hiit e Open Gym): €90/mese",
+            "Formula Open all-inclusive (pugilato, Hyrox e accesso libero): €90/mese",
             "Prima lezione di prova gratuita e senza impegno",
           ]}
           ctaLabel="Prenota su WhatsApp"
@@ -765,7 +760,7 @@ const pageSchema = buildPageSchema(
     <div class="pb-container">
       <SectionHeading
         topline="FAQ"
-        description="Le domande più frequenti sul corso Hyrox: livello richiesto per iniziare, frequenza consigliata degli allenamenti, prova gratuita, preparazione alle gare Hyrox ufficiali e differenze con PB Hiit."
+        description="Le domande più frequenti sul corso Hyrox: livello richiesto per iniziare, frequenza consigliata degli allenamenti, prova gratuita, preparazione alle gare Hyrox ufficiali e cosa portare alla prima lezione."
       >
         Domande frequenti su <span class="text-brand">Hyrox</span>
       </SectionHeading>

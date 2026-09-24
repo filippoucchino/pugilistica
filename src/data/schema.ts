@@ -118,9 +118,16 @@ export function buildGym(): Record<string, unknown> {
       },
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
         opens: "17:00",
         closes: "21:00",
+      },
+      // Il venerdì sera la palestra chiude alle 20:00
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Friday",
+        opens: "17:00",
+        closes: "20:00",
       },
       {
         "@type": "OpeningHoursSpecification",
@@ -202,7 +209,7 @@ export function buildWebSite(): Record<string, unknown> {
     name: siteInfo.shortName,
     url: SITE_URL,
     description:
-      "Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato, Hyrox e PB Hiit.",
+      "Palestra di pugilato a Barlassina in Brianza. Corsi di pugilato e Hyrox.",
     publisher: buildGymRef(),
     inLanguage: "it-IT",
   };
@@ -272,7 +279,7 @@ export function buildFaqPage(
   };
 }
 
-/** Course per pagine corso (pugilato, hyrox, pb-hiit) */
+/** Course per pagine corso (pugilato, hyrox) */
 export function buildCourse(opts: CourseSchemaOpts): Record<string, unknown> {
   const url = `${SITE_URL}/${opts.slug}/`;
   const node: Record<string, unknown> = {

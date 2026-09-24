@@ -116,7 +116,6 @@ export const zones = zonesInfo.map((z) => z.name);
 export const navLinks = [
   { label: "Pugilato", href: "/pugilato/" },
   { label: "Hyrox", href: "/hyrox/" },
-  { label: "PB Hiit", href: "/pb-hiit/" },
   { label: "Lezioni private", href: "/lezioni-private-pugilato/" },
   { label: "Chi siamo", href: "/chi-siamo/" },
   { label: "FAQ", href: "/faq/" },
@@ -128,7 +127,6 @@ export const navLinks = [
 export const courseLinks = [
   { label: "Pugilato", href: "/pugilato/" },
   { label: "Hyrox", href: "/hyrox/" },
-  { label: "PB Hiit", href: "/pb-hiit/" },
   { label: "Lezioni private", href: "/lezioni-private-pugilato/" },
 ];
 
@@ -209,15 +207,15 @@ export const reviewAggregation = {
 
 /* — Orari — */
 // Orari reali di apertura della palestra.
-// Lun–Gio: mattina 08:00–11:00, pomeriggio/sera 12:30–21:00 (pausa pranzo 11:00–12:30)
-// Ven: mattina 08:00–11:00, pomeriggio 12:30–20:00 (chiusura anticipata)
+// Lun–Gio: 08:00–11:00 / 12:30–13:30 / 17:00–21:00
+// Ven: 08:00–11:00 / 12:30–13:30 / 17:00–20:00 (chiusura anticipata, niente corsi 20–21)
 // Sab: 10:00–12:00 (solo 2 corsi), Dom: chiusa.
 export const hours = [
   { day: "Lunedì", time: "08:00 – 11:00 / 12:30 – 13:30 / 17:00 – 21:00" },
   { day: "Martedì", time: "08:00 – 11:00 / 12:30 – 13:30 / 17:00 – 21:00" },
   { day: "Mercoledì", time: "08:00 – 11:00 / 12:30 – 13:30 / 17:00 – 21:00" },
   { day: "Giovedì", time: "08:00 – 11:00 / 12:30 – 13:30 / 17:00 – 21:00" },
-  { day: "Venerdì", time: "08:00 – 11:00 / 12:30 – 13:30 / 17:00 – 21:00" },
+  { day: "Venerdì", time: "08:00 – 11:00 / 12:30 – 13:30 / 17:00 – 20:00" },
   { day: "Sabato", time: "10:00 – 12:00" },
   { day: "Domenica", time: "Chiuso", closed: true },
 ] as const;

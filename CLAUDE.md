@@ -1,7 +1,7 @@
 # pugilisticabrianza.it
 
 Sito web statico per ASD Pugilistica Brianza, palestra di pugilato a
-Barlassina (MB). Il sito presenta i corsi (pugilato, Hyrox, PB Hiit,
+Barlassina (MB). Il sito presenta i corsi (pugilato, Hyrox,
 lezioni private), la storia della palestra e del coach, e permette
 ai potenziali iscritti di prenotare una prova gratuita.
 
@@ -59,11 +59,10 @@ pugilistica/
 │   │   └── schema.ts                  ← builder JSON-LD Schema.org centralizzati per tutte le pagine
 │   ├── layouts/
 │   │   └── BaseLayout.astro           ← layout unico: head, SEO, Header, slot, Footer, scroll reveal
-│   ├── pages/                         ← 12 pagine, una per URL (+ 404)
+│   ├── pages/                         ← 11 pagine, una per URL (+ 404)
 │   │   ├── index.astro
 │   │   ├── pugilato.astro
 │   │   ├── hyrox.astro
-│   │   ├── pb-hiit.astro
 │   │   ├── lezioni-private-pugilato.astro
 │   │   ├── chi-siamo.astro
 │   │   ├── faq.astro
@@ -87,7 +86,6 @@ pugilistica/
 - `/` — Home (hero, servizi, segmenti, coach, recensioni, gallery, FAQ)
 - `/pugilato/` — Corso pugilato (principale)
 - `/hyrox/` — Corso Hyrox
-- `/pb-hiit/` — Corso PB Hiit
 - `/lezioni-private-pugilato/` — Lezioni private 1:1
 - `/chi-siamo/` — Storia, filosofia, coach
 - `/faq/` — Domande frequenti (3 gruppi: generali, pratiche, corsi)
@@ -142,17 +140,16 @@ Le foto della gallery vivono in `src/assets/images/` organizzate per corso:
 src/assets/images/
 ├── bio/             ← foto coach (stefano-rizzo.jpg, moreno-bragato.jpg, ecc.)
 ├── pugilato/        ← 8 foto gallery pagina pugilato + riusate nella home
-├── hyrox/           ← 8 foto gallery pagina hyrox
-└── pb-hiit/         ← 5 foto gallery pagina pb-hiit
+└── hyrox/           ← 8 foto gallery pagina hyrox
 ```
 
-La home page riusa un mix di 8 foto dalle tre cartelle (non ha una cartella dedicata).
+La home page riusa un mix di 6 foto dalle cartelle pugilato e hyrox (non ha una cartella dedicata).
 
 ### Convenzione nomi file immagini
 
 `<soggetto>-<contesto>-<corso>-pugilistica-brianza.jpg`
 
-Esempi: `circuito-gruppo-pb-hiit-pugilistica-brianza.jpg`,
+Esempi: `area-functional-panoramica-hyrox-pugilistica-brianza.jpg`,
 `ring-boxe-pugilistica-brianza-barlassina.jpg`,
 `sled-push-allenamento-hyrox-pugilistica-brianza.jpg`.
 
@@ -167,7 +164,7 @@ Esempi: `circuito-gruppo-pb-hiit-pugilistica-brianza.jpg`,
 
 ## Gestione video (sezione "Che cos'è il [corso]?")
 
-Ogni pagina corso (pugilato, hyrox, pb-hiit, ecc.) può mostrare un video verticale
+Ogni pagina corso (pugilato, hyrox, ecc.) può mostrare un video verticale
 accanto al `DefinitionGrid`. Il componente supporta una prop `video` opzionale: se
 presente, il layout diventa 2 colonne su `lg+` (contenuto a sinistra, video a destra)
 e su mobile il video appare sopra le card. Se la prop manca, il componente si comporta
@@ -314,7 +311,7 @@ Note pratiche:
 La pagina mostra orari dei corsi, prezzi e info pratiche. Tre file chiave:
 
 - **`src/data/scheduleData.ts`** — single source of truth per orari, attività, prezzi, note.
-  Esporta `schedule` (array di `ScheduleRow`, 9 righe × 6 colonne Lun–Sab), `pricingPlans`,
+  Esporta `schedule` (array di `ScheduleRow`, 8 righe × 6 colonne Lun–Sab), `pricingPlans`,
   `scheduleNotes`, `activityLabels`, `buildEvents()` (genera `RecurringEvent[]` con mappatura
   precisa slot→giorni, es. Boxe 09:00-10:00 → Lun/Mer/Ven).
   Un'assertion a build-time verifica che `sum(colspan) === 6` per ogni riga.
@@ -333,7 +330,7 @@ Ogni slot ha il suo `data-tags` e `data-primary-tag` per colore e filtro.
 
 ### Filtro per corso
 
-Pulsanti pill sopra la tabella (`pb-filter-pill`), uno per `ActivityTag` (6 tipi).
+Pulsanti pill sopra la tabella (`pb-filter-pill`), uno per `ActivityTag` (5 tipi).
 Script `<script is:inline>` in `orari.astro` — progressive enhancement, senza JS la
 tabella mostra tutto.
 
@@ -399,7 +396,7 @@ nel sorgente — non serve rifarlo manualmente:
 
 ## Dati strutturati Schema.org (JSON-LD)
 
-Tutte le 11 pagine hanno dati strutturati JSON-LD nel `<head>`, generati da
+Tutte le 10 pagine hanno dati strutturati JSON-LD nel `<head>`, generati da
 builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 `@graph` nel frontmatter e lo passa a `BaseLayout` tramite la prop `schema`.
 
@@ -429,12 +426,11 @@ builder centralizzati in `src/data/schema.ts`. Ogni pagina compone il suo
 | `/` | WebSite, SportsActivityLocation (full), WebPage, FAQPage, Offer |
 | `/pugilato/` | Course (con CourseInstance + courseSchedule), VideoObject, FAQPage, BreadcrumbList |
 | `/hyrox/` | Course (con CourseInstance + courseSchedule), VideoObject, FAQPage, BreadcrumbList |
-| `/pb-hiit/` | Course (con CourseInstance + courseSchedule), VideoObject, FAQPage, BreadcrumbList |
 | `/lezioni-private-pugilato/` | Service, FAQPage, BreadcrumbList |
 | `/chi-siamo/` | AboutPage, Person ×5, BreadcrumbList |
 | `/faq/` | FAQPage (15 items), BreadcrumbList |
 | `/contatti/` | SportsActivityLocation (full), ContactPage, BreadcrumbList |
-| `/orari/` | SportsActivityLocation (full), Event ×6, BreadcrumbList |
+| `/orari/` | SportsActivityLocation (full), Event ×5, BreadcrumbList |
 | `/prova-gratuita/` | Offer, FAQPage, BreadcrumbList |
 | `/privacy-policy/` | WebPage, BreadcrumbList |
 
@@ -1236,7 +1232,6 @@ Ultimo aggiornamento: 2026-06-05
   | `/` | I nostri corsi / Per chi siamo / Perché sceglierci / Il coach / La palestra / Recensioni / Dove siamo / Domande frequenti |
   | `/pugilato/` | Il corso di boxe / Per chi è / Benefici / La lezione / I coach / Perché sceglierci / Info pratiche / Gli spazi / Domande frequenti / Dove siamo |
   | `/hyrox/` | Il corso hyrox / Per chi è / Benefici / La lezione / Il coach / Perché sceglierci / Info pratiche / Attrezzatura / Domande frequenti / Dove siamo |
-  | `/pb-hiit/` | Il corso pb-hiit / Per chi è / Benefici / La lezione / Il coach / Perché sceglierci / Info pratiche / Domande frequenti / Dove siamo |
   | `/lezioni-private-pugilato/` | Il percorso / Benefici / Il coach / Domande frequenti / Dove siamo |
   | `/chi-siamo/` | Filosofia / Il team / Per chi siamo / Gli spazi / Dove siamo |
   | `/faq/` | Palestra e corsi / Orari, costi e logistica / I corsi |
@@ -1311,11 +1306,40 @@ Ultimo aggiornamento: 2026-06-05
 - Footer: testo orari apertura aggiornato (2026-06-09):
   "Lun – Sab" → "Aperti da lunedì a sabato" nella colonna Contatti del `Footer.astro`.
 
+- Rimozione completa del corso PB Hiit (2026-09-24), il corso non è più offerto:
+  - **Pagina `/pb-hiit/` eliminata**, con redirect 301 → `/` in `public/.htaccess`
+    (`RewriteRule ^pb-hiit(/.*)?$`) e in `vercel.json`. La pagina era indicizzata su Google.
+  - **Asset eliminati**: cartella `src/assets/images/pb-hiit/` e video `corso-pb-hiit-*` in
+    `public/videos/`. Le 2 foto PB Hiit riusate nelle gallery di home e chi-siamo sono state
+    tolte (gallery da 8 a 6 foto).
+  - **Dati**: link PB Hiit tolti da `navLinks`/`courseLinks` (`shared.ts`), piano prezzi PB Hiit
+    tolto da `pricingPlans`, `ActivityTag` `pb-hiit` rimosso da `scheduleData.ts` (le fasce
+    Lun/Mer 19:00-20:00 ora sono Boxe + Hyrox), descrizioni JSON-LD e `site.webmanifest` aggiornati.
+  - **Testi**: tutte le citazioni riscritte (home, faq, hyrox, pugilato, prova-gratuita, orari,
+    contatti, chi-siamo). Rimossa la FAQ Hyrox "In cosa si differenzia il corso Hyrox dal PB Hiit?".
+    FAQ "differenza tra i corsi" ora confronta solo pugilato e Hyrox.
+  - **Layout**: card "I nostri percorsi" in home da 4 a 3 (`lg:grid-cols-3`); griglia prezzi in
+    `/orari/` da 3 colonne a 2×2 (`md:grid-cols-2`, 4 piani).
+  - Le voci storiche qui sopra che citano pb-hiit descrivono lavori passati: non sono più attuali.
+
+- Allineamento al volantino "Orario corsi" definitivo (2026-09-24):
+  - **Tabella orari** (`scheduleData.ts`): rimossa la riga 08:00–09:00 (Open Gym Lun–Ven);
+    nella riga 10:00–11:00 la cella Lun–Ven è ora un placeholder vuoto (resta Hyrox il sabato).
+    L'unico accesso libero è martedì e giovedì 09:00–10:00.
+  - **"Open Gym" → "Accesso libero"**: etichetta cella `ACCESSO LIBERO`, `activityLabels`
+    "Accesso libero" e tutti i testi delle pagine. Il tag interno resta `open-gym` (usato da CSS
+    e filtri, non visibile al visitatore).
+  - **Età minima 6 anni**: Kids Boxe "6–12 anni"; ovunque "dagli 8 anni" → "dai 6 anni".
+  - **Venerdì chiude alle 20:00**: `hours` in `shared.ts`, `openingHoursSpecification` in
+    `schema.ts` (voce separata Friday 17:00–20:00), testi di `/contatti/` e FAQ.
+  - **FAQ "Quali sono gli orari di apertura?"** corretta: prima diceva "08:00–21:00" continuato,
+    ora riporta le tre fasce GBP.
+  - **Regola**: fonte degli orari dei corsi = volantino ufficiale; fonte degli orari di apertura
+    = Google Business Profile. Prove gratuite: lunedì, mercoledì e venerdì (confermato).
+
 ### In corso
 - Nessuna attività in corso
 
 ### Prossimo step
-- Aggiungere foto attrezzatura a pb-hiit e creare la seconda sezione gallery (topline "La palestra")
-  seguendo lo stesso pattern di pugilato e hyrox
 - Verificare la leggibilità del favicon a 16×16 (il pugile ha molti dettagli): se non si distingue,
   valutare una versione semplificata o un monogramma "PB" per le piccole dimensioni

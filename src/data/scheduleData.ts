@@ -16,8 +16,7 @@ export type ActivityTag =
   | "boxe"
   | "boxe-agonisti"
   | "kids-boxe"
-  | "hyrox"
-  | "pb-hiit";
+  | "hyrox";
 
 export interface Activity {
   label: string;
@@ -36,7 +35,7 @@ export interface ScheduleCell {
    * filtro evidenzia solo quella selezionata.
    */
   activities: readonly Activity[] | null;
-  /** Numero di colonne occupate. Default 1. Usato per OPEN GYM che copre tutti i 5 giorni feriali. */
+  /** Numero di colonne occupate. Default 1. Usato per i placeholder vuoti che coprono più giorni. */
   colspan?: 1 | 2 | 3 | 4 | 5;
 }
 
@@ -65,12 +64,11 @@ export const WEEKDAYS_SHORT = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab"] as cons
  * evidenzia solo la card del corso selezionato, non un'ibrida ambigua.
  */
 export const ACTIVITIES: Record<string, Activity> = {
-  openGym:      { label: "OPEN GYM",       tags: ["open-gym"] },
+  openGym:      { label: "ACCESSO LIBERO", tags: ["open-gym"] },
   boxe:         { label: "BOXE",           tags: ["boxe"] },
   boxeAgonisti: { label: "BOXE AGONISTI",  tags: ["boxe-agonisti"] },
-  kidsBoxe:     { label: "KIDS BOXE",      tags: ["kids-boxe"], note: "8–12 anni" },
+  kidsBoxe:     { label: "KIDS BOXE",      tags: ["kids-boxe"], note: "6–12 anni" },
   hyrox:        { label: "HYROX",          tags: ["hyrox"] },
-  pbHiit:       { label: "PB HIIT",        tags: ["pb-hiit"] },
 };
 
 /* — Orari unificati (Lun–Sab) —
@@ -80,15 +78,6 @@ export const ACTIVITIES: Record<string, Activity> = {
  * si rappresentano con `activities: null` (placeholder "/").
  */
 export const schedule: ScheduleRow[] = [
-  {
-    time: "08:00 – 09:00",
-    startIso: "08:00",
-    endIso: "09:00",
-    cells: [
-      { activities: [ACTIVITIES.openGym], colspan: 5 },
-      { activities: null },
-    ],
-  },
   {
     time: "09:00 – 10:00",
     startIso: "09:00",
@@ -103,11 +92,13 @@ export const schedule: ScheduleRow[] = [
     ],
   },
   {
+    // Fascia dedicata al Sabato: nel feriale non ci sono corsi in questo slot,
+    // per questo la cella Lun–Ven è un grande placeholder vuoto.
     time: "10:00 – 11:00",
     startIso: "10:00",
     endIso: "11:00",
     cells: [
-      { activities: [ACTIVITIES.openGym], colspan: 5 },
+      { activities: null, colspan: 5 },
       { activities: [ACTIVITIES.hyrox] },
     ],
   },
@@ -166,9 +157,9 @@ export const schedule: ScheduleRow[] = [
     startIso: "19:00",
     endIso: "20:00",
     cells: [
-      { activities: [ACTIVITIES.boxe, ACTIVITIES.pbHiit] },
+      { activities: [ACTIVITIES.boxe, ACTIVITIES.hyrox] },
       { activities: [ACTIVITIES.boxeAgonisti] },
-      { activities: [ACTIVITIES.boxe, ACTIVITIES.pbHiit] },
+      { activities: [ACTIVITIES.boxe, ACTIVITIES.hyrox] },
       { activities: [ACTIVITIES.boxeAgonisti] },
       { activities: [ACTIVITIES.boxe, ACTIVITIES.hyrox] },
       { activities: null },
@@ -221,7 +212,7 @@ export const pricingPlans: PricingPlan[] = [
     price: "15€",
     period: "/lezione",
     features: [
-      "Partecipa a una singola lezione di pugilato, Hyrox o PB Hiit",
+      "Partecipa a una singola lezione di pugilato o Hyrox",
       "Nessun impegno mensile, paghi solo il giorno della lezione",
       "Ideale per chi è di passaggio a Barlassina o vuole provare un corso specifico",
     ],
@@ -253,25 +244,13 @@ export const pricingPlans: PricingPlan[] = [
     ctaHref: "/hyrox/",
   },
   {
-    title: "PB Hiit",
-    price: "50€",
-    period: "/mese",
-    features: [
-      "Accesso a tutte le PB Hiit Class settimanali della Pugilistica Brianza",
-      "Allenamento funzionale ad alta intensità su circuiti a intervalli (HIIT)",
-      "Obiettivi: dimagrimento, tono muscolare e condizione cardiovascolare",
-    ],
-    ctaLabel: "Scopri PB Hiit",
-    ctaHref: "/pb-hiit/",
-  },
-  {
     title: "Open",
     price: "90€",
     period: "/mese",
     note: "Formula all-inclusive",
     features: [
       "Accesso illimitato a tutti i corsi della Pugilistica Brianza di Barlassina",
-      "Boxe, Hyrox, PB Hiit e Open Gym dal lunedì al sabato",
+      "Boxe, Hyrox e accesso libero dal lunedì al sabato",
       "Massima libertà di allenamento: puoi combinare più discipline nella stessa settimana",
     ],
     ctaLabel: "Prenota una prova",
@@ -291,18 +270,17 @@ export const scheduleNotes = {
 } as const;
 
 /* — Etichette delle attività (per legenda e JSON-LD) —
- * Una voce per ogni ActivityTag: queste sono le 6 categorie della legenda.
- * Le celle combinate ("BOXE + HYROX", "BOXE + PB HIIT") non hanno una voce
- * propria — appartengono contemporaneamente a due tag.
+ * Una voce per ogni ActivityTag: queste sono le 5 categorie della legenda.
+ * Le celle combinate ("BOXE + HYROX") non hanno una voce propria —
+ * appartengono contemporaneamente a due tag.
  */
 
 export const activityLabels: Record<ActivityTag, string> = {
-  "open-gym": "Open Gym",
+  "open-gym": "Accesso libero",
   boxe: "Boxe",
   "boxe-agonisti": "Boxe Agonisti",
   "kids-boxe": "Kids Boxe",
   hyrox: "Hyrox",
-  "pb-hiit": "PB Hiit",
 };
 
 /* — Descrizioni brevi delle attività per JSON-LD Event.description — */
@@ -312,9 +290,8 @@ const activityDescriptions: Record<ActivityTag, string> = {
     "Sessione di allenamento libera in palestra con disponibilità di sacchi, pesi e attrezzature.",
   boxe: "Corso di pugilato per tutti i livelli con tecnica, sparring leggero e preparazione atletica.",
   "boxe-agonisti": "Allenamento avanzato riservato ai pugili agonisti in preparazione ai match.",
-  "kids-boxe": "Corso di pugilato per bambini e ragazzi dagli 8 ai 12 anni.",
+  "kids-boxe": "Corso di pugilato per bambini e ragazzi dai 6 ai 12 anni.",
   hyrox: "Allenamento Hyrox: forza funzionale, corsa e stazioni tematiche.",
-  "pb-hiit": "Allenamento PB Hiit: interval training ad alta intensità per forza e resistenza.",
 };
 
 /* — Helper: costruzione dei nodi Event per il JSON-LD —

@@ -9,7 +9,9 @@
     { "source": "/category/uncategorized",                 "destination": "/", "permanent": true },
     { "source": "/category/uncategorized/:path*",          "destination": "/", "permanent": true },
     { "source": "/pugilistica_brianza_orari_2024.pdf",     "destination": "/orari/", "permanent": true },
-    { "source": "/privacy.html",                           "destination": "/privacy-policy/", "permanent": true }
+    { "source": "/privacy.html",                           "destination": "/privacy-policy/", "permanent": true },
+    { "source": "/pb-hiit",                                "destination": "/", "permanent": true },
+    { "source": "/pb-hiit/:path*",                         "destination": "/", "permanent": true }
   ],
   "headers": [
     {
